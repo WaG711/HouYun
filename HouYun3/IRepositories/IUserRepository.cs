@@ -1,6 +1,6 @@
-﻿using HouYun2.Models;
+﻿using HouYun3.Models;
 
-namespace HouYun2.IRepositories
+namespace HouYun3.IRepositories
 {
     public interface IUserRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace HouYun2.Models
+namespace HouYun3.Models
 {
     public class Notification
     {

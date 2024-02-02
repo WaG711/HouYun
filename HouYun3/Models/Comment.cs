@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun2.Models
+namespace HouYun3.Models
 {
     public class Comment
     {

@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class VideoRepository : IVideoRepository
     {
