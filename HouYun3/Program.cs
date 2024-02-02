@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Repositories;

@@ -1,7 +1,5 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
-using HouYun3.Repositories;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
