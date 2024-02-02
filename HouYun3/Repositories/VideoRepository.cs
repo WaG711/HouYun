@@ -16,13 +16,7 @@ namespace HouYun2.Repositories
 
         public async Task<List<Video>> GetAllVideos()
         {
-            return await _context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .ToListAsync();
+            return await _context.Videos.ToListAsync();
         }
 
         public async Task<Video> GetVideo(int videoId)
@@ -40,11 +34,6 @@ namespace HouYun2.Repositories
         {
             return await _context.Videos
                 .Where(v => v.CategoryID == categoryId)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
                 .ToListAsync();
         }
 
@@ -52,11 +41,6 @@ namespace HouYun2.Repositories
         {
             return await _context.Videos
                 .Where(v => v.UserID == userId)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
                 .ToListAsync();
         }
 
