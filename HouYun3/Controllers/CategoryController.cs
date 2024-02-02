@@ -13,6 +13,12 @@ namespace HouYun3.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var allCategories = await _categoryRepository.GetAllCategories();
+            return View(allCategories);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -24,7 +30,7 @@ namespace HouYun3.Controllers
             if (ModelState.IsValid)
             {
                 await _categoryRepository.AddCategory(category);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Video");
             }
 
             return View(category);
@@ -46,7 +52,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> DeleteConfirmed(int categoryId)
         {
             await _categoryRepository.DeleteCategory(categoryId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Video");
         }
     }
 }
