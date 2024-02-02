@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouYun3.Models
 {
@@ -19,6 +20,11 @@ namespace HouYun3.Models
 
         [Required(ErrorMessage = "Поле 'Путь к файлу' обязательно для заполнения")]
         public string FilePath { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Файл видео")]
+        [Required(ErrorMessage = "Выберите видеофайл")]
+        public IFormFile VideoFile { get; set; }
 
         [ScaffoldColumn(false)]
         [Display(Name = "Дата загрузки")]

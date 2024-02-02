@@ -1,6 +1,7 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
 using HouYun3.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -17,20 +18,20 @@ namespace HouYun3.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId)
         {
-            var allVideos = await _videoRepository.GetAllVideos();
             var categories = await _categoryRepository.GetAllCategories();
             ViewBag.Categories = new SelectList(categories, "CategoryID", "Name");
 
-            return View(allVideos);
-        }
+            var allVideos = await _videoRepository.GetAllVideos();
 
-        [HttpPost]
-        public async Task<IActionResult> FilterByCategory(int categoryId)
-        {
-            var videos = await _videoRepository.GetVideosByCategory(categoryId);
-            return PartialView("_VideoListPartial", videos);
+            var model = new VideoViewModel
+            {
+                Videos = categoryId.HasValue ? allVideos.Where(v => v.CategoryID == categoryId.Value) : allVideos,
+                CategoryId = categoryId
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -45,27 +46,47 @@ namespace HouYun3.Controllers
             return View(video);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var categories = await _categoryRepository.GetAllCategories();
-            ViewBag.Categories = new SelectList(categories, "CategoryID", "Name");
-
+            ViewBag.Categories = await _categoryRepository.GetAllCategories();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Video video)
+        public async Task<IActionResult> Create(Video model)
         {
+            IFormFile videoFile = model.VideoFile;
+
             if (ModelState.IsValid)
             {
-                await _videoRepository.AddVideo(video);
-                return RedirectToAction("Index");
+                try
+                {
+                    if (videoFile != null && videoFile.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(videoFile.FileName);
+                        var filePath = System.IO.Path.Combine("wwwroot", "videos", fileName);
+
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await videoFile.CopyToAsync(stream);
+                        }
+
+                        model.FilePath = "/videos/" + fileName;
+                    }
+
+                    await _videoRepository.AddVideo(model);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Произошла ошибка при добавлении видео.");
+                }
             }
 
-            var categories = await _categoryRepository.GetAllCategories();
-            ViewBag.Categories = new SelectList(categories, "CategoryID", "Name");
-
-            return View(video);
+            ViewBag.Categories = await _categoryRepository.GetAllCategories();
+            return View(model);
         }
 
         public async Task<IActionResult> Delete()

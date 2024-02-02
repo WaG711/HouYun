@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HouYun3.Models.VideoViewModel
+
 @{
+    ViewData["Title"] = "Video Index";
+}
+
+<h2>Video Index</h2>
+
+<div class="form-group">
+    <label asp-for="CategoryId" class="control-label"></label>
+    <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "Value", "Text"))">
+        <option value="">All Categories</option>
+    </select>
+    <button class="btn btn-primary" onclick="filterVideos()">Filter</button>
+</div>
+
+<div id="videoList">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>User</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var video in Model.Videos)
+            {
+                <tr>
+                    <td>@video.Title</td>
+                    <td>@video.Category.Name</td>
+                    <td>@video.User.Login</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@video.VideoID">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        function filterVideos() {
+            var categoryId = $("#CategoryId").val();
+            window.location.href = "/Video/Index?categoryId=" + categoryId;
+        }
+    </script>
 }
