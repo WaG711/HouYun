@@ -4,44 +4,33 @@
     ViewData["Title"] = "Video Index";
 }
 
-<a href="@Url.Action("Index", "Video")">All Videos</a>
+<a href="@Url.Action("Index", "Video", new { category = "" })">All Videos</a>
 
 @foreach (var category in ViewBag.Categories)
 {
-    <a href="@Url.Action("Index", "Video", new { categoryId = category.Value })">@category.Text</a>
+    <a href="@Url.Action("Index", "Video", new { category = category.Text })">@category.Text</a>
 }
 
 <div id="videoList">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>User</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var video in Model.Videos)
-            {
-                <tr>
-                    <td>@video.Title</td>
-                    <td>@video.Category.Name</td>
-                    <td>@video.User.Login</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@video.VideoID">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @foreach (var video in Model.Videos)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@video.Title</h5>
+                <p class="card-text">Category: @video.Category.Name</p>
+                <p class="card-text">User: @video.User.Login</p>
+                <p class="card-text">Upload Date: @video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                <a href="@Url.Action("Details", "Video", new { id = video.VideoID })" class="btn btn-primary">Watch Video</a>
+            </div>
+        </div>
+    }
 </div>
 
 @section Scripts {
     <script>
         function filterVideos() {
-            var categoryId = $("#CategoryId").val();
-            window.location.href = "/Video/Index?categoryId=" + categoryId;
+            var categoryName = $("#Category").val();
+            window.location.href = "/Video/Index?category=" + categoryName;
         }
     </script>
 }

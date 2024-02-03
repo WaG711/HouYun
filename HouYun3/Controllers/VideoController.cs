@@ -16,17 +16,17 @@ namespace HouYun3.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(string category)
         {
             var categories = await _categoryRepository.GetAllCategories();
-            ViewBag.Categories = new SelectList(categories, "CategoryID", "Name");
+            ViewBag.Categories = new SelectList(categories, "Name", "Name");
 
             var allVideos = await _videoRepository.GetAllVideos();
 
             var model = new VideoViewModel
             {
-                Videos = categoryId.HasValue ? allVideos.Where(v => v.CategoryID == categoryId.Value) : allVideos,
-                CategoryId = categoryId
+                Videos = string.IsNullOrEmpty(category) ? allVideos : allVideos.Where(v => v.Category.Name == category),
+                CategoryName = category
             };
 
             return View(model);
