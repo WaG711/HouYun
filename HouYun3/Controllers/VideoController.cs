@@ -9,11 +9,13 @@ namespace HouYun3.Controllers
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IWebHostEnvironment _appEnvironment;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository)
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IWebHostEnvironment appEnvironment)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> Index(string category)
@@ -62,7 +64,7 @@ namespace HouYun3.Controllers
                 try
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                    var filePath = Path.Combine("wwwroot", "videos", fileName);
+                    var filePath = Path.Combine(_appEnvironment.WebRootPath, "videos", fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -70,23 +72,18 @@ namespace HouYun3.Controllers
                     }
 
                     model.FilePath = "/videos/" + fileName;
+                    await _videoRepository.AddVideo(model);
+
+                    return RedirectToAction("Index", "Video");
                 }
                 catch (Exception)
                 {
                     ModelState.AddModelError("", "Произошла ошибка при сохранении видеофайла.");
-                }
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _videoRepository.AddVideo(model);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("", "Произошла ошибка при добавлении видео.");
+                    if (!string.IsNullOrEmpty(model.FilePath))
+                    {
+                        System.IO.File.Delete(_appEnvironment.WebRootPath + model.FilePath);
+                    }
                 }
             }
 
