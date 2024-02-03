@@ -52,29 +52,36 @@ namespace HouYun3.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Video model)
         {
             IFormFile videoFile = model.VideoFile;
+
+            if (videoFile != null && videoFile.Length > 0)
+            {
+                try
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
+                    var filePath = Path.Combine("wwwroot", "videos", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await videoFile.CopyToAsync(stream);
+                    }
+
+                    model.FilePath = "/videos/" + fileName;
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Произошла ошибка при сохранении видеофайла.");
+                }
+            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (videoFile != null && videoFile.Length > 0)
-                    {
-                        var fileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(videoFile.FileName);
-                        var filePath = System.IO.Path.Combine("wwwroot", "videos", fileName);
-
-                        using (var stream = System.IO.File.Create(filePath))
-                        {
-                            await videoFile.CopyToAsync(stream);
-                        }
-
-                        model.FilePath = "/videos/" + fileName;
-                    }
-
                     await _videoRepository.AddVideo(model);
-
                     return RedirectToAction("Index", "Home");
                 }
                 catch (Exception)

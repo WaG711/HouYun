@@ -4,15 +4,12 @@
     ViewData["Title"] = "Video Index";
 }
 
-<h2>Video Index</h2>
+<a href="@Url.Action("Index", "Video")">All Videos</a>
 
-<div class="form-group">
-    <label asp-for="CategoryId" class="control-label"></label>
-    <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "Value", "Text"))">
-        <option value="">All Categories</option>
-    </select>
-    <button class="btn btn-primary" onclick="filterVideos()">Filter</button>
-</div>
+@foreach (var category in ViewBag.Categories)
+{
+    <a href="@Url.Action("Index", "Video", new { categoryId = category.Value })">@category.Text</a>
+}
 
 <div id="videoList">
     <table class="table">
