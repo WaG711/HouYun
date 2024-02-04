@@ -1,11 +1,5 @@
 ﻿@model HouYun3.Models.Video
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h2>Create</h2>
-
 <form asp-action="Create" asp-controller="Video" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
@@ -36,9 +30,9 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="CategoryId" class="control-label"></label>
-        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryID", "Name"))" class="form-control"></select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
+        <label asp-for="Category" class="control-label"></label>
+        <select asp-for="Category.CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name"))" class="form-control"></select>
+        <span asp-validation-for="Category.CategoryId" class="text-danger"></span>
     </div>
 
     <div class="form-group">

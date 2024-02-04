@@ -1,7 +1,9 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
+using HouYun3.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
@@ -9,13 +11,15 @@ namespace HouYun3.Controllers
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IWebHostEnvironment appEnvironment)
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IWebHostEnvironment appEnvironment, IUserRepository userRepository)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
             _appEnvironment = appEnvironment;
+            _userRepository = userRepository;
         }
 
         public async Task<IActionResult> Index(string category)
@@ -57,6 +61,9 @@ namespace HouYun3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Video model)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUser = await _userRepository.GetUserById(int.Parse(userId));
+
             IFormFile videoFile = model.VideoFile;
 
             if (videoFile != null && videoFile.Length > 0)
@@ -72,6 +79,9 @@ namespace HouYun3.Controllers
                     }
 
                     model.FilePath = "/videos/" + fileName;
+
+                    model.User = currentUser;
+
                     await _videoRepository.AddVideo(model);
 
                     return RedirectToAction("Index", "Video");
