@@ -26,6 +26,18 @@ namespace HouYun3.Controllers
             return View(watchLaterList);
         }
 
+        public async Task<IActionResult> Details(int watchLaterId)
+        {
+            var watchLater = await _watchLaterRepository.GetWatchLaterById(watchLaterId);
+
+            if (watchLater == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Details", "Video", new { id = watchLater.Video.VideoId });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToWatchLater(int videoId)
