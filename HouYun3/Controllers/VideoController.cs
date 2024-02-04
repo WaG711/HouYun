@@ -1,6 +1,5 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
-using HouYun3.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
@@ -14,24 +13,23 @@ namespace HouYun3.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IWebHostEnvironment appEnvironment, IUserRepository userRepository)
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IWebHostEnvironment appEnvironment)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
-            _appEnvironment = appEnvironment;
             _userRepository = userRepository;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> Index(string category)
         {
             var categories = await _categoryRepository.GetAllCategories();
-            ViewBag.Categories = new SelectList(categories, "Name", "Name");
-
-            var allVideos = await _videoRepository.GetAllVideos();
-
             var model = new VideoViewModel
             {
-                Videos = string.IsNullOrEmpty(category) ? allVideos : allVideos.Where(v => v.Category.Name == category),
+                Categories = new SelectList(categories, "Name", "Name"),
+                Videos = string.IsNullOrWhiteSpace(category)
+                    ? await _videoRepository.GetAllVideos()
+                    : (await _videoRepository.GetAllVideos()).Where(v => v.Category.Name.Equals(category, StringComparison.OrdinalIgnoreCase)),
                 CategoryName = category
             };
 
@@ -101,17 +99,37 @@ namespace HouYun3.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Delete()
+        public async Task<IActionResult> DeleteList()
         {
-            var allVideos = await _videoRepository.GetAllVideos();
-            return View(allVideos);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userVideos = await _videoRepository.GetUserVideos(int.Parse(userId));
+
+            return View(userVideos);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(int videoId)
+        public async Task<IActionResult> Delete(int? id)
         {
-            await _videoRepository.DeleteVideo(videoId);
-            return RedirectToAction("Delete");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var video = await _videoRepository.GetVideoById(id.Value);
+
+            if (video == null)
+            {
+                return NotFound();
+            }
+
+            return View(video);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _videoRepository.DeleteVideo(id);
+            return RedirectToAction("Index");
         }
     }
 }

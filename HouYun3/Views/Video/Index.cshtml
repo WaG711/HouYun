@@ -6,7 +6,7 @@
 
 <a href="@Url.Action("Index", "Video", new { category = "" })">All Videos</a>
 
-@foreach (var category in ViewBag.Categories)
+@foreach (var category in Model.Categories)
 {
     <a href="@Url.Action("Index", "Video", new { category = category.Text })">@category.Text</a>
 }

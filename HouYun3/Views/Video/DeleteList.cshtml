@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Video>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var video in Model)
+        {
+            <tr>
+                <td>@video.Title</td>
+                <td>@video.Description</td>
+                <td>
+                    <form asp-action="Delete" asp-controller="Video" method="post">
+                        <input type="hidden" asp-for="@video.VideoId" value="@video.VideoId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

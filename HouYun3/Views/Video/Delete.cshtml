@@ -1,1 +1,22 @@
-﻿
+﻿@model HouYun3.Models.Video
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" asp-controller="Video" method="post">
+        <input type="hidden" asp-for="VideoId" />
+
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" asp-controller="Video" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

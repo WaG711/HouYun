@@ -5,6 +5,7 @@ namespace HouYun3.IRepositories
     public interface IVideoRepository
     {
         Task<IEnumerable<Video>> GetAllVideos();
+        Task<IEnumerable<Video>> GetUserVideos(int userId);
         Task<Video> GetVideoById(int videoId);
         Task AddVideo(Video video);
         Task UpdateVideo(Video video);
