@@ -14,9 +14,10 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchHistory>> GetAllWatchHistory()
+        public async Task<IEnumerable<WatchHistory>> GetWatchHistoryByUserId(int userId)
         {
             return await _context.WatchHistories
+                .Where(w => w.UserId == userId)
                 .Include(w => w.User)
                 .Include(w => w.Video)
                 .ToListAsync();
