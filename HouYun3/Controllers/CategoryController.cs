@@ -38,7 +38,7 @@ namespace HouYun3.Controllers
 
         public async Task<IActionResult> Delete(int categoryId)
         {
-            var category = await _categoryRepository.GetCategory(categoryId);
+            var category = await _categoryRepository.GetCategoryById(categoryId);
 
             if (category == null)
             {

@@ -14,19 +14,14 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<List<Like>> GetLikes(int videoId)
+        public async Task<int> GetLikesCountByVideoId(int videoId)
         {
-            return await _context.Likes
-                .Where(l => l.VideoID == videoId)
-                .Include(l => l.User)
-                .ToListAsync();
+            return await _context.Likes.CountAsync(l => l.VideoId == videoId);
         }
 
-        public async Task<Like> GetLike(int likeId)
+        public async Task<bool> IsUserLikedVideo(int videoId, int userId)
         {
-            return await _context.Likes
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(l => l.LikeID == likeId);
+            return await _context.Likes.AnyAsync(l => l.VideoId == videoId && l.User.UserId == userId);
         }
 
         public async Task AddLike(Like like)
@@ -35,7 +30,7 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteLike(int likeId)
+        public async Task RemoveLike(int likeId)
         {
             var like = await _context.Likes.FindAsync(likeId);
             if (like != null)

@@ -14,34 +14,26 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<List<Video>> GetAllVideos()
-        {
-            return await _context.Videos.ToListAsync();
-        }
-
-        public async Task<Video> GetVideo(int videoId)
+        public async Task<IEnumerable<Video>> GetAllVideos()
         {
             return await _context.Videos
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .Include(v => v.Comments)
+                .ToListAsync();
+        }
+
+        public async Task<Video> GetVideoById(int videoId)
+        {
+            return await _context.Videos
                 .Include(v => v.Likes)
                 .Include(v => v.Views)
-                .FirstOrDefaultAsync(v => v.VideoID == videoId);
-        }
-
-        public async Task<List<Video>> GetVideosByCategory(int categoryId)
-        {
-            return await _context.Videos
-                .Where(v => v.CategoryID == categoryId)
-                .ToListAsync();
-        }
-
-        public async Task<List<Video>> GetVideosByUser(int userId)
-        {
-            return await _context.Videos
-                .Where(v => v.UserID == userId)
-                .ToListAsync();
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Comments)
+                .FirstOrDefaultAsync(v => v.VideoId == videoId);
         }
 
         public async Task AddVideo(Video video)

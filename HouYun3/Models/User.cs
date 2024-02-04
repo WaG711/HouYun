@@ -5,7 +5,7 @@ namespace HouYun3.Models
     public class User
     {
         [Key]
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Email' обязательно для заполнения")]
         [EmailAddress(ErrorMessage = "Некорректный формат 'Email'")]

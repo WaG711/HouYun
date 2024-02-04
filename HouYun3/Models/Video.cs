@@ -7,7 +7,7 @@ namespace HouYun3.Models
     public class Video
     {
         [Key]
-        public int VideoID { get; set; }
+        public int VideoId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Название видео' обязательно для заполнения")]
         [Display(Name = "Название видео")]
@@ -36,18 +36,12 @@ namespace HouYun3.Models
         public DateTime UploadDate { get; set; }
 
         public ICollection<Like> Likes { get; set; } = new List<Like>();
-
         public ICollection<View> Views { get; set; } = new List<View>();
 
         [Display(Name = "Категория видео")]
         [Required(ErrorMessage = "Поле 'Категория видео' обязательно для заполнения")]
-        public int CategoryID { get; set; }
-
-        [Display(Name = "Категория")]
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        [Required(ErrorMessage = "Поле 'Пользователь' обязательно для заполнения")]
-        public int UserID { get; set; }
 
         [Display(Name = "Пользователь")]
         public User User { get; set; }

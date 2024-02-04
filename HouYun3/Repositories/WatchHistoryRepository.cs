@@ -14,20 +14,20 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<List<WatchHistory>> GetWatchHistories(int userId)
-        {
-            return await _context.WatchHistories
-                .Where(w => w.UserID == userId)
-                .Include(w => w.Video)
-                .ToListAsync();
-        }
-
-        public async Task<WatchHistory> GetWatchHistory(int watchHistoryId)
+        public async Task<IEnumerable<WatchHistory>> GetAllWatchHistory()
         {
             return await _context.WatchHistories
                 .Include(w => w.User)
                 .Include(w => w.Video)
-                .FirstOrDefaultAsync(w => w.WatchHistoryID == watchHistoryId);
+                .ToListAsync();
+        }
+
+        public async Task<WatchHistory> GetWatchHistoryById(int watchHistoryId)
+        {
+            return await _context.WatchHistories
+                .Include(w => w.User)
+                .Include(w => w.Video)
+                .FirstOrDefaultAsync(w => w.WatchHistoryId == watchHistoryId);
         }
 
         public async Task AddWatchHistory(WatchHistory watchHistory)

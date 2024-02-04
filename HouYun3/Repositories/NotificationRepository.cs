@@ -14,17 +14,17 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<List<Notification>> GetNotifications(int userId)
+        public async Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(int userId)
         {
             return await _context.Notifications
-                .Where(n => n.UserID == userId)
+                .Where(n => n.User.UserId == userId && !n.IsRead)
+                .OrderByDescending(n => n.NotificationDate)
                 .ToListAsync();
         }
 
-        public async Task<Notification> GetNotification(int notificationId)
+        public async Task<int> GetUnreadNotificationsCountByUserId(int userId)
         {
-            return await _context.Notifications
-                .FirstOrDefaultAsync(n => n.NotificationID == notificationId);
+            return await _context.Notifications.CountAsync(n => n.User.UserId == userId && !n.IsRead);
         }
 
         public async Task AddNotification(Notification notification)
@@ -33,12 +33,12 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteNotification(int notificationId)
+        public async Task MarkNotificationAsRead(int notificationId)
         {
             var notification = await _context.Notifications.FindAsync(notificationId);
             if (notification != null)
             {
-                _context.Notifications.Remove(notification);
+                notification.IsRead = true;
                 await _context.SaveChangesAsync();
             }
         }

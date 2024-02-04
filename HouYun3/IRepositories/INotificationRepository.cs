@@ -4,9 +4,9 @@ namespace HouYun3.IRepositories
 {
     public interface INotificationRepository
     {
-        Task<List<Notification>> GetNotifications(int userId);
-        Task<Notification> GetNotification(int notificationId);
+        Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(int userId);
+        Task<int> GetUnreadNotificationsCountByUserId(int userId);
         Task AddNotification(Notification notification);
-        Task DeleteNotification(int notificationId);
+        Task MarkNotificationAsRead(int notificationId);
     }
 }

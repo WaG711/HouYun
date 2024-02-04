@@ -5,7 +5,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Category ID</th>
+            <th>Category Id</th>
             <th>Name</th>
             <th>Actions</th>
         </tr>
@@ -14,10 +14,10 @@
         @foreach (var category in Model)
         {
             <tr>
-                <td>@category.CategoryID</td>
+                <td>@category.CategoryId</td>
                 <td>@category.Name</td>
                 <td>
-                    <a asp-action="Delete" asp-route-categoryId="@category.CategoryID">Delete</a>
+                    <a asp-action="Delete" asp-route-categoryId="@category.CategoryId">Delete</a>
                 </td>
             </tr>
         }

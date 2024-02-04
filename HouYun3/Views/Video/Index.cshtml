@@ -20,7 +20,7 @@
                 <p class="card-text">Category: @video.Category.Name</p>
                 <p class="card-text">User: @video.User.Login</p>
                 <p class="card-text">Upload Date: @video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-                <a href="@Url.Action("Details", "Video", new { id = video.VideoID })" class="btn btn-primary">Watch Video</a>
+                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a>
             </div>
         </div>
     }

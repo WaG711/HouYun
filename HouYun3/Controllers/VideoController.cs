@@ -36,7 +36,7 @@ namespace HouYun3.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var video = await _videoRepository.GetVideo(id);
+            var video = await _videoRepository.GetVideoById(id);
 
             if (video == null)
             {
