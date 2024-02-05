@@ -33,7 +33,7 @@ namespace HouYun3.Repositories
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .Include(v => v.Comments)
-                .Where(v => v.User.UserId == userId)
+                .Where(v => v.User.Id == userId.ToString())
                 .ToListAsync();
         }
 

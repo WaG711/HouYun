@@ -4,6 +4,7 @@ using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouYun3.Migrations
 {
     [DbContext(typeof(HouYun3Context))]
-    partial class HouYun3ContextModelSnapshot : ModelSnapshot
+    [Migration("20240205184536_H3")]
+    partial class H3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,7 +374,7 @@ namespace HouYun3.Migrations
             modelBuilder.Entity("HouYun3.Models.Notification", b =>
                 {
                     b.HasOne("HouYun3.Models.User", "User")
-                        .WithMany("Notifications")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -380,7 +383,7 @@ namespace HouYun3.Migrations
             modelBuilder.Entity("HouYun3.Models.SearchHistory", b =>
                 {
                     b.HasOne("HouYun3.Models.User", "User")
-                        .WithMany("SearchHistory")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -423,7 +426,7 @@ namespace HouYun3.Migrations
             modelBuilder.Entity("HouYun3.Models.WatchHistory", b =>
                 {
                     b.HasOne("HouYun3.Models.User", "User")
-                        .WithMany("WatchHistory")
+                        .WithMany()
                         .HasForeignKey("UserId1");
 
                     b.HasOne("HouYun3.Models.Video", "Video")
@@ -440,7 +443,7 @@ namespace HouYun3.Migrations
             modelBuilder.Entity("HouYun3.Models.WatchLater", b =>
                 {
                     b.HasOne("HouYun3.Models.User", "User")
-                        .WithMany("WatchLaterList")
+                        .WithMany()
                         .HasForeignKey("UserId1");
 
                     b.HasOne("HouYun3.Models.Video", "Video")
@@ -461,15 +464,7 @@ namespace HouYun3.Migrations
 
             modelBuilder.Entity("HouYun3.Models.User", b =>
                 {
-                    b.Navigation("Notifications");
-
-                    b.Navigation("SearchHistory");
-
                     b.Navigation("Videos");
-
-                    b.Navigation("WatchHistory");
-
-                    b.Navigation("WatchLaterList");
                 });
 
             modelBuilder.Entity("HouYun3.Models.Video", b =>

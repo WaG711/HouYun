@@ -2,6 +2,8 @@
 using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Repositories;
+using HouYun3.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HouYun3
 {
@@ -25,6 +27,16 @@ namespace HouYun3
             builder.Services.AddScoped<IViewRepository, ViewRepository>();
             builder.Services.AddScoped<IWatchLaterRepository, WatchLaterRepository>();
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
+
 
             var app = builder.Build();
 

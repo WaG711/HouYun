@@ -1,26 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HouYun3.Models;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouYun3.Models
 {
-    public class User
+    public class User : IdentityUser
     {
         [Key]
-        public int UserId { get; set; }
+        public override string Id { get; set; }
 
         [Required(ErrorMessage = "Поле 'Email' обязательно для заполнения")]
         [EmailAddress(ErrorMessage = "Некорректный формат 'Email'")]
-        public string Email { get; set; }
-
-        [Display(Name = "Аватар")]
-        public string Avatar { get; set; }
+        public override string Email { get; set; }
 
         [Required(ErrorMessage = "Поле 'Логин' обязательно для заполнения")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Длина 'Логина' должна быть от 3 до 50 символов")]
-        public string Login { get; set; }
-
-        [Required(ErrorMessage = "Поле 'Пароль' обязательно для заполнения")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public override string UserName { get; set; }
 
         [ScaffoldColumn(false)]
         [Display(Name = "Дата регистрации")]
