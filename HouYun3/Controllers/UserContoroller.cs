@@ -55,11 +55,11 @@ namespace HouYun3.Controllers.UserContoller
 
             return View(model);
         }
-        /*public async Task<IActionResult> LogoutAsync()
+        public async Task<IActionResult> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
-        }*/
+        }
 
         [HttpGet]
         public IActionResult Login()
