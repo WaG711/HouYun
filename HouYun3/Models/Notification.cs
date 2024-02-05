@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun2.Models
+namespace HouYun3.Models
 {
     public class Notification
     {
         [Key]
-        public int NotificationID { get; set; }
+        public int NotificationId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Сообщение' обязательно для заполнения")]
         [StringLength(100, ErrorMessage = "Длина 'Сообщения' не должна превышать 100 символов")]
@@ -19,10 +18,6 @@ namespace HouYun2.Models
         [Display(Name = "Прочитано")]
         public bool IsRead { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Пользователь ID' обязательно для заполнения")]
-        public int UserID { get; set; }
-
-        [ForeignKey("UserID")]
         public User User { get; set; }
 
 

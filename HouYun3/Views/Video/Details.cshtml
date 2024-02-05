@@ -1,0 +1,47 @@
+﻿@model HouYun3.Models.VideoDetailsViewModel
+
+@{
+    ViewData["Title"] = "Video Details";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Video.Title</h5>
+        <p class="card-text">Category: @Model.Video.Category.Name</p>
+        <p class="card-text">User: @Model.Video.User.Login</p>
+        <p class="card-text">Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+
+        <video width="100%" height="auto" controls>
+            <source src="@Model.Video.FilePath" type="video/mp4">
+        </video>
+
+        <h6>Comments:</h6>
+        @foreach (var comment in Model.Comments)
+        {
+            <p>@comment.Text</p>
+        }
+
+        <form asp-action="AddComment" method="post">
+            <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+            <input type="text" name="commentText" placeholder="Add a comment" />
+            <button type="submit">Add Comment</button>
+        </form>
+
+        <p class="card-text">Likes: @Model.LikesCount</p>
+
+        @if (Model.IsLikedByCurrentUser)
+        {
+            <form asp-action="RemoveLike" method="post">
+                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+                <button type="submit">Remove Like</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="AddLike" method="post">
+                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+                <button type="submit">Like</button>
+            </form>
+        }
+    </div>
+</div>

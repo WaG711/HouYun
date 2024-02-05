@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class CommentRepository : ICommentRepository
     {
@@ -14,19 +14,17 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<Comment>> GetComments(int videoId)
+        public async Task<IEnumerable<Comment>> GetCommentsByVideoId(int videoId)
         {
             return await _context.Comments
-                .Where(c => c.VideoID == videoId)
                 .Include(c => c.User)
+                .Where(c => c.VideoId == videoId)
                 .ToListAsync();
         }
 
-        public async Task<Comment> GetComment(int commentId)
+        public async Task<Comment> GetCommentById(int commentId)
         {
-            return await _context.Comments
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(c => c.CommentID == commentId);
+            return await _context.Comments.FindAsync(commentId);
         }
 
         public async Task AddComment(Comment comment)

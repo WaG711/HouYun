@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class WatchLaterRepository : IWatchLaterRepository
     {
@@ -14,20 +14,21 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<WatchLater>> GetWatchLaterList(int userId)
+        public async Task<IEnumerable<WatchLater>> GetWatchLaterByUserId(int userId)
         {
             return await _context.WatchLaters
-                .Where(wl => wl.UserID == userId)
-                .Include(wl => wl.Video)
+                .Where(w => w.UserId == userId)
+                .Include(w => w.User)
+                .Include(w => w.Video)
                 .ToListAsync();
         }
 
-        public async Task<WatchLater> GetWatchLater(int watchLaterId)
+        public async Task<WatchLater> GetWatchLaterById(int watchLaterId)
         {
             return await _context.WatchLaters
-                .Include(wl => wl.User)
-                .Include(wl => wl.Video)
-                .FirstOrDefaultAsync(wl => wl.WatchLaterID == watchLaterId);
+                .Include(w => w.User)
+                .Include(w => w.Video)
+                .FirstOrDefaultAsync(w => w.WatchLaterId == watchLaterId);
         }
 
         public async Task AddWatchLater(WatchLater watchLater)

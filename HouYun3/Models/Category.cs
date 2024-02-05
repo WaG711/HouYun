@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun2.Models
+namespace HouYun3.Models
 {
     public class Category
     {
         [Key]
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Название' обязательно для заполнения")]
         [StringLength(50, ErrorMessage = "Длина 'Названия' не должна превышать 50 символов")]

@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -14,12 +14,7 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<User>> GetAllUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        public async Task<User> GetUser(int userId)
+        public async Task<User> GetUserById(int userId)
         {
             return await _context.Users
                 .Include(u => u.Videos)
@@ -27,7 +22,17 @@ namespace HouYun2.Repositories
                 .Include(u => u.WatchHistory)
                 .Include(u => u.WatchLaterList)
                 .Include(u => u.Notifications)
-                .FirstOrDefaultAsync(u => u.UserID == userId);
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await _context.Users.ToListAsync();
         }
 
         public async Task AddUser(User user)

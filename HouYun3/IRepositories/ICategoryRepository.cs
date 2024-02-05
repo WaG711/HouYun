@@ -1,13 +1,13 @@
-﻿using HouYun2.Models;
+﻿using HouYun3.Models;
 
-namespace HouYun2.IRepositories
+namespace HouYun3.IRepositories
 {
     public interface ICategoryRepository
     {
-        Task<List<Category>> GetAllCategories();
-        Task<Category> GetCategory(int categoryId);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<Category> GetCategoryById(int id);
         Task AddCategory(Category category);
         Task UpdateCategory(Category category);
-        Task DeleteCategory(int categoryId);
+        Task DeleteCategory(int id);
     }
 }

@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class WatchHistoryRepository : IWatchHistoryRepository
     {
@@ -14,20 +14,21 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<WatchHistory>> GetWatchHistories(int userId)
+        public async Task<IEnumerable<WatchHistory>> GetWatchHistoryByUserId(int userId)
         {
             return await _context.WatchHistories
-                .Where(w => w.UserID == userId)
+                .Where(w => w.UserId == userId)
+                .Include(w => w.User)
                 .Include(w => w.Video)
                 .ToListAsync();
         }
 
-        public async Task<WatchHistory> GetWatchHistory(int watchHistoryId)
+        public async Task<WatchHistory> GetWatchHistoryById(int watchHistoryId)
         {
             return await _context.WatchHistories
                 .Include(w => w.User)
                 .Include(w => w.Video)
-                .FirstOrDefaultAsync(w => w.WatchHistoryID == watchHistoryId);
+                .FirstOrDefaultAsync(w => w.WatchHistoryId == watchHistoryId);
         }
 
         public async Task AddWatchHistory(WatchHistory watchHistory)
