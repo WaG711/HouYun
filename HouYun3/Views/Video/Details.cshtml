@@ -1,20 +1,48 @@
-﻿@model HouYun3.Models.Video
+﻿@model HouYun3.Models.VideoDetailsViewModel
 
 @{
     ViewData["Title"] = "Video Details";
 }
 
-<h2>Video Details</h2>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Video.Title</h5>
+        <p class="card-text">Category: @Model.Video.Category.Name</p>
+        <p class="card-text">User: @Model.Video.User.Login</p>
+        <p class="card-text">Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
 
-<div>
-    <h4>@Model.Title</h4>
-    <p>Description: @Model.Description</p>
-    <p>Category: @Model.Category.Name</p>
-    <p>User: @Model.User.Login</p>
-    <p>Duration: @Model.DurationSeconds seconds</p>
-    <p>Upload Date: @Model.UploadDate.ToString("MMMM dd, yyyy")</p>
+        <video width="100%" height="auto" controls>
+            <source src="@Model.Video.FilePath" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-    <video width="640" height="360" controls>
-        <source src="@Model.FilePath" type="video/mp4">
-    </video>
+        <h6>Comments:</h6>
+        @foreach (var comment in Model.Comments)
+        {
+            <p>@comment.Text</p>
+        }
+
+        <form asp-action="AddComment" method="post">
+            <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+            <input type="text" name="commentText" placeholder="Add a comment" />
+            <button type="submit">Add Comment</button>
+        </form>
+
+        <p class="card-text">Likes: @Model.LikesCount</p>
+
+        @if (Model.IsLikedByCurrentUser)
+        {
+            <form asp-action="RemoveLike" method="post">
+                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+                <button type="submit">Remove Like</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="AddLike" method="post">
+                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
+                <button type="submit">Like</button>
+            </form>
+        }
+    </div>
 </div>

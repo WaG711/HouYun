@@ -7,6 +7,6 @@ namespace HouYun3.IRepositories
         Task<int> GetLikesCountByVideoId(int videoId);
         Task<bool> IsUserLikedVideo(int videoId, int userId);
         Task AddLike(Like like);
-        Task RemoveLike(int likeId);
+        Task RemoveLike(int userId, int videoId);
     }
 }
