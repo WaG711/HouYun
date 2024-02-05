@@ -4,6 +4,11 @@
     ViewData["Title"] = "Video Index";
 }
 
+<form asp-action="Search" method="get">
+    <input type="text" name="searchTerm" placeholder="Search videos">
+    <button type="submit">Search</button>
+</form>
+
 <a href="@Url.Action("Index", "Video", new { category = "" })">All Videos</a>
 
 @foreach (var category in Model.Categories)

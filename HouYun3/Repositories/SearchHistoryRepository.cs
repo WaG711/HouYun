@@ -19,6 +19,7 @@ namespace HouYun3.Repositories
             return await _context.SearchHistories
                 .Where(sh => sh.User.UserId == userId)
                 .OrderByDescending(sh => sh.SearchDate)
+                .Take(10)
                 .ToListAsync();
         }
 

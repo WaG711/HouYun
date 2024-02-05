@@ -2,6 +2,7 @@
 using HouYun3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using System.Security.Claims;
 
 namespace HouYun3.Controllers
@@ -11,13 +12,17 @@ namespace HouYun3.Controllers
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ISearchHistoryRepository _searchHistoryRepository;
+
         private readonly IWebHostEnvironment _appEnvironment;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, IWebHostEnvironment appEnvironment)
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, ISearchHistoryRepository searchHistoryRepository, IWebHostEnvironment appEnvironment)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
             _userRepository = userRepository;
+            _searchHistoryRepository = searchHistoryRepository;
+
             _appEnvironment = appEnvironment;
         }
 
@@ -130,6 +135,30 @@ namespace HouYun3.Controllers
         {
             await _videoRepository.DeleteVideo(id);
             return RedirectToAction("Index");
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserById(int.Parse(userId));
+
+            await _searchHistoryRepository.AddSearchHistory(new SearchHistory
+            {
+                User = user,
+                SearchQuery = searchTerm
+            });
+
+            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserId(int.Parse(userId));
+
+            var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
+
+
+            ViewData["LastSearches"] = lastSearches;
+
+            return View("Index", new VideoViewModel { Videos = searchResults, CategoryName = "Search Results" });
         }
     }
 }

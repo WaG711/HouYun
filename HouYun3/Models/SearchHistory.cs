@@ -17,7 +17,6 @@ namespace HouYun3.Models
 
         public User User { get; set; }
 
-
         public SearchHistory()
         {
             SearchDate = DateTime.Now;

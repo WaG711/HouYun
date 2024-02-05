@@ -69,5 +69,13 @@ namespace HouYun3.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+
+        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
+        {
+            return await _context.Videos
+                .Where(v => v.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToListAsync();
+        }
     }
 }
