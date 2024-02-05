@@ -43,7 +43,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddToWatchLater(int videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(int.Parse(userId));
+            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
             var video = await _videoRepository.GetVideoById(videoId);
 
             if (user != null && video != null)

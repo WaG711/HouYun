@@ -14,17 +14,17 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(int userId)
+        public async Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(string userId)
         {
             return await _context.Notifications
-                .Where(n => n.User.UserId == userId && !n.IsRead)
+                .Where(n => n.User.Id == userId && !n.IsRead)
                 .OrderByDescending(n => n.NotificationDate)
                 .ToListAsync();
         }
 
-        public async Task<int> GetUnreadNotificationsCountByUserId(int userId)
+        public async Task<int> GetUnreadNotificationsCountByUserId(string userId)
         {
-            return await _context.Notifications.CountAsync(n => n.User.UserId == userId && !n.IsRead);
+            return await _context.Notifications.CountAsync(n => n.User.Id == userId && !n.IsRead);
         }
 
         public async Task AddNotification(Notification notification)

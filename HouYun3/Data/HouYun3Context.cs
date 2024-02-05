@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HouYun3.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HouYun3.Data
 {
@@ -14,7 +15,6 @@ namespace HouYun3.Data
         {
         }
 
-        public DbSet<HouYun3.Models.User> Users { get; set; } = default!;
         public DbSet<HouYun3.Models.Video> Videos { get; set; } = default!;
         public DbSet<HouYun3.Models.Category> Categories { get; set; } = default!;
         public DbSet<HouYun3.Models.Comment> Comments { get; set; } = default!;

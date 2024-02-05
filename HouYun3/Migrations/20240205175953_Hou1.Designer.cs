@@ -4,6 +4,7 @@ using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouYun3.Migrations
 {
     [DbContext(typeof(HouYun3Context))]
-    partial class HouYun3ContextModelSnapshot : ModelSnapshot
+    [Migration("20240205175953_Hou1")]
+    partial class Hou1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,6 +245,7 @@ namespace HouYun3.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("VideoId");
@@ -262,6 +266,7 @@ namespace HouYun3.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ViewId"));
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("VideoId")
@@ -288,6 +293,7 @@ namespace HouYun3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("VideoId")
@@ -317,6 +323,7 @@ namespace HouYun3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("VideoId")
@@ -396,7 +403,9 @@ namespace HouYun3.Migrations
 
                     b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("Videos")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -407,7 +416,9 @@ namespace HouYun3.Migrations
                 {
                     b.HasOne("HouYun3.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany("Views")
@@ -424,7 +435,9 @@ namespace HouYun3.Migrations
                 {
                     b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("WatchHistory")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany()
@@ -441,7 +454,9 @@ namespace HouYun3.Migrations
                 {
                     b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("WatchLaterList")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany()

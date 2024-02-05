@@ -84,7 +84,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> Create(Video model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var currentUser = await _userRepository.GetUserById(int.Parse(userId));
+            var currentUser = await _userRepository.GetUserByIdAsync(userId.ToString());
 
             IFormFile videoFile = model.VideoFile;
 
@@ -160,7 +160,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> Search(string searchTerm)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(int.Parse(userId));
+            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
 
             await _searchHistoryRepository.AddSearchHistory(new SearchHistory
             {
@@ -168,7 +168,7 @@ namespace HouYun3.Controllers
                 SearchQuery = searchTerm
             });
 
-            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserId(int.Parse(userId));
+            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserId(userId.ToString());
 
             var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
 
@@ -183,7 +183,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddComment(int videoId, string commentText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(int.Parse(userId));
+            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
             var video = await _videoRepository.GetVideoById(videoId);
 
             if (user != null && video != null && !string.IsNullOrWhiteSpace(commentText))
@@ -206,7 +206,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddLike(int videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(int.Parse(userId));
+            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
             var video = await _videoRepository.GetVideoById(videoId);
 
             if (user != null && video != null)
