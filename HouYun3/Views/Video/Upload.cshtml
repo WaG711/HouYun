@@ -25,7 +25,12 @@
     </div>
     <div class="form-group">
         <label asp-for="Video.CategoryId" class="control-label">Category</label>
-        <select asp-for="Video.CategoryId" class="form-control" asp-items="@Model.Categories"></select>
+        <select asp-for="Video.CategoryId" class="form-control">
+            @foreach (var category in Model.Categories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
         <span asp-validation-for="Video.CategoryId" class="text-danger"></span>
     </div>
     <div class="form-group">

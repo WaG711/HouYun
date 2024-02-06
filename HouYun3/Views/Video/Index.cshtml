@@ -16,9 +16,12 @@
         <h4>Categories:</h4>
         <div class="btn-group" role="group" aria-label="Categories">
             <a href="@Url.Action("Index", "Video", new { category = "" })" class="btn btn-secondary">All Categories</a>
-            @foreach (var category in Model.Categories)
+            @if (Model.Categories != null)
             {
-                <a href="@Url.Action("Index", "Video", new { category = category.Value })" class="btn btn-secondary">@category.Text</a>
+                @foreach (var category in Model.Categories)
+                {
+                    <a href="@Url.Action("Index", "Video", new { category = category.Text })" class="btn btn-secondary">@category.Text</a>
+                }
             }
         </div>
     </div>
@@ -44,11 +47,32 @@
     }
 </div>
 
+@if (ViewData["LastSearches"] != null && ViewData["LastSearches"] is List<HouYun3.Models.SearchHistory> lastSearches && lastSearches.Any())
+{
+    <div>
+        <h4>Last Searches:</h4>
+        <ul>
+            @foreach (var search in lastSearches)
+            {
+                <li>@search.SearchQuery</li>
+            }
+        </ul>
+    </div>
+}
+
 @section Scripts {
     <script>
-        function filterVideos() {
-            var categoryName = $("#Category").val();
-            window.location.href = "/Video/Index?category=" + categoryName;
-        }
+        $(document).ready(function () {
+            function filterVideos() {
+                var categoryName = $("#Category").val();
+                window.location.href = "/Video/Index?category=" + categoryName;
+            }
+
+            $("#searchForm").submit(function (event) {
+                event.preventDefault();
+                var searchTerm = $("#searchTerm").val();
+                window.location.href = "/Video/Search?searchTerm=" + searchTerm;
+            });
+        });
     </script>
 }

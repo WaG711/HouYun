@@ -14,7 +14,7 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<List<SearchHistory>> GetLastSearchesByUserIdAsync(string userId)
+        public async Task<List<SearchHistory>> GetSearchHistoryByUserIdAsync(string userId)
         {
             return await _context.SearchHistories
                 .Where(s => s.UserId == userId)

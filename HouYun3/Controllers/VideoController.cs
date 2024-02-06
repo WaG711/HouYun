@@ -94,9 +94,15 @@ namespace HouYun3.Controllers
 
 
         [HttpGet]
-        public IActionResult Upload()
+        public async Task<IActionResult> Upload()
         {
-            return View();
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            var model = new UploadViewModel
+            {
+                Categories = categories
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -156,21 +162,27 @@ namespace HouYun3.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var user = await _userRepository.GetUserByIdAsync(userId);
-
-            await _searchHistoryRepository.AddSearchHistoryAsync(new SearchHistory
+            var searchHistory = new SearchHistory
             {
-                User = user,
+                UserId = userId,
                 SearchQuery = searchTerm
-            });
+            };
 
-            var lastSearches = await _searchHistoryRepository.GetLastSearchesByUserIdAsync(userId);
+            await _searchHistoryRepository.AddSearchHistoryAsync(searchHistory);
+
+            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserIdAsync(userId);
 
             var searchResults = await _videoRepository.SearchVideosByTitleAsync(searchTerm);
 
             ViewData["LastSearches"] = lastSearches;
 
-            return View("Index", new VideoViewModel { Videos = searchResults, CategoryName = "Search Results" });
+            var viewModel = new VideoViewModel
+            {
+                Videos = searchResults,
+                CategoryName = "Search Results"
+            };
+
+            return View("Index", viewModel);
         }
 
         [HttpPost]
@@ -178,7 +190,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddLike(int videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
+            var user = await _userRepository.GetUserByIdAsync(userId);
             var video = await _videoRepository.GetVideoByIdAsync(videoId);
 
             if (user != null && video != null)
@@ -221,7 +233,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddComment(int videoId, string commentText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
+            var user = await _userRepository.GetUserByIdAsync(userId);
             var video = await _videoRepository.GetVideoByIdAsync(videoId);
 
             if (user != null && video != null && !string.IsNullOrWhiteSpace(commentText))
