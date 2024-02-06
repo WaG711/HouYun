@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class VideoRepository : IVideoRepository
     {
@@ -14,50 +14,38 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<Video>> GetAllVideos()
+        public async Task<IEnumerable<Video>> GetAllVideos()
         {
             return await _context.Videos
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
                 .ToListAsync();
         }
 
-        public async Task<Video> GetVideo(int videoId)
+        public async Task<IEnumerable<Video>> GetUserVideos(int userId)
         {
             return await _context.Videos
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .FirstOrDefaultAsync(v => v.VideoID == videoId);
-        }
-
-        public async Task<List<Video>> GetVideosByCategory(int categoryId)
-        {
-            return await _context.Videos
-                .Where(v => v.CategoryID == categoryId)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
+                .Where(v => v.User.Id == userId.ToString())
                 .ToListAsync();
         }
 
-        public async Task<List<Video>> GetVideosByUser(int userId)
+        public async Task<Video> GetVideoById(int videoId)
         {
             return await _context.Videos
-                .Where(v => v.UserID == userId)
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Include(v => v.Category)
                 .Include(v => v.User)
                 .Include(v => v.Comments)
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .ToListAsync();
+                .FirstOrDefaultAsync(v => v.VideoId == videoId);
         }
 
         public async Task AddVideo(Video video)
@@ -80,6 +68,14 @@ namespace HouYun2.Repositories
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync();
             }
+        }
+
+
+        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
+        {
+            return await _context.Videos
+                .Where(v => v.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToListAsync();
         }
     }
 }

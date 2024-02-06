@@ -1,13 +1,17 @@
-﻿using HouYun2.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using HouYun3.Models;
 
-namespace HouYun2.IRepositories
+public interface IUserRepository
 {
-    public interface IUserRepository
-    {
-        Task<List<User>> GetAllUsers();
-        Task<User> GetUser(int userId);
-        Task AddUser(User user);
-        Task UpdateUser(User user);
-        Task DeleteUser(int userId);
-    }
+    Task<User> GetUserByIdAsync(string userId);
+    Task<User> GetUserByEmailAsync(string email);
+    Task<User> GetUserByUserNameAsync(string userName);
+    Task<IdentityResult> CreateUserAsync(User user, string password);
+    Task<IdentityResult> UpdateUserAsync(User user);
+    Task<IdentityResult> DeleteUserAsync(User user);
+    Task<bool> CheckPasswordAsync(User user, string password);
+
 }

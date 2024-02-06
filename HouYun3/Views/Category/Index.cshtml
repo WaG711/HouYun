@@ -1,0 +1,25 @@
+﻿@model List<HouYun3.Models.Category>
+
+<h2>All Categories</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.CategoryId</td>
+                <td>@category.Name</td>
+                <td>
+                    <a asp-action="Delete" asp-route-categoryId="@category.CategoryId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

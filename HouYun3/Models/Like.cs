@@ -1,23 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun2.Models
+namespace HouYun3.Models
 {
     public class Like
     {
         [Key]
-        public int LikeID { get; set; }
+        public int LikeId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Видео ID' обязательно для заполнения")]
-        public int VideoID { get; set; }
-
-        [ForeignKey("VideoID")]
+        public int VideoId { get; set; }
         public Video Video { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Пользователь ID' обязательно для заполнения")]
-        public int UserID { get; set; }
-
-        [ForeignKey("UserID")]
+        public int UserId { get; set; }
         public User User { get; set; }
     }
 }

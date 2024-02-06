@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -14,14 +14,14 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<Category>> GetAllCategories()
+        public async Task<IEnumerable<Category>> GetAllCategories()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetCategory(int categoryId)
+        public async Task<Category> GetCategoryById(int id)
         {
-            return await _context.Categories.FindAsync(categoryId);
+            return await _context.Categories.FindAsync(id);
         }
 
         public async Task AddCategory(Category category)
@@ -36,9 +36,9 @@ namespace HouYun2.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCategory(int categoryId)
+        public async Task DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(categoryId);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
                 _context.Categories.Remove(category);

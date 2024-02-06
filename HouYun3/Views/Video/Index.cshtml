@@ -1,0 +1,41 @@
+﻿@model HouYun3.Models.VideoViewModel
+
+@{
+    ViewData["Title"] = "Video Index";
+}
+
+<form asp-action="Search" method="get">
+    <input type="text" name="searchTerm" placeholder="Search videos">
+    <button type="submit">Search</button>
+</form>
+
+<a href="@Url.Action("Index", "Video", new { category = "" })">All Videos</a>
+
+@foreach (var category in Model.Categories)
+{
+    <a href="@Url.Action("Index", "Video", new { category = category.Text })">@category.Text</a>
+}
+
+<div id="videoList">
+    @foreach (var video in Model.Videos)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@video.Title</h5>
+                <p class="card-text">Category: @video.Category.Name</p>
+                <p class="card-text">User: @video.User.UserName</p>
+                <p class="card-text">Upload Date: @video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function filterVideos() {
+            var categoryName = $("#Category").val();
+            window.location.href = "/Video/Index?category=" + categoryName;
+        }
+    </script>
+}

@@ -1,55 +1,53 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
-using HouYun3.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using HouYun3.Models;
+using HouYun3.IRepositories;
 
-namespace HouYun2.Repositories
+public class UserRepository : IUserRepository
 {
-    public class UserRepository : IUserRepository
+    private readonly UserManager<User> _userManager;
+
+    public UserRepository(UserManager<User> userManager)
     {
-        private readonly HouYun3Context _context;
-
-        public UserRepository(HouYun3Context context)
-        {
-            _context = context;
-        }
-
-        public async Task<List<User>> GetAllUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-        public async Task<User> GetUser(int userId)
-        {
-            return await _context.Users
-                .Include(u => u.Videos)
-                .Include(u => u.SearchHistory)
-                .Include(u => u.WatchHistory)
-                .Include(u => u.WatchLaterList)
-                .Include(u => u.Notifications)
-                .FirstOrDefaultAsync(u => u.UserID == userId);
-        }
-
-        public async Task AddUser(User user)
-        {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateUser(User user)
-        {
-            _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteUser(int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
-            if (user != null)
-            {
-                _context.Users.Remove(user);
-                await _context.SaveChangesAsync();
-            }
-        }
+        _userManager = userManager;
     }
+
+    public async Task<User> GetUserByIdAsync(string userId)
+    {
+        return await _userManager.FindByIdAsync(userId);
+    }
+
+    public async Task<User> GetUserByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<User> GetUserByUserNameAsync(string userName)
+    {
+        return await _userManager.FindByNameAsync(userName);
+    }
+
+    public async Task<IdentityResult> CreateUserAsync(User user, string password)
+    {
+        return await _userManager.CreateAsync(user, password);
+    }
+
+    public async Task<IdentityResult> UpdateUserAsync(User user)
+    {
+        return await _userManager.UpdateAsync(user);
+    }
+
+    public async Task<IdentityResult> DeleteUserAsync(User user)
+    {
+        return await _userManager.DeleteAsync(user);
+    }
+
+    public async Task<bool> CheckPasswordAsync(User user, string password)
+    {
+        return await _userManager.CheckPasswordAsync(user, password);
+    }
+
+    // Дополнительные методы, если необходимо
 }

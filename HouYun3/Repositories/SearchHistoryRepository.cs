@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class SearchHistoryRepository : ISearchHistoryRepository
     {
@@ -14,18 +14,15 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<SearchHistory>> GetSearchHistories(int userId)
+        public async Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(string userId)
         {
             return await _context.SearchHistories
-                .Where(s => s.UserID == userId)
+                .Where(sh => sh.User.Id == userId)
+                .OrderByDescending(sh => sh.SearchDate)
+                .Take(10)
                 .ToListAsync();
         }
 
-        public async Task<SearchHistory> GetSearchHistory(int searchHistoryId)
-        {
-            return await _context.SearchHistories
-                .FirstOrDefaultAsync(s => s.SearchHistoryID == searchHistoryId);
-        }
 
         public async Task AddSearchHistory(SearchHistory searchHistory)
         {
@@ -33,14 +30,9 @@ namespace HouYun2.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteSearchHistory(int searchHistoryId)
+        public Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(int userId)
         {
-            var searchHistory = await _context.SearchHistories.FindAsync(searchHistoryId);
-            if (searchHistory != null)
-            {
-                _context.SearchHistories.Remove(searchHistory);
-                await _context.SaveChangesAsync();
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using HouYun2.Models;
+﻿using HouYun3.Models;
 
-namespace HouYun2.IRepositories
+namespace HouYun3.IRepositories
 {
     public interface ICommentRepository
     {
-        Task<List<Comment>> GetComments(int videoId);
-        Task<Comment> GetComment(int commentId);
+        Task<IEnumerable<Comment>> GetCommentsByVideoId(int videoId);
+        Task<Comment> GetCommentById(int commentId);
         Task AddComment(Comment comment);
         Task UpdateComment(Comment comment);
         Task DeleteComment(int commentId);

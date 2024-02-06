@@ -22,31 +22,31 @@ namespace HouYun3.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HouYun2.Models.Category", b =>
+            modelBuilder.Entity("HouYun3.Models.Category", b =>
                 {
-                    b.Property<int>("CategoryID")
+                    b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("CategoryID");
+                    b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Comment", b =>
+            modelBuilder.Entity("HouYun3.Models.Comment", b =>
                 {
-                    b.Property<int>("CommentID")
+                    b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
                     b.Property<DateTime>("CommentDate")
                         .HasColumnType("datetime2");
@@ -56,51 +56,54 @@ namespace HouYun3.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("UserID")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VideoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideoID")
-                        .HasColumnType("int");
+                    b.HasKey("CommentId");
 
-                    b.HasKey("CommentID");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("VideoId");
 
-                    b.HasIndex("VideoID");
-
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Like", b =>
+            modelBuilder.Entity("HouYun3.Models.Like", b =>
                 {
-                    b.Property<int>("LikeID")
+                    b.Property<int>("LikeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"));
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideoID")
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VideoId")
                         .HasColumnType("int");
 
-                    b.HasKey("LikeID");
+                    b.HasKey("LikeId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId1");
 
-                    b.HasIndex("VideoID");
+                    b.HasIndex("VideoId");
 
-                    b.ToTable("Like");
+                    b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Notification", b =>
+            modelBuilder.Entity("HouYun3.Models.Notification", b =>
                 {
-                    b.Property<int>("NotificationID")
+                    b.Property<int>("NotificationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationId"));
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
@@ -113,23 +116,23 @@ namespace HouYun3.Migrations
                     b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("NotificationID");
+                    b.HasKey("NotificationId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.SearchHistory", b =>
+            modelBuilder.Entity("HouYun3.Models.SearchHistory", b =>
                 {
-                    b.Property<int>("SearchHistoryID")
+                    b.Property<int>("SearchHistoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchHistoryID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SearchHistoryId"));
 
                     b.Property<DateTime>("SearchDate")
                         .HasColumnType("datetime2");
@@ -139,58 +142,83 @@ namespace HouYun3.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("SearchHistoryID");
+                    b.HasKey("SearchHistoryId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("SearchHistory");
+                    b.ToTable("SearchHistories");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.User", b =>
+            modelBuilder.Entity("HouYun3.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
-
-                    b.Property<string>("Avatar")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserID");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Video", b =>
+            modelBuilder.Entity("HouYun3.Models.Video", b =>
                 {
-                    b.Property<int>("VideoID")
+                    b.Property<int>("VideoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VideoID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VideoId"));
 
-                    b.Property<int>("CategoryID")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -213,104 +241,108 @@ namespace HouYun3.Migrations
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("VideoID");
+                    b.HasKey("VideoId");
 
-                    b.HasIndex("CategoryID");
+                    b.HasIndex("CategoryId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Video");
+                    b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.View", b =>
+            modelBuilder.Entity("HouYun3.Models.View", b =>
                 {
-                    b.Property<int>("ViewID")
+                    b.Property<int>("ViewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ViewID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ViewId"));
 
-                    b.Property<int>("UserID")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VideoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideoID")
-                        .HasColumnType("int");
+                    b.HasKey("ViewId");
 
-                    b.HasKey("ViewID");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("VideoId");
 
-                    b.HasIndex("VideoID");
-
-                    b.ToTable("View");
+                    b.ToTable("Views");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.WatchHistory", b =>
+            modelBuilder.Entity("HouYun3.Models.WatchHistory", b =>
                 {
-                    b.Property<int>("WatchHistoryID")
+                    b.Property<int>("WatchHistoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WatchHistoryID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WatchHistoryId"));
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideoID")
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VideoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("WatchDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("WatchHistoryID");
+                    b.HasKey("WatchHistoryId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId1");
 
-                    b.HasIndex("VideoID");
+                    b.HasIndex("VideoId");
 
-                    b.ToTable("WatchHistory");
+                    b.ToTable("WatchHistories");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.WatchLater", b =>
+            modelBuilder.Entity("HouYun3.Models.WatchLater", b =>
                 {
-                    b.Property<int>("WatchLaterID")
+                    b.Property<int>("WatchLaterId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WatchLaterID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WatchLaterId"));
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VideoID")
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VideoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("WatchDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("WatchLaterID");
+                    b.HasKey("WatchLaterId");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId1");
 
-                    b.HasIndex("VideoID");
+                    b.HasIndex("VideoId");
 
-                    b.ToTable("WatchLater");
+                    b.ToTable("WatchLaters");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Comment", b =>
+            modelBuilder.Entity("HouYun3.Models.Comment", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("HouYun2.Models.Video", "Video")
+                    b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany("Comments")
-                        .HasForeignKey("VideoID")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -319,17 +351,15 @@ namespace HouYun3.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Like", b =>
+            modelBuilder.Entity("HouYun3.Models.Like", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
-                    b.HasOne("HouYun2.Models.Video", "Video")
+                    b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany("Likes")
-                        .HasForeignKey("VideoID")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -338,58 +368,50 @@ namespace HouYun3.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Notification", b =>
+            modelBuilder.Entity("HouYun3.Models.Notification", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.SearchHistory", b =>
+            modelBuilder.Entity("HouYun3.Models.SearchHistory", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("SearchHistory")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Video", b =>
+            modelBuilder.Entity("HouYun3.Models.Video", b =>
                 {
-                    b.HasOne("HouYun2.Models.Category", "Category")
+                    b.HasOne("HouYun3.Models.Category", "Category")
                         .WithMany("Videos")
-                        .HasForeignKey("CategoryID")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("Videos")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Category");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.View", b =>
+            modelBuilder.Entity("HouYun3.Models.View", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("HouYun2.Models.Video", "Video")
+                    b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany("Views")
-                        .HasForeignKey("VideoID")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -398,17 +420,15 @@ namespace HouYun3.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.WatchHistory", b =>
+            modelBuilder.Entity("HouYun3.Models.WatchHistory", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("WatchHistory")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
-                    b.HasOne("HouYun2.Models.Video", "Video")
+                    b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany()
-                        .HasForeignKey("VideoID")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -417,17 +437,15 @@ namespace HouYun3.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.WatchLater", b =>
+            modelBuilder.Entity("HouYun3.Models.WatchLater", b =>
                 {
-                    b.HasOne("HouYun2.Models.User", "User")
+                    b.HasOne("HouYun3.Models.User", "User")
                         .WithMany("WatchLaterList")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
-                    b.HasOne("HouYun2.Models.Video", "Video")
+                    b.HasOne("HouYun3.Models.Video", "Video")
                         .WithMany()
-                        .HasForeignKey("VideoID")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -436,12 +454,12 @@ namespace HouYun3.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Category", b =>
+            modelBuilder.Entity("HouYun3.Models.Category", b =>
                 {
                     b.Navigation("Videos");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.User", b =>
+            modelBuilder.Entity("HouYun3.Models.User", b =>
                 {
                     b.Navigation("Notifications");
 
@@ -454,7 +472,7 @@ namespace HouYun3.Migrations
                     b.Navigation("WatchLaterList");
                 });
 
-            modelBuilder.Entity("HouYun2.Models.Video", b =>
+            modelBuilder.Entity("HouYun3.Models.Video", b =>
                 {
                     b.Navigation("Comments");
 

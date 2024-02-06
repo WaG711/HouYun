@@ -1,12 +1,12 @@
-﻿using HouYun2.Models;
+﻿using HouYun3.Models;
 
-namespace HouYun2.IRepositories
+namespace HouYun3.IRepositories
 {
     public interface INotificationRepository
     {
-        Task<List<Notification>> GetNotifications(int userId);
-        Task<Notification> GetNotification(int notificationId);
+        Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(string userId);
+        Task<int> GetUnreadNotificationsCountByUserId(string userId);
         Task AddNotification(Notification notification);
-        Task DeleteNotification(int notificationId);
+        Task MarkNotificationAsRead(int notificationId);
     }
 }

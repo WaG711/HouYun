@@ -1,9 +1,9 @@
-﻿using HouYun2.IRepositories;
-using HouYun2.Models;
+﻿using HouYun3.IRepositories;
+using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun2.Repositories
+namespace HouYun3.Repositories
 {
     public class ViewRepository : IViewRepository
     {
@@ -14,12 +14,20 @@ namespace HouYun2.Repositories
             _context = context;
         }
 
-        public async Task<List<View>> GetViews(int videoId)
+        public async Task<IEnumerable<View>> GetAllViews()
         {
             return await _context.Views
-                .Where(v => v.VideoID == videoId)
                 .Include(v => v.User)
+                .Include(v => v.Video)
                 .ToListAsync();
+        }
+
+        public async Task<View> GetViewById(int viewId)
+        {
+            return await _context.Views
+                .Include(v => v.User)
+                .Include(v => v.Video)
+                .FirstOrDefaultAsync(v => v.ViewId == viewId);
         }
 
         public async Task AddView(View view)
