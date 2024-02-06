@@ -2,8 +2,8 @@
 using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Repositories;
-using HouYun3.Models;
 using Microsoft.AspNetCore.Identity;
+using HouYun3.ApplicationModel;
 
 
 namespace HouYun3

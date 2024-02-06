@@ -17,10 +17,8 @@ namespace HouYun3.Controllers
         private readonly ILikeRepository _likeRepository;
         private readonly IViewRepository _viewRepository;
 
-        private readonly IWebHostEnvironment _appEnvironment;
-
         public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, ISearchHistoryRepository searchHistoryRepository,
-            ICommentRepository commentRepository, ILikeRepository likeRepository, IViewRepository viewRepository, IWebHostEnvironment appEnvironment)
+            ICommentRepository commentRepository, ILikeRepository likeRepository, IViewRepository viewRepository)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
@@ -29,24 +27,33 @@ namespace HouYun3.Controllers
             _commentRepository = commentRepository;
             _likeRepository = likeRepository;
             _viewRepository = viewRepository;
-
-            _appEnvironment = appEnvironment;
         }
 
-        public async Task<IActionResult> Index(int? categoryId)
+        public async Task<IActionResult> Index(string category)
         {
             var categories = await _categoryRepository.GetAllCategoriesAsync();
+            IEnumerable<Video> videos;
 
-            var videos = await _videoRepository.GetAllVideosAsync();
-
-            if (categoryId.HasValue)
+            if (!string.IsNullOrEmpty(category))
             {
-                videos = (await _videoRepository.GetVideosByCategoryIdAsync(categoryId.Value));
+                var categoryId = categories.FirstOrDefault(c => c.Name.Equals(category, StringComparison.OrdinalIgnoreCase))?.CategoryId;
+                if (categoryId.HasValue)
+                {
+                    videos = await _videoRepository.GetVideosByCategoryIdAsync(categoryId.Value);
+                }
+                else
+                {
+                    videos = Enumerable.Empty<Video>();
+                }
+            }
+            else
+            {
+                videos = await _videoRepository.GetAllVideosAsync();
             }
 
             var categoryList = categories.Select(c => new SelectListItem
             {
-                Value = c.CategoryId.ToString(),
+                Value = c.Name,
                 Text = c.Name
             });
 
@@ -54,7 +61,7 @@ namespace HouYun3.Controllers
             {
                 Categories = categoryList,
                 Videos = videos,
-                CategoryName = categoryId.HasValue ? categories.FirstOrDefault(c => c.CategoryId == categoryId.Value)?.Name : "All Categories"
+                CategoryName = category
             };
 
             return View(viewModel);

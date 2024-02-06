@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HouYun3.Migrations.ApplicationDb
 {
     /// <inheritdoc />
-    public partial class Appl1 : Migration
+    public partial class ac : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,7 +52,7 @@ namespace HouYun3.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Categories",
                 columns: table => new
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
@@ -61,7 +61,7 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -171,7 +171,7 @@ namespace HouYun3.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Notification",
+                name: "Notifications",
                 columns: table => new
                 {
                     NotificationId = table.Column<int>(type: "int", nullable: false)
@@ -183,9 +183,9 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notification", x => x.NotificationId);
+                    table.PrimaryKey("PK_Notifications", x => x.NotificationId);
                     table.ForeignKey(
-                        name: "FK_Notification_AspNetUsers_UserId",
+                        name: "FK_Notifications_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -193,7 +193,7 @@ namespace HouYun3.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "SearchHistory",
+                name: "SearchHistories",
                 columns: table => new
                 {
                     SearchHistoryId = table.Column<int>(type: "int", nullable: false)
@@ -204,9 +204,9 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SearchHistory", x => x.SearchHistoryId);
+                    table.PrimaryKey("PK_SearchHistories", x => x.SearchHistoryId);
                     table.ForeignKey(
-                        name: "FK_SearchHistory_AspNetUsers_UserId",
+                        name: "FK_SearchHistories_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -214,7 +214,7 @@ namespace HouYun3.Migrations.ApplicationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Video",
+                name: "Videos",
                 columns: table => new
                 {
                     VideoId = table.Column<int>(type: "int", nullable: false)
@@ -229,23 +229,23 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Video", x => x.VideoId);
+                    table.PrimaryKey("PK_Videos", x => x.VideoId);
                     table.ForeignKey(
-                        name: "FK_Video_AspNetUsers_UserId",
+                        name: "FK_Videos_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Video_Category_CategoryId",
+                        name: "FK_Videos_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
+                name: "Comments",
                 columns: table => new
                 {
                     CommentId = table.Column<int>(type: "int", nullable: false)
@@ -257,50 +257,49 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => x.CommentId);
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comment_AspNetUsers_UserId",
+                        name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comment_Video_VideoId",
+                        name: "FK_Comments_Videos_VideoId",
                         column: x => x.VideoId,
-                        principalTable: "Video",
+                        principalTable: "Videos",
                         principalColumn: "VideoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Like",
+                name: "Likes",
                 columns: table => new
                 {
                     LikeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VideoId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Like", x => x.LikeId);
+                    table.PrimaryKey("PK_Likes", x => x.LikeId);
                     table.ForeignKey(
-                        name: "FK_Like_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Likes_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Like_Video_VideoId",
+                        name: "FK_Likes_Videos_VideoId",
                         column: x => x.VideoId,
-                        principalTable: "Video",
+                        principalTable: "Videos",
                         principalColumn: "VideoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "View",
+                name: "Views",
                 columns: table => new
                 {
                     ViewId = table.Column<int>(type: "int", nullable: false)
@@ -310,75 +309,73 @@ namespace HouYun3.Migrations.ApplicationDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_View", x => x.ViewId);
+                    table.PrimaryKey("PK_Views", x => x.ViewId);
                     table.ForeignKey(
-                        name: "FK_View_AspNetUsers_UserId",
+                        name: "FK_Views_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_View_Video_VideoId",
+                        name: "FK_Views_Videos_VideoId",
                         column: x => x.VideoId,
-                        principalTable: "Video",
+                        principalTable: "Videos",
                         principalColumn: "VideoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WatchHistory",
+                name: "WatchHistories",
                 columns: table => new
                 {
                     WatchHistoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WatchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VideoId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WatchHistory", x => x.WatchHistoryId);
+                    table.PrimaryKey("PK_WatchHistories", x => x.WatchHistoryId);
                     table.ForeignKey(
-                        name: "FK_WatchHistory_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_WatchHistories_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WatchHistory_Video_VideoId",
+                        name: "FK_WatchHistories_Videos_VideoId",
                         column: x => x.VideoId,
-                        principalTable: "Video",
+                        principalTable: "Videos",
                         principalColumn: "VideoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WatchLater",
+                name: "WatchLaters",
                 columns: table => new
                 {
                     WatchLaterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WatchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VideoId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WatchLater", x => x.WatchLaterId);
+                    table.PrimaryKey("PK_WatchLaters", x => x.WatchLaterId);
                     table.ForeignKey(
-                        name: "FK_WatchLater_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_WatchLaters_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WatchLater_Video_VideoId",
+                        name: "FK_WatchLaters_Videos_VideoId",
                         column: x => x.VideoId,
-                        principalTable: "Video",
+                        principalTable: "Videos",
                         principalColumn: "VideoId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -421,73 +418,73 @@ namespace HouYun3.Migrations.ApplicationDb
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_UserId",
-                table: "Comment",
+                name: "IX_Comments_UserId",
+                table: "Comments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_VideoId",
-                table: "Comment",
+                name: "IX_Comments_VideoId",
+                table: "Comments",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_UserId1",
-                table: "Like",
-                column: "UserId1");
+                name: "IX_Likes_UserId",
+                table: "Likes",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Like_VideoId",
-                table: "Like",
+                name: "IX_Likes_VideoId",
+                table: "Likes",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notification_UserId",
-                table: "Notification",
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SearchHistory_UserId",
-                table: "SearchHistory",
+                name: "IX_SearchHistories_UserId",
+                table: "SearchHistories",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Video_CategoryId",
-                table: "Video",
+                name: "IX_Videos_CategoryId",
+                table: "Videos",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Video_UserId",
-                table: "Video",
+                name: "IX_Videos_UserId",
+                table: "Videos",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_View_UserId",
-                table: "View",
+                name: "IX_Views_UserId",
+                table: "Views",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_View_VideoId",
-                table: "View",
+                name: "IX_Views_VideoId",
+                table: "Views",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchHistory_UserId1",
-                table: "WatchHistory",
-                column: "UserId1");
+                name: "IX_WatchHistories_UserId",
+                table: "WatchHistories",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchHistory_VideoId",
-                table: "WatchHistory",
+                name: "IX_WatchHistories_VideoId",
+                table: "WatchHistories",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchLater_UserId1",
-                table: "WatchLater",
-                column: "UserId1");
+                name: "IX_WatchLaters_UserId",
+                table: "WatchLaters",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchLater_VideoId",
-                table: "WatchLater",
+                name: "IX_WatchLaters_VideoId",
+                table: "WatchLaters",
                 column: "VideoId");
         }
 
@@ -510,37 +507,37 @@ namespace HouYun3.Migrations.ApplicationDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Like");
+                name: "Likes");
 
             migrationBuilder.DropTable(
-                name: "Notification");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "SearchHistory");
+                name: "SearchHistories");
 
             migrationBuilder.DropTable(
-                name: "View");
+                name: "Views");
 
             migrationBuilder.DropTable(
-                name: "WatchHistory");
+                name: "WatchHistories");
 
             migrationBuilder.DropTable(
-                name: "WatchLater");
+                name: "WatchLaters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Video");
+                name: "Videos");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Categories");
         }
     }
 }

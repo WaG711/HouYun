@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using HouYun3.ApplicationModel;
 
 namespace HouYun3.Models
 {

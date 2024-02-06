@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HouYun3.Models;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace HouYun3.Models
+namespace HouYun3.ApplicationModel
 {
     public class User : IdentityUser
     {

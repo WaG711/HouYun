@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using HouYun3.Models;
 using Microsoft.EntityFrameworkCore;
 using HouYun3.IRepositories;
+using HouYun3.ApplicationModel;
 
 
 namespace HouYun3.Repositories

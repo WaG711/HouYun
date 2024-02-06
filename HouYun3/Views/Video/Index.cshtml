@@ -11,30 +11,34 @@
     </div>
 </form>
 
-<div>
-    <h4>Categories:</h4>
-    <ul>
-        <li><a href="@Url.Action("Index", "Video", new { categoryId = "" })">All Categories</a></li>
-        @foreach (var category in Model.Categories)
-        {
-            <li><a href="@Url.Action("Index", "Video", new { categoryId = category.Value })">@category.Text</a></li>
-        }
-    </ul>
+<div class="row">
+    <div class="col">
+        <h4>Categories:</h4>
+        <div class="btn-group" role="group" aria-label="Categories">
+            <a href="@Url.Action("Index", "Video", new { category = "" })" class="btn btn-secondary">All Categories</a>
+            @foreach (var category in Model.Categories)
+            {
+                <a href="@Url.Action("Index", "Video", new { category = category.Value })" class="btn btn-secondary">@category.Text</a>
+            }
+        </div>
+    </div>
 </div>
 
 <hr />
 
-<div id="videoList">
+<div id="videoList" class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@video.Title</h5>
-                <p class="card-text">Uploaded by: @video.User.UserName</p>
-                <video width="320" height="240" controls>
-                    <source src="@Url.Content("~/videos/" + video.FilePath)" type="video/mp4">
-                </video>
-                <p><a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a></p>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">@video.Title</h5>
+                    <p class="card-text">Uploaded by: @video.User.UserName</p>
+                    <video width="320" height="240" controls>
+                        <source src="@Url.Content("~/videos/" + video.FilePath)" type="video/mp4">
+                    </video>
+                    <p><a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a></p>
+                </div>
             </div>
         </div>
     }
@@ -44,7 +48,7 @@
     <script>
         function filterVideos() {
             var categoryName = $("#Category").val();
-            window.location.href = "/Video/Index?categoryId=" + categoryName;
+            window.location.href = "/Video/Index?category=" + categoryName;
         }
     </script>
 }

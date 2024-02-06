@@ -1,4 +1,5 @@
-﻿using HouYun3.Models;
+﻿using HouYun3.ApplicationModel;
+using HouYun3.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

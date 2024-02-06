@@ -1,4 +1,4 @@
-﻿using HouYun3.Models;
+﻿using HouYun3.ApplicationModel;
 using Microsoft.AspNetCore.Identity;
 
 namespace HouYun3.IRepositories

@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\ApplicationDb\" />
     <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
