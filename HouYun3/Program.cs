@@ -2,11 +2,9 @@
 using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Repositories;
-using HouYun3.Models;
 using Microsoft.AspNetCore.Identity;
-using System.Data;
-using System;
-using static HouYun3.Models.User;
+using HouYun3.ApplicationModel;
+
 
 namespace HouYun3
 {
@@ -38,12 +36,12 @@ namespace HouYun3
 
             builder.Services.AddIdentity<User, IdentityRole>(opts=>
             {
-                opts.Password.RequiredLength = 6;   // минимальная длина
-                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
-                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
-                opts.Password.RequireUppercase = true; // требуются ли символы в верхнем регистре
-                opts.Password.RequireDigit = true; // требуются ли цифры
-                opts.User.RequireUniqueEmail = true;    // уникальный email
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireDigit = true;
+                opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews();

@@ -1,5 +1,4 @@
-﻿using HouYun3.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
@@ -7,6 +6,7 @@ using HouYun3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HouYun3.IRepositories;
+using HouYun3.ApplicationModel;
 
 namespace HouYun3.Controllers.UserContoller
 {
@@ -21,15 +21,11 @@ namespace HouYun3.Controllers.UserContoller
         private readonly IVideoRepository _videoRepository;
         private readonly IUserRepository _userRepository;
 
-        public UserController(IVideoRepository videoRepository)
-        {
-            _videoRepository = videoRepository;
-        }
-
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<UserController> logger)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IVideoRepository videoRepository, ILogger<UserController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _videoRepository = videoRepository;
             _logger = logger;
         }
 
@@ -105,7 +101,6 @@ namespace HouYun3.Controllers.UserContoller
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }

@@ -14,31 +14,34 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Notification>> GetUnreadNotificationsByUserId(string userId)
+        public async Task<Notification> GetNotificationByIdAsync(int id)
         {
-            return await _context.Notifications
-                .Where(n => n.User.Id == userId && !n.IsRead)
-                .OrderByDescending(n => n.NotificationDate)
-                .ToListAsync();
+            return await _context.Notifications.FindAsync(id);
         }
 
-        public async Task<int> GetUnreadNotificationsCountByUserId(string userId)
+        public async Task<List<Notification>> GetAllNotificationsAsync()
         {
-            return await _context.Notifications.CountAsync(n => n.User.Id == userId && !n.IsRead);
+            return await _context.Notifications.ToListAsync();
         }
 
-        public async Task AddNotification(Notification notification)
+        public async Task AddNotificationAsync(Notification notification)
         {
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
         }
 
-        public async Task MarkNotificationAsRead(int notificationId)
+        public async Task UpdateNotificationAsync(Notification notification)
         {
-            var notification = await _context.Notifications.FindAsync(notificationId);
+            _context.Notifications.Update(notification);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteNotificationAsync(int id)
+        {
+            var notification = await _context.Notifications.FindAsync(id);
             if (notification != null)
             {
-                notification.IsRead = true;
+                _context.Notifications.Remove(notification);
                 await _context.SaveChangesAsync();
             }
         }

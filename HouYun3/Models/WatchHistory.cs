@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HouYun3.ApplicationModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouYun3.Models
 {
@@ -12,15 +14,17 @@ namespace HouYun3.Models
         public DateTime WatchDate { get; set; }
 
         public int VideoId { get; set; }
+        [ForeignKey("VideoId")]
         public Video Video { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
 
         public WatchHistory()
         {
-            WatchDate = DateTime.Now;
+            WatchDate = DateTime.UtcNow;
         }
     }
 }

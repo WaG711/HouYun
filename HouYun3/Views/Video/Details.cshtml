@@ -1,47 +1,116 @@
-﻿@model HouYun3.Models.VideoDetailsViewModel
+﻿@model HouYun3.ViewModels.VideoDetailsViewModel
 
 @{
     ViewData["Title"] = "Video Details";
 }
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">@Model.Video.Title</h5>
-        <p class="card-text">Category: @Model.Video.Category.Name</p>
-        <p class="card-text">User: @Model.Video.User.UserName</p>
-        <p class="card-text">Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-
-        <video width="100%" height="auto" controls>
-            <source src="@Model.Video.FilePath" type="video/mp4">
-        </video>
-
-        <h6>Comments:</h6>
+<div>
+    <h2>@Model.Video.Title</h2>
+    <p>@Model.Video.Description</p>
+    <p>Uploaded by: @Model.Video.User.UserName</p>
+    <p>Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+    <video controls style="max-width: 100%;">
+        <source src="@Url.Content("~/videos/" + Model.Video.FilePath)" type="video/mp4">
+    </video>
+    <p>Likes: @Model.LikesCount</p>
+    <form id="likeForm" asp-action="AddLike" asp-controller="Video" method="post">
+        <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+        <button type="submit" class="btn btn-primary">Like</button>
+    </form>
+    <form id="removeLikeForm" asp-action="RemoveLike" asp-controller="Video" method="post">
+        <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+        <button type="submit" class="btn btn-danger">Remove Like</button>
+    </form>
+    <div id="commentsSection">
+        <h3>Comments</h3>
         @foreach (var comment in Model.Comments)
         {
-            <p>@comment.Text</p>
-        }
-
-        <form asp-action="AddComment" method="post">
-            <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
-            <input type="text" name="commentText" placeholder="Add a comment" />
-            <button type="submit">Add Comment</button>
-        </form>
-
-        <p class="card-text">Likes: @Model.LikesCount</p>
-
-        @if (Model.IsLikedByCurrentUser)
-        {
-            <form asp-action="RemoveLike" method="post">
-                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
-                <button type="submit">Remove Like</button>
-            </form>
-        }
-        else
-        {
-            <form asp-action="AddLike" method="post">
-                <input type="hidden" name="videoId" value="@Model.Video.VideoId" />
-                <button type="submit">Like</button>
-            </form>
+            <div>
+                <p>@comment.Text</p>
+                <p>Posted by: @comment.User.UserName</p>
+            </div>
         }
     </div>
+    <div id="addCommentSection">
+        <h3>Add Comment</h3>
+        <form id="addCommentForm" asp-action="AddComment" asp-controller="Video" method="post">
+            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+            <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
+            <button type="submit" class="btn btn-primary">Add Comment</button>
+        </form>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("likeForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch("/Video/AddLike", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Liked the video!");
+                        window.location.reload();
+                    } else {
+                        alert("Failed to like the video.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+
+        document.getElementById("removeLikeForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch("/Video/RemoveLike", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Removed like from the video!");
+                        window.location.reload();
+                    } else {
+                        alert("Failed to remove like from the video.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+
+        document.getElementById("addCommentForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            fetch("/Video/AddComment", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Comment added successfully!");
+                        document.getElementById("commentText").value = "";
+                        window.location.reload();
+                    } else {
+                        alert("Failed to add comment.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+}

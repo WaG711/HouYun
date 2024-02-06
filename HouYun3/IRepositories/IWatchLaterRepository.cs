@@ -4,9 +4,9 @@ namespace HouYun3.IRepositories
 {
     public interface IWatchLaterRepository
     {
-        Task<IEnumerable<WatchLater>> GetWatchLaterByUserId(int userId);
-        Task<WatchLater> GetWatchLaterById(int watchLaterId);
-        Task AddWatchLater(WatchLater watchLater);
-        Task DeleteWatchLater(int watchLaterId);
+        Task<WatchLater> GetWatchLaterByIdAsync(int id);
+        Task<List<WatchLater>> GetAllWatchLatersAsync();
+        Task AddWatchLaterAsync(WatchLater watchLater);
+        Task DeleteWatchLaterAsync(int id);
     }
 }

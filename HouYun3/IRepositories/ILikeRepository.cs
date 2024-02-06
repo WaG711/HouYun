@@ -4,9 +4,11 @@ namespace HouYun3.IRepositories
 {
     public interface ILikeRepository
     {
-        Task<int> GetLikesCountByVideoId(int videoId);
-        Task<bool> IsUserLikedVideo(int videoId, int userId);
-        Task AddLike(Like like);
-        Task RemoveLike(int userId, int videoId);
+        Task<Like> GetLikeByIdAsync(int id);
+        Task<List<Like>> GetLikesByVideoIdAsync(int videoId);
+        Task AddLikeAsync(Like like);
+        Task DeleteLikeAsync(int id);
+        Task<int> GetLikesCountByVideoIdAsync(int videoId);
+        Task<bool> IsUserLikedVideoAsync(int videoId, string userId);
     }
 }

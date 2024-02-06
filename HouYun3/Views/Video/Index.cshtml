@@ -1,41 +1,78 @@
-﻿@model HouYun3.Models.VideoViewModel
+﻿@model HouYun3.ViewModels.VideoViewModel
 
 @{
     ViewData["Title"] = "Video Index";
 }
 
-<form asp-action="Search" method="get">
-    <input type="text" name="searchTerm" placeholder="Search videos">
-    <button type="submit">Search</button>
+<form asp-controller="Video" asp-action="Search" method="get">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" name="searchTerm" placeholder="Search videos" aria-label="Search videos" aria-describedby="button-search">
+        <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
+    </div>
 </form>
 
-<a href="@Url.Action("Index", "Video", new { category = "" })">All Videos</a>
+<div class="row">
+    <div class="col">
+        <h4>Categories:</h4>
+        <div class="btn-group" role="group" aria-label="Categories">
+            <a href="@Url.Action("Index", "Video", new { category = "" })" class="btn btn-secondary">All Categories</a>
+            @if (Model.Categories != null)
+            {
+                @foreach (var category in Model.Categories)
+                {
+                    <a href="@Url.Action("Index", "Video", new { category = category.Text })" class="btn btn-secondary">@category.Text</a>
+                }
+            }
+        </div>
+    </div>
+</div>
 
-@foreach (var category in Model.Categories)
-{
-    <a href="@Url.Action("Index", "Video", new { category = category.Text })">@category.Text</a>
-}
+<hr />
 
-<div id="videoList">
+<div id="videoList" class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@video.Title</h5>
-                <p class="card-text">Category: @video.Category.Name</p>
-                <p class="card-text">User: @video.User.UserName</p>
-                <p class="card-text">Upload Date: @video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">@video.Title</h5>
+                    <p class="card-text">Uploaded by: @video.User.UserName</p>
+                    <video width="320" height="240" controls>
+                        <source src="@Url.Content("~/videos/" + video.FilePath)" type="video/mp4">
+                    </video>
+                    <p><a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a></p>
+                </div>
             </div>
         </div>
     }
 </div>
 
+@if (ViewData["LastSearches"] != null && ViewData["LastSearches"] is List<HouYun3.Models.SearchHistory> lastSearches && lastSearches.Any())
+{
+    <div>
+        <h4>Last Searches:</h4>
+        <ul>
+            @foreach (var search in lastSearches)
+            {
+                <li>@search.SearchQuery</li>
+            }
+        </ul>
+    </div>
+}
+
 @section Scripts {
     <script>
-        function filterVideos() {
-            var categoryName = $("#Category").val();
-            window.location.href = "/Video/Index?category=" + categoryName;
-        }
+        $(document).ready(function () {
+            function filterVideos() {
+                var categoryName = $("#Category").val();
+                window.location.href = "/Video/Index?category=" + categoryName;
+            }
+
+            $("#searchForm").submit(function (event) {
+                event.preventDefault();
+                var searchTerm = $("#searchTerm").val();
+                window.location.href = "/Video/Search?searchTerm=" + searchTerm;
+            });
+        });
     </script>
 }

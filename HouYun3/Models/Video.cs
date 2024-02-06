@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using HouYun3.ApplicationModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,7 +24,7 @@ namespace HouYun3.Models
         [Range(0, int.MaxValue, ErrorMessage = "Значение 'Продолжительность' должно быть неотрицательным")]
         public int DurationSeconds { get; set; }
 
-        [BindNever]
+        [ScaffoldColumn(false)]
         public string FilePath { get; set; }
 
         [NotMapped]
@@ -35,23 +35,27 @@ namespace HouYun3.Models
         [ScaffoldColumn(false)]
         public DateTime UploadDate { get; set; }
 
-        public ICollection<Like> Likes { get; set; } = new List<Like>();
-        public ICollection<View> Views { get; set; } = new List<View>();
-
         [Display(Name = "Категория видео")]
         [Required(ErrorMessage = "Поле 'Категория видео' обязательно для заполнения")]
         public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
-        [Display(Name = "Пользователь")]
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Like> Likes { get; set; }
+        public ICollection<View> Views { get; set; }
 
 
         public Video()
         {
-            UploadDate = DateTime.Now;
+            UploadDate = DateTime.UtcNow;
+            Comments = new List<Comment>();
+            Likes = new List<Like>();
+            Views = new List<View>();
         }
     }
 }

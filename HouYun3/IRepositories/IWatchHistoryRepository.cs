@@ -4,9 +4,9 @@ namespace HouYun3.IRepositories
 {
     public interface IWatchHistoryRepository
     {
-        Task<IEnumerable<WatchHistory>> GetWatchHistoryByUserId(int userId);
-        Task<WatchHistory> GetWatchHistoryById(int watchHistoryId);
-        Task AddWatchHistory(WatchHistory watchHistory);
-        Task DeleteWatchHistory(int watchHistoryId);
+        Task<WatchHistory> GetWatchHistoryByIdAsync(int id);
+        Task<List<WatchHistory>> GetAllWatchHistoriesAsync();
+        Task AddWatchHistoryAsync(WatchHistory watchHistory);
+        Task DeleteWatchHistoryAsync(int id);
     }
 }

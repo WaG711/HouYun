@@ -18,7 +18,7 @@ namespace HouYun3.Controllers
             _userRepository = userRepository;
         }
 
-        public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var watchLaterList = await _watchLaterRepository.GetWatchLaterByUserId(int.Parse(userId));
@@ -67,6 +67,6 @@ namespace HouYun3.Controllers
             await _watchLaterRepository.DeleteWatchLater(watchLaterId);
 
             return RedirectToAction("Index");
-        }
+        }*/
     }
 }

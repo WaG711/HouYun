@@ -1,5 +1,6 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
+using HouYun3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
@@ -16,10 +17,8 @@ namespace HouYun3.Controllers
         private readonly ILikeRepository _likeRepository;
         private readonly IViewRepository _viewRepository;
 
-        private readonly IWebHostEnvironment _appEnvironment;
-
         public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IUserRepository userRepository, ISearchHistoryRepository searchHistoryRepository,
-            ICommentRepository commentRepository, ILikeRepository likeRepository, IViewRepository viewRepository, IWebHostEnvironment appEnvironment)
+            ICommentRepository commentRepository, ILikeRepository likeRepository, IViewRepository viewRepository)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
@@ -28,38 +27,59 @@ namespace HouYun3.Controllers
             _commentRepository = commentRepository;
             _likeRepository = likeRepository;
             _viewRepository = viewRepository;
-
-            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> Index(string category)
         {
-            var categories = await _categoryRepository.GetAllCategories();
-            var model = new VideoViewModel
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            IEnumerable<Video> videos;
+
+            if (!string.IsNullOrEmpty(category))
             {
-                Categories = new SelectList(categories, "Name", "Name"),
-                Videos = string.IsNullOrWhiteSpace(category)
-                    ? await _videoRepository.GetAllVideos()
-                    : (await _videoRepository.GetAllVideos()).Where(v => v.Category.Name.Equals(category, StringComparison.OrdinalIgnoreCase)),
+                var categoryId = categories.FirstOrDefault(c => c.Name.Equals(category, StringComparison.OrdinalIgnoreCase))?.CategoryId;
+                if (categoryId.HasValue)
+                {
+                    videos = await _videoRepository.GetVideosByCategoryIdAsync(categoryId.Value);
+                }
+                else
+                {
+                    videos = Enumerable.Empty<Video>();
+                }
+            }
+            else
+            {
+                videos = await _videoRepository.GetAllVideosAsync();
+            }
+
+            var categoryList = categories.Select(c => new SelectListItem
+            {
+                Value = c.Name,
+                Text = c.Name
+            });
+
+            var viewModel = new VideoViewModel
+            {
+                Categories = categoryList,
+                Videos = videos,
                 CategoryName = category
             };
 
-            return View(model);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var video = await _videoRepository.GetVideoById(id);
+            var video = await _videoRepository.GetVideoByIdAsync(id);
 
             if (video == null)
             {
                 return NotFound();
             }
 
-            var comments = await _commentRepository.GetCommentsByVideoId(video.VideoId);
-            var likesCount = await _likeRepository.GetLikesCountByVideoId(video.VideoId);
+            var comments = await _commentRepository.GetCommentsByVideoIdAsync(video.VideoId);
+            var likesCount = await _likeRepository.GetLikesCountByVideoIdAsync(video.VideoId);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isLikedByCurrentUser = userId != null && await _likeRepository.IsUserLikedVideo(video.VideoId, int.Parse(userId));
+            var isLikedByCurrentUser = userId != null && await _likeRepository.IsUserLikedVideoAsync(video.VideoId, userId);
 
             var viewModel = new VideoDetailsViewModel
             {
@@ -72,133 +92,99 @@ namespace HouYun3.Controllers
             return View(viewModel);
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Upload()
         {
-            ViewBag.Categories = await _categoryRepository.GetAllCategories();
-            return View();
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            ViewBag.Categories = categories;
+
+            return View(new VideoUploadViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Video model)
+        public async Task<IActionResult> Upload(VideoUploadViewModel model)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var currentUser = await _userRepository.GetUserByIdAsync(userId.ToString());
-
-            IFormFile videoFile = model.VideoFile;
-
-            if (videoFile != null && videoFile.Length > 0)
+            if (ModelState.IsValid)
             {
-                try
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var video = new Video
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                    var filePath = Path.Combine(_appEnvironment.WebRootPath, "videos", fileName);
+                    Title = model.Title,
+                    Description = model.Description,
+                    DurationSeconds = model.DurationSeconds,
+                    CategoryId = model.CategoryId,
+                    UserId = userId
+                };
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await videoFile.CopyToAsync(stream);
-                    }
+                await _videoRepository.AddVideoAsync(video, model.VideoFile);
 
-                    model.FilePath = "/videos/" + fileName;
-
-                    model.User = currentUser;
-
-                    await _videoRepository.AddVideo(model);
-
-                    return RedirectToAction("Index", "Video");
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("", "Произошла ошибка при сохранении видеофайла.");
-
-                    if (!string.IsNullOrEmpty(model.FilePath))
-                    {
-                        System.IO.File.Delete(_appEnvironment.WebRootPath + model.FilePath);
-                    }
-                }
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Categories = await _categoryRepository.GetAllCategories();
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            ViewBag.Categories = categories;
+
             return View(model);
         }
 
-        public async Task<IActionResult> DeleteList()
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userVideos = await _videoRepository.GetUserVideos(int.Parse(userId));
-
-            return View(userVideos);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var video = await _videoRepository.GetVideoById(id.Value);
+            var video = await _videoRepository.GetVideoByIdAsync(id);
 
             if (video == null)
             {
                 return NotFound();
             }
 
-            return View(video);
+            if (video.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return Forbid();
+            }
+
+            await _videoRepository.DeleteVideoAsync(id);
+
+            return RedirectToAction("UserVideos");
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> UserVideos()
         {
-            await _videoRepository.DeleteVideo(id);
-            return RedirectToAction("Index");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var userVideos = await _videoRepository.GetVideosByUserIdAsync(userId);
+
+            return View(userVideos);
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(string searchTerm)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
 
-            await _searchHistoryRepository.AddSearchHistory(new SearchHistory
+            var searchHistory = new SearchHistory
             {
-                User = user,
+                UserId = userId,
                 SearchQuery = searchTerm
-            });
+            };
 
-            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserId(userId.ToString());
+            await _searchHistoryRepository.AddSearchHistoryAsync(searchHistory);
 
-            var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
+            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserIdAsync(userId);
 
+            var searchResults = await _videoRepository.SearchVideosByTitleAsync(searchTerm);
 
             ViewData["LastSearches"] = lastSearches;
 
-            return View("Index", new VideoViewModel { Videos = searchResults, CategoryName = "Search Results" });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(int videoId, string commentText)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
-            var video = await _videoRepository.GetVideoById(videoId);
-
-            if (user != null && video != null && !string.IsNullOrWhiteSpace(commentText))
+            var viewModel = new VideoViewModel
             {
-                var comment = new Comment
-                {
-                    Text = commentText,
-                    User = user,
-                    Video = video
-                };
+                Videos = searchResults,
+                CategoryName = "Search Results"
+            };
 
-                await _commentRepository.AddComment(comment);
-            }
-
-            return RedirectToAction("Details", new { id = videoId });
+            return View("Index", viewModel);
         }
 
         [HttpPost]
@@ -206,8 +192,8 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddLike(int videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
-            var video = await _videoRepository.GetVideoById(videoId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            var video = await _videoRepository.GetVideoByIdAsync(videoId);
 
             if (user != null && video != null)
             {
@@ -217,7 +203,7 @@ namespace HouYun3.Controllers
                     Video = video
                 };
 
-                await _likeRepository.AddLike(like);
+                await _likeRepository.AddLikeAsync(like);
             }
 
             return RedirectToAction("Details", new { id = videoId });
@@ -228,16 +214,40 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> RemoveLike(int videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var video = await _videoRepository.GetVideoById(videoId);
+            var video = await _videoRepository.GetVideoByIdAsync(videoId);
 
             if (userId != null && video != null)
             {
-                var isLikedByUser = await _likeRepository.IsUserLikedVideo(video.VideoId, int.Parse(userId));
+                var likes = await _likeRepository.GetLikesByVideoIdAsync(videoId);
+                var likeToRemove = likes.FirstOrDefault(l => l.UserId == userId);
 
-                if (isLikedByUser)
+                if (likeToRemove != null)
                 {
-                    await _likeRepository.RemoveLike(int.Parse(userId), video.VideoId);
+                    await _likeRepository.DeleteLikeAsync(likeToRemove.LikeId);
                 }
+            }
+
+            return RedirectToAction("Details", new { id = videoId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(int videoId, string commentText)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            var video = await _videoRepository.GetVideoByIdAsync(videoId);
+
+            if (user != null && video != null && !string.IsNullOrWhiteSpace(commentText))
+            {
+                var comment = new Comment
+                {
+                    Text = commentText,
+                    User = user,
+                    Video = video
+                };
+
+                await _commentRepository.AddCommentAsync(comment);
             }
 
             return RedirectToAction("Details", new { id = videoId });

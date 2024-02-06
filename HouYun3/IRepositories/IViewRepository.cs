@@ -4,9 +4,9 @@ namespace HouYun3.IRepositories
 {
     public interface IViewRepository
     {
-        Task<IEnumerable<View>> GetAllViews();
-        Task<View> GetViewById(int viewId);
-        Task AddView(View view);
-        Task DeleteView(int viewId);
+        Task<View> GetViewByIdAsync(int id);
+        Task<List<View>> GetAllViewsAsync();
+        Task AddViewAsync(View view);
+        Task DeleteViewAsync(int id);
     }
 }

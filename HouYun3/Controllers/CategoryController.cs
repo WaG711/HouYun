@@ -15,8 +15,8 @@ namespace HouYun3.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allCategories = await _categoryRepository.GetAllCategories();
-            return View(allCategories);
+            List<Category> categories = await _categoryRepository.GetAllCategoriesAsync();
+            return View(categories);
         }
 
         public IActionResult Create()
@@ -25,21 +25,25 @@ namespace HouYun3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Category category)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("CategoryId,Name")] Category category)
         {
             if (ModelState.IsValid)
             {
-                await _categoryRepository.AddCategory(category);
-                return RedirectToAction("Index", "Video");
+                await _categoryRepository.AddCategoryAsync(category);
+                return RedirectToAction(nameof(Index));
             }
-
             return View(category);
         }
 
-        public async Task<IActionResult> Delete(int categoryId)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var category = await _categoryRepository.GetCategoryById(categoryId);
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var category = await _categoryRepository.GetCategoryByIdAsync(id.Value);
             if (category == null)
             {
                 return NotFound();
@@ -49,10 +53,11 @@ namespace HouYun3.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int categoryId)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _categoryRepository.DeleteCategory(categoryId);
-            return RedirectToAction("Index", "Video");
+            await _categoryRepository.DeleteCategoryAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

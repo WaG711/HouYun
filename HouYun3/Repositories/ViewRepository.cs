@@ -14,31 +14,25 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<View>> GetAllViews()
+        public async Task<View> GetViewByIdAsync(int id)
         {
-            return await _context.Views
-                .Include(v => v.User)
-                .Include(v => v.Video)
-                .ToListAsync();
+            return await _context.Views.FindAsync(id);
         }
 
-        public async Task<View> GetViewById(int viewId)
+        public async Task<List<View>> GetAllViewsAsync()
         {
-            return await _context.Views
-                .Include(v => v.User)
-                .Include(v => v.Video)
-                .FirstOrDefaultAsync(v => v.ViewId == viewId);
+            return await _context.Views.ToListAsync();
         }
 
-        public async Task AddView(View view)
+        public async Task AddViewAsync(View view)
         {
             _context.Views.Add(view);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteView(int viewId)
+        public async Task DeleteViewAsync(int id)
         {
-            var view = await _context.Views.FindAsync(viewId);
+            var view = await _context.Views.FindAsync(id);
             if (view != null)
             {
                 _context.Views.Remove(view);

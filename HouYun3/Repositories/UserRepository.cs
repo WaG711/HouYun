@@ -1,53 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using HouYun3.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using HouYun3.IRepositories;
+using HouYun3.ApplicationModel;
 
-public class UserRepository : IUserRepository
+
+namespace HouYun3.Repositories
 {
-    private readonly UserManager<User> _userManager;
-
-    public UserRepository(UserManager<User> userManager)
+    public class UserRepository : IUserRepository
     {
-        _userManager = userManager;
-    }
+        private readonly UserManager<User> _userManager;
 
-    public async Task<User> GetUserByIdAsync(string userId)
-    {
-        return await _userManager.FindByIdAsync(userId);
-    }
+        public UserRepository(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
 
-    public async Task<User> GetUserByEmailAsync(string email)
-    {
-        return await _userManager.FindByEmailAsync(email);
-    }
+        public async Task<User> GetUserByIdAsync(string id)
+        {
+            return await _userManager.FindByIdAsync(id);
+        }
 
-    public async Task<User> GetUserByUserNameAsync(string userName)
-    {
-        return await _userManager.FindByNameAsync(userName);
-    }
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
 
-    public async Task<IdentityResult> CreateUserAsync(User user, string password)
-    {
-        return await _userManager.CreateAsync(user, password);
-    }
+        public async Task<IdentityResult> AddUserAsync(User user, string password)
+        {
+            return await _userManager.CreateAsync(user, password);
+        }
 
-    public async Task<IdentityResult> UpdateUserAsync(User user)
-    {
-        return await _userManager.UpdateAsync(user);
-    }
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
 
-    public async Task<IdentityResult> DeleteUserAsync(User user)
-    {
-        return await _userManager.DeleteAsync(user);
+        public async Task<IdentityResult> DeleteUserAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                return await _userManager.DeleteAsync(user);
+            }
+            return IdentityResult.Failed();
+        }
     }
-
-    public async Task<bool> CheckPasswordAsync(User user, string password)
-    {
-        return await _userManager.CheckPasswordAsync(user, password);
-    }
-
-    // Дополнительные методы, если необходимо
 }

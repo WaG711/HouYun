@@ -14,29 +14,29 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Category>> GetAllCategories()
-        {
-            return await _context.Categories.ToListAsync();
-        }
-
-        public async Task<Category> GetCategoryById(int id)
+        public async Task<Category> GetCategoryByIdAsync(int id)
         {
             return await _context.Categories.FindAsync(id);
         }
 
-        public async Task AddCategory(Category category)
+        public async Task<List<Category>> GetAllCategoriesAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task AddCategoryAsync(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCategory(Category category)
+        public async Task UpdateCategoryAsync(Category category)
         {
-            _context.Entry(category).State = EntityState.Modified;
+            _context.Categories.Update(category);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCategory(int id)
+        public async Task DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category != null)

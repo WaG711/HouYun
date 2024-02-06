@@ -14,31 +14,40 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<int> GetLikesCountByVideoId(int videoId)
+        public async Task<Like> GetLikeByIdAsync(int id)
         {
-            return await _context.Likes.CountAsync(l => l.VideoId == videoId);
+            return await _context.Likes.FindAsync(id);
         }
 
-        public async Task<bool> IsUserLikedVideo(int videoId, int userId)
+        public async Task<List<Like>> GetLikesByVideoIdAsync(int videoId)
         {
-            return await _context.Likes.AnyAsync(l => l.VideoId == videoId && l.UserId == userId);
+            return await _context.Likes.Where(l => l.VideoId == videoId).ToListAsync();
         }
 
-        public async Task AddLike(Like like)
+        public async Task AddLikeAsync(Like like)
         {
             _context.Likes.Add(like);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveLike(int userId, int videoId)
+        public async Task DeleteLikeAsync(int id)
         {
-            var likeToRemove = await _context.Likes.FirstOrDefaultAsync(l => l.UserId == userId && l.VideoId == videoId);
-
-            if (likeToRemove != null)
+            var like = await _context.Likes.FindAsync(id);
+            if (like != null)
             {
-                _context.Likes.Remove(likeToRemove);
+                _context.Likes.Remove(like);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<int> GetLikesCountByVideoIdAsync(int videoId)
+        {
+            return await _context.Likes.Where(l => l.VideoId == videoId).CountAsync();
+        }
+
+        public async Task<bool> IsUserLikedVideoAsync(int videoId, string userId)
+        {
+            return await _context.Likes.AnyAsync(l => l.VideoId == videoId && l.UserId == userId);
         }
     }
 }

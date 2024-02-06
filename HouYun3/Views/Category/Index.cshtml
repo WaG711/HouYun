@@ -1,23 +1,28 @@
-﻿@model List<HouYun3.Models.Category>
+﻿@model List<Category>
 
-<h2>All Categories</h2>
+<h2>Categories</h2>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>Category Id</th>
-            <th>Name</th>
-            <th>Actions</th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Name)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@category.CategoryId</td>
-                <td>@category.Name</td>
                 <td>
-                    <a asp-action="Delete" asp-route-categoryId="@category.CategoryId">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
                 </td>
             </tr>
         }
