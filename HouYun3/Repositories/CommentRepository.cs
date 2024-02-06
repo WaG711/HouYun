@@ -19,9 +19,9 @@ namespace HouYun3.Repositories
             return await _context.Comments.FindAsync(id);
         }
 
-        public async Task<List<Comment>> GetAllCommentsAsync()
+        public async Task<List<Comment>> GetCommentsByVideoIdAsync(int videoId)
         {
-            return await _context.Comments.ToListAsync();
+            return await _context.Comments.Where(c => c.VideoId == videoId).ToListAsync();
         }
 
         public async Task AddCommentAsync(Comment comment)

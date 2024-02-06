@@ -1,0 +1,37 @@
+﻿@model UploadViewModel
+
+@{
+    ViewData["Title"] = "Upload Video";
+}
+
+<h1>Upload Video</h1>
+
+<form asp-controller="Video" asp-action="Upload" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="Video.Title" class="control-label">Title</label>
+        <input asp-for="Video.Title" class="form-control" />
+        <span asp-validation-for="Video.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Video.Description" class="control-label">Description</label>
+        <textarea asp-for="Video.Description" class="form-control"></textarea>
+        <span asp-validation-for="Video.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Video.DurationSeconds" class="control-label">Duration (Seconds)</label>
+        <input asp-for="Video.DurationSeconds" class="form-control" />
+        <span asp-validation-for="Video.DurationSeconds" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Video.CategoryId" class="control-label">Category</label>
+        <select asp-for="Video.CategoryId" class="form-control" asp-items="@Model.Categories"></select>
+        <span asp-validation-for="Video.CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Video.VideoFile" class="control-label">Video File</label>
+        <input asp-for="Video.VideoFile" type="file" class="form-control" />
+        <span asp-validation-for="Video.VideoFile" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>

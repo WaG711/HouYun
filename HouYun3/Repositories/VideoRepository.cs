@@ -24,6 +24,18 @@ namespace HouYun3.Repositories
             return await _context.Videos.ToListAsync();
         }
 
+        public async Task<List<Video>> GetVideosByUserIdAsync(string userId)
+        {
+            return await _context.Videos
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<List<Video>> GetVideosByCategoryIdAsync(int categoryId)
+        {
+            return await _context.Videos.Where(v => v.CategoryId == categoryId).ToListAsync();
+        }
+
         public async Task AddVideoAsync(Video video, IFormFile videoFile)
         {
             if (videoFile != null && videoFile.Length > 0)
@@ -57,6 +69,13 @@ namespace HouYun3.Repositories
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Video>> SearchVideosByTitleAsync(string searchTerm)
+        {
+            return await _context.Videos
+                .Where(v => v.Title.Contains(searchTerm))
+                .ToListAsync();
         }
     }
 }
