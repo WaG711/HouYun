@@ -4,6 +4,9 @@ using HouYun3.IRepositories;
 using HouYun3.Repositories;
 using HouYun3.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Data;
+using System;
+using static HouYun3.Models.User;
 
 namespace HouYun3
 {
@@ -33,10 +36,18 @@ namespace HouYun3
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<User, IdentityRole>(opts=>
+            {
+                opts.Password.RequiredLength = 6;   // минимальная длина
+                opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
+                opts.Password.RequireLowercase = false; // требуются ли символы в нижнем регистре
+                opts.Password.RequireUppercase = true; // требуются ли символы в верхнем регистре
+                opts.Password.RequireDigit = true; // требуются ли цифры
+                opts.User.RequireUniqueEmail = true;    // уникальный email
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
-
 
             var app = builder.Build();
 

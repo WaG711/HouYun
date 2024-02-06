@@ -26,11 +26,5 @@ namespace HouYun3.Models
         public ICollection<WatchHistory> WatchHistory { get; set; } = new List<WatchHistory>();
         public ICollection<WatchLater> WatchLaterList { get; set; } = new List<WatchLater>();
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
-
-
-        public User()
-        {
-            RegistrationDate = DateTime.Now;
-        }
     }
 }
