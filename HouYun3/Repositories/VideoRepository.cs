@@ -38,21 +38,35 @@ namespace HouYun3.Repositories
 
         public async Task AddVideoAsync(Video video, IFormFile videoFile)
         {
-            if (videoFile != null && videoFile.Length > 0)
+            try
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                if (videoFile != null && videoFile.Length > 0)
                 {
-                    await videoFile.CopyToAsync(stream);
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await videoFile.CopyToAsync(stream);
+                    }
+
+                    video.FilePath = fileName;
                 }
 
-                video.FilePath = fileName;
+                _context.Videos.Add(video);
+                await _context.SaveChangesAsync();
             }
-
-            _context.Videos.Add(video);
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                if (!string.IsNullOrEmpty(video.FilePath))
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.FilePath);
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+            }
         }
 
         public async Task UpdateVideoAsync(Video video)

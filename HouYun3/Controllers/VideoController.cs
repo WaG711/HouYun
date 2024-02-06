@@ -97,33 +97,39 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> Upload()
         {
             var categories = await _categoryRepository.GetAllCategoriesAsync();
-            var model = new UploadViewModel
-            {
-                Categories = categories
-            };
+            ViewBag.Categories = categories;
 
-            return View(model);
+            return View(new VideoUploadViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upload(UploadViewModel model)
+        public async Task<IActionResult> Upload(VideoUploadViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var currentUser = await _userRepository.GetUserByIdAsync(userId);
+
+                var category = await _categoryRepository.GetCategoryByIdAsync(model.CategoryId);
                 var video = new Video
                 {
-                    Title = model.Video.Title,
-                    Description = model.Video.Description,
-                    DurationSeconds = model.Video.DurationSeconds,
-                    CategoryId = model.Video.CategoryId,
-                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    Title = model.Title,
+                    Description = model.Description,
+                    DurationSeconds = model.DurationSeconds,
+                    CategoryId = model.CategoryId,
+                    Category = category,
+                    UserId = userId,
+                    User = currentUser
                 };
 
-                await _videoRepository.AddVideoAsync(video, model.Video.VideoFile);
+                await _videoRepository.AddVideoAsync(video, model.VideoFile);
 
                 return RedirectToAction("Index");
             }
+
+            var categories = await _categoryRepository.GetAllCategoriesAsync();
+            ViewBag.Categories = categories;
 
             return View(model);
         }
