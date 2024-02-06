@@ -14,32 +14,25 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchLater>> GetWatchLaterByUserId(int userId)
+        public async Task<WatchLater> GetWatchLaterByIdAsync(int id)
         {
-            return await _context.WatchLaters
-                .Where(w => w.UserId == userId)
-                .Include(w => w.User)
-                .Include(w => w.Video)
-                .ToListAsync();
+            return await _context.WatchLaters.FindAsync(id);
         }
 
-        public async Task<WatchLater> GetWatchLaterById(int watchLaterId)
+        public async Task<List<WatchLater>> GetAllWatchLatersAsync()
         {
-            return await _context.WatchLaters
-                .Include(w => w.User)
-                .Include(w => w.Video)
-                .FirstOrDefaultAsync(w => w.WatchLaterId == watchLaterId);
+            return await _context.WatchLaters.ToListAsync();
         }
 
-        public async Task AddWatchLater(WatchLater watchLater)
+        public async Task AddWatchLaterAsync(WatchLater watchLater)
         {
             _context.WatchLaters.Add(watchLater);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWatchLater(int watchLaterId)
+        public async Task DeleteWatchLaterAsync(int id)
         {
-            var watchLater = await _context.WatchLaters.FindAsync(watchLaterId);
+            var watchLater = await _context.WatchLaters.FindAsync(id);
             if (watchLater != null)
             {
                 _context.WatchLaters.Remove(watchLater);

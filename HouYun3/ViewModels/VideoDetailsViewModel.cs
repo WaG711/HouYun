@@ -1,4 +1,6 @@
-﻿namespace HouYun3.Models
+﻿using HouYun3.Models;
+
+namespace HouYun3.ViewModels
 {
     public class VideoDetailsViewModel
     {

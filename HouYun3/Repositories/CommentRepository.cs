@@ -14,34 +14,31 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Comment>> GetCommentsByVideoId(int videoId)
+        public async Task<Comment> GetCommentByIdAsync(int id)
         {
-            return await _context.Comments
-                .Include(c => c.User)
-                .Where(c => c.VideoId == videoId)
-                .ToListAsync();
+            return await _context.Comments.FindAsync(id);
         }
 
-        public async Task<Comment> GetCommentById(int commentId)
+        public async Task<List<Comment>> GetAllCommentsAsync()
         {
-            return await _context.Comments.FindAsync(commentId);
+            return await _context.Comments.ToListAsync();
         }
 
-        public async Task AddComment(Comment comment)
+        public async Task AddCommentAsync(Comment comment)
         {
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateComment(Comment comment)
+        public async Task UpdateCommentAsync(Comment comment)
         {
-            _context.Entry(comment).State = EntityState.Modified;
+            _context.Comments.Update(comment);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteComment(int commentId)
+        public async Task DeleteCommentAsync(int id)
         {
-            var comment = await _context.Comments.FindAsync(commentId);
+            var comment = await _context.Comments.FindAsync(id);
             if (comment != null)
             {
                 _context.Comments.Remove(comment);

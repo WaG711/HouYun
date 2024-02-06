@@ -15,11 +15,13 @@ namespace HouYun3.Models
         [Display(Name = "Дата поиска")]
         public DateTime SearchDate { get; set; }
 
+        [Display(Name = "Пользователь")]
+        public string UserId { get; set; }
         public User User { get; set; }
 
         public SearchHistory()
         {
-            SearchDate = DateTime.Now;
+            SearchDate = DateTime.UtcNow;
         }
     }
 }

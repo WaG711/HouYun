@@ -18,12 +18,13 @@ namespace HouYun3.Models
         [Display(Name = "Прочитано")]
         public bool IsRead { get; set; }
 
+        [Display(Name = "Пользователь")]
+        public string UserId { get; set; }
         public User User { get; set; }
-
 
         public Notification()
         {
-            NotificationDate = DateTime.Now;
+            NotificationDate = DateTime.UtcNow;
         }
     }
 }

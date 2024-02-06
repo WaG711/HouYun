@@ -10,6 +10,8 @@ namespace HouYun3.Models
         public int VideoId { get; set; }
         public Video Video { get; set; }
 
+        [Display(Name = "Пользователь")]
+        public string UserId { get; set; }
         public User User { get; set; }
     }
 }

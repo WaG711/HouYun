@@ -11,6 +11,11 @@ namespace HouYun3.Models
         [StringLength(50, ErrorMessage = "Длина 'Названия' не должна превышать 50 символов")]
         public string Name { get; set; }
 
-        public ICollection<Video> Videos { get; set; } = new List<Video>();
+        public ICollection<Video> Videos { get; set; }
+
+        public Category()
+        {
+            Videos = new List<Video>();
+        }
     }
 }

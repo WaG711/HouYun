@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using HouYun3.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HouYun3.Models
+namespace HouYun3.ViewModels
 {
     public class VideoViewModel
     {

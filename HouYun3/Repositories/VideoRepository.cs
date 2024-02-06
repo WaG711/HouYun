@@ -14,68 +14,49 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Video>> GetAllVideos()
+        public async Task<Video> GetVideoByIdAsync(int id)
         {
-            return await _context.Videos
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .ToListAsync();
+            return await _context.Videos.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Video>> GetUserVideos(int userId)
+        public async Task<List<Video>> GetAllVideosAsync()
         {
-            return await _context.Videos
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Where(v => v.User.Id == userId.ToString())
-                .ToListAsync();
+            return await _context.Videos.ToListAsync();
         }
 
-        public async Task<Video> GetVideoById(int videoId)
+        public async Task AddVideoAsync(Video video, IFormFile videoFile)
         {
-            return await _context.Videos
-                .Include(v => v.Likes)
-                .Include(v => v.Views)
-                .Include(v => v.Category)
-                .Include(v => v.User)
-                .Include(v => v.Comments)
-                .FirstOrDefaultAsync(v => v.VideoId == videoId);
-        }
+            if (videoFile != null && videoFile.Length > 0)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
 
-        public async Task AddVideo(Video video)
-        {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await videoFile.CopyToAsync(stream);
+                }
+
+                video.FilePath = fileName;
+            }
+
             _context.Videos.Add(video);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateVideo(Video video)
+        public async Task UpdateVideoAsync(Video video)
         {
-            _context.Entry(video).State = EntityState.Modified;
+            _context.Videos.Update(video);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteVideo(int videoId)
+        public async Task DeleteVideoAsync(int id)
         {
-            var video = await _context.Videos.FindAsync(videoId);
+            var video = await _context.Videos.FindAsync(id);
             if (video != null)
             {
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync();
             }
-        }
-
-
-        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
-        {
-            return await _context.Videos
-                .Where(v => v.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToListAsync();
         }
     }
 }

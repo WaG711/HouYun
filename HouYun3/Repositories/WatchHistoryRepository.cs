@@ -14,32 +14,25 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchHistory>> GetWatchHistoryByUserId(int userId)
+        public async Task<WatchHistory> GetWatchHistoryByIdAsync(int id)
         {
-            return await _context.WatchHistories
-                .Where(w => w.UserId == userId)
-                .Include(w => w.User)
-                .Include(w => w.Video)
-                .ToListAsync();
+            return await _context.WatchHistories.FindAsync(id);
         }
 
-        public async Task<WatchHistory> GetWatchHistoryById(int watchHistoryId)
+        public async Task<List<WatchHistory>> GetAllWatchHistoriesAsync()
         {
-            return await _context.WatchHistories
-                .Include(w => w.User)
-                .Include(w => w.Video)
-                .FirstOrDefaultAsync(w => w.WatchHistoryId == watchHistoryId);
+            return await _context.WatchHistories.ToListAsync();
         }
 
-        public async Task AddWatchHistory(WatchHistory watchHistory)
+        public async Task AddWatchHistoryAsync(WatchHistory watchHistory)
         {
             _context.WatchHistories.Add(watchHistory);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWatchHistory(int watchHistoryId)
+        public async Task DeleteWatchHistoryAsync(int id)
         {
-            var watchHistory = await _context.WatchHistories.FindAsync(watchHistoryId);
+            var watchHistory = await _context.WatchHistories.FindAsync(id);
             if (watchHistory != null)
             {
                 _context.WatchHistories.Remove(watchHistory);

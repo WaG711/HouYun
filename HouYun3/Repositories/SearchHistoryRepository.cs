@@ -14,25 +14,36 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(string userId)
+        public async Task<SearchHistory> GetSearchHistoryByIdAsync(int id)
         {
-            return await _context.SearchHistories
-                .Where(sh => sh.User.Id == userId)
-                .OrderByDescending(sh => sh.SearchDate)
-                .Take(10)
-                .ToListAsync();
+            return await _context.SearchHistories.FindAsync(id);
         }
 
+        public async Task<List<SearchHistory>> GetAllSearchHistoriesAsync()
+        {
+            return await _context.SearchHistories.ToListAsync();
+        }
 
-        public async Task AddSearchHistory(SearchHistory searchHistory)
+        public async Task AddSearchHistoryAsync(SearchHistory searchHistory)
         {
             _context.SearchHistories.Add(searchHistory);
             await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(int userId)
+        public async Task UpdateSearchHistoryAsync(SearchHistory searchHistory)
         {
-            throw new NotImplementedException();
+            _context.SearchHistories.Update(searchHistory);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSearchHistoryAsync(int id)
+        {
+            var searchHistory = await _context.SearchHistories.FindAsync(id);
+            if (searchHistory != null)
+            {
+                _context.SearchHistories.Remove(searchHistory);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

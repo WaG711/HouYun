@@ -1,5 +1,4 @@
-﻿using HouYun3.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace HouYun3.Models
@@ -21,10 +20,26 @@ namespace HouYun3.Models
         [Display(Name = "Дата регистрации")]
         public DateTime RegistrationDate { get; set; }
 
-        public ICollection<Video> Videos { get; set; } = new List<Video>();
-        public ICollection<SearchHistory> SearchHistory { get; set; } = new List<SearchHistory>();
-        public ICollection<WatchHistory> WatchHistory { get; set; } = new List<WatchHistory>();
-        public ICollection<WatchLater> WatchLaterList { get; set; } = new List<WatchLater>();
-        public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<Video> Videos { get; set; }
+        public ICollection<SearchHistory> SearchHistory { get; set; }
+        public ICollection<WatchHistory> WatchHistory { get; set; }
+        public ICollection<WatchLater> WatchLaterList { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
+        public ICollection<View> Views { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Like> Likes { get; set; }
+
+        public User()
+        {
+            RegistrationDate = DateTime.UtcNow;
+            Videos = new List<Video>();
+            SearchHistory = new List<SearchHistory>();
+            WatchHistory = new List<WatchHistory>();
+            WatchLaterList = new List<WatchLater>();
+            Notifications = new List<Notification>();
+            Views = new List<View>();
+            Comments = new List<Comment>();
+            Likes = new List<Like>();
+        }
     }
 }
