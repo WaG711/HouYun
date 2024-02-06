@@ -2,6 +2,7 @@
 using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
+using HouYun3.ApplicationModel;
 
 namespace HouYun3.Repositories
 {
@@ -66,6 +67,7 @@ namespace HouYun3.Repositories
                         File.Delete(filePath);
                     }
                 }
+                throw;
             }
         }
 

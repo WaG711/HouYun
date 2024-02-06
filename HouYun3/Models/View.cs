@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using HouYun3.ApplicationModel;
+﻿using HouYun3.ApplicationModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouYun3.Models
 {
@@ -9,10 +10,11 @@ namespace HouYun3.Models
         public int ViewId { get; set; }
 
         public int VideoId { get; set; }
+        [ForeignKey("VideoId")]
         public Video Video { get; set; }
 
-        [Display(Name = "Пользователь")]
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
     }
 }

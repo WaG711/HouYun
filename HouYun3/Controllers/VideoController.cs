@@ -109,18 +109,14 @@ namespace HouYun3.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var currentUser = await _userRepository.GetUserByIdAsync(userId);
 
-                var category = await _categoryRepository.GetCategoryByIdAsync(model.CategoryId);
                 var video = new Video
                 {
                     Title = model.Title,
                     Description = model.Description,
                     DurationSeconds = model.DurationSeconds,
                     CategoryId = model.CategoryId,
-                    Category = category,
-                    UserId = userId,
-                    User = currentUser
+                    UserId = userId
                 };
 
                 await _videoRepository.AddVideoAsync(video, model.VideoFile);

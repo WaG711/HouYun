@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HouYun3.ApplicationModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using HouYun3.ApplicationModel;
 
 namespace HouYun3.Models
 {
@@ -38,10 +38,11 @@ namespace HouYun3.Models
         [Display(Name = "Категория видео")]
         [Required(ErrorMessage = "Поле 'Категория видео' обязательно для заполнения")]
         public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
-        [Display(Name = "Пользователь")]
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
