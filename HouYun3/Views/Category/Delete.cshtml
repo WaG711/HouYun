@@ -1,10 +1,10 @@
-﻿@model HouYun3.Models.Category
+﻿@model Category
 
-<h2>Delete Category</h2>
+<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this category?</h3>
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Category:</h4>
+    <h4>Category</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -15,11 +15,9 @@
         </dd>
     </dl>
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="CategoryId" />
-        <div class="form-group">
-            <button type="submit" class="btn btn-danger">Delete</button>
-            <a asp-action="Index">Back to List</a>
-        </div>
+    <form asp-action="Delete" asp-route-id="@Model.CategoryId">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back to List</a>
+        @Html.AntiForgeryToken()
     </form>
 </div>

@@ -1,14 +1,16 @@
-﻿@model HouYun3.Models.Category
+﻿@model Category
 
-<h2>Create Category</h2>
+<h2>Create</h2>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create">
+    <input type="hidden" asp-for="CategoryId" />
     <div class="form-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
+    @Html.AntiForgeryToken()
 </form>
