@@ -109,6 +109,7 @@ namespace HouYun3.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userRepository.GetUserByIdAsync(userId);
 
                 var video = new Video
                 {
@@ -116,6 +117,7 @@ namespace HouYun3.Controllers
                     Description = model.Description,
                     DurationSeconds = model.DurationSeconds,
                     CategoryId = model.CategoryId,
+                    User = user,
                     UserId = userId
                 };
 
