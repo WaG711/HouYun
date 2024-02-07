@@ -16,20 +16,36 @@ namespace HouYun3.Repositories
 
         public async Task<IEnumerable<Video>> GetAllVideos()
         {
-            return await _context.Videos.ToListAsync();
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Comments)
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Video>> GetVideosByCategory(string categoryName)
         {
             return await _context.Videos
                 .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Comments)
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Where(v => v.Category.Name == categoryName)
                 .ToListAsync();
         }
 
         public async Task<Video> GetVideoById(Guid id)
         {
-            return await _context.Videos.FindAsync(id);
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Comments)
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
+                .FirstOrDefaultAsync(v => v.VideoId == id);
         }
 
         public async Task AddVideo(Video video, IFormFile videoFile)
@@ -86,6 +102,11 @@ namespace HouYun3.Repositories
         public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
         {
             return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Comments)
+                .Include(v => v.Likes)
+                .Include(v => v.Views)
                 .Where(v => v.Title.Contains(searchTerm))
                 .ToListAsync();
         }
