@@ -1,5 +1,4 @@
-﻿using HouYun3.ApplicationModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouYun3.Models
@@ -7,7 +6,7 @@ namespace HouYun3.Models
     public class Notification
     {
         [Key]
-        public int NotificationId { get; set; }
+        public Guid NotificationId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Сообщение' обязательно для заполнения")]
         [StringLength(100, ErrorMessage = "Длина 'Сообщения' не должна превышать 100 символов")]

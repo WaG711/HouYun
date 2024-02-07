@@ -4,7 +4,9 @@ namespace HouYun3.IRepositories
 {
     public interface ISearchHistoryRepository
     {
-        Task<List<SearchHistory>> GetSearchHistoryByUserIdAsync(string userId);
-        Task AddSearchHistoryAsync(SearchHistory searchHistory);
+        Task<IEnumerable<SearchHistory>> GetAllSearchHistory();
+        Task<SearchHistory> GetSearchHistoryById(Guid id);
+        Task<SearchHistory> AddSearchHistory(SearchHistory searchHistory);
+        Task DeleteSearchHistory(Guid id);
     }
 }

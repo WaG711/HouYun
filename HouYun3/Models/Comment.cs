@@ -1,5 +1,4 @@
-﻿using HouYun3.ApplicationModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouYun3.Models
@@ -7,7 +6,7 @@ namespace HouYun3.Models
     public class Comment
     {
         [Key]
-        public int CommentId { get; set; }
+        public Guid CommentId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Текст комментария' обязательно для заполнения")]
         [StringLength(500, ErrorMessage = "Длина 'Текста комментария' не должна превышать 500 символов")]
@@ -17,7 +16,7 @@ namespace HouYun3.Models
         [Display(Name = "Дата комментария")]
         public DateTime CommentDate { get; set; }
 
-        public int VideoId { get; set; }
+        public Guid VideoId { get; set; }
         [ForeignKey("VideoId")]
         public Video Video { get; set; }
 

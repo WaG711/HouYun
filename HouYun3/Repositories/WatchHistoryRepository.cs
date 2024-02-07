@@ -7,30 +7,30 @@ namespace HouYun3.Repositories
 {
     public class WatchHistoryRepository : IWatchHistoryRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public WatchHistoryRepository(HouYun3Context context)
+        public WatchHistoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<WatchHistory> GetWatchHistoryByIdAsync(int id)
-        {
-            return await _context.WatchHistories.FindAsync(id);
-        }
-
-        public async Task<List<WatchHistory>> GetAllWatchHistoriesAsync()
+        public async Task<IEnumerable<WatchHistory>> GetAllWatchHistory()
         {
             return await _context.WatchHistories.ToListAsync();
         }
 
-        public async Task AddWatchHistoryAsync(WatchHistory watchHistory)
+        public async Task<WatchHistory> GetWatchHistoryById(Guid id)
+        {
+            return await _context.WatchHistories.FindAsync(id);
+        }
+
+        public async Task AddWatchHistory(WatchHistory watchHistory)
         {
             _context.WatchHistories.Add(watchHistory);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWatchHistoryAsync(int id)
+        public async Task DeleteWatchHistory(Guid id)
         {
             var watchHistory = await _context.WatchHistories.FindAsync(id);
             if (watchHistory != null)
@@ -38,16 +38,6 @@ namespace HouYun3.Repositories
                 _context.WatchHistories.Remove(watchHistory);
                 await _context.SaveChangesAsync();
             }
-        }
-
-        public async Task DeleteAllWatchHistoryAsync(string UserId)
-        {
-            var watchHistories = await _context.WatchHistories
-                .Where(w => w.UserId == UserId)
-                .ToListAsync();
-
-            _context.WatchHistories.RemoveRange(watchHistories);
-            await _context.SaveChangesAsync();
         }
     }
 }

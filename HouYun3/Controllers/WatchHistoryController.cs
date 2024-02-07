@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    public class WatchHistoryController : Controller
+   /* public class WatchHistoryController : Controller
     {
         private readonly IWatchHistoryRepository _watchHistoryRepository;
         private readonly IVideoRepository _videoRepository;
@@ -59,5 +59,5 @@ namespace HouYun3.Controllers
             return RedirectToAction("Index");
         }
 
-    }
+    }*/
 }

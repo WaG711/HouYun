@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun3.Controllers
 {
-    public class CategoryController : Controller
+    /*public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -59,5 +59,5 @@ namespace HouYun3.Controllers
             await _categoryRepository.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
         }
-    }
+    }*/
 }

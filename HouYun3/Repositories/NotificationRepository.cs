@@ -7,36 +7,38 @@ namespace HouYun3.Repositories
 {
     public class NotificationRepository : INotificationRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public NotificationRepository(HouYun3Context context)
+        public NotificationRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Notification> GetNotificationByIdAsync(int id)
-        {
-            return await _context.Notifications.FindAsync(id);
-        }
-
-        public async Task<List<Notification>> GetAllNotificationsAsync()
+        public async Task<IEnumerable<Notification>> GetAllNotifications()
         {
             return await _context.Notifications.ToListAsync();
         }
 
-        public async Task AddNotificationAsync(Notification notification)
+        public async Task<Notification> GetNotificationById(Guid id)
+        {
+            return await _context.Notifications.FindAsync(id);
+        }
+
+        public async Task<Notification> AddNotification(Notification notification)
         {
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
+            return notification;
         }
 
-        public async Task UpdateNotificationAsync(Notification notification)
+        public async Task<Notification> UpdateNotification(Notification notification)
         {
-            _context.Notifications.Update(notification);
+            _context.Entry(notification).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return notification;
         }
 
-        public async Task DeleteNotificationAsync(int id)
+        public async Task DeleteNotification(Guid id)
         {
             var notification = await _context.Notifications.FindAsync(id);
             if (notification != null)

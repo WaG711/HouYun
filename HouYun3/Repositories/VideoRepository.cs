@@ -2,42 +2,29 @@
 using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
-using HouYun3.ApplicationModel;
 
 namespace HouYun3.Repositories
 {
     public class VideoRepository : IVideoRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public VideoRepository(HouYun3Context context)
+        public VideoRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<Video> GetVideoByIdAsync(int id)
-        {
-            return await _context.Videos.FindAsync(id);
-        }
-
-        public async Task<List<Video>> GetAllVideosAsync()
+        public async Task<IEnumerable<Video>> GetAllVideos()
         {
             return await _context.Videos.ToListAsync();
         }
 
-        public async Task<List<Video>> GetVideosByUserIdAsync(string userId)
+        public async Task<Video> GetVideoById(Guid id)
         {
-            return await _context.Videos
-                .Where(v => v.UserId == userId)
-                .ToListAsync();
+            return await _context.Videos.FindAsync(id);
         }
 
-        public async Task<List<Video>> GetVideosByCategoryIdAsync(int categoryId)
-        {
-            return await _context.Videos.Where(v => v.CategoryId == categoryId).ToListAsync();
-        }
-
-        public async Task AddVideoAsync(Video video, IFormFile videoFile)
+        public async Task AddVideo(Video video, IFormFile videoFile)
         {
             try
             {
@@ -71,13 +58,14 @@ namespace HouYun3.Repositories
             }
         }
 
-        public async Task UpdateVideoAsync(Video video)
+        public async Task<Video> UpdateVideo(Video video)
         {
-            _context.Videos.Update(video);
+            _context.Entry(video).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return video;
         }
 
-        public async Task DeleteVideoAsync(int id)
+        public async Task DeleteVideo(Guid id)
         {
             var video = await _context.Videos.FindAsync(id);
             if (video != null)
@@ -85,13 +73,6 @@ namespace HouYun3.Repositories
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync();
             }
-        }
-
-        public async Task<List<Video>> SearchVideosByTitleAsync(string searchTerm)
-        {
-            return await _context.Videos
-                .Where(v => v.Title.Contains(searchTerm))
-                .ToListAsync();
         }
     }
 }

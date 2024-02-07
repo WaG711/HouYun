@@ -6,7 +6,7 @@ using HouYun3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HouYun3.IRepositories;
-using HouYun3.ApplicationModel;
+using HouYun3.Models;
 
 namespace HouYun3.Controllers.UserContoller
 {

@@ -7,35 +7,35 @@ namespace HouYun3.Repositories
 {
     public class WatchLaterRepository : IWatchLaterRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public WatchLaterRepository(HouYun3Context context)
+        public WatchLaterRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<WatchLater> GetWatchLaterByIdAsync(int id)
+        public async Task<IEnumerable<WatchLater>> GetAllWatchLaterItems()
         {
-            return await _context.WatchLaters.FindAsync(id);
+            return await _context.WatchLaterItems.ToListAsync();
         }
 
-        public async Task<List<WatchLater>> GetAllWatchLatersAsync()
+        public async Task<WatchLater> GetWatchLaterItemById(Guid id)
         {
-            return await _context.WatchLaters.ToListAsync();
+            return await _context.WatchLaterItems.FindAsync(id);
         }
 
-        public async Task AddWatchLaterAsync(WatchLater watchLater)
+        public async Task AddWatchLaterItem(WatchLater watchLaterItem)
         {
-            _context.WatchLaters.Add(watchLater);
+            _context.WatchLaterItems.Add(watchLaterItem);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWatchLaterAsync(int id)
+        public async Task DeleteWatchLaterItem(Guid id)
         {
-            var watchLater = await _context.WatchLaters.FindAsync(id);
-            if (watchLater != null)
+            var watchLaterItem = await _context.WatchLaterItems.FindAsync(id);
+            if (watchLaterItem != null)
             {
-                _context.WatchLaters.Remove(watchLater);
+                _context.WatchLaterItems.Remove(watchLaterItem);
                 await _context.SaveChangesAsync();
             }
         }

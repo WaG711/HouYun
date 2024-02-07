@@ -5,7 +5,7 @@ namespace HouYun3.Models
     public class Category
     {
         [Key]
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
         [Required(ErrorMessage = "Поле 'Название' обязательно для заполнения")]
         [StringLength(50, ErrorMessage = "Длина 'Названия' не должна превышать 50 символов")]

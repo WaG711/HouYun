@@ -7,30 +7,30 @@ namespace HouYun3.Repositories
 {
     public class ViewRepository : IViewRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public ViewRepository(HouYun3Context context)
+        public ViewRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<View> GetViewByIdAsync(int id)
-        {
-            return await _context.Views.FindAsync(id);
-        }
-
-        public async Task<List<View>> GetAllViewsAsync()
+        public async Task<IEnumerable<View>> GetAllViews()
         {
             return await _context.Views.ToListAsync();
         }
 
-        public async Task AddViewAsync(View view)
+        public async Task<View> GetViewById(Guid id)
+        {
+            return await _context.Views.FindAsync(id);
+        }
+
+        public async Task AddView(View view)
         {
             _context.Views.Add(view);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteViewAsync(int id)
+        public async Task DeleteView(Guid id)
         {
             var view = await _context.Views.FindAsync(id);
             if (view != null)
