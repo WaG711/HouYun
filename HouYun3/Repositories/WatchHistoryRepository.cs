@@ -39,5 +39,15 @@ namespace HouYun3.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteAllWatchHistoryAsync(string UserId)
+        {
+            var watchHistories = await _context.WatchHistories
+                .Where(w => w.UserId == UserId)
+                .ToListAsync();
+
+            _context.WatchHistories.RemoveRange(watchHistories);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace HouYun3.IRepositories
         Task<List<WatchHistory>> GetAllWatchHistoriesAsync();
         Task AddWatchHistoryAsync(WatchHistory watchHistory);
         Task DeleteWatchHistoryAsync(int id);
+        Task DeleteAllWatchHistoryAsync(string id);
     }
 }
