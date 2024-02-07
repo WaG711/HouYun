@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun3.Controllers
 {
-    /*public class CategoryController : Controller
+    public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -13,51 +13,52 @@ namespace HouYun3.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<Category> categories = await _categoryRepository.GetAllCategoriesAsync();
-            return View(categories);
+            try
+            {
+                var categories = await _categoryRepository.GetAllCategories();
+                return View(categories);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,Name")] Category category)
+        public async Task<IActionResult> Add(Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _categoryRepository.AddCategoryAsync(category);
-                return RedirectToAction(nameof(Index));
+                var newCategory = await _categoryRepository.AddCategory(category);
+                return RedirectToAction("Index");
             }
-            return View(category);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                await _categoryRepository.DeleteCategory(id);
+                return RedirectToAction("Index");
             }
-
-            var category = await _categoryRepository.GetCategoryByIdAsync(id.Value);
-            if (category == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-
-            return View(category);
         }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            await _categoryRepository.DeleteCategoryAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
-    }*/
+    }
 }
