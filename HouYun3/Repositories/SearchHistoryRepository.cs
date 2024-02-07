@@ -14,14 +14,13 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<SearchHistory>> GetAllSearchHistory()
+        public async Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(string userId)
         {
-            return await _context.SearchHistories.ToListAsync();
-        }
-
-        public async Task<SearchHistory> GetSearchHistoryById(Guid id)
-        {
-            return await _context.SearchHistories.FindAsync(id);
+            return await _context.SearchHistories
+                .Where(s => s.UserId == userId)
+                .OrderByDescending(s => s.SearchDate)
+                .Take(10)
+                .ToListAsync();
         }
 
         public async Task<SearchHistory> AddSearchHistory(SearchHistory searchHistory)
@@ -29,16 +28,6 @@ namespace HouYun3.Repositories
             _context.SearchHistories.Add(searchHistory);
             await _context.SaveChangesAsync();
             return searchHistory;
-        }
-
-        public async Task DeleteSearchHistory(Guid id)
-        {
-            var searchHistory = await _context.SearchHistories.FindAsync(id);
-            if (searchHistory != null)
-            {
-                _context.SearchHistories.Remove(searchHistory);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

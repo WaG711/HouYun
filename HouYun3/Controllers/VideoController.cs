@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    /*public class VideoController : Controller
+    public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -29,136 +29,123 @@ namespace HouYun3.Controllers
             _viewRepository = viewRepository;
         }
 
-        public async Task<IActionResult> Index(string category)
+        public async Task<IActionResult> Index(string searchTerm, string category)
         {
-            var categories = await _categoryRepository.GetAllCategoriesAsync();
             IEnumerable<Video> videos;
+            IEnumerable<Category> categories;
 
-            if (!string.IsNullOrEmpty(category))
+            categories = await _categoryRepository.GetAllCategories();
+
+            try
             {
-                var categoryId = categories.FirstOrDefault(c => c.Name.Equals(category, StringComparison.OrdinalIgnoreCase))?.CategoryId;
-                if (categoryId.HasValue)
+                if (!string.IsNullOrEmpty(searchTerm))
                 {
-                    videos = await _videoRepository.GetVideosByCategoryIdAsync(categoryId.Value);
+                    var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
+                    videos = searchResults;
+                }
+                else if (!string.IsNullOrEmpty(category))
+                {
+                    var videosByCategory = await _videoRepository.GetVideosByCategory(category);
+                    videos = videosByCategory;
                 }
                 else
                 {
-                    videos = Enumerable.Empty<Video>();
+                    videos = await _videoRepository.GetAllVideos();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                videos = await _videoRepository.GetAllVideosAsync();
+                return StatusCode(500, $"Failed to retrieve videos: {ex.Message}");
             }
-
-            var categoryList = categories.Select(c => new SelectListItem
-            {
-                Value = c.Name,
-                Text = c.Name
-            });
 
             var viewModel = new VideoViewModel
             {
-                Categories = categoryList,
                 Videos = videos,
-                CategoryName = category
+                SelectedCategory = category ?? "All",
+                SearchTerm = searchTerm,
+                Categories = categories
             };
 
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            var video = await _videoRepository.GetVideoByIdAsync(id);
-
-            if (video == null)
+            try
             {
-                return NotFound();
+                var video = await _videoRepository.GetVideoById(id);
+                if (video == null)
+                {
+                    return NotFound();
+                }
+                return View(video);
             }
-
-            var comments = await _commentRepository.GetCommentsByVideoIdAsync(video.VideoId);
-            var likesCount = await _likeRepository.GetLikesCountByVideoIdAsync(video.VideoId);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isLikedByCurrentUser = userId != null && await _likeRepository.IsUserLikedVideoAsync(video.VideoId, userId);
-
-            var viewModel = new VideoDetailsViewModel
+            catch (Exception ex)
             {
-                Video = video,
-                Comments = comments,
-                LikesCount = likesCount,
-                IsLikedByCurrentUser = isLikedByCurrentUser
-            };
-
-            return View(viewModel);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-
-        [HttpGet]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Add()
         {
-            var categories = await _categoryRepository.GetAllCategoriesAsync();
-            ViewBag.Categories = categories;
-
-            return View(new VideoUploadViewModel());
+            var model = new AddVideoViewModel();
+            var categories = await _categoryRepository.GetAllCategories();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
+            return View(model);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upload(VideoUploadViewModel model)
+        public async Task<IActionResult> Add(AddVideoViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = await _userRepository.GetUserByIdAsync(userId);
-
                 var video = new Video
                 {
                     Title = model.Title,
                     Description = model.Description,
-                    DurationSeconds = model.DurationSeconds,
                     CategoryId = model.CategoryId,
-                    User = user,
                     UserId = userId
                 };
 
-                await _videoRepository.AddVideoAsync(video, model.VideoFile);
-
+                await _videoRepository.AddVideo(video, model.VideoFile);
                 return RedirectToAction("Index");
             }
-
-            var categories = await _categoryRepository.GetAllCategoriesAsync();
-            ViewBag.Categories = categories;
-
-            return View(model);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var video = await _videoRepository.GetVideoByIdAsync(id);
-
+            var video = await _videoRepository.GetVideoById(id);
             if (video == null)
             {
                 return NotFound();
             }
 
-            if (video.UserId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                return Forbid();
-            }
-
-            await _videoRepository.DeleteVideoAsync(id);
-
-            return RedirectToAction("UserVideos");
+            return View(video);
         }
 
-        public async Task<IActionResult> UserVideos()
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var userVideos = await _videoRepository.GetVideosByUserIdAsync(userId);
-
-            return View(userVideos);
+            try
+            {
+                await _videoRepository.DeleteVideo(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -172,24 +159,24 @@ namespace HouYun3.Controllers
                 SearchQuery = searchTerm
             };
 
-            await _searchHistoryRepository.AddSearchHistoryAsync(searchHistory);
+            await _searchHistoryRepository.AddSearchHistory(searchHistory);
 
-            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserIdAsync(userId);
+            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByUserId(userId);
 
-            var searchResults = await _videoRepository.SearchVideosByTitleAsync(searchTerm);
+            var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
 
             ViewData["LastSearches"] = lastSearches;
 
             var viewModel = new VideoViewModel
             {
                 Videos = searchResults,
-                CategoryName = "Search Results"
+                SearchTerm = "Search Results"
             };
 
             return View("Index", viewModel);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddLike(int videoId)
         {
@@ -253,6 +240,6 @@ namespace HouYun3.Controllers
             }
 
             return RedirectToAction("Details", new { id = videoId });
-        }
-    }*/
+        }*/
+    }
 }

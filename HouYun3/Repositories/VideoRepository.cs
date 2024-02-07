@@ -19,6 +19,14 @@ namespace HouYun3.Repositories
             return await _context.Videos.ToListAsync();
         }
 
+        public async Task<IEnumerable<Video>> GetVideosByCategory(string categoryName)
+        {
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Where(v => v.Category.Name == categoryName)
+                .ToListAsync();
+        }
+
         public async Task<Video> GetVideoById(Guid id)
         {
             return await _context.Videos.FindAsync(id);
@@ -73,6 +81,13 @@ namespace HouYun3.Repositories
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
+        {
+            return await _context.Videos
+                .Where(v => v.Title.Contains(searchTerm))
+                .ToListAsync();
         }
     }
 }

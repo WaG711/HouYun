@@ -124,6 +124,9 @@ namespace HouYun3.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("SearchDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SearchQuery")
                         .IsRequired()
                         .HasMaxLength(100)
