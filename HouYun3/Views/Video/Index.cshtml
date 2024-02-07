@@ -48,10 +48,10 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@video.Title</h5>
-                    <p class="card-text">Uploaded by: @video.User.UserName</p>
+                    <p class="card-text">Uploaded by: @video.User</p>
                     <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
                     <video width="100%" controls>
-                        <source src="@video.FilePath" type="video/mp4">
+                        <source src="@Url.Content($"~/videos/{video.FilePath}")" type="video/mp4">
                     </video>
                 </div>
             </div>
