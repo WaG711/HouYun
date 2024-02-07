@@ -3,7 +3,7 @@ using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Repositories;
 using Microsoft.AspNetCore.Identity;
-using HouYun3.ApplicationModel;
+using HouYun3.Models;
 
 
 namespace HouYun3
@@ -13,11 +13,25 @@ namespace HouYun3
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<HouYun3Context>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("HouYun3Context") ?? throw new InvalidOperationException("Connection string 'HouYun3Context' not found.")));
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // Add services to the container.
+            builder.Services.AddIdentity<User, IdentityRole>(opts =>
+            {
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = true;
+                opts.Password.RequireDigit = true;
+                opts.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
             builder.Services.AddControllersWithViews();
+            builder.Services.AddRazorPages();
+
             builder.Services.AddScoped<IVideoRepository, VideoRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -28,24 +42,6 @@ namespace HouYun3
             builder.Services.AddScoped<IViewRepository, ViewRepository>();
             builder.Services.AddScoped<IWatchLaterRepository, WatchLaterRepository>();
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddIdentity<User, IdentityRole>(opts=>
-            {
-                opts.Password.RequiredLength = 6;
-                opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false;
-                opts.Password.RequireUppercase = true;
-                opts.Password.RequireDigit = true;
-                opts.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddRazorPages();
 
             var app = builder.Build();
 

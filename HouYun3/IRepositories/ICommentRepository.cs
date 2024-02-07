@@ -4,10 +4,10 @@ namespace HouYun3.IRepositories
 {
     public interface ICommentRepository
     {
-        Task<Comment> GetCommentByIdAsync(int id);
-        Task<List<Comment>> GetCommentsByVideoIdAsync(int videoId);
-        Task AddCommentAsync(Comment comment);
-        Task UpdateCommentAsync(Comment comment);
-        Task DeleteCommentAsync(int id);
+        Task<IEnumerable<Comment>> GetAllComments();
+        Task<Comment> GetCommentById(Guid id);
+        Task<Comment> AddComment(Comment comment);
+        Task<Comment> UpdateComment(Comment comment);
+        Task DeleteComment(Guid id);
     }
 }

@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    public class VideoController : Controller
+    /*public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -109,6 +109,7 @@ namespace HouYun3.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await _userRepository.GetUserByIdAsync(userId);
 
                 var video = new Video
                 {
@@ -116,6 +117,7 @@ namespace HouYun3.Controllers
                     Description = model.Description,
                     DurationSeconds = model.DurationSeconds,
                     CategoryId = model.CategoryId,
+                    User = user,
                     UserId = userId
                 };
 
@@ -252,5 +254,5 @@ namespace HouYun3.Controllers
 
             return RedirectToAction("Details", new { id = videoId });
         }
-    }
+    }*/
 }

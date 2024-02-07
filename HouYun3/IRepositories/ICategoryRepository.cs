@@ -4,10 +4,10 @@ namespace HouYun3.IRepositories
 {
     public interface ICategoryRepository
     {
-        Task<Category> GetCategoryByIdAsync(int id);
-        Task<List<Category>> GetAllCategoriesAsync();
-        Task AddCategoryAsync(Category category);
-        Task UpdateCategoryAsync(Category category);
-        Task DeleteCategoryAsync(int id);
+        Task<IEnumerable<Category>> GetAllCategories();
+        Task<Category> GetCategoryById(Guid id);
+        Task<Category> AddCategory(Category category);
+        Task<Category> UpdateCategory(Category category);
+        Task DeleteCategory(Guid id);
     }
 }

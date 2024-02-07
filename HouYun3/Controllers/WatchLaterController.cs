@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    public class WatchLaterController : Controller
+    /*public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;
         private readonly IVideoRepository _videoRepository;
@@ -18,7 +18,7 @@ namespace HouYun3.Controllers
             _userRepository = userRepository;
         }
 
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var watchLaterList = await _watchLaterRepository.GetWatchLaterByUserId(int.Parse(userId));
@@ -67,6 +67,6 @@ namespace HouYun3.Controllers
             await _watchLaterRepository.DeleteWatchLater(watchLaterId);
 
             return RedirectToAction("Index");
-        }*/
-    }
+        }
+    }*/
 }

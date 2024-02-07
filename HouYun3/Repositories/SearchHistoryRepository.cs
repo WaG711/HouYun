@@ -7,26 +7,38 @@ namespace HouYun3.Repositories
 {
     public class SearchHistoryRepository : ISearchHistoryRepository
     {
-        private readonly HouYun3Context _context;
+        private readonly ApplicationDbContext _context;
 
-        public SearchHistoryRepository(HouYun3Context context)
+        public SearchHistoryRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<List<SearchHistory>> GetSearchHistoryByUserIdAsync(string userId)
+        public async Task<IEnumerable<SearchHistory>> GetAllSearchHistory()
         {
-            return await _context.SearchHistories
-                .Where(s => s.UserId == userId)
-                .OrderByDescending(s => s.SearchDate)
-                .Take(10)
-                .ToListAsync();
+            return await _context.SearchHistories.ToListAsync();
         }
 
-        public async Task AddSearchHistoryAsync(SearchHistory searchHistory)
+        public async Task<SearchHistory> GetSearchHistoryById(Guid id)
+        {
+            return await _context.SearchHistories.FindAsync(id);
+        }
+
+        public async Task<SearchHistory> AddSearchHistory(SearchHistory searchHistory)
         {
             _context.SearchHistories.Add(searchHistory);
             await _context.SaveChangesAsync();
+            return searchHistory;
+        }
+
+        public async Task DeleteSearchHistory(Guid id)
+        {
+            var searchHistory = await _context.SearchHistories.FindAsync(id);
+            if (searchHistory != null)
+            {
+                _context.SearchHistories.Remove(searchHistory);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
