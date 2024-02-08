@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HouYun3.IRepositories;
 using HouYun3.Models;
+using System.Security.Claims;
 
 namespace HouYun3.Controllers.UserContoller
 {
@@ -106,14 +107,15 @@ namespace HouYun3.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword(string Username)
+        public async Task<IActionResult> ChangePassword()
         {
-            User user = await _userManager.FindByIdAsync(Username);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserById(userId);
             if (user == null)
             {
                 return NotFound();
             }
-            ChangePasswordViewModel model = new ChangePasswordViewModel { UserName = user.UserName};
+            ChangePasswordViewModel model = new ChangePasswordViewModel { };
             return View(model);
         }
         [HttpPost]
@@ -125,7 +127,8 @@ namespace HouYun3.Controllers.UserContoller
                 return View(model);
             }
 
-            User user = await _userManager.FindByNameAsync(model.UserName);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserById(userId);
 
             if (user == null)
             {
