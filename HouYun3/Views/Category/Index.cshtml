@@ -1,28 +1,25 @@
-﻿@model List<Category>
+﻿@model IEnumerable<Category>
 
-<h2>Categories</h2>
+<h2>All Categories</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model[0].Name)
-            </th>
-            <th></th>
+            <th>Category Id</th>
+            <th>Name</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var category in Model)
         {
             <tr>
+                <td>@category.CategoryId</td>
+                <td>@category.Name</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                    <form asp-action="Delete" asp-route-id="@category.CategoryId" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         }

@@ -4,74 +4,69 @@
     ViewData["Title"] = "Video Index";
 }
 
-<form asp-controller="Video" asp-action="Search" method="get">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" name="searchTerm" placeholder="Search videos" aria-label="Search videos" aria-describedby="button-search">
-        <button class="btn btn-outline-secondary" type="submit" id="button-search">Search</button>
-    </div>
-</form>
-
-<div class="row">
-    <div class="col">
-        <h4>Categories:</h4>
-        <div class="btn-group" role="group" aria-label="Categories">
-            <a href="@Url.Action("Index", "Video", new { category = "" })" class="btn btn-secondary">All Categories</a>
-            @if (Model.Categories != null)
-            {
-                @foreach (var category in Model.Categories)
-                {
-                    <a href="@Url.Action("Index", "Video", new { category = category.Text })" class="btn btn-secondary">@category.Text</a>
-                }
-            }
-        </div>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <h4>Search Videos:</h4>
+        <form asp-action="Search" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Enter search term" name="searchTerm" value="@Model.SearchTerm">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
-<hr />
+<div class="row mb-3">
+    <div class="col-md-12">
+        <h4>Filter by Category:</h4>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Video/Index">All</a>
+                    </li>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Video/Index?category=@category.Name">@category.Name</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
 
-<div id="videoList" class="row">
+<div class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">@video.Title</h5>
-                    <p class="card-text">Uploaded by: @video.User.UserName</p>
-                    <video width="320" height="240" controls>
-                        <source src="@Url.Content("~/videos/" + video.FilePath)" type="video/mp4">
-                    </video>
-                    <p><a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a></p>
-                </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })">
+                    <div class="card-body">
+                        <h5 class="card-title">@video.Title</h5>
+                        <p class="card-text">Uploaded by: @video.User.UserName</p>
+                        <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
+                        <video width="100%" controls>
+                            <source src="@Url.Content($"~/videos/{video.FilePath}")" type="video/mp4">
+                        </video>
+                    </div>
+                </a>
             </div>
         </div>
     }
 </div>
 
-@if (ViewData["LastSearches"] != null && ViewData["LastSearches"] is List<HouYun3.Models.SearchHistory> lastSearches && lastSearches.Any())
-{
-    <div>
-        <h4>Last Searches:</h4>
-        <ul>
-            @foreach (var search in lastSearches)
-            {
-                <li>@search.SearchQuery</li>
-            }
-        </ul>
-    </div>
-}
-
 @section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            function filterVideos() {
-                var categoryName = $("#Category").val();
-                window.location.href = "/Video/Index?category=" + categoryName;
-            }
-
-            $("#searchForm").submit(function (event) {
-                event.preventDefault();
-                var searchTerm = $("#searchTerm").val();
-                window.location.href = "/Video/Search?searchTerm=" + searchTerm;
+            $(".nav-link").click(function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                window.location.href = url;
             });
         });
     </script>

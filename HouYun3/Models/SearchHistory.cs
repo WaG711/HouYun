@@ -12,8 +12,17 @@ namespace HouYun3.Models
         [StringLength(100, ErrorMessage = "Длина 'Поискового запроса' не должна превышать 100 символов")]
         public string SearchQuery { get; set; }
 
+        [ScaffoldColumn(false)]
+        [Display(Name = "Дата поиска")]
+        public DateTime SearchDate { get; set; }
+
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
+
+        public SearchHistory()
+        {
+            SearchDate = DateTime.UtcNow;
+        }
     }
 }
