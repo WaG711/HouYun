@@ -128,18 +128,25 @@ namespace HouYun3.Controllers.UserContoller
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(userId);
+
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
-                return NotFound();
+                return View(model);
             }
 
             var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
 
+
             if (result.Succeeded)
             {
-                return RedirectToAction("PasswordChanged");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
