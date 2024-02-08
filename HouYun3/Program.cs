@@ -63,6 +63,12 @@ namespace HouYun3
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+            name: "videoDetails",
+            pattern: "Video/Details/{id}",
+            defaults: new { controller = "Video", action = "Details" });
+
             app.MapControllerRoute(
                 name: "search",
                 pattern: "Video/Search",

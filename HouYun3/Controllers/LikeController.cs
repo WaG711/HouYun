@@ -18,7 +18,7 @@ namespace HouYun3.Controllers
             _likeRepository = likeRepository;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddLike(int videoId)
         {
@@ -59,6 +59,6 @@ namespace HouYun3.Controllers
             }
 
             return RedirectToAction("Details", new { id = videoId });
-        }
+        }*/
     }
 }

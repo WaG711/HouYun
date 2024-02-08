@@ -20,7 +20,7 @@ namespace HouYun3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(int videoId, string commentText)
+        public async Task<IActionResult> AddComment(Guid videoId, string commentText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userRepository.GetUserById(userId);
@@ -38,7 +38,7 @@ namespace HouYun3.Controllers
                 await _commentRepository.AddComment(comment);
             }
 
-            return RedirectToAction("Details", new { id = videoId });
+            return RedirectToAction("Details", "Video", new { id = videoId });
         }
     }
 }
