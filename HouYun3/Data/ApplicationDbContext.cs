@@ -26,33 +26,33 @@ namespace HouYun3.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Like>()
-                .HasKey(v => v.LikeId);
+                .HasKey(l => l.LikeId);
 
             modelBuilder.Entity<Like>()
-                .HasOne(v => v.Video)
+                .HasOne(l => l.Video)
                 .WithMany(v => v.Likes)
-                .HasForeignKey(v => v.VideoId)
+                .HasForeignKey(l => l.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Like>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.Likes)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(l => l.User)
+                .WithMany(u => u.Likes)
+                .HasForeignKey(l => l.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Comment>()
-                .HasKey(v => v.CommentId);
+                .HasKey(c => c.CommentId);
 
             modelBuilder.Entity<Comment>()
-                .HasOne(v => v.Video)
+                .HasOne(c => c.Video)
                 .WithMany(v => v.Comments)
-                .HasForeignKey(v => v.VideoId)
+                .HasForeignKey(c => c.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.Comments)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<View>()
@@ -66,56 +66,56 @@ namespace HouYun3.Data
 
             modelBuilder.Entity<View>()
                 .HasOne(v => v.User)
-                .WithMany(v => v.Views)
+                .WithMany(u => u.Views)
                 .HasForeignKey(v => v.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WatchLater>()
-                .HasKey(v => v.WatchLaterId);
+                .HasKey(w => w.WatchLaterId);
 
             modelBuilder.Entity<WatchLater>()
-                .HasOne(v => v.Video)
-                .WithMany(v => v.WatchLaterList)
-                .HasForeignKey(v => v.VideoId)
+                .HasOne(w => w.Video)
+                .WithOne(v => v.WatchLater)
+                .HasForeignKey<WatchLater>(w => w.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchLater>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.WatchLaterList)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(w => w.User)
+                .WithMany(u => u.WatchLaterList)
+                .HasForeignKey(w => w.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasKey(v => v.WatchHistoryId);
+                .HasKey(w => w.WatchHistoryId);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasOne(v => v.Video)
-                .WithMany(v => v.WatchHistories)
-                .HasForeignKey(v => v.VideoId)
+                .HasOne(w => w.Video)
+                .WithOne(v => v.WatchHistory)
+                .HasForeignKey<WatchHistory>(w => w.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.WatchHistory)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(w => w.User)
+                .WithMany(u => u.WatchHistory)
+                .HasForeignKey(w => w.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SearchHistory>()
-                .HasKey(v => v.SearchHistoryId);
+                .HasKey(s => s.SearchHistoryId);
 
             modelBuilder.Entity<SearchHistory>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.SearchHistory)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(s => s.User)
+                .WithMany(u => u.SearchHistory)
+                .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Notification>()
-                .HasKey(v => v.NotificationId);
+                .HasKey(n => n.NotificationId);
 
             modelBuilder.Entity<Notification>()
-                .HasOne(v => v.User)
-                .WithMany(v => v.Notifications)
-                .HasForeignKey(v => v.UserId)
+                .HasOne(n => n.User)
+                .WithMany(u => u.Notifications)
+                .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

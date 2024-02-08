@@ -294,7 +294,8 @@ namespace HouYun3.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VideoId");
+                    b.HasIndex("VideoId")
+                        .IsUnique();
 
                     b.ToTable("WatchHistories");
                 });
@@ -316,7 +317,8 @@ namespace HouYun3.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VideoId");
+                    b.HasIndex("VideoId")
+                        .IsUnique();
 
                     b.ToTable("WatchLaterItems");
                 });
@@ -561,8 +563,8 @@ namespace HouYun3.Migrations
                         .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
-                        .WithMany("WatchHistories")
-                        .HasForeignKey("VideoId")
+                        .WithOne("WatchHistory")
+                        .HasForeignKey("HouYun3.Models.WatchHistory", "VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -580,8 +582,8 @@ namespace HouYun3.Migrations
                         .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
-                        .WithMany("WatchLaterList")
-                        .HasForeignKey("VideoId")
+                        .WithOne("WatchLater")
+                        .HasForeignKey("HouYun3.Models.WatchLater", "VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -673,9 +675,11 @@ namespace HouYun3.Migrations
 
                     b.Navigation("Views");
 
-                    b.Navigation("WatchHistories");
+                    b.Navigation("WatchHistory")
+                        .IsRequired();
 
-                    b.Navigation("WatchLaterList");
+                    b.Navigation("WatchLater")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

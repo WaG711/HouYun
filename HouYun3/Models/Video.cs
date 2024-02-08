@@ -39,11 +39,12 @@ namespace HouYun3.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
 
+        public WatchHistory WatchHistory { get; set; }
+        public WatchLater WatchLater { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Like> Likes { get; set; }
         public ICollection<View> Views { get; set; }
-        public ICollection<WatchHistory> WatchHistories { get; set; }
-        public ICollection<WatchLater> WatchLaterList { get; set; }
 
 
         public Video()
@@ -52,8 +53,6 @@ namespace HouYun3.Models
             Comments = new List<Comment>();
             Likes = new List<Like>();
             Views = new List<View>();
-            WatchHistories = new List<WatchHistory>();
-            WatchLaterList = new List<WatchLater>();
         }
     }
 }
