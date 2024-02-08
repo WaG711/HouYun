@@ -19,8 +19,6 @@ namespace HouYun3.Repositories
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
                 .Include(v => v.Views)
                 .ToListAsync();
         }
@@ -30,8 +28,6 @@ namespace HouYun3.Repositories
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
                 .Include(v => v.Views)
                 .Where(v => v.Category.Name == categoryName)
                 .ToListAsync();
@@ -52,18 +48,15 @@ namespace HouYun3.Repositories
         {
             try
             {
-                if (videoFile != null && videoFile.Length > 0)
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await videoFile.CopyToAsync(stream);
-                    }
-
-                    video.FilePath = fileName;
+                    await videoFile.CopyToAsync(stream);
                 }
+
+                video.FilePath = fileName;
 
                 _context.Videos.Add(video);
                 await _context.SaveChangesAsync();
@@ -73,6 +66,7 @@ namespace HouYun3.Repositories
                 if (!string.IsNullOrEmpty(video.FilePath))
                 {
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.FilePath);
+
                     if (File.Exists(filePath))
                     {
                         File.Delete(filePath);
@@ -104,8 +98,6 @@ namespace HouYun3.Repositories
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.User)
-                .Include(v => v.Comments)
-                .Include(v => v.Likes)
                 .Include(v => v.Views)
                 .Where(v => v.Title.Contains(searchTerm))
                 .ToListAsync();
