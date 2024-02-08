@@ -4,10 +4,12 @@ namespace HouYun3.ViewModels
 {
     public class ChangePasswordViewModel
     {
-        [Required(ErrorMessage = "Новый пароль")]
+        [Required]
+        [Display(Name = "Новый Пароль")]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
-        [Required(ErrorMessage = "Старый пароль")]
+        [Required]
+        [Display(Name = "Старый Пароль")]
         [DataType(DataType.Password)]
         public string OldPassword { get; set;}
     }

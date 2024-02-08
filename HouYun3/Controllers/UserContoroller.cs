@@ -14,20 +14,12 @@ namespace HouYun3.Controllers.UserContoller
 
     public class UserController : Controller
     {
-        private readonly ILogger<UserController> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-
         private readonly IWatchLaterRepository _watchLaterRepository;
-        private readonly IVideoRepository _videoRepository;
         private readonly IUserRepository _userRepository;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IVideoRepository videoRepository, ILogger<UserController> logger)
+        public UserController(IUserRepository userRepository)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _videoRepository = videoRepository;
-            _logger = logger;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -42,36 +34,14 @@ namespace HouYun3.Controllers.UserContoller
         {
             if (ModelState.IsValid)
             {
-                var user = new User { Email = model.Email, UserName = model.UserName };
-                var existingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-
-                if (existingUser != null)
+                var result = await _userRepository.RegisterUser(model);
+                if (result)
                 {
-                    ModelState.AddModelError(string.Empty, "Этот почтовый адрес уже используется.");
-                    return View(model);
-                }
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+                ModelState.AddModelError(string.Empty, "Ошибка при регистрации.");
             }
-
             return View(model);
-        }
-        public async Task<IActionResult> LogoutAsync()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -79,21 +49,18 @@ namespace HouYun3.Controllers.UserContoller
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var result = await _userRepository.LoginUser(model.UserName, model.Password, model.RememberMe);
+                if (result)
                 {
-                    return RedirectToAction("", "");
+                    return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
-
             }
             return View(model);
         }
@@ -102,7 +69,7 @@ namespace HouYun3.Controllers.UserContoller
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await _userRepository.Logout();
             return RedirectToAction("Index", "Home");
         }
 
@@ -110,14 +77,14 @@ namespace HouYun3.Controllers.UserContoller
         public async Task<IActionResult> ChangePassword()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(userId);
-            if (user == null)
+
+            if (userId == null)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
-            ChangePasswordViewModel model = new ChangePasswordViewModel { };
-            return View(model);
+            return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
@@ -128,40 +95,17 @@ namespace HouYun3.Controllers.UserContoller
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _userRepository.ChangeUserPassword(userId.ToString(), model.OldPassword, model.NewPassword);
 
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                return View(model);
-            }
-
-            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-
-
-            if (result.Succeeded)
+            if (result)
             {
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-
+                ModelState.AddModelError(string.Empty, "Не удалось изменить пароль");
                 return View(model);
             }
-        }
-
-        public class UploadVideos()
-        {
-
         }
 
     }
