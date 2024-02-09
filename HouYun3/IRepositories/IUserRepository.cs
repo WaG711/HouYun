@@ -14,7 +14,5 @@ namespace HouYun3.IRepositories
         Task<bool> LoginUser(string userName, string password, bool rememberMe);
         Task<bool> RegisterUser(RegisterViewModel model);
         Task Logout();
-
-
     }
 }
