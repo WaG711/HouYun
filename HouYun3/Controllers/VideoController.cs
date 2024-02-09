@@ -1,12 +1,14 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
 using HouYun3.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;

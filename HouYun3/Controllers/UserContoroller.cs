@@ -49,6 +49,7 @@ namespace HouYun3.Controllers.UserContoller
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -85,6 +86,7 @@ namespace HouYun3.Controllers.UserContoller
             return View();
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)

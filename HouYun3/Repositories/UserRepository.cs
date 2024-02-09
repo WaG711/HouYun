@@ -5,6 +5,7 @@ using HouYun3.Models;
 using Azure.Identity;
 using System.Security.Claims;
 using HouYun3.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace HouYun3.Repositories
@@ -13,12 +14,13 @@ namespace HouYun3.Repositories
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _roleManager = roleManager;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -101,6 +103,20 @@ namespace HouYun3.Repositories
 
             if (result.Succeeded)
             {
+                if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("User"));
+                }
+
+                if (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }
