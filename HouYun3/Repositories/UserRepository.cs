@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using HouYun3.IRepositories;
 using HouYun3.Models;
+using Azure.Identity;
+using System.Security.Claims;
+using HouYun3.ViewModels;
 
 
 namespace HouYun3.Repositories
@@ -9,10 +12,13 @@ namespace HouYun3.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserRepository(UserManager<User> userManager)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -59,6 +65,52 @@ namespace HouYun3.Repositories
             {
                 await _userManager.DeleteAsync(user);
             }
+        }
+
+        public async Task<bool> ChangeUserPassword(string userId, string oldPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return false; 
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+
+            return result.Succeeded;
+        }
+
+        public async Task<bool> LoginUser(string userName, string password, bool rememberMe)
+        {
+            var result = await _signInManager.PasswordSignInAsync(userName, password, rememberMe, false);
+            return result.Succeeded;
+        }
+
+        public async Task<bool> RegisterUser(RegisterViewModel model)
+        {
+            var user = new User { Email = model.Email, UserName = model.UserName };
+            var existingUser = await _userManager.FindByEmailAsync(model.Email);
+
+            if (existingUser != null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task Logout()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
