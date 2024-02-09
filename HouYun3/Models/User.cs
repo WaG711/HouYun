@@ -38,7 +38,7 @@ namespace HouYun3.Models
             Comments = new List<Comment>();
             Likes = new List<Like>();
             Subscriptions = new List<Subscription>();
-            Channel = new Channel { Name = UserName };
+            Channel = new Channel { UserId = Id };
         }
     }
 }
