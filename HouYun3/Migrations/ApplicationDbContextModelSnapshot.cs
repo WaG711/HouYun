@@ -38,6 +38,31 @@ namespace HouYun3.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("HouYun3.Models.Channel", b =>
+                {
+                    b.Property<Guid>("ChannelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChannelId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Channels");
+                });
+
             modelBuilder.Entity("HouYun3.Models.Comment", b =>
                 {
                     b.Property<Guid>("CommentId")
@@ -143,6 +168,28 @@ namespace HouYun3.Migrations
                     b.ToTable("SearchHistories");
                 });
 
+            modelBuilder.Entity("HouYun3.Models.Subscription", b =>
+                {
+                    b.Property<Guid>("SubscriptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChannelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("SubscriptionId");
+
+                    b.HasIndex("ChannelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Subscriptions");
+                });
+
             modelBuilder.Entity("HouYun3.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -185,9 +232,6 @@ namespace HouYun3.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -312,6 +356,9 @@ namespace HouYun3.Migrations
 
                     b.Property<Guid>("VideoId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("WatchLaterDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("WatchLaterId");
 
@@ -456,6 +503,17 @@ namespace HouYun3.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HouYun3.Models.Channel", b =>
+                {
+                    b.HasOne("HouYun3.Models.User", "User")
+                        .WithOne("Channel")
+                        .HasForeignKey("HouYun3.Models.Channel", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HouYun3.Models.Comment", b =>
                 {
                     b.HasOne("HouYun3.Models.User", "User")
@@ -512,6 +570,25 @@ namespace HouYun3.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HouYun3.Models.Subscription", b =>
+                {
+                    b.HasOne("HouYun3.Models.Channel", "Channel")
+                        .WithMany("Subscribers")
+                        .HasForeignKey("ChannelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HouYun3.Models.User", "User")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Channel");
 
                     b.Navigation("User");
                 });
@@ -648,8 +725,16 @@ namespace HouYun3.Migrations
                     b.Navigation("Videos");
                 });
 
+            modelBuilder.Entity("HouYun3.Models.Channel", b =>
+                {
+                    b.Navigation("Subscribers");
+                });
+
             modelBuilder.Entity("HouYun3.Models.User", b =>
                 {
+                    b.Navigation("Channel")
+                        .IsRequired();
+
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
@@ -657,6 +742,8 @@ namespace HouYun3.Migrations
                     b.Navigation("Notifications");
 
                     b.Navigation("SearchHistory");
+
+                    b.Navigation("Subscriptions");
 
                     b.Navigation("Videos");
 

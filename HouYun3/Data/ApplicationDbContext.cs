@@ -12,6 +12,8 @@ namespace HouYun3.Data
         }
 
         public DbSet<Video> Videos { get; set; }
+        public DbSet<Channel> Channels { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -24,6 +26,30 @@ namespace HouYun3.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Subscription>()
+                .HasKey(s => s.SubscriptionId);
+
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.Channel)
+                .WithMany(c => c.Subscribers)
+                .HasForeignKey(s => s.ChannelId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Channel>()
+                .HasKey(c => c.ChannelId);
+
+            modelBuilder.Entity<Channel>()
+                .HasOne(c => c.User)
+                .WithOne(u => u.Channel)
+                .HasForeignKey<Channel>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Like>()
                 .HasKey(l => l.LikeId);
