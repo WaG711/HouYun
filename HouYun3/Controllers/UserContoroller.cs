@@ -76,12 +76,6 @@ namespace HouYun3.Controllers.UserContoller
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 
@@ -104,6 +98,35 @@ namespace HouYun3.Controllers.UserContoller
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить пароль");
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeUsername()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUsername(ChangeUsenameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _userRepository.ChangeUsername(userId.ToString(), model.NewUsername, model.Password);
+
+            if (result)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
                 return View(model);
             }
         }

@@ -67,6 +67,38 @@ namespace HouYun3.Repositories
             }
         }
 
+        public async Task<bool> ChangeUsername(string userId, string newUsername, string oldPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, oldPassword);
+            if (!passwordValid)
+            {
+                return false;
+            }
+
+            var existingUser = await _userManager.FindByNameAsync(newUsername);
+            if (existingUser != null && existingUser.Id != userId)
+            {
+                return false;
+            }
+
+            var result = await _userManager.SetUserNameAsync(user, newUsername);
+
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         public async Task<bool> ChangeUserPassword(string userId, string oldPassword, string newPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);

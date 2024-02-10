@@ -1,0 +1,24 @@
+﻿@model HouYun3.ViewModels.forUser.ChangeUsenameViewModel
+@{
+    ViewBag.Title = "Изменение Никнейма";
+}
+
+<form method="post" asp-controller="User" asp-action="ChangeUsername">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <label asp-for="NewUsername">Новый Никнейм</label>
+        <input asp-for="NewUsername" name="NewUsername" />
+        <span asp-validation-for="NewUsername"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password">Подтверждение пороля</label>
+        <input asp-for="Password" name="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div>
+        <input type="submit" value="Change" />
+    </div>
+</form>
