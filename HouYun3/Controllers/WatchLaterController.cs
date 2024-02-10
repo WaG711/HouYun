@@ -26,7 +26,7 @@ namespace HouYun3.Controllers
         [HttpGet]
         public async Task<IActionResult> AddToWatchLater(Guid videoId)
         {
-            string refererUrl = Request.Headers["Referer"].ToString();
+            string refererUrl = Request.Headers.Referer.ToString();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 

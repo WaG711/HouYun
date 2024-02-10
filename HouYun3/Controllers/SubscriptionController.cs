@@ -16,10 +16,12 @@ namespace HouYun3.Controllers
         [HttpPost]
         public async Task<IActionResult> Subscribe(Guid channelId, string userId)
         {
+            string refererUrl = Request.Headers.Referer.ToString();
+
             var existingSubscription = await _subscriptionRepository.GetSubscriptionByChannelAndUser(channelId, userId);
             if (existingSubscription != null)
             {
-                return Ok();
+                return Redirect(refererUrl);
             }
 
             var subscription = new Subscription
@@ -30,21 +32,23 @@ namespace HouYun3.Controllers
 
             await _subscriptionRepository.CreateSubscription(subscription);
 
-            return Ok();
+            return Redirect(refererUrl);
         }
 
         [HttpPost]
         public async Task<IActionResult> Unsubscribe(Guid subscriptionId)
         {
+            string refererUrl = Request.Headers.Referer.ToString();
+
             var subscription = await _subscriptionRepository.GetSubscriptionById(subscriptionId);
             if (subscription == null)
             {
-                return Ok();
+                return Redirect(refererUrl);
             }
 
             await _subscriptionRepository.DeleteSubscription(subscriptionId);
 
-            return Ok();
+            return Redirect(refererUrl);
         }
     }
 }
