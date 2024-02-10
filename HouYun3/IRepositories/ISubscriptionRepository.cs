@@ -9,5 +9,6 @@ namespace HouYun3.IRepositories
         Task CreateSubscription(Subscription subscription);
         Task UpdateSubscription(Subscription subscription);
         Task DeleteSubscription(Guid id);
+        Task<Subscription> GetSubscriptionByChannelAndUser(Guid channelId, string userId);
     }
 }

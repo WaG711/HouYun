@@ -19,6 +19,11 @@ namespace HouYun3.Repositories
             return await _context.Subscriptions.FindAsync(id);
         }
 
+        public async Task<Subscription> GetSubscriptionByChannelAndUser(Guid channelId, string userId)
+        {
+            return await _context.Subscriptions.FirstOrDefaultAsync(s => s.ChannelId == channelId && s.UserId == userId);
+        }
+
         public async Task<IEnumerable<Subscription>> GetAllSubscriptions()
         {
             return await _context.Subscriptions.ToListAsync();
