@@ -14,8 +14,6 @@
     <video id="videoPlayer" controls style="max-width: 100%;">
         <source src="@Url.Content("~/videos/" + Model.FilePath)" type="video/mp4">
     </video>
-    <button id="forwardButton" onclick="forwardVideo()" class="video-control-button">Forward 10s</button>
-    <button id="backwardButton" onclick="backwardVideo()" class="video-control-button">Backward 10s</button>
 
     <p>Likes: @Model.Likes.Count</p>
     <form id="likeForm">
@@ -144,20 +142,6 @@
                 .catch(error => {
                     console.error("Error:", error);
                 });
-        }
-    </script>
-
-    <script>
-        function forwardVideo() {
-            var videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.currentTime += 10;
-        }
-    </script>
-
-    <script>
-        function backwardVideo() {
-            var videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.currentTime -= 10;
         }
     </script>
 }

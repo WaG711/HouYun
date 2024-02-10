@@ -20,22 +20,3 @@ html {
 body {
   margin-bottom: 60px;
 }
-
-.video-control-button {
-    background-color: #4CAF50; /* Цвет фона */
-    border: none; /* Убрать границы */
-    color: white; /* Цвет текста */
-    padding: 10px 20px; /* Отступы внутри кнопки */
-    text-align: center; /* Выравнивание текста по центру */
-    text-decoration: none; /* Убрать подчеркивание ссылки */
-    display: inline-block; /* Отображать как блочный элемент */
-    font-size: 16px; /* Размер шрифта */
-    cursor: pointer; /* Курсор при наведении */
-    border-radius: 8px; /* Закругление углов */
-    transition: background-color 0.3s; /* Плавное изменение цвета фона */
-    margin-right: 10px; /* Отступ справа между кнопками */
-}
-
-    .video-control-button:hover {
-        background-color: #45a049; /* Цвет фона при наведении */
-    }
