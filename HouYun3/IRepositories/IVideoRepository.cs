@@ -11,5 +11,6 @@ namespace HouYun3.IRepositories
         Task<Video> UpdateVideo(Video video);
         Task DeleteVideo(Guid id);
         Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm);
+        Task<IEnumerable<Video>> GetAllVideosByChannelName(string ChannelName);
     }
 }
