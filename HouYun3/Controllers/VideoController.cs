@@ -1,7 +1,6 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
-using HouYun3.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using HouYun3.ViewModels.forVideo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;

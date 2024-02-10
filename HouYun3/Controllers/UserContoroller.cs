@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using HouYun3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HouYun3.IRepositories;
 using HouYun3.Models;
 using System.Security.Claims;
+using HouYun3.ViewModels.forUser;
 
 namespace HouYun3.Controllers.UserContoller
 {
@@ -49,7 +49,6 @@ namespace HouYun3.Controllers.UserContoller
         {
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -86,7 +85,6 @@ namespace HouYun3.Controllers.UserContoller
             return View();
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)

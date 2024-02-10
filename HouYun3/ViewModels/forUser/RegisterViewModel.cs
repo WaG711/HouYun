@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun3.ViewModels
+namespace HouYun3.ViewModels.forUser
 {
     public class RegisterViewModel
     {

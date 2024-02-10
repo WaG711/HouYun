@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun3.ViewModels
+namespace HouYun3.ViewModels.forUser
 {
     public class ChangePasswordViewModel
     {
@@ -11,6 +11,6 @@ namespace HouYun3.ViewModels
         [Required]
         [Display(Name = "Старый Пароль")]
         [DataType(DataType.Password)]
-        public string OldPassword { get; set;}
+        public string OldPassword { get; set; }
     }
 }

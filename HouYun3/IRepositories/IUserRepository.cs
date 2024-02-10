@@ -1,5 +1,5 @@
 ﻿using HouYun3.Models;
-using HouYun3.ViewModels;
+using HouYun3.ViewModels.forUser;
 
 namespace HouYun3.IRepositories
 {
