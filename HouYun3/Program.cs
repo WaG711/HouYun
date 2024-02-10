@@ -28,7 +28,7 @@ namespace HouYun3
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-
+   
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
