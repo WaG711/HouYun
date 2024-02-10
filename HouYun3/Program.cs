@@ -42,6 +42,8 @@ namespace HouYun3
             builder.Services.AddScoped<IViewRepository, ViewRepository>();
             builder.Services.AddScoped<IWatchLaterRepository, WatchLaterRepository>();
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
+            builder.Services.AddScoped<IChannelRepository, ChannelRepository>();
+            builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
             var app = builder.Build();
 
@@ -65,9 +67,18 @@ namespace HouYun3
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-            name: "videoDetails",
-            pattern: "Video/Details/{id}",
-            defaults: new { controller = "Video", action = "Details" });
+                name: "viewController",
+                pattern: "{controller=ViewController}/{action=AddView}/{id?}");
+
+            app.MapControllerRoute(
+                name: "like",
+                pattern: "like/{action}/{videoId?}",
+                defaults: new { controller = "Like" });
+
+            app.MapControllerRoute(
+                name: "addComment",
+                pattern: "Comment/AddComment",
+                defaults: new { controller = "Comment", action = "AddComment" });
 
             app.MapControllerRoute(
                 name: "search",

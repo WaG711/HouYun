@@ -8,5 +8,6 @@ namespace HouYun3.IRepositories
         Task<View> GetViewById(Guid id);
         Task AddView(View view);
         Task DeleteView(Guid id);
+        Task<View> GetViewByVideoAndUser(Guid videoId, string userId);
     }
 }

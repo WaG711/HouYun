@@ -18,9 +18,9 @@ namespace HouYun3.Controllers
             _likeRepository = likeRepository;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddLike(int videoId)
+        public async Task<IActionResult> AddLike(Guid videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userRepository.GetUserById(userId);
@@ -28,29 +28,32 @@ namespace HouYun3.Controllers
 
             if (user != null && video != null)
             {
-                var like = new Like
+                var existingLike = await _likeRepository.GetLikeByUserIdAndVideoId(userId, videoId);
+                if (existingLike == null)
                 {
-                    User = user,
-                    Video = video
-                };
+                    var like = new Like
+                    {
+                        User = user,
+                        Video = video
+                    };
 
-                await _likeRepository.AddLike(like);
+                    await _likeRepository.AddLike(like);
+                }
             }
 
-            return RedirectToAction("Details", new { id = videoId });
+            return RedirectToAction("Details", "Video", new { id = videoId });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveLike(int videoId)
+        public async Task<IActionResult> RemoveLike(Guid videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var video = await _videoRepository.GetVideoById(videoId);
 
             if (userId != null && video != null)
             {
-                var likes = await _likeRepository.GetLikesByVideoId(videoId);
-                var likeToRemove = likes.FirstOrDefault(l => l.UserId == userId);
+                var likeToRemove = await _likeRepository.GetLikeByUserIdAndVideoId(userId, videoId);
 
                 if (likeToRemove != null)
                 {
@@ -58,7 +61,7 @@ namespace HouYun3.Controllers
                 }
             }
 
-            return RedirectToAction("Details", new { id = videoId });
-        }*/
+            return RedirectToAction("Details", "Video", new { id = videoId });
+        }
     }
 }

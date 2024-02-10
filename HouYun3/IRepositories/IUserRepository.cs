@@ -1,5 +1,5 @@
 ﻿using HouYun3.Models;
-using HouYun3.ViewModels;
+using HouYun3.ViewModels.forUser;
 
 namespace HouYun3.IRepositories
 {
@@ -14,7 +14,5 @@ namespace HouYun3.IRepositories
         Task<bool> LoginUser(string userName, string password, bool rememberMe);
         Task<bool> RegisterUser(RegisterViewModel model);
         Task Logout();
-
-
     }
 }

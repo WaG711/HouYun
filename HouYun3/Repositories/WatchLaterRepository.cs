@@ -14,9 +14,22 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchLater>> GetAllWatchLaterItems()
+        public async Task<IEnumerable<Video>> GetVideosByUserId(string userId)
         {
-            return await _context.WatchLaterItems.ToListAsync();
+            var watchLaterItems = await _context.WatchLaterItems
+                .Include(v => v.User)
+                .Include(v => v.Video)
+                    .ThenInclude(v => v.Views)
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
+
+            var videoIds = watchLaterItems.Select(v => v.VideoId).ToList();
+
+            var videos = await _context.Videos
+                .Where(v => videoIds.Contains(v.VideoId))
+                .ToListAsync();
+
+            return videos;
         }
 
         public async Task<WatchLater> GetWatchLaterItemById(Guid id)
@@ -38,6 +51,12 @@ namespace HouYun3.Repositories
                 _context.WatchLaterItems.Remove(watchLaterItem);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<WatchLater> GetWatchLaterItemByUserIdAndVideoId(string userId, Guid videoId)
+        {
+            return await _context.WatchLaterItems
+                .FirstOrDefaultAsync(wl => wl.UserId == userId && wl.VideoId == videoId);
         }
     }
 }

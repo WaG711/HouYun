@@ -1,4 +1,4 @@
-﻿@model HouYun3.ViewModels.VideoViewModel
+﻿@model HouYun3.ViewModels.forVideo.VideoViewModel
 
 @{
     ViewData["Title"] = "Video Index";
@@ -49,11 +49,13 @@
                         <h5 class="card-title">@video.Title</h5>
                         <p class="card-text">Uploaded by: @video.User.UserName</p>
                         <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
+                        <p class="card-text">Views: @video.Views.Count</p>
                         <video width="100%" controls>
                             <source src="@Url.Content($"~/videos/{video.FilePath}")" type="video/mp4">
                         </video>
                     </div>
                 </a>
+                <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="btn btn-primary">Добавить в "Смотреть позже"</a>
             </div>
         </div>
     }

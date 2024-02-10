@@ -8,6 +8,10 @@ namespace HouYun3.Models
         [Key]
         public Guid WatchLaterId { get; set; }
 
+        [ScaffoldColumn(false)]
+        [Display(Name = "Дата просмотра")]
+        public DateTime WatchLaterDate { get; set; }
+
         public Guid VideoId { get; set; }
         [ForeignKey("VideoId")]
         public Video Video { get; set; }
@@ -15,5 +19,10 @@ namespace HouYun3.Models
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
+
+        public WatchLater()
+        {
+            WatchLaterDate = DateTime.UtcNow;
+        }
     }
 }

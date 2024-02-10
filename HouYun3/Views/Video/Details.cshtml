@@ -9,17 +9,20 @@
     <p>@Model.Description</p>
     <p>Uploaded by: @Model.User.UserName</p>
     <p>Upload Date: @Model.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-    <video controls style="max-width: 100%;">
+    <p>Views: @Model.Views.Count</p>
+
+    <video id="videoPlayer" controls style="max-width: 100%;">
         <source src="@Url.Content("~/videos/" + Model.FilePath)" type="video/mp4">
     </video>
-    <p>Likes: @Model.Likes</p>
-    <form id="likeForm" asp-action="AddLike" asp-controller="Video" method="post">
+
+    <p>Likes: @Model.Likes.Count</p>
+    <form id="likeForm">
         <input type="hidden" id="videoId" name="videoId" value="@Model.VideoId" />
-        <button type="submit" class="btn btn-primary">Like</button>
+        <button type="button" onclick="addLike()" class="btn btn-primary">Like</button>
     </form>
-    <form id="removeLikeForm" asp-action="RemoveLike" asp-controller="Video" method="post">
+    <form id="removeLikeForm">
         <input type="hidden" id="videoId" name="videoId" value="@Model.VideoId" />
-        <button type="submit" class="btn btn-danger">Remove Like</button>
+        <button type="button" onclick="removeLike()" class="btn btn-danger">Remove Like</button>
     </form>
     <div id="commentsSection">
         <h3>Comments</h3>
@@ -33,81 +36,112 @@
     </div>
     <div id="addCommentSection">
         <h3>Add Comment</h3>
-        <form id="addCommentForm" asp-action="AddComment" asp-controller="Comment" method="post">
+        <form id="addCommentForm">
             <input type="hidden" id="videoId" name="videoId" value="@Model.VideoId" />
             <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
-            <button type="submit" class="btn btn-primary">Add Comment</button>
+            <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
         </form>
     </div>
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById("likeForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch("/Video/AddLike", {
-                method: "POST",
-                body: formData,
+        document.addEventListener('DOMContentLoaded', function () {
+            var videoId = '@Model.VideoId';
+            var userId = '@Model.User.Id';
+            addView(videoId, userId);
+        });
+
+        function addView(videoId, userId) {
+            fetch(`/ViewController/AddView?videoId=${videoId}&userId=${userId}`, {
+                method: 'POST',
                 headers: {
-                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
-                }
+                    'Content-Type': 'application/json'
+                },
             })
                 .then(response => {
-                    if (response.ok) {
-                        alert("Liked the video!");
-                        window.location.reload();
-                    } else {
-                        alert("Failed to like the video.");
+                    if (!response.ok) {
+                        console.error('Ошибка при добавлении просмотра');
                     }
                 })
                 .catch(error => {
-                    console.error("Error:", error);
+                    console.error('Ошибка при отправке запроса:', error);
                 });
-        });
+        }
+    </script>
 
-        document.getElementById("removeLikeForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            fetch("/Video/RemoveLike", {
+    <script>
+        function addLike() {
+            var videoId = document.getElementById("videoId").value;
+            fetch("/Like/AddLike?videoId=" + videoId, {
                 method: "POST",
-                body: formData,
                 headers: {
-                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
                 }
             })
-                .then(response => {
-                    if (response.ok) {
-                        alert("Removed like from the video!");
-                        window.location.reload();
-                    } else {
-                        alert("Failed to remove like from the video.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
-        });
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Failed to like the video.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
 
-        document.getElementById("addCommentForm").addEventListener("submit", function (event) {
-            event.preventDefault();
-            var formData = new FormData(this);
+    <script>
+        function removeLike() {
+            var videoId = document.getElementById("videoId").value;
+            fetch("/Like/RemoveLike?videoId=" + videoId, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Failed to remove like from the video.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+
+    <script>
+        function addComment() {
+            var videoId = document.getElementById("videoId").value;
+            var commentText = document.getElementById("commentText").value;
+
+            var formData = new FormData();
+            formData.append("videoId", videoId);
+            formData.append("commentText", commentText);
+
             fetch("/Comment/AddComment", {
                 method: "POST",
                 body: formData,
                 headers: {
-                    RequestVerificationToken: document.querySelector('input[name="__RequestVerificationToken"]').value
+                    "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
                 }
             })
                 .then(response => {
                     if (response.ok) {
-                        document.getElementById("commentText").value = "";
                         window.location.reload();
+                    } else {
+                        console.error("Failed to add comment.");
                     }
                 })
                 .catch(error => {
                     console.error("Error:", error);
                 });
-        });
+        }
     </script>
 }
