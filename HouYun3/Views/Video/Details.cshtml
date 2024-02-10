@@ -9,6 +9,7 @@
     <p>@Model.Description</p>
     <p>Uploaded by: @Model.User.UserName</p>
     <p>Upload Date: @Model.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+    <p>Views: @Model.Views.Count</p>
     <video controls style="max-width: 100%;">
         <source src="@Url.Content("~/videos/" + Model.FilePath)" type="video/mp4">
     </video>
@@ -43,6 +44,29 @@
 
 @section Scripts {
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var videoId = '@Model.VideoId';
+            var userId = '@Model.User.Id';
+            addView(videoId, userId);
+        });
+
+        function addView(videoId, userId) {
+            fetch(`/ViewController/AddView?videoId=${videoId}&userId=${userId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Ошибка при добавлении просмотра');
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка при отправке запроса:', error);
+                });
+        }
+
         function addLike() {
             var videoId = document.getElementById("videoId").value;
             fetch("/Like/AddLike?videoId=" + videoId, {
