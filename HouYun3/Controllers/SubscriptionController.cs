@@ -13,7 +13,7 @@ namespace HouYun3.Controllers
             _subscriptionRepository = subscriptionRepository;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Subscribe(Guid channelId, string userId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
@@ -35,7 +35,7 @@ namespace HouYun3.Controllers
             return Redirect(refererUrl);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Unsubscribe(Guid subscriptionId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
