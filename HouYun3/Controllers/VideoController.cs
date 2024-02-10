@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
