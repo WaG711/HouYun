@@ -52,5 +52,11 @@ namespace HouYun3.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<WatchLater> GetWatchLaterItemByUserIdAndVideoId(string userId, Guid videoId)
+        {
+            return await _context.WatchLaterItems
+                .FirstOrDefaultAsync(wl => wl.UserId == userId && wl.VideoId == videoId);
+        }
     }
 }

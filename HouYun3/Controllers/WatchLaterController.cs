@@ -27,7 +27,15 @@ namespace HouYun3.Controllers
         [HttpGet]
         public async Task<IActionResult> AddToWatchLater(Guid videoId)
         {
+            string refererUrl = Request.Headers["Referer"].ToString();
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var existingItem = await _watchLaterRepository.GetWatchLaterItemByUserIdAndVideoId(userId, videoId);
+            if (existingItem != null)
+            {
+                return Redirect(refererUrl);
+            }
 
             var watchLaterItem = new WatchLater
             {
@@ -36,7 +44,8 @@ namespace HouYun3.Controllers
             };
 
             await _watchLaterRepository.AddWatchLaterItem(watchLaterItem);
-            return Ok();
+
+            return Redirect(refererUrl);
         }
 
         [HttpPost]
