@@ -14,9 +14,22 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchLater>> GetAllWatchLaterItems()
+        public async Task<IEnumerable<Video>> GetVideosByUserId(string userId)
         {
-            return await _context.WatchLaterItems.ToListAsync();
+            var watchLaterItems = await _context.WatchLaterItems
+                .Include(v => v.User)
+                .Include(v => v.Video)
+                    .ThenInclude(v => v.Views)
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
+
+            var videoIds = watchLaterItems.Select(v => v.VideoId).ToList();
+
+            var videos = await _context.Videos
+                .Where(v => videoIds.Contains(v.VideoId))
+                .ToListAsync();
+
+            return videos;
         }
 
         public async Task<WatchLater> GetWatchLaterItemById(Guid id)

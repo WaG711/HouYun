@@ -1,72 +1,49 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-    /*public class WatchLaterController : Controller
+    public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;
-        private readonly IVideoRepository _videoRepository;
-        private readonly IUserRepository _userRepository;
 
-        public WatchLaterController(IWatchLaterRepository watchLaterRepository, IVideoRepository videoRepository, IUserRepository userRepository)
+        public WatchLaterController(IWatchLaterRepository watchLaterRepository)
         {
             _watchLaterRepository = watchLaterRepository;
-            _videoRepository = videoRepository;
-            _userRepository = userRepository;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var watchLaterList = await _watchLaterRepository.GetWatchLaterByUserId(int.Parse(userId));
 
-            return View(watchLaterList);
+            var watchLaterItems = await _watchLaterRepository.GetVideosByUserId(userId);
+            return View(watchLaterItems);
         }
 
-        public async Task<IActionResult> Details(int watchLaterId)
-        {
-            var watchLater = await _watchLaterRepository.GetWatchLaterById(watchLaterId);
-
-            if (watchLater == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Details", "Video", new { id = watchLater.Video.VideoId });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToWatchLater(int videoId)
+        [HttpGet]
+        public async Task<IActionResult> AddToWatchLater(Guid videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserByIdAsync(userId.ToString());
-            var video = await _videoRepository.GetVideoById(videoId);
 
-            if (user != null && video != null)
+            var watchLaterItem = new WatchLater
             {
-                var watchLater = new WatchLater
-                {
-                    User = user,
-                    Video = video
-                };
+                UserId = userId,
+                VideoId = videoId
+            };
 
-                await _watchLaterRepository.AddWatchLater(watchLater);
-            }
-
-            return RedirectToAction("Index", "Video");
+            await _watchLaterRepository.AddWatchLaterItem(watchLaterItem);
+            return Ok();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveFromWatchLater(int watchLaterId)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            await _watchLaterRepository.DeleteWatchLater(watchLaterId);
-
+            await _watchLaterRepository.DeleteWatchLaterItem(id);
             return RedirectToAction("Index");
         }
-    }*/
+    }
 }
