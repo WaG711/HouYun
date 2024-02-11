@@ -41,6 +41,23 @@
                                     </button>
                                 </form>
                             </li>
+                            <li class="nav-item">
+                                <form method="post" asp-action="ChangeUsername" asp-controller="User">
+                                    <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
+                                        Change Username
+                                    </button>
+                                </form>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <form method="post" asp-action="Index" asp-controller="AdminPanel">
+                                        <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">
+                                            Admin Panel
+                                        </button>
+                                    </form>
+                                </li>
+                            }
                         }
                         else
                         {

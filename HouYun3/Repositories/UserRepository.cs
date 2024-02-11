@@ -13,12 +13,13 @@ namespace HouYun3.Repositories
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _roleManager = roleManager;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -67,6 +68,38 @@ namespace HouYun3.Repositories
             }
         }
 
+        public async Task<bool> ChangeUsername(string userId, string newUsername, string oldPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, oldPassword);
+            if (!passwordValid)
+            {
+                return false;
+            }
+
+            var existingUser = await _userManager.FindByNameAsync(newUsername);
+            if (existingUser != null && existingUser.Id != userId)
+            {
+                return false;
+            }
+
+            var result = await _userManager.SetUserNameAsync(user, newUsername);
+
+            if (!result.Succeeded)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
         public async Task<bool> ChangeUserPassword(string userId, string oldPassword, string newPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -89,7 +122,7 @@ namespace HouYun3.Repositories
 
         public async Task<bool> RegisterUser(RegisterViewModel model)
         {
-            var user = new User { Email = model.Email, UserName = model.UserName, Channel = { Name = model.UserName } };
+            var user = new User { Email = model.Email, UserName = model.UserName };
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
             if (existingUser != null)
@@ -101,6 +134,20 @@ namespace HouYun3.Repositories
 
             if (result.Succeeded)
             {
+                if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("User"));
+                }
+
+                if (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "User");
+                }
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return true;
             }

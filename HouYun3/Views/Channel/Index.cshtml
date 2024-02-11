@@ -1,0 +1,26 @@
+﻿@model HouYun3.ViewModels.forVideo.ChannelViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    @foreach (var video in Model.Videos)
+    {
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })">
+                    <div class="card-body">
+                        <h5 class="card-title">@video.Title</h5>
+                        <p class="card-text">Uploaded by: @video.User.UserName</p>
+                        <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
+                        <p class="card-text">Views: @video.Views.Count</p>
+                        <video width="100%" controls>
+                            <source src="@Url.Content($"~/videos/{video.FilePath}")" type="video/mp4">
+                        </video>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
+</div>

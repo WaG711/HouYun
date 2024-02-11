@@ -103,5 +103,15 @@ namespace HouYun3.Repositories
                 .Where(v => v.Title.Contains(searchTerm))
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Video>> GetAllVideosByChannelName(string ChannelName)
+        {
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.User)
+                .Include(v => v.Views)
+                .Where(v => v.User.UserName == ChannelName)
+                .ToListAsync();
+        }
     }
 }
