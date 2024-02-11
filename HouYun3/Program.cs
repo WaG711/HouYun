@@ -84,10 +84,17 @@ namespace HouYun3
                 name: "search",
                 pattern: "Video/Search",
                 defaults: new { controller = "Search", action = "Search" });
+
             app.MapControllerRoute(
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
+
+
+           app.MapControllerRoute(
+                name: "username",
+                pattern: "{username}/{action=Index}/{id?}",
+                defaults: new { controller = "User" });
 
             app.Run();
         }

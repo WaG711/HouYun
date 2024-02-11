@@ -35,14 +35,14 @@
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="post" asp-action="ChangePassword" asp-controller="User">
+                                <form method="post" asp-action="ChangePassword" asp-controller="@User.Identity.Name">
                                     <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
                                         Change Password
                                     </button>
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="post" asp-action="ChangeUsername" asp-controller="User">
+                                <form method="post" asp-action="ChangeUsername" asp-controller="@User.Identity.Name">
                                     <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
                                         Change Username
                                     </button>
@@ -65,10 +65,10 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Registration">Registration</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Registration" asp-action="">Registration</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="">Login</a>
                             </li>
                         }
                     </ul>

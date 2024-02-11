@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Repositories
 {
-    public class WatchLaterRepository : IWatchLaterRepository
+    public class WatchLaterRepository :     IWatchLaterRepository
     {
         private readonly ApplicationDbContext _context;
 

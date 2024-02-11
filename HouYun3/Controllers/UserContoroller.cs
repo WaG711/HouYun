@@ -11,7 +11,6 @@ using HouYun3.ViewModels.forUser;
 
 namespace HouYun3.Controllers.UserContoller
 {
-
     public class UserController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;
@@ -20,50 +19,6 @@ namespace HouYun3.Controllers.UserContoller
         public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-        }
-
-        [HttpGet]
-        public IActionResult Registration()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registration(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _userRepository.RegisterUser(model);
-                if (result)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError(string.Empty, "Ошибка при регистрации.");
-            }
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _userRepository.LoginUser(model.UserName, model.Password, model.RememberMe);
-                if (result)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
-            }
-            return View(model);
         }
 
         [HttpPost]
@@ -75,10 +30,18 @@ namespace HouYun3.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword()
+        public async Task<IActionResult> ChangePassword(string username)
         {
+            string currentUsername = User.Identity.Name;
+
+            if (string.IsNullOrEmpty(username) || !username.Equals(currentUsername, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -104,8 +67,15 @@ namespace HouYun3.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangeUsername()
+        public async Task<IActionResult> ChangeUsername(string username)
         {
+            string currentUsername = User.Identity.Name;
+
+            if (string.IsNullOrEmpty(username) || !username.Equals(currentUsername, StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
