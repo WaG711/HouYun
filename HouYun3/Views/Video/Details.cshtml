@@ -7,12 +7,12 @@
 <div>
     <h2>@Model.Title</h2>
     <p>@Model.Description</p>
-    <p>Uploaded by: @Model.User.UserName</p>
+    <p>Uploaded by: @Model.Channel.Name</p>
     <p>Upload Date: @Model.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
     <p>Views: @Model.Views.Count</p>
 
     <video id="videoPlayer" controls style="max-width: 100%;">
-        <source src="@Url.Content("~/videos/" + Model.FilePath)" type="video/mp4">
+        <source src="@Url.Content("~/videos/" + Model.VideoPath)" type="video/mp4">
     </video>
 
     <p>Likes: @Model.Likes.Count</p>
@@ -48,7 +48,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var videoId = '@Model.VideoId';
-            var userId = '@Model.User.Id';
+            var userId = '@Model.Channel.UserId';
             addView(videoId, userId);
         });
 

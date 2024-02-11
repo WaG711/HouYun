@@ -19,12 +19,20 @@ namespace HouYun3.Models
         public string Description { get; set; }
 
         [ScaffoldColumn(false)]
-        public string FilePath { get; set; }
+        public string VideoPath { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string PosterPath { get; set; }
 
         [NotMapped]
         [Display(Name = "Файл видео")]
         [Required(ErrorMessage = "Выберите видеофайл")]
         public IFormFile VideoFile { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Файл постера")]
+        [Required(ErrorMessage = "Выберите постер")]
+        public IFormFile PosterFile { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime UploadDate { get; set; }
@@ -35,9 +43,9 @@ namespace HouYun3.Models
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public Guid ChannelId { get; set; }
+        [ForeignKey("ChannelId")]
+        public Channel Channel { get; set; }
 
         public WatchHistory WatchHistory { get; set; }
         public WatchLater WatchLater { get; set; }

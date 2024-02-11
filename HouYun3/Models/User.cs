@@ -17,7 +17,6 @@ namespace HouYun3.Models
         public override string UserName { get; set; }
 
         public Channel Channel { get; set; }
-        public ICollection<Video> Videos { get; set; }
         public ICollection<SearchHistory> SearchHistory { get; set; }
         public ICollection<WatchHistory> WatchHistory { get; set; }
         public ICollection<WatchLater> WatchLaterList { get; set; }
@@ -29,7 +28,6 @@ namespace HouYun3.Models
 
         public User()
         {
-            Videos = new List<Video>();
             SearchHistory = new List<SearchHistory>();
             WatchHistory = new List<WatchHistory>();
             WatchLaterList = new List<WatchLater>();

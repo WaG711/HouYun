@@ -21,5 +21,9 @@ namespace HouYun3.ViewModels.forVideo
         [Display(Name = "Файл видео")]
         [Required(ErrorMessage = "Выберите видеофайл")]
         public IFormFile VideoFile { get; set; }
+
+        [Display(Name = "Файл постера")]
+        [Required(ErrorMessage = "Выберите постер")]
+        public IFormFile PosterFile { get; set; }
     }
 }
