@@ -1,9 +1,7 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
-using HouYun3.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Threading.Channels;
 
 namespace HouYun3.Controllers
 {
