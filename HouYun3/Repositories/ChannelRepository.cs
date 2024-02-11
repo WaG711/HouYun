@@ -17,6 +17,7 @@ namespace HouYun3.Repositories
         public async Task<Channel> GetChannelByName(string channelName)
         {
             return await _context.Channels
+                .Include(v => v.Subscribers)
                 .Include(v => v.Videos)
                     .ThenInclude(v => v.Views)
                 .FirstOrDefaultAsync(c => c.Name == channelName);
