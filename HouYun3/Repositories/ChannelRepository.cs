@@ -20,6 +20,14 @@ namespace HouYun3.Repositories
             return channel.ChannelId;
         }
 
+        public async Task<Channel> GetChannelByUserId(string userId)
+        {
+            return await _context.Channels
+                .Include(v => v.Videos)
+                    .ThenInclude(v => v.Views)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+        }
+
         public async Task<Channel> GetChannelById(Guid id)
         {
             return await _context.Channels.FindAsync(id);

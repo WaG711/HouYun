@@ -1,26 +1,24 @@
 ﻿using HouYun3.IRepositories;
 using Microsoft.AspNetCore.Mvc;
-using HouYun3.ViewModels.forVideo;
+using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
     public class ChannelController : Controller
     {
-        private readonly IVideoRepository _videoRepository;
+        private readonly IChannelRepository _channelRepository;
 
-        public ChannelController(IVideoRepository videoRepository)
+        public ChannelController(IChannelRepository channelRepository, IVideoRepository videoRepository)
         {
-            _videoRepository = videoRepository;
+            _channelRepository = channelRepository;
         }
-        public async Task<IActionResult> Index(string channelName)
+
+        public async Task<IActionResult> Index()
         {
-            var videos = await _videoRepository.GetAllVideosByChannelName(channelName);
-            var channelViewModel = new ChannelViewModel
-            {
-                ChannelName = channelName,
-                Videos = videos
-            };
-            return View(channelViewModel);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            return View(channel);
         }
     }
 }

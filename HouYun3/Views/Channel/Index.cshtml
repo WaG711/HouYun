@@ -1,9 +1,13 @@
-﻿@model HouYun3.ViewModels.forVideo.ChannelViewModel
+﻿@model HouYun3.Models.Channel
 
 @{
     ViewData["Title"] = "Index";
 }
 
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+
+<h2>Videos:</h2>
 <div class="row">
     @foreach (var video in Model.Videos)
     {
