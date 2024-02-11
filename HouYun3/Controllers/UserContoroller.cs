@@ -14,7 +14,6 @@ namespace HouYun3.Controllers.UserContoller
 
     public class UserController : Controller
     {
-        private readonly IWatchLaterRepository _watchLaterRepository;
         private readonly IUserRepository _userRepository;
 
         public UserController(IUserRepository userRepository)

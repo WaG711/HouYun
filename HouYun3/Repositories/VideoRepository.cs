@@ -112,25 +112,5 @@ namespace HouYun3.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
-        {
-            return await _context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.Channel)
-                .Include(v => v.Views)
-                .Where(v => v.Title.Contains(searchTerm))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Video>> GetAllVideosByChannelName(string ChannelName)
-        {
-            return await _context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.Channel)
-                .Include(v => v.Views)
-                .Where(v => v.Channel.Name == ChannelName)
-                .ToListAsync();
-        }
     }
 }

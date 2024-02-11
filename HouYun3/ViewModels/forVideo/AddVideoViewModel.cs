@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HouYun3.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouYun3.ViewModels.forVideo
 {
@@ -25,5 +26,7 @@ namespace HouYun3.ViewModels.forVideo
         [Display(Name = "Файл постера")]
         [Required(ErrorMessage = "Выберите постер")]
         public IFormFile PosterFile { get; set; }
+
+        public IEnumerable<Category>? Categories { get; set; }
     }
 }

@@ -8,12 +8,10 @@ namespace HouYun3.Controllers
     public class CommentController : Controller
     {
         private readonly IChannelRepository _channelRepository;
-        private readonly IVideoRepository _videoRepository;
         private readonly ICommentRepository _commentRepository;
 
-        public CommentController(IVideoRepository videoRepository, ICommentRepository commentRepository, IChannelRepository channelRepository)
+        public CommentController(ICommentRepository commentRepository, IChannelRepository channelRepository)
         {
-            _videoRepository = videoRepository;
             _commentRepository = commentRepository;
             _channelRepository = channelRepository;
         }
@@ -22,23 +20,24 @@ namespace HouYun3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddComment(Guid videoId, string commentText)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channel = await _channelRepository.GetChannelByUserId(userId);
-            var video = await _videoRepository.GetVideoById(videoId);
+            string refererUrl = Request.Headers.Referer.ToString();
 
-            if (channel != null && video != null && !string.IsNullOrWhiteSpace(commentText))
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+
+            if (!string.IsNullOrWhiteSpace(commentText))
             {
                 var comment = new Comment
                 {
                     Text = commentText,
-                    Channel = channel,
-                    Video = video
+                    ChannelId = channelId,
+                    VideoId = videoId
                 };
 
                 await _commentRepository.AddComment(comment);
             }
 
-            return RedirectToAction("Details", "Video", new { id = videoId });
+            return Redirect(refererUrl);
         }
     }
 }

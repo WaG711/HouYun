@@ -18,6 +18,7 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> Subscribe(Guid channelId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var existingSubscription = await _subscriptionRepository.GetSubscriptionByChannelAndUser(channelId, userId);
@@ -43,19 +44,15 @@ namespace HouYun3.Controllers
             string refererUrl = Request.Headers.Referer.ToString();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
             var userSubscriptions = await _subscriptionRepository.GetSubscriptionsByUserId(userId);
 
             var subscriptionToUnsubscribe = userSubscriptions.FirstOrDefault(sub => sub.ChannelId == channelId);
-
             if (subscriptionToUnsubscribe == null)
             {
                 return Redirect(refererUrl);
             }
 
-            var subscriptionId = subscriptionToUnsubscribe.SubscriptionId;
-
-            await _subscriptionRepository.DeleteSubscription(subscriptionId);
+            await _subscriptionRepository.DeleteSubscription(subscriptionToUnsubscribe.SubscriptionId);
 
             return Redirect(refererUrl);
         }

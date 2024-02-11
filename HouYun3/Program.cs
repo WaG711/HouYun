@@ -101,6 +101,12 @@ namespace HouYun3
                 pattern: "Subscription/Subscribe",
                 defaults: new { controller = "Subscription", action = "Subscribe" });
 
+            app.MapControllerRoute(
+                name: "search",
+                pattern: "Search/SearchResult/{searchTerm?}",
+                defaults: new { controller = "Search", action = "SearchResult" }
+            );
+
             app.Run();
         }
     }
