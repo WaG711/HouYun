@@ -48,16 +48,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var videoId = '@Model.VideoId';
-            var userId = '@Model.Channel.UserId';
-            addView(videoId, userId);
+            addView(videoId);
         });
 
-        function addView(videoId, userId) {
-            fetch(`/ViewController/AddView?videoId=${videoId}&userId=${userId}`, {
+        function addView(videoId) {
+            var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            fetch(`/ViewController/AddView/${videoId}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
+                body: JSON.stringify({})
             })
                 .then(response => {
                     if (!response.ok) {

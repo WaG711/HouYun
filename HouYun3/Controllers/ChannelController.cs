@@ -1,6 +1,5 @@
 ﻿using HouYun3.IRepositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
@@ -8,15 +7,19 @@ namespace HouYun3.Controllers
     {
         private readonly IChannelRepository _channelRepository;
 
-        public ChannelController(IChannelRepository channelRepository, IVideoRepository videoRepository)
+        public ChannelController(IChannelRepository channelRepository)
         {
             _channelRepository = channelRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string channelName)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channel = await _channelRepository.GetChannelByUserId(userId);
+            var channel = await _channelRepository.GetChannelByName(channelName);
+
+            if (channel == null)
+            {
+                return NotFound();
+            }
 
             return View(channel);
         }
