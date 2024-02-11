@@ -49,6 +49,7 @@ namespace HouYun3.Controllers.UserContoller
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
