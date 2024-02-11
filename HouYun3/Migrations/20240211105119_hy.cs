@@ -197,16 +197,16 @@ namespace HouYun3.Migrations
                     Message = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     NotificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.NotificationId);
                     table.ForeignKey(
-                        name: "FK_Notifications_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Notifications_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -217,16 +217,16 @@ namespace HouYun3.Migrations
                     SearchHistoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SearchQuery = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SearchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SearchHistories", x => x.SearchHistoryId);
                     table.ForeignKey(
-                        name: "FK_SearchHistories_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_SearchHistories_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -293,16 +293,16 @@ namespace HouYun3.Migrations
                     Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Comments_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Videos_VideoId",
@@ -318,16 +318,16 @@ namespace HouYun3.Migrations
                 {
                     LikeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Likes", x => x.LikeId);
                     table.ForeignKey(
-                        name: "FK_Likes_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Likes_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Likes_Videos_VideoId",
@@ -343,16 +343,16 @@ namespace HouYun3.Migrations
                 {
                     ViewId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Views", x => x.ViewId);
                     table.ForeignKey(
-                        name: "FK_Views_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Views_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Views_Videos_VideoId",
@@ -369,16 +369,16 @@ namespace HouYun3.Migrations
                     WatchHistoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WatchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WatchHistories", x => x.WatchHistoryId);
                     table.ForeignKey(
-                        name: "FK_WatchHistories_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_WatchHistories_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WatchHistories_Videos_VideoId",
@@ -395,16 +395,16 @@ namespace HouYun3.Migrations
                     WatchLaterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     WatchLaterDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WatchLaterItems", x => x.WatchLaterId);
                     table.ForeignKey(
-                        name: "FK_WatchLaterItems_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_WatchLaterItems_Channels_ChannelId",
+                        column: x => x.ChannelId,
+                        principalTable: "Channels",
+                        principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WatchLaterItems_Videos_VideoId",
@@ -460,9 +460,9 @@ namespace HouYun3.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserId",
+                name: "IX_Comments_ChannelId",
                 table: "Comments",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_VideoId",
@@ -470,9 +470,9 @@ namespace HouYun3.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Likes_UserId",
+                name: "IX_Likes_ChannelId",
                 table: "Likes",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Likes_VideoId",
@@ -480,14 +480,14 @@ namespace HouYun3.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notifications_UserId",
+                name: "IX_Notifications_ChannelId",
                 table: "Notifications",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SearchHistories_UserId",
+                name: "IX_SearchHistories_ChannelId",
                 table: "SearchHistories",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_ChannelId",
@@ -510,9 +510,9 @@ namespace HouYun3.Migrations
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Views_UserId",
+                name: "IX_Views_ChannelId",
                 table: "Views",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Views_VideoId",
@@ -520,9 +520,9 @@ namespace HouYun3.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchHistories_UserId",
+                name: "IX_WatchHistories_ChannelId",
                 table: "WatchHistories",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WatchHistories_VideoId",
@@ -531,9 +531,9 @@ namespace HouYun3.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_WatchLaterItems_UserId",
+                name: "IX_WatchLaterItems_ChannelId",
                 table: "WatchLaterItems",
-                column: "UserId");
+                column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WatchLaterItems_VideoId",

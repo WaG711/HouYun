@@ -1,25 +1,30 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
+using HouYun3.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Channels;
 
 namespace HouYun3.Controllers
 {
     public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;
+        private readonly IChannelRepository _channelRepository;
 
-        public WatchLaterController(IWatchLaterRepository watchLaterRepository)
+        public WatchLaterController(IWatchLaterRepository watchLaterRepository, IChannelRepository channelRepository)
         {
             _watchLaterRepository = watchLaterRepository;
+            _channelRepository = channelRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var watchLaterItems = await _watchLaterRepository.GetVideosByUserId(userId);
+            var watchLaterItems = await _watchLaterRepository.GetVideosByChannelId(channelId);
             return View(watchLaterItems);
         }
 
@@ -29,8 +34,9 @@ namespace HouYun3.Controllers
             string refererUrl = Request.Headers.Referer.ToString();
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var existingItem = await _watchLaterRepository.GetWatchLaterItemByUserIdAndVideoId(userId, videoId);
+            var existingItem = await _watchLaterRepository.GetWatchLaterItemByChannelIdAndVideoId(channelId, videoId);
             if (existingItem != null)
             {
                 return Redirect(refererUrl);
@@ -38,7 +44,7 @@ namespace HouYun3.Controllers
 
             var watchLaterItem = new WatchLater
             {
-                UserId = userId,
+                ChannelId = channelId,
                 VideoId = videoId
             };
 

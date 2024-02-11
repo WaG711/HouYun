@@ -16,9 +16,9 @@ namespace HouYun3.Models
         [ForeignKey("VideoId")]
         public Video Video { get; set; }
 
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public Guid ChannelId { get; set; }
+        [ForeignKey("ChannelId")]
+        public Channel Channel { get; set; }
 
 
         public WatchHistory()

@@ -14,10 +14,10 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<SearchHistory>> GetSearchHistoryByUserId(string userId)
+        public async Task<IEnumerable<SearchHistory>> GetSearchHistoryByChannelId(Guid channelId)
         {
             return await _context.SearchHistories
-                .Where(s => s.UserId == userId)
+                .Where(s => s.ChannelId == channelId)
                 .OrderByDescending(s => s.SearchDate)
                 .Take(10)
                 .ToListAsync();

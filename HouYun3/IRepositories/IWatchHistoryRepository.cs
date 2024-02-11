@@ -8,6 +8,6 @@ namespace HouYun3.IRepositories
         Task<WatchHistory> GetWatchHistoryById(Guid id);
         Task AddWatchHistory(WatchHistory watchHistory);
         Task DeleteWatchHistory(Guid id);
-        Task DeleteAllWatchHistory(string UserId);
+        Task DeleteAllWatchHistory(Guid channelId);
     }
 }

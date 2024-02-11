@@ -19,9 +19,9 @@ namespace HouYun3.Models
         [Display(Name = "Прочитано")]
         public bool IsRead { get; set; }
 
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        public Guid ChannelId { get; set; }
+        [ForeignKey("ChannelId")]
+        public Channel Channel { get; set; }
 
         public Notification()
         {

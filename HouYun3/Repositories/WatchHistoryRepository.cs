@@ -40,10 +40,10 @@ namespace HouYun3.Repositories
             }
         }
 
-        public async Task DeleteAllWatchHistory(string UserId)
+        public async Task DeleteAllWatchHistory(Guid channelId)
         {
             var watchHistories = await _context.WatchHistories
-                .Where(w => w.UserId == UserId)
+                .Where(w => w.ChannelId == channelId)
                 .ToListAsync();
 
             _context.WatchHistories.RemoveRange(watchHistories);

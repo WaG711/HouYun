@@ -7,15 +7,15 @@ namespace HouYun3.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IChannelRepository _channelRepository;
         private readonly IVideoRepository _videoRepository;
         private readonly ICommentRepository _commentRepository;
 
-        public CommentController(IUserRepository userRepository, IVideoRepository videoRepository, ICommentRepository commentRepository)
+        public CommentController(IVideoRepository videoRepository, ICommentRepository commentRepository, IChannelRepository channelRepository)
         {
-            _userRepository = userRepository;
             _videoRepository = videoRepository;
             _commentRepository = commentRepository;
+            _channelRepository = channelRepository;
         }
 
         [HttpPost]
@@ -23,15 +23,15 @@ namespace HouYun3.Controllers
         public async Task<IActionResult> AddComment(Guid videoId, string commentText)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _userRepository.GetUserById(userId);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
             var video = await _videoRepository.GetVideoById(videoId);
 
-            if (user != null && video != null && !string.IsNullOrWhiteSpace(commentText))
+            if (channel != null && video != null && !string.IsNullOrWhiteSpace(commentText))
             {
                 var comment = new Comment
                 {
                     Text = commentText,
-                    User = user,
+                    Channel = channel,
                     Video = video
                 };
 
