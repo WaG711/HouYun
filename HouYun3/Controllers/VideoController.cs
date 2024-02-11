@@ -12,11 +12,13 @@ namespace HouYun3.Controllers
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IChannelRepository _channelRepository;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository)
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IChannelRepository channelRepository)
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
+            _channelRepository = channelRepository;
         }
 
         public async Task<IActionResult> Index(string searchTerm, string category)
@@ -79,8 +81,9 @@ namespace HouYun3.Controllers
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            if (userId == null)
+            if (channelId == null)
             {
                 return View(model);
             }
@@ -90,10 +93,10 @@ namespace HouYun3.Controllers
                 Title = model.Title,
                 Description = model.Description,
                 CategoryId = model.CategoryId,
-                UserId = userId
+                ChannelId = channelId
             };
 
-            await _videoRepository.AddVideo(video, model.VideoFile);
+            await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
             return RedirectToAction("Index");
         }
 

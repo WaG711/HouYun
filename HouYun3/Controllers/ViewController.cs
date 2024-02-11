@@ -15,9 +15,9 @@ namespace HouYun3.Controllers
 
         [HttpPost]
         [Route("ViewController/AddView")]
-        public async Task<IActionResult> AddView(Guid videoId, string userId)
+        public async Task<IActionResult> AddView(Guid videoId, Guid channelId)
         {
-            var existingView = await _viewRepository.GetViewByVideoAndUser(videoId, userId);
+            var existingView = await _viewRepository.GetViewByVideoAndChannel(videoId, channelId);
             if (existingView != null)
             {
                 return Ok();
@@ -26,7 +26,7 @@ namespace HouYun3.Controllers
             var view = new View
             {
                 VideoId = videoId,
-                UserId = userId,
+                ChannelId = channelId
             };
 
             await _viewRepository.AddView(view);

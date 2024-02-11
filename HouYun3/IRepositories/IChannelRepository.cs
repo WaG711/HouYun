@@ -9,5 +9,7 @@ namespace HouYun3.IRepositories
         Task CreateChannel(Channel channel);
         Task UpdateChannel(Channel channel);
         Task DeleteChannel(Guid id);
+        Task<Guid> GetChannelIdByUserId(string userId);
+        Task<Channel> GetChannelByUserId(string userId);
     }
 }

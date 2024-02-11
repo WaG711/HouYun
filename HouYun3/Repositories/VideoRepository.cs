@@ -18,7 +18,7 @@ namespace HouYun3.Repositories
         {
             return await _context.Videos
                 .Include(v => v.Category)
-                .Include(v => v.User)
+                .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .ToListAsync();
         }
@@ -27,7 +27,7 @@ namespace HouYun3.Repositories
         {
             return await _context.Videos
                 .Include(v => v.Category)
-                .Include(v => v.User)
+                .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .Where(v => v.Category.Name == categoryName)
                 .ToListAsync();
@@ -37,40 +37,59 @@ namespace HouYun3.Repositories
         {
             return await _context.Videos
                 .Include(v => v.Category)
-                .Include(v => v.User)
+                .Include(v => v.Channel)
                 .Include(v => v.Comments)
-                    .ThenInclude(v => v.User)
+                    .ThenInclude(v => v.Channel)
                 .Include(v => v.Likes)
                 .Include(v => v.Views)
                 .FirstOrDefaultAsync(v => v.VideoId == id);
         }
 
-        public async Task AddVideo(Video video, IFormFile videoFile)
+        public async Task AddVideo(Video video, IFormFile videoFile, IFormFile posterFile)
         {
             try
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", fileName);
+                var videoFileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
+                var videoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", videoFileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var videoStream = new FileStream(videoFilePath, FileMode.Create))
                 {
-                    await videoFile.CopyToAsync(stream);
+                    await videoFile.CopyToAsync(videoStream);
                 }
 
-                video.FilePath = fileName;
+                var posterFileName = Guid.NewGuid().ToString() + Path.GetExtension(posterFile.FileName);
+                var posterFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "posters", posterFileName);
+
+                using (var posterStream = new FileStream(posterFilePath, FileMode.Create))
+                {
+                    await posterFile.CopyToAsync(posterStream);
+                }
+
+                video.VideoPath = videoFileName;
+                video.PosterPath = posterFileName;
 
                 _context.Videos.Add(video);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
             {
-                if (!string.IsNullOrEmpty(video.FilePath))
+                if (!string.IsNullOrEmpty(video.VideoPath))
                 {
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.FilePath);
+                    var videoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.VideoPath);
 
-                    if (File.Exists(filePath))
+                    if (File.Exists(videoFilePath))
                     {
-                        File.Delete(filePath);
+                        File.Delete(videoFilePath);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(video.PosterPath))
+                {
+                    var posterFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "posters", video.PosterPath);
+
+                    if (File.Exists(posterFilePath))
+                    {
+                        File.Delete(posterFilePath);
                     }
                 }
                 throw;
@@ -98,7 +117,7 @@ namespace HouYun3.Repositories
         {
             return await _context.Videos
                 .Include(v => v.Category)
-                .Include(v => v.User)
+                .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .Where(v => v.Title.Contains(searchTerm))
                 .ToListAsync();
@@ -108,9 +127,9 @@ namespace HouYun3.Repositories
         {
             return await _context.Videos
                 .Include(v => v.Category)
-                .Include(v => v.User)
+                .Include(v => v.Channel)
                 .Include(v => v.Views)
-                .Where(v => v.User.UserName == ChannelName)
+                .Where(v => v.Channel.Name == ChannelName)
                 .ToListAsync();
         }
     }

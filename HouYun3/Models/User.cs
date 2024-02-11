@@ -17,28 +17,12 @@ namespace HouYun3.Models
         public override string UserName { get; set; }
 
         public Channel Channel { get; set; }
-        public ICollection<Video> Videos { get; set; }
-        public ICollection<SearchHistory> SearchHistory { get; set; }
-        public ICollection<WatchHistory> WatchHistory { get; set; }
-        public ICollection<WatchLater> WatchLaterList { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
-        public ICollection<View> Views { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Like> Likes { get; set; }
         public ICollection<Subscription> Subscriptions { get; set; }
 
         public User()
         {
-            Videos = new List<Video>();
-            SearchHistory = new List<SearchHistory>();
-            WatchHistory = new List<WatchHistory>();
-            WatchLaterList = new List<WatchLater>();
-            Notifications = new List<Notification>();
-            Views = new List<View>();
-            Comments = new List<Comment>();
-            Likes = new List<Like>();
-            Subscriptions = new List<Subscription>();
             Channel = new Channel { UserId = Id };
+            Subscriptions = new List<Subscription>();
         }
     }
 }

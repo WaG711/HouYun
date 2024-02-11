@@ -14,9 +14,9 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<View> GetViewByVideoAndUser(Guid videoId, string userId)
+        public async Task<View> GetViewByVideoAndChannel(Guid videoId, Guid channelId)
         {
-            return await _context.Views.FirstOrDefaultAsync(v => v.VideoId == videoId && v.UserId == userId);
+            return await _context.Views.FirstOrDefaultAsync(v => v.VideoId == videoId && v.ChannelId == channelId);
         }
 
         public async Task<IEnumerable<View>> GetAllViews()

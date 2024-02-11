@@ -122,7 +122,7 @@ namespace HouYun3.Repositories
 
         public async Task<bool> RegisterUser(RegisterViewModel model)
         {
-            var user = new User { Email = model.Email, UserName = model.UserName };
+            var user = new User { Email = model.Email, UserName = model.UserName, Channel = { Name = model.UserName, Description = $"This is the {model.UserName} user's channel" } };
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
             if (existingUser != null)
