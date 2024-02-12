@@ -23,6 +23,22 @@ namespace HouYun3.Repositories
                 .ToListAsync();
         }
 
+        public async Task<SearchHistory> GetSearchHistoryByChannelIdAndQuery(Guid channelId, string searchTerm)
+        {
+            return await _context.SearchHistories
+                .FirstOrDefaultAsync(s => s.ChannelId == channelId && s.SearchQuery == searchTerm);
+        }
+
+        public async Task<IEnumerable<Video>> SearchVideosByTitle(string searchTerm)
+        {
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.Channel)
+                .Include(v => v.Views)
+                .Where(v => v.Title.Contains(searchTerm))
+                .ToListAsync();
+        }
+
         public async Task<SearchHistory> AddSearchHistory(SearchHistory searchHistory)
         {
             _context.SearchHistories.Add(searchHistory);

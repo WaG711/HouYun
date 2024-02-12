@@ -7,7 +7,6 @@ namespace HouYun3.Controllers
 {
     public class RegistrationController : Controller
     {
-        private readonly IWatchLaterRepository _watchLaterRepository;
         private readonly IUserRepository _userRepository;
 
         public RegistrationController(IUserRepository userRepository)

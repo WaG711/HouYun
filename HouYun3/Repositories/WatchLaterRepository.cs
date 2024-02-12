@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Repositories
 {
-    public class WatchLaterRepository :     IWatchLaterRepository
+    public class WatchLaterRepository : IWatchLaterRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,17 +16,12 @@ namespace HouYun3.Repositories
 
         public async Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId)
         {
-            var watchLaterItems = await _context.WatchLaterItems
-                .Include(v => v.Channel)
-                .Include(v => v.Video)
-                    .ThenInclude(v => v.Views)
-                .Where(v => v.ChannelId == channelId)
-                .ToListAsync();
-
-            var videoIds = watchLaterItems.Select(v => v.VideoId).ToList();
-
-            var videos = await _context.Videos
-                .Where(v => videoIds.Contains(v.VideoId))
+            var videos = await _context.WatchLaterItems
+                .Where(item => item.ChannelId == channelId)
+                .Include(item => item.Video.Channel)
+                .Include(item => item.Video.Views)
+                .Include(item => item.Video.WatchLater)
+                .Select(item => item.Video)
                 .ToListAsync();
 
             return videos;

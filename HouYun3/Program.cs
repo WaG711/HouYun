@@ -91,11 +91,21 @@ namespace HouYun3
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
 
+            app.MapControllerRoute(
+                name: "unsubscribe",
+                pattern: "Subscription/Unsubscribe",
+                defaults: new { controller = "Subscription", action = "Unsubscribe" });
 
-           app.MapControllerRoute(
-                name: "username",
-                pattern: "{username}/{action=Index}/{id?}",
-                defaults: new { controller = "User" });
+            app.MapControllerRoute(
+                name: "subscribe",
+                pattern: "Subscription/Subscribe",
+                defaults: new { controller = "Subscription", action = "Subscribe" });
+
+            app.MapControllerRoute(
+                name: "search",
+                pattern: "Search/SearchResult/{searchTerm?}",
+                defaults: new { controller = "Search", action = "SearchResult" }
+            );
 
             app.Run();
         }

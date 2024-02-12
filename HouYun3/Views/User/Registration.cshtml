@@ -1,0 +1,30 @@
+﻿@model HouYun3.ViewModels.forUser.RegisterViewModel
+
+<h1>Register</h1>
+
+<form method="post" asp-controller="user" asp-action="Registration">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div>
+        <input type="submit" value="REG" />
+    </div>
+
+</form>

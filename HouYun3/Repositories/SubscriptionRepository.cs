@@ -24,9 +24,9 @@ namespace HouYun3.Repositories
             return await _context.Subscriptions.FirstOrDefaultAsync(s => s.ChannelId == channelId && s.UserId == userId);
         }
 
-        public async Task<IEnumerable<Subscription>> GetAllSubscriptions()
+        public async Task<IEnumerable<Subscription>> GetSubscriptionsByUserId(string userId)
         {
-            return await _context.Subscriptions.ToListAsync();
+            return await _context.Subscriptions.Where(s => s.UserId == userId).ToListAsync();
         }
 
         public async Task CreateSubscription(Subscription subscription)

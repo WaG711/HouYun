@@ -5,7 +5,7 @@ namespace HouYun3.IRepositories
     public interface ISubscriptionRepository
     {
         Task<Subscription> GetSubscriptionById(Guid id);
-        Task<IEnumerable<Subscription>> GetAllSubscriptions();
+        Task<IEnumerable<Subscription>> GetSubscriptionsByUserId(string userId);
         Task CreateSubscription(Subscription subscription);
         Task UpdateSubscription(Subscription subscription);
         Task DeleteSubscription(Guid id);

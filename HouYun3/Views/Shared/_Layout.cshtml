@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HouYun3.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/plyr/dist/plyr.css" />
-    <script src="~/lib/plyr/dist/plyr.js"></script>
-    <script src="~/js/site.js"></script>
 </head>
 <body>
     <header>
@@ -35,14 +32,14 @@
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="post" asp-action="ChangePassword" asp-controller="@User.Identity.Name">
+                                <form method="post" asp-action="ChangePassword" asp-controller="User">
                                     <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
                                         Change Password
                                     </button>
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="post" asp-action="ChangeUsername" asp-controller="@User.Identity.Name">
+                                <form method="post" asp-action="ChangeUsername" asp-controller="User">
                                     <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
                                         Change Username
                                     </button>
@@ -84,12 +81,39 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - HouYun3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
+                <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск">
+                <button type="submit">Поиск</button>
+            </form>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        window.onload = function () {
+            var searchTerm = localStorage.getItem('searchTerm');
+            if (searchTerm) {
+                document.getElementById('searchTerm').value = searchTerm;
+            }
+        };
+
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            var searchTerm = document.getElementById('searchTerm').value;
+            localStorage.setItem('searchTerm', searchTerm);
+        });
+    </script>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            var searchTerm = document.getElementById('searchTerm').value;
+            if (!searchTerm.trim()) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

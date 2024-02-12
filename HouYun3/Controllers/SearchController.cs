@@ -1,6 +1,5 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
-using HouYun3.Repositories;
 using HouYun3.ViewModels.forVideo;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,43 +9,44 @@ namespace HouYun3.Controllers
     public class SearchController : Controller
     {
         private readonly ISearchHistoryRepository _searchHistoryRepository;
-        private readonly IVideoRepository _videoRepository;
         private readonly IChannelRepository _channelRepository;
 
-        public SearchController(ISearchHistoryRepository searchHistoryRepository, IVideoRepository videoRepository, IChannelRepository channelRepository)
+        public SearchController(ISearchHistoryRepository searchHistoryRepository, IChannelRepository channelRepository)
         {
             _searchHistoryRepository = searchHistoryRepository;
-            _videoRepository = videoRepository;
             _channelRepository = channelRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(string searchTerm)
+        public async Task<IActionResult> SearchResult(string searchTerm)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var searchHistory = new SearchHistory
+            var existingSearch = await _searchHistoryRepository.GetSearchHistoryByChannelIdAndQuery(channelId, searchTerm);
+            if (existingSearch == null)
             {
-                ChannelId = channelId,
-                SearchQuery = searchTerm
-            };
+                var searchHistory = new SearchHistory
+                {
+                    ChannelId = channelId,
+                    SearchQuery = searchTerm
+                };
 
-            await _searchHistoryRepository.AddSearchHistory(searchHistory);
+                await _searchHistoryRepository.AddSearchHistory(searchHistory);
+            }
 
             var lastSearches = await _searchHistoryRepository.GetSearchHistoryByChannelId(channelId);
 
-            var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
+            var searchResults = await _searchHistoryRepository.SearchVideosByTitle(searchTerm);
 
-            ViewData["LastSearches"] = lastSearches;
-
-            var viewModel = new VideoViewModel
+            var viewModel = new SearchViewModel
             {
+                SearchTerm = searchTerm,
                 Videos = searchResults,
-                SearchTerm = searchTerm
+                LastSearches = lastSearches
             };
 
-            return RedirectToAction("Index", "Video", viewModel);
+            return View(viewModel);
         }
     }
 }

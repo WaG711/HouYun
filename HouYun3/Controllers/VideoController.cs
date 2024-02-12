@@ -2,7 +2,6 @@
 using HouYun3.Models;
 using HouYun3.ViewModels.forVideo;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace HouYun3.Controllers
@@ -14,6 +13,7 @@ namespace HouYun3.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IChannelRepository _channelRepository;
 
+<<<<<<< HEAD
         public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IChannelRepository channelRepository)
         {
             _videoRepository = videoRepository;
@@ -22,36 +22,32 @@ namespace HouYun3.Controllers
         }
 
         public async Task<IActionResult> Index(string searchTerm, string category)
+=======
+        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository,
+            IChannelRepository channelRepository)
+>>>>>>> new
         {
-            IEnumerable<Video> videos;
-            IEnumerable<Category> categories;
+            _videoRepository = videoRepository;
+            _categoryRepository = categoryRepository;
+            _channelRepository = channelRepository;
+        }
 
-            categories = await _categoryRepository.GetAllCategories();
+        public async Task<IActionResult> Index(string category)
+        {
+            var model = new VideoViewModel();
 
-            if (!string.IsNullOrEmpty(searchTerm))
+            if (!string.IsNullOrEmpty(category))
             {
-                var searchResults = await _videoRepository.SearchVideosByTitle(searchTerm);
-                videos = searchResults;
-            }
-            else if (!string.IsNullOrEmpty(category))
-            {
-                var videosByCategory = await _videoRepository.GetVideosByCategory(category);
-                videos = videosByCategory;
+                model.Videos = await _videoRepository.GetVideosByCategory(category);
             }
             else
             {
-                videos = await _videoRepository.GetAllVideos();
+                model.Videos = await _videoRepository.GetAllVideos();
             }
 
-            var viewModel = new VideoViewModel
-            {
-                Videos = videos,
-                SelectedCategory = category ?? "All",
-                SearchTerm = searchTerm,
-                Categories = categories
-            };
+            model.Categories = await _categoryRepository.GetAllCategories();
 
-            return View(viewModel);
+            return View(model);
         }
 
         public async Task<IActionResult> Details(Guid id)
@@ -66,27 +62,30 @@ namespace HouYun3.Controllers
 
         public async Task<IActionResult> Add()
         {
-            var model = new AddVideoViewModel();
-            var categories = await _categoryRepository.GetAllCategories();
-            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
+            var model = new AddVideoViewModel
+            {
+                Categories = await _categoryRepository.GetAllCategories(),
+            };
+
             return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AddVideoViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                model = new AddVideoViewModel
+                {
+                    Categories = await _categoryRepository.GetAllCategories(),
+                };
+
                 return View(model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-
-            if (channelId == null)
-            {
-                return View(model);
-            }
 
             var video = new Video
             {

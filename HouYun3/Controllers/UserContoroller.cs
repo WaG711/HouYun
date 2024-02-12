@@ -11,9 +11,9 @@ using HouYun3.ViewModels.forUser;
 
 namespace HouYun3.Controllers.UserContoller
 {
+
     public class UserController : Controller
     {
-        private readonly IWatchLaterRepository _watchLaterRepository;
         private readonly IUserRepository _userRepository;
 
         public UserController(IUserRepository userRepository)
@@ -30,18 +30,10 @@ namespace HouYun3.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword(string username)
+        public async Task<IActionResult> ChangePassword()
         {
-            string currentUsername = User.Identity.Name;
-
-            if (string.IsNullOrEmpty(username) || !username.Equals(currentUsername, StringComparison.OrdinalIgnoreCase))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,15 +59,8 @@ namespace HouYun3.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangeUsername(string username)
+        public async Task<IActionResult> ChangeUsername()
         {
-            string currentUsername = User.Identity.Name;
-
-            if (string.IsNullOrEmpty(username) || !username.Equals(currentUsername, StringComparison.OrdinalIgnoreCase))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
             return View();
         }
 

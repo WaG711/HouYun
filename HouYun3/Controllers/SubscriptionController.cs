@@ -1,6 +1,7 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
@@ -13,10 +14,12 @@ namespace HouYun3.Controllers
             _subscriptionRepository = subscriptionRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Subscribe(Guid channelId, string userId)
+        [HttpPost]
+        public async Task<IActionResult> Subscribe(Guid channelId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var existingSubscription = await _subscriptionRepository.GetSubscriptionByChannelAndUser(channelId, userId);
             if (existingSubscription != null)
@@ -35,18 +38,21 @@ namespace HouYun3.Controllers
             return Redirect(refererUrl);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Unsubscribe(Guid subscriptionId)
+        [HttpPost]
+        public async Task<IActionResult> Unsubscribe(Guid channelId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
 
-            var subscription = await _subscriptionRepository.GetSubscriptionById(subscriptionId);
-            if (subscription == null)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userSubscriptions = await _subscriptionRepository.GetSubscriptionsByUserId(userId);
+
+            var subscriptionToUnsubscribe = userSubscriptions.FirstOrDefault(sub => sub.ChannelId == channelId);
+            if (subscriptionToUnsubscribe == null)
             {
                 return Redirect(refererUrl);
             }
 
-            await _subscriptionRepository.DeleteSubscription(subscriptionId);
+            await _subscriptionRepository.DeleteSubscription(subscriptionToUnsubscribe.SubscriptionId);
 
             return Redirect(refererUrl);
         }

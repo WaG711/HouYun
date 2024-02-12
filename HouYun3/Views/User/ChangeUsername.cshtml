@@ -3,7 +3,7 @@
     ViewBag.Title = "Изменение Никнейма";
 }
 
-<form method="post" asp-controller="@User.Identity.Name" asp-action="ChangeUsername">
+<form method="post" asp-controller="User" asp-action="ChangeUsername">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div>
