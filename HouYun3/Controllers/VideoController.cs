@@ -1,5 +1,6 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.Models;
+using HouYun3.Repositories;
 using HouYun3.ViewModels.forVideo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,15 +12,17 @@ namespace HouYun3.Controllers
     public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IChannelRepository _channelRepository;
+private readonly ICategoryRepository _categoryRepository;
+private readonly IChannelRepository _channelRepository;
+private readonly IWatchHistoryRepository _watchHistoryRepository;
 
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IChannelRepository channelRepository)
-        {
-            _videoRepository = videoRepository;
-            _categoryRepository = categoryRepository;
-            _channelRepository = channelRepository;
-        }
+public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IChannelRepository channelRepository, IWatchHistoryRepository watchHistoryRepository)
+{
+    _videoRepository = videoRepository;
+    _categoryRepository = categoryRepository;
+    _channelRepository = channelRepository;
+    _watchHistoryRepository = watchHistoryRepository;
+}
 
         public async Task<IActionResult> Index(string searchTerm, string category)
         {
@@ -61,8 +64,30 @@ namespace HouYun3.Controllers
             {
                 return NotFound();
             }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+            var watchHistoryExists = await _watchHistoryRepository.CheckWatchHistoryExists(channelId, id);
+            if (!watchHistoryExists)
+            {
+                var watchHistory = new WatchHistory
+                {
+                    VideoId = video.VideoId,
+                    ChannelId = channelId,
+                    WatchDate = DateTime.Now
+                };
+                await _watchHistoryRepository.AddWatchHistory(watchHistory);
+            }
+            else
+            {
+                var watchHistory = await _watchHistoryRepository.GetWatchHistoryByChannelAndVideoId(channelId, id);
+                watchHistory.WatchDate = DateTime.Now;
+                await _watchHistoryRepository.UpdateWatchHistory(watchHistory);
+            }
+
             return View(video);
         }
+
 
         public async Task<IActionResult> Add()
         {

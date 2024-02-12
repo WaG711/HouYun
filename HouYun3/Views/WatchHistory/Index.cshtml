@@ -1,7 +1,6 @@
-﻿@model IEnumerable<HouYun3.Models.WatchHistory>
+﻿@model List<WatchHistory>
 
-<h2>История просмотров</h2>
-
+<h2>Watch History</h2>
 @if (Model.Any())
 {
     <div class="row">
@@ -24,8 +23,12 @@
             </div>
         }
     </div>
+    <form method="post" asp-action="DeleteAllWatchHistoryAsync" asp-controller="WatchHistory">
+        <button type="submit" class="btn btn-danger">Удалить всю историю просмотров</button>
+    </form>
 }
 else
 {
-    <p>История просмотров пуста.</p>
+    <p>No videos found in watch history.</p>
 }
+
