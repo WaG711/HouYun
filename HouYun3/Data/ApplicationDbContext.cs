@@ -101,8 +101,8 @@ namespace HouYun3.Data
 
             modelBuilder.Entity<WatchLater>()
                 .HasOne(w => w.Video)
-                .WithOne(v => v.WatchLater)
-                .HasForeignKey<WatchLater>(w => w.VideoId)
+                .WithMany(w => w.WatchLaterItems)
+                .HasForeignKey(w => w.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchLater>()

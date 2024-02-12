@@ -20,7 +20,8 @@ namespace HouYun3.Repositories
                 .Where(item => item.ChannelId == channelId)
                 .Include(item => item.Video.Channel)
                 .Include(item => item.Video.Views)
-                .Include(item => item.Video.WatchLater)
+                .Include(item => item.Video.WatchLaterItems)
+                    .ThenInclude(v => v.Channel)
                 .Select(item => item.Video)
                 .ToListAsync();
 
@@ -33,7 +34,7 @@ namespace HouYun3.Repositories
         }
 
         public async Task AddWatchLaterItem(WatchLater watchLaterItem)
-        {
+            {
             _context.WatchLaterItems.Add(watchLaterItem);
             await _context.SaveChangesAsync();
         }

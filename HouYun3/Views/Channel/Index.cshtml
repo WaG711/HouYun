@@ -15,21 +15,30 @@
     var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
     var isAuthor = Model.UserId == userId;
 
-    if (!isAuthor)
+    if (isAuthor)
     {
-        if (isSubscribed)
+        <a href="@Url.Action("Add", "Channel")" class="btn btn-primary">Загрузить видео</a>
+
+        <a href="@Url.Action("Delete", "Channel")" class="btn btn-danger">Удалить видео</a>
+    }
+    else
+    {
+        if (!isAuthor)
         {
-            <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
-                <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                <button type="button" onclick="unsubscribe()">Отписаться</button>
-            </form>
-        }
-        else
-        {
-            <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
-                <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                <button type="button" onclick="subscribe()">Подписаться</button>
-            </form>
+            if (isSubscribed)
+            {
+                <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
+                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                    <button type="button" onclick="unsubscribe()">Отписаться</button>
+                </form>
+            }
+            else
+            {
+                <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
+                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                    <button type="button" onclick="subscribe()">Подписаться</button>
+                </form>
+            }
         }
     }
 }
