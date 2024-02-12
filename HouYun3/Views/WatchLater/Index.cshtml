@@ -1,25 +1,28 @@
-﻿@model IEnumerable<HouYun3.Models.WatchHistory>
+﻿@model IEnumerable<Video>
 
-<h2>История просмотров</h2>
+<h2>Список видео "Смотреть позже"</h2>
 
 @if (Model.Any())
 {
     <div class="row">
-        @foreach (var watchHistory in Model)
+        @foreach (var video in Model)
         {
             <div class="col-md-3 mb-3">
                 <div class="card">
-                    <a href="@Url.Action("Details", "Video", new { id = watchHistory.Video.VideoId })">
+                    <a href="@Url.Action("Details", "Video", new { id = video.VideoId })">
                         <div class="card-body">
-                            <h5 class="card-title">@watchHistory.Video.Title</h5>
-                            <p class="card-text">Uploaded by: @watchHistory.Channel.Name</p>
-                            <p class="card-text">Watch Date: @watchHistory.WatchDate.ToString("dd/MM/yyyy")</p>
-                            <p class="card-text">Views: @watchHistory.Video.Views.Count</p>
+                            <h5 class="card-title">@video.Title</h5>
+                            <p class="card-text">Uploaded by: @video.Channel.Name</p>
+                            <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
+                            <p class="card-text">Views: @video.Views.Count</p>
                             <video width="100%" controls>
-                                <source src="@Url.Content($"~/videos/{watchHistory.Video.VideoPath}")" type="video/mp4">
+                                <source src="@Url.Content($"~/videos/{video.VideoPath}")" type="video/mp4">
                             </video>
                         </div>
                     </a>
+                    <form asp-action="Delete" asp-route-id="@video.WatchLater.WatchLaterId" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </div>
             </div>
         }
@@ -27,5 +30,5 @@
 }
 else
 {
-    <p>История просмотров пуста.</p>
+    <p>Список "Смотреть позже" пуст.</p>
 }
