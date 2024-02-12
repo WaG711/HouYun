@@ -13,19 +13,8 @@ namespace HouYun3.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IChannelRepository _channelRepository;
 
-<<<<<<< HEAD
-        public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository, IChannelRepository channelRepository)
-        {
-            _videoRepository = videoRepository;
-            _categoryRepository = categoryRepository;
-            _channelRepository = channelRepository;
-        }
-
-        public async Task<IActionResult> Index(string searchTerm, string category)
-=======
         public VideoController(IVideoRepository videoRepository, ICategoryRepository categoryRepository,
             IChannelRepository channelRepository)
->>>>>>> new
         {
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
