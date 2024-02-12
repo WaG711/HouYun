@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@watchHistory.Video.Title</h5>
                             <p class="card-text">Uploaded by: @watchHistory.Channel.Name</p>
-                            <p class="card-text">Watch Date: @watchHistory.WatchDate.ToString("dd/MM/yyyy")</p>
+                            <p class="card-text">Watch Date: @watchHistory.WatchDate.ToString("dd/MM/yyyy HH:mm:ss")</p>
                             <p class="card-text">Views: @watchHistory.Video.Views.Count</p>
                             <video width="100%" controls>
                                 <source src="@Url.Content($"~/videos/{watchHistory.Video.VideoPath}")" type="video/mp4">

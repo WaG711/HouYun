@@ -6,63 +6,58 @@ using System.Security.Claims;
 
 namespace HouYun3.Controllers
 {
-   public class WatchHistoryController : Controller
-    {
-        private readonly IWatchHistoryRepository _watchHistoryRepository;
-        private readonly IVideoRepository _videoRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IChannelRepository _channelRepository;
+    /* public class WatchHistoryController : Controller
+     {
+         private readonly IWatchHistoryRepository _watchHistoryRepository;
+         private readonly IVideoRepository _videoRepository;
+         private readonly IUserRepository _userRepository;
 
-        public WatchHistoryController(IWatchHistoryRepository watchHistoryRepository, IVideoRepository videoRepository, IUserRepository userRepository, IChannelRepository channelRepository)
-        {
-            _watchHistoryRepository = watchHistoryRepository;
-            _videoRepository = videoRepository;
-            _userRepository = userRepository;
-            _channelRepository = channelRepository;
-            _channelRepository = channelRepository;
-        }
+         public WatchHistoryController(IWatchHistoryRepository watchHistoryRepository, IVideoRepository videoRepository, IUserRepository userRepository)
+         {
+             _watchHistoryRepository = watchHistoryRepository;
+             _videoRepository = videoRepository;
+             _userRepository = userRepository;
+         }
 
-        public async Task<IActionResult> Index()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var watchHistoryItems = await _watchHistoryRepository.GetWatchHistoryByUserId(userId);
-            return View(watchHistoryItems);
-        }
+         public async Task<IActionResult> Index()
+         {
+             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+             var watchLaterList = await _watchHistoryRepository.GetWatchHistoryByIdAsync(int.Parse(userId));
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddToWatchHistory(Guid videoId)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-            var user = await _channelRepository.GetChannelById(channelId);
-            var video = await _videoRepository.GetVideoById(videoId);
+             return View(watchLaterList);
+         }
 
-            if (user != null && video != null)
-            {
-                var watchHistory = new WatchHistory
-                {
-                    Channel = user,
-                    Video = video
-                };
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> AddToWatchHistory(int videoId)
+         {
+             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+             var user = await _userRepository.GetUserByIdAsync(userId.ToString());
+             var video = await _videoRepository.GetVideoByIdAsync(videoId);
 
-                await _watchHistoryRepository.AddWatchHistory(watchHistory);
-            }
+             if (user != null && video != null)
+             {
+                 var watchHistory = new WatchHistory
+                 {
+                     User = user,
+                     Video = video
+                 };
 
-            return RedirectToAction("Index", "Video");
-        }
+                 await _watchHistoryRepository.AddWatchHistoryAsync(watchHistory);
+             }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAllWatchHistoryAsync()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-            await _watchHistoryRepository.DeleteAllWatchHistory(channelId);
+             return RedirectToAction("Index", "Video");
+         }
 
-            return RedirectToAction("Index", "WatchHistory");
-        }
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public async Task<IActionResult> DeleteAllWatchHistoryAsync()
+         {
+             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+             await _watchHistoryRepository.DeleteAllWatchHistoryAsync(userId);
 
+             return RedirectToAction("Index");
+         }
 
-    }
-}
+     }*/
+}   
