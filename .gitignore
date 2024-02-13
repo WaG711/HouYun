@@ -13,8 +13,8 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 appsettings.json
-wwwroot/videos/*
-wwwroot/posters/*
+wwwroot/videos
+wwwroot/posters
 
 # Mono auto generated files
 mono_crash.*
