@@ -107,13 +107,6 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            /*var channel = new Channel
-            {
-                ChannelId = channelId,
-                Description = model.Description,
-                Name = model.ChannelName
-            };*/
-
             await _channelRepository.UpdateChannel(channelId, model.ChannelName,model.Description);
             return RedirectToAction("Index");
         }
