@@ -94,7 +94,16 @@ namespace HouYun3.Controllers
         [HttpGet]
         public async Task<IActionResult> Update()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            var model = new UpdateChannelViewModel 
+            {
+                ChannelName = channel.Name, 
+                Description = channel.Description 
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -102,6 +111,11 @@ namespace HouYun3.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            if(model.ChannelName == channel.Name && model.Description == channel.Description) 
+            {
+                return RedirectToAction("Index");
+            }
 
             if(model.ChannelName != null) 
             {
@@ -112,6 +126,7 @@ namespace HouYun3.Controllers
             {
                 channel.Description = model.Description;
             }
+
 
             await _channelRepository.UpdateChannel(channel);
             return RedirectToAction("Index");
