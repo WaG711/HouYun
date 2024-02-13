@@ -68,8 +68,13 @@ namespace HouYun3
 
             app.MapControllerRoute(
                 name: "AddView",
-                pattern: "ViewController/AddView/{videoId}",
-                defaults: new { controller = "ViewController", action = "AddView" });
+                pattern: "View/AddView/{videoId}",
+                defaults: new { controller = "View", action = "AddView" });
+
+            app.MapControllerRoute(
+                name: "AddToWatchHistory",
+                pattern: "WatchHistory/AddToWatchHistory/{videoId}",
+                defaults: new { controller = "WatchHistory", action = "AddToWatchHistory" });
 
             app.MapControllerRoute(
                 name: "like",
