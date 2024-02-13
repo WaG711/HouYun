@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HouYun3.Migrations
 {
     /// <inheritdoc />
-    public partial class NS : Migration
+    public partial class hy : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

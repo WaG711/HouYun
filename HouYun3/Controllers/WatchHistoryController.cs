@@ -21,7 +21,7 @@ namespace HouYun3.Controllers
             _channelRepository = channelRepository;
         }
 
-       /* public async Task<IActionResult> Index()
+        /*public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var watchHistoryItems = await _watchHistoryRepository.GetWatchHistoryByUserId(userId);

@@ -3,8 +3,6 @@ using HouYun3.IRepositories;
 using HouYun3.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun3.Repositories
 {

@@ -4,7 +4,6 @@ using HouYun3.ViewModels.forVideo;
 using HouYun3.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Controllers
 {

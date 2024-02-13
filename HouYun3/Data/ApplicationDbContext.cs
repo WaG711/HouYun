@@ -119,9 +119,9 @@ namespace HouYun3.Data
                 .HasKey(w => w.WatchHistoryId);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasOne(w => w.Video)
-                .WithOne(v => v.WatchHistory)
-                .HasForeignKey<WatchHistory>(w => w.VideoId)
+                .HasOne(w => w.Video).
+                WithMany(v => v.WatchHistories)
+                .HasForeignKey(w => w.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchHistory>()
