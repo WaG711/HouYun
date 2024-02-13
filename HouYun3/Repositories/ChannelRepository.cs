@@ -2,6 +2,7 @@
 using HouYun3.IRepositories;
 using HouYun3.Models;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun3.Repositories
 {
@@ -53,19 +54,12 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateChannel(Guid СhannelId, string newName, string newDescription)
+        public async Task UpdateChannel(Channel channel)
         {
-            var existingChannel = await _context.Channels.FindAsync(СhannelId);
-
-            if (existingChannel != null)
-            {
-                existingChannel.Name = newName;
-                existingChannel.Description = newDescription;
-
-                _context.Update(existingChannel);
-                await _context.SaveChangesAsync();
-            }
+            _context.Entry(channel).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
+
 
         public async Task DeleteChannel(Guid id)
         {

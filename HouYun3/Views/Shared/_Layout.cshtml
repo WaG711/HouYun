@@ -44,6 +44,11 @@
                                         Change Username
                                     </button>
                                 </form>
+                                <form method="post" asp-action="Index" asp-controller="Channel">
+                                    <button type="sumbit" class="nav-link btn btn-link py-0" style="width:auto">
+                                         My  Channel
+                                    </button>
+                                </form>
                             </li>
                             @if (User.IsInRole("Admin"))
                             {

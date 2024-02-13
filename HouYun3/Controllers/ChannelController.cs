@@ -4,6 +4,7 @@ using HouYun3.ViewModels.forVideo;
 using HouYun3.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Controllers
 {
@@ -97,17 +98,22 @@ namespace HouYun3.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ChangeChannelNameandDescriptionViewModel model)
+        public async Task<IActionResult> Update(UpdateChannelViewModel model)
         {
-            if (!ModelState.IsValid)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            if(model.ChannelName != null) 
             {
-                return View(model);
+                channel.Name = model.ChannelName;
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+            if (model.Description != null)
+            {
+                channel.Description = model.Description;
+            }
 
-            await _channelRepository.UpdateChannel(channelId, model.ChannelName,model.Description);
+            await _channelRepository.UpdateChannel(channel);
             return RedirectToAction("Index");
         }
     }
