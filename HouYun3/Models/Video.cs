@@ -48,8 +48,8 @@ namespace HouYun3.Models
         public Channel Channel { get; set; }
 
         public WatchHistory WatchHistory { get; set; }
-        public WatchLater WatchLater { get; set; }
-
+        //public ICollection<WatchHistory> WatchHistories { get; set; }
+        public ICollection<WatchLater> WatchLaterItems { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Like> Likes { get; set; }
         public ICollection<View> Views { get; set; }
@@ -61,6 +61,8 @@ namespace HouYun3.Models
             Comments = new List<Comment>();
             Likes = new List<Like>();
             Views = new List<View>();
+            //WatchHistories = new List<WatchHistory>();
+            WatchLaterItems = new List<WatchLater>();
         }
     }
 }
