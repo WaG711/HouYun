@@ -1,7 +1,10 @@
 ﻿using HouYun3.Data;
 using HouYun3.IRepositories;
 using HouYun3.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun3.Repositories
 {
@@ -53,19 +56,22 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateChannel(Guid СhannelId, string newName, string newDescription)
+        public async Task UpdateChannel(Channel channel)
         {
-            var existingChannel = await _context.Channels.FindAsync(СhannelId);
-
-            if (existingChannel != null)
+            try 
             {
-                existingChannel.Name = newName;
-                existingChannel.Description = newDescription;
-
-                _context.Update(existingChannel);
+                _context.Entry(channel).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
+            catch (Exception ex) 
+            {
+                if (ex.InnerException is SqlException sqlException && (sqlException.Number == 2601 || sqlException.Number == 2627)) 
+                { 
+                    throw new Exception("Имя канала уже используется");
+                }
+            }
         }
+
 
         public async Task DeleteChannel(Guid id)
         {

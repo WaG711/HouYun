@@ -51,7 +51,7 @@ namespace HouYun3.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
@@ -61,6 +61,9 @@ namespace HouYun3.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ChannelId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();

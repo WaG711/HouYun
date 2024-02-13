@@ -46,6 +46,10 @@ namespace HouYun3.Data
                 .HasKey(c => c.ChannelId);
 
             modelBuilder.Entity<Channel>()
+                .HasIndex(c => c.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Channel>()
                 .HasOne(c => c.User)
                 .WithOne(u => u.Channel)
                 .HasForeignKey<Channel>(c => c.UserId)

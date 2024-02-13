@@ -4,6 +4,7 @@ using HouYun3.ViewModels.forVideo;
 using HouYun3.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Controllers
 {
@@ -93,22 +94,49 @@ namespace HouYun3.Controllers
         [HttpGet]
         public async Task<IActionResult> Update()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            var model = new UpdateChannelViewModel 
+            {
+                ChannelName = channel.Name, 
+                Description = channel.Description 
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ChangeChannelNameandDescriptionViewModel model)
+        public async Task<IActionResult> Update(UpdateChannelViewModel model)
         {
-            if (!ModelState.IsValid)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            if(model.ChannelName == channel.Name && model.Description == channel.Description) 
             {
-                return View(model);
+                return RedirectToAction("Index");
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+            if(model.ChannelName != null) 
+            {
+                channel.Name = model.ChannelName;
+            }
 
-            await _channelRepository.UpdateChannel(channelId, model.ChannelName,model.Description);
-            return RedirectToAction("Index");
+            if (model.Description != null)
+            {
+                channel.Description = model.Description;
+            }
+
+            try
+            {
+                await _channelRepository.UpdateChannel(channel);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex) 
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
+            }
         }
     }
 }
