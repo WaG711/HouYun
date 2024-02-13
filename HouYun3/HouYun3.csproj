@@ -22,7 +22,10 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Views\WatchHistory\" />
+    <Folder Include="Views\WatchHistory\" />
     <Folder Include="wwwroot\videos\" />
+    <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\Videos\" />
     <Folder Include="wwwroot\posters\" />
   </ItemGroup>
 

@@ -53,10 +53,18 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateChannel(Channel channel)
+        public async Task UpdateChannel(Guid СhannelId, string newName, string newDescription)
         {
-            _context.Channels.Update(channel);
-            await _context.SaveChangesAsync();
+            var existingChannel = await _context.Channels.FindAsync(СhannelId);
+
+            if (existingChannel != null)
+            {
+                existingChannel.Name = newName;
+                existingChannel.Description = newDescription;
+
+                _context.Update(existingChannel);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteChannel(Guid id)
