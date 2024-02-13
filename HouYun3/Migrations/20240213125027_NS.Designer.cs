@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouYun3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240212141944_hy")]
-    partial class hy
+    [Migration("20240213125027_NS")]
+    partial class NS
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace HouYun3.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
@@ -64,6 +64,9 @@ namespace HouYun3.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ChannelId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();

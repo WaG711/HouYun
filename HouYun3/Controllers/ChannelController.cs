@@ -127,9 +127,16 @@ namespace HouYun3.Controllers
                 channel.Description = model.Description;
             }
 
-
-            await _channelRepository.UpdateChannel(channel);
-            return RedirectToAction("Index");
+            try
+            {
+                await _channelRepository.UpdateChannel(channel);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex) 
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
+            }
         }
     }
 }
