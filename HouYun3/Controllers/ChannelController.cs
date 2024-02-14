@@ -11,11 +11,13 @@ namespace HouYun3.Controllers
     {
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IVideoRepository _videoRepository;
 
-        public ChannelController(IChannelRepository channelRepository, ICategoryRepository categoryRepository)
+        public ChannelController(IChannelRepository channelRepository, ICategoryRepository categoryRepository, IVideoRepository videoRepository)
         {
             _channelRepository = channelRepository;
             _categoryRepository = categoryRepository;
+            _videoRepository = videoRepository;
         }
 
         public async Task<IActionResult> Index(string channelName)
@@ -66,7 +68,7 @@ namespace HouYun3.Controllers
                 ChannelId = channelId
             };
 
-            await _channelRepository.AddVideo(video, model.VideoFile, model.PosterFile);
+            await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
             return RedirectToAction("Index");
         }
 
@@ -76,14 +78,14 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var videos = await _channelRepository.GetVideosByChannelId(channelId);
+            var videos = await _videoRepository.GetVideosByChannelId(channelId);
             return View(videos);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _channelRepository.DeleteVideo(id);
+            await _videoRepository.DeleteVideo(id);
             return RedirectToAction("Delete");
         }
 
@@ -113,15 +115,8 @@ namespace HouYun3.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (model.ChannelName != null)
-            {
-                channel.Name = model.ChannelName;
-            }
-
-            if (model.Description != null)
-            {
-                channel.Description = model.Description;
-            }
+            channel.Name = model.ChannelName ?? channel.Name;
+            channel.Description = model.Description ?? channel.Description;
 
             try
             {

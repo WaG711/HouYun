@@ -2,7 +2,6 @@
 using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Channels;
 
 namespace HouYun3.Repositories
 {
@@ -20,7 +19,6 @@ namespace HouYun3.Repositories
         public async Task<IEnumerable<Notification>> GetAllNotificationsByChannelId(Guid channelId)
         {
             return await _context.Notifications
-                .Include(c => c.Channel)
                 .Where(c => c.ChannelId == channelId)
                 .ToListAsync();
         }
