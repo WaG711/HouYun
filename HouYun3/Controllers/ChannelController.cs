@@ -13,7 +13,8 @@ namespace HouYun3.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IVideoRepository _videoRepository;
 
-        public ChannelController(IChannelRepository channelRepository, ICategoryRepository categoryRepository, IVideoRepository videoRepository)
+        public ChannelController(IChannelRepository channelRepository, ICategoryRepository categoryRepository,
+            IVideoRepository videoRepository)
         {
             _channelRepository = channelRepository;
             _categoryRepository = categoryRepository;
@@ -110,20 +111,14 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channel = await _channelRepository.GetChannelByUserId(userId);
 
-            if(model.ChannelName == channel.Name && model.Description == channel.Description) 
+            if(model.ChannelName == channel.Name
+                && model.Description == channel.Description) 
             {
                 return RedirectToAction("Index");
             }
 
-            if(model.ChannelName != null) 
-            {
-                channel.Name = model.ChannelName;
-            }
-
-            if (model.Description != null)
-            {
-                channel.Description = model.Description;
-            }
+            channel.Name = model.ChannelName ?? channel.Name;
+            channel.Description = model.Description ?? channel.Description;
 
             try
             {
