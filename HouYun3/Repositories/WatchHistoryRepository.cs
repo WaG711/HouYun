@@ -14,14 +14,31 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<WatchHistory>> GetAllWatchHistory()
+        public async Task<WatchHistory> GetWatchHistoryByChannelIdAndVideoId(Guid channelId, Guid videoId)
         {
-            return await _context.WatchHistories.ToListAsync();
+            return await _context.WatchHistories
+                .FirstOrDefaultAsync(w => w.ChannelId == channelId && w.VideoId == videoId);
         }
 
-        public async Task<WatchHistory> GetWatchHistoryById(Guid id)
+        public async Task UpdateWatchHistory(WatchHistory existingWatchHistory)
         {
-            return await _context.WatchHistories.FindAsync(id);
+            _context.Entry(existingWatchHistory).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<WatchHistory>> GetWatchHistoryByChannelId(Guid channelId)
+        {
+            return await _context.WatchHistories
+            .Where(w => w.ChannelId == channelId)
+            .Include(w => w.Channel)
+            .Include(w => w.Video)
+                .ThenInclude(v => v.Channel)
+            .Include(w => w.Video)
+                .ThenInclude(v => v.Views)
+            .Include(w => w.Video)
+                .ThenInclude(v => v.Comments)
+            .OrderByDescending(w => w.WatchDate)
+            .ToListAsync();
         }
 
         public async Task AddWatchHistory(WatchHistory watchHistory)

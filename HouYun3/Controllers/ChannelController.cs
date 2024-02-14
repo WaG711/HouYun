@@ -4,21 +4,17 @@ using HouYun3.ViewModels.forVideo;
 using HouYun3.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 
 namespace HouYun3.Controllers
 {
     public class ChannelController : Controller
     {
         private readonly IChannelRepository _channelRepository;
-        private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public ChannelController(IChannelRepository channelRepository, IVideoRepository videoRepository,
-            ICategoryRepository categoryRepository)
+        public ChannelController(IChannelRepository channelRepository, ICategoryRepository categoryRepository)
         {
             _channelRepository = channelRepository;
-            _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
         }
 
@@ -70,7 +66,7 @@ namespace HouYun3.Controllers
                 ChannelId = channelId
             };
 
-            await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
+            await _channelRepository.AddVideo(video, model.VideoFile, model.PosterFile);
             return RedirectToAction("Index");
         }
 
@@ -80,14 +76,14 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var videos = await _videoRepository.GetVideosByChannelId(channelId);
+            var videos = await _channelRepository.GetVideosByChannelId(channelId);
             return View(videos);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _videoRepository.DeleteVideo(id);
+            await _channelRepository.DeleteVideo(id);
             return RedirectToAction("Delete");
         }
 

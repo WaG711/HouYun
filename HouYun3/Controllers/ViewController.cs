@@ -17,7 +17,8 @@ namespace HouYun3.Controllers
         }
 
         [HttpPost]
-        [Route("ViewController/AddView/{videoId}")]
+        [ValidateAntiForgeryToken]
+        [Route("View/AddView/{videoId}")]
         public async Task<IActionResult> AddView(Guid videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

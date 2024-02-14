@@ -49,26 +49,33 @@
         document.addEventListener('DOMContentLoaded', function () {
             var videoId = '@Model.VideoId';
             addView(videoId);
+            AddToWatchHistory(videoId);
         });
 
         function addView(videoId) {
             var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
-            fetch(`/ViewController/AddView/${videoId}`, {
+            fetch(`/View/AddView/${videoId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
                 },
                 body: JSON.stringify({})
             })
-                .then(response => {
-                    if (!response.ok) {
-                        console.error('Ошибка при добавлении просмотра');
-                    }
-                })
-                .catch(error => {
-                    console.error('Ошибка при отправке запроса:', error);
-                });
+        }
+
+        function AddToWatchHistory(videoId) {
+            var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+            fetch(`/WatchHistory/AddToWatchHistory/${videoId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
+                },
+                body: JSON.stringify({})
+            })
         }
     </script>
 

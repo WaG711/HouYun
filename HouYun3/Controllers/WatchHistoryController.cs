@@ -8,60 +8,61 @@ namespace HouYun3.Controllers
    public class WatchHistoryController : Controller
     {
         private readonly IWatchHistoryRepository _watchHistoryRepository;
-        private readonly IVideoRepository _videoRepository;
-        private readonly IUserRepository _userRepository;
         private readonly IChannelRepository _channelRepository;
 
-        public WatchHistoryController(IWatchHistoryRepository watchHistoryRepository, IVideoRepository videoRepository, IUserRepository userRepository, IChannelRepository channelRepository)
+        public WatchHistoryController(IWatchHistoryRepository watchHistoryRepository, IChannelRepository channelRepository)
         {
             _watchHistoryRepository = watchHistoryRepository;
-            _videoRepository = videoRepository;
-            _userRepository = userRepository;
-            _channelRepository = channelRepository;
             _channelRepository = channelRepository;
         }
 
-       /* public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var watchHistoryItems = await _watchHistoryRepository.GetWatchHistoryByUserId(userId);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+            var watchHistoryItems = await _watchHistoryRepository.GetWatchHistoryByChannelId(channelId);
+
             return View(watchHistoryItems);
-        }*/
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("WatchHistory/AddToWatchHistory/{videoId}")]
         public async Task<IActionResult> AddToWatchHistory(Guid videoId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-            var user = await _channelRepository.GetChannelById(channelId);
-            var video = await _videoRepository.GetVideoById(videoId);
 
-            if (user != null && video != null)
+            var existingWatchHistory = await _watchHistoryRepository.GetWatchHistoryByChannelIdAndVideoId(channelId, videoId);
+            if (existingWatchHistory != null)
+            {
+                existingWatchHistory.WatchDate = DateTime.UtcNow;
+                await _watchHistoryRepository.UpdateWatchHistory(existingWatchHistory);
+            }
+            else
             {
                 var watchHistory = new WatchHistory
                 {
-                    Channel = user,
-                    Video = video
+                    ChannelId = channelId,
+                    VideoId = videoId
                 };
 
                 await _watchHistoryRepository.AddWatchHistory(watchHistory);
             }
 
-            return RedirectToAction("Index", "Video");
+            return Ok();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAllWatchHistoryAsync()
+        public async Task<IActionResult> DeleteAllWatchHistory()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+
             await _watchHistoryRepository.DeleteAllWatchHistory(channelId);
 
-            return RedirectToAction("Index", "WatchHistory");
+            return RedirectToAction("Index");
         }
-
-
     }
 }

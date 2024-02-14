@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WatchHistory>
+
+<h2>Watch History</h2>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <a href="@Url.Action("Details", "Video", new { id = item.Video.VideoId })">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Video.Title - Watched on @item.WatchDate</h5>
+                            <p class="card-text">Uploaded by: @item.Video.Channel.Name</p>
+                            <p class="card-text">Upload Date: @item.Video.UploadDate.ToString("dd/MM/yyyy")</p>
+                            <p class="card-text">Views: @item.Video.Views.Count</p>
+                            <img src="@Url.Content("~/posters/" + item.Video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+    <form method="post" asp-action="DeleteAllWatchHistory" asp-controller="WatchHistory" class="mt-3">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Delete All Watch History</button>
+    </form>
+}
+else
+{
+    <p>No watch history found.</p>
+}

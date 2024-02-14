@@ -12,5 +12,9 @@ namespace HouYun3.IRepositories
         Task<Guid> GetChannelIdByUserId(string userId);
         Task<Channel> GetChannelByUserId(string userId);
         Task<Channel> GetChannelByName(string channelName);
+        Task AddVideo(Video video, IFormFile videoFile, IFormFile posterFile);
+        Task<Video> UpdateVideo(Video video);
+        Task DeleteVideo(Guid id);
+        Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId);
     }
 }

@@ -343,8 +343,7 @@ namespace HouYun3.Migrations
 
                     b.HasIndex("ChannelId");
 
-                    b.HasIndex("VideoId")
-                        .IsUnique();
+                    b.HasIndex("VideoId");
 
                     b.ToTable("WatchHistories");
                 });
@@ -643,8 +642,8 @@ namespace HouYun3.Migrations
                         .IsRequired();
 
                     b.HasOne("HouYun3.Models.Video", "Video")
-                        .WithOne("WatchHistory")
-                        .HasForeignKey("HouYun3.Models.WatchHistory", "VideoId")
+                        .WithMany("WatchHistories")
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -765,8 +764,7 @@ namespace HouYun3.Migrations
 
                     b.Navigation("Views");
 
-                    b.Navigation("WatchHistory")
-                        .IsRequired();
+                    b.Navigation("WatchHistories");
 
                     b.Navigation("WatchLaterItems");
                 });
