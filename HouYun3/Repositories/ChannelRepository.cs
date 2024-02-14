@@ -9,10 +9,12 @@ namespace HouYun3.Repositories
     public class ChannelRepository : IChannelRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotificationRepository _notificationRepository;
 
-        public ChannelRepository(ApplicationDbContext context)
+        public ChannelRepository(ApplicationDbContext context, INotificationRepository notificationRepository)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<Channel> GetChannelByName(string channelName)
@@ -35,6 +37,7 @@ namespace HouYun3.Repositories
             return await _context.Channels
                 .Include(v => v.Videos)
                     .ThenInclude(v => v.Views)
+                .Include(v => v.Subscribers)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
@@ -106,6 +109,13 @@ namespace HouYun3.Repositories
 
                 _context.Videos.Add(video);
                 await _context.SaveChangesAsync();
+
+                var notification = new Notification()
+                {
+                    Message = $"На канале {video.Channel.Name}. Вышло новое видео: {video.Title}",
+                    ChannelId = video.ChannelId
+                };
+                await _notificationRepository.AddNotification(notification);
             }
             catch (Exception)
             {

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Notification>
+
+<h2>Notifications</h2>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var notification in Model)
+        {
+            <li>@notification.Message</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No notifications found.</p>
+}

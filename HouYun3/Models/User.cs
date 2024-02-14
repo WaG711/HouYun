@@ -21,8 +21,8 @@ namespace HouYun3.Models
 
         public User()
         {
-            Channel = new Channel { UserId = Id };
             Subscriptions = new List<Subscription>();
+            Channel = new Channel { UserId = Id, Subscribers = Subscriptions };
         }
     }
 }

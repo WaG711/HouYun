@@ -2,21 +2,27 @@
 using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Channels;
 
 namespace HouYun3.Repositories
 {
     public class NotificationRepository : INotificationRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISubscriptionRepository _subscriptionRepository;
 
-        public NotificationRepository(ApplicationDbContext context)
+        public NotificationRepository(ApplicationDbContext context, ISubscriptionRepository subscriptionRepository)
         {
             _context = context;
+            _subscriptionRepository = subscriptionRepository;
         }
 
-        public async Task<IEnumerable<Notification>> GetAllNotifications()
+        public async Task<IEnumerable<Notification>> GetAllNotificationsByChannelId(Guid channelId)
         {
-            return await _context.Notifications.ToListAsync();
+            return await _context.Notifications
+                .Include(c => c.Channel)
+                .Where(c => c.ChannelId == channelId)
+                .ToListAsync();
         }
 
         public async Task<Notification> GetNotificationById(Guid id)
@@ -24,11 +30,20 @@ namespace HouYun3.Repositories
             return await _context.Notifications.FindAsync(id);
         }
 
-        public async Task<Notification> AddNotification(Notification notification)
+        public async Task AddNotification(Notification notification)
         {
-            _context.Notifications.Add(notification);
-            await _context.SaveChangesAsync();
-            return notification;
+            var subscribers = await _subscriptionRepository.GetSubscriptionsByChannelId(notification.ChannelId);
+            foreach (var subscriber in subscribers)
+            {
+                var sub = subscriber.User.Channel.ChannelId;
+                var notify = new Notification
+                {
+                    Message = notification.Message,
+                    ChannelId = sub
+                };
+                _context.Notifications.Add(notify);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Notification> UpdateNotification(Notification notification)
