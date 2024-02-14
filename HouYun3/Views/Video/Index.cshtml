@@ -32,7 +32,7 @@
     {
         <div class="col-md-3 mb-3">
             <div class="card">
-                <a href="@Url.Action("Details", "Video", new { id = video.VideoId })">
+                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
                     <div class="card-body">
                         <h5 class="card-title">@video.Title</h5>
                         <p class="card-text">Uploaded by: @video.Channel.Name</p>

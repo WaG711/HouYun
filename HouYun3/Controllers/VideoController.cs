@@ -34,14 +34,22 @@ namespace HouYun3.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid videoId)
         {
-            var video = await _videoRepository.GetVideoById(id);
+            var video = await _videoRepository.GetVideoById(videoId);
+
             if (video == null)
             {
                 return NotFound();
             }
-            return View(video);
+
+            var model = new DetailsViewModel()
+            {
+                Video = video,
+                Videos = await _videoRepository.GetAllVideosExceptId(videoId)
+            };
+
+            return View(model);
         }
     }
 }

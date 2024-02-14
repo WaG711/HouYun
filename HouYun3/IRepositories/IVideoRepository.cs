@@ -6,6 +6,7 @@ namespace HouYun3.IRepositories
     {
         Task<IEnumerable<Video>> GetAllVideos();
         Task<IEnumerable<Video>> GetVideosByCategory(string categoryName);
+        Task<IEnumerable<Video>> GetAllVideosExceptId(Guid id);
         Task<Video> GetVideoById(Guid id);
         Task AddVideo(Video video, IFormFile videoFile, IFormFile posterFile);
         Task<Video> UpdateVideo(Video video);

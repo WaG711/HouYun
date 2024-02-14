@@ -34,6 +34,20 @@ namespace HouYun3.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Video>> GetAllVideosExceptId(Guid id)
+        {
+            var allVideos = await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.Channel)
+                .Include(v => v.Views)
+                .OrderByDescending(v => v.UploadDate)
+                .ToListAsync();
+
+            var videosExceptId = allVideos.Where(v => v.VideoId != id).ToList();
+
+            return videosExceptId;
+        }
+
         public async Task<Video> GetVideoById(Guid id)
         {
             return await _context.Videos
