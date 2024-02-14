@@ -35,7 +35,7 @@ namespace HouYun3.Models
         public ICollection<Like> Likes { get; set; }
 
         public Channel()
-        {
+        {   
             SearchHistories = new List<SearchHistory>();
             WatchHistories = new List<WatchHistory>();
             WatchLaterList = new List<WatchLater>();
@@ -44,7 +44,6 @@ namespace HouYun3.Models
             Comments = new List<Comment>();
             Likes = new List<Like>();
             Videos = new List<Video>();
-            Subscribers = new List<Subscription>();
             RegistrationDate = DateTime.UtcNow;
         }
     }

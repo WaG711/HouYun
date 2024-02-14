@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouYun3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240213132024_hy")]
-    partial class hy
+    [Migration("20240214143450_cs2")]
+    partial class cs2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
