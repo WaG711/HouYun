@@ -7,7 +7,9 @@
     <ul>
         @foreach (var notification in Model)
         {
-            <li>@notification.Message</li>
+            <li>
+                <strong>@notification.NotificationDate.ToString("dd/MM/yyyy HH:mm"):</strong> @notification.Message
+            </li>
         }
     </ul>
 }

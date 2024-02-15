@@ -22,6 +22,7 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
             var notifys = await _notificationRepository.GetAllNotificationsByChannelId(channelId);
+
             return View(notifys);
         }
     }

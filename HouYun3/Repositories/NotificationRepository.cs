@@ -19,10 +19,20 @@ namespace HouYun3.Repositories
 
         public async Task<IEnumerable<Notification>> GetAllNotificationsByChannelId(Guid channelId)
         {
-            return await _context.Notifications
-                .Include(c => c.Channel)
-                .Where(c => c.ChannelId == channelId)
-                .ToListAsync();
+            var notifications = await _context.Notifications
+            .Include(c => c.Channel)
+            .Where(c => c.ChannelId == channelId)
+            .OrderByDescending(w => w.NotificationDate)
+            .ToListAsync();
+
+            foreach (var notification in notifications)
+            {
+                notification.IsRead = true;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return notifications;
         }
 
         public async Task<Notification> GetNotificationById(Guid id)
