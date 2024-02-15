@@ -68,7 +68,7 @@ namespace HouYun.Controllers.UserContoller
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _userRepository.ChangeUsername(userId.ToString(), model.NewUsername, model.Password);
+            var result = await _userRepository.ChangeUsername(userId, model.NewUsername, model.Password);
 
             if (result)
             {
@@ -79,6 +79,8 @@ namespace HouYun.Controllers.UserContoller
                 ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
                 return View(model);
             }
+
+
         }
 
     }

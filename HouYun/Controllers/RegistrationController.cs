@@ -25,7 +25,7 @@ namespace HouYun.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userRepository.RegisterUser(model);
+                var result = await _userRepository.RegistrationUser(model);
                 if (result)
                 {
                     return RedirectToAction("Index", "Home");
