@@ -141,9 +141,14 @@ namespace HouYun3.Migrations
                     b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("VideoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("NotificationId");
 
                     b.HasIndex("ChannelId");
+
+                    b.HasIndex("VideoId");
 
                     b.ToTable("Notifications");
                 });
@@ -562,7 +567,15 @@ namespace HouYun3.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HouYun3.Models.Video", "Video")
+                        .WithMany("Notifications")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Channel");
+
+                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("HouYun3.Models.SearchHistory", b =>
@@ -761,6 +774,8 @@ namespace HouYun3.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("Views");
 

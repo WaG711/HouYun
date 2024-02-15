@@ -7,7 +7,7 @@
     <ul>
         @foreach (var notification in Model)
         {
-            <li>@notification.Message</li>
+            <a href="@Url.Action("Details", "Video", new { videoId = notification.VideoId })">@notification.Message</a>
         }
     </ul>
 }

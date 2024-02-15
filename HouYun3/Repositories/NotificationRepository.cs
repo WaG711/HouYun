@@ -19,7 +19,8 @@ namespace HouYun3.Repositories
         public async Task<IEnumerable<Notification>> GetAllNotificationsByChannelId(Guid channelId)
         {
             return await _context.Notifications
-                .Where(c => c.ChannelId == channelId)
+                .Include(n => n.Video)
+                .Where(n => n.ChannelId == channelId)
                 .OrderByDescending(n => n.NotificationDate)
                 .ToListAsync();
         }
@@ -34,7 +35,8 @@ namespace HouYun3.Repositories
                 var notify = new Notification
                 {
                     Message = notification.Message,
-                    ChannelId = sub
+                    ChannelId = sub,
+                    VideoId = notification.VideoId
                 };
 
                 _context.Notifications.Add(notify);
@@ -53,13 +55,21 @@ namespace HouYun3.Repositories
 
         public async Task DeleteReadNotifications()
         {
-            var notifications = await _context.Notifications.Where(n => n.IsRead).ToListAsync();
+            var notificationsGroupedByChannel = await _context.Notifications
+            .Where(n => n.IsRead)
+            .GroupBy(n => n.ChannelId)
+            .ToListAsync();
 
-            if (notifications.Count != 0)
+            foreach (var group in notificationsGroupedByChannel)
             {
-                _context.Notifications.RemoveRange(notifications);
-                await _context.SaveChangesAsync();
+                var lastTenNotifications = group.OrderByDescending(n => n.NotificationDate).Take(10);
+
+                var notificationsToRemove = group.Except(lastTenNotifications);
+
+                _context.Notifications.RemoveRange(notificationsToRemove);
             }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

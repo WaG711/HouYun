@@ -143,6 +143,12 @@ namespace HouYun3.Data
                 .HasKey(n => n.NotificationId);
 
             modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Video)
+                .WithMany(v => v.Notifications)
+                .HasForeignKey(n => n.VideoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Channel)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.ChannelId)

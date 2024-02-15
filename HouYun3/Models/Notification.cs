@@ -23,6 +23,10 @@ namespace HouYun3.Models
         [ForeignKey("ChannelId")]
         public Channel Channel { get; set; }
 
+        public Guid VideoId { get; set; }
+        [ForeignKey("VideoId")]
+        public Video Video { get; set; }
+
         public Notification()
         {
             NotificationDate = DateTime.UtcNow;

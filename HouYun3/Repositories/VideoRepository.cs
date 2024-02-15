@@ -91,7 +91,8 @@ namespace HouYun3.Repositories
                 var notification = new Notification()
                 {
                     Message = $"На канале {video.Channel.Name}. Вышло новое видео: {video.Title}",
-                    ChannelId = video.ChannelId
+                    ChannelId = video.ChannelId,
+                    VideoId = video.VideoId
                 };
                 await _notificationRepository.AddNotification(notification);
             }
