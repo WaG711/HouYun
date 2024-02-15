@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Notification>
+
+<h2>Notifications</h2>
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var notification in Model)
+        {
+            <li>
+                <a href="@Url.Action("Details", "Video", new { videoId = notification.VideoId })">
+                    <p>Автор канала "@notification.Video.Channel.Name" загрузил новое видео: "@notification.Video.Title"</p>
+                    <img src="@Url.Content("~/posters/" + notification.Video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No notifications found.</p>
+}

@@ -1,0 +1,25 @@
+﻿@model HouYun.ViewModels.forVideo.SearchViewModel
+
+@if (Model.Videos.Any())
+{
+    <div class="row">
+        @foreach (var video in Model.Videos)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">@video.Title</h5>
+                        <p class="card-text">@video.Description</p>
+                        <p class="card-text">@video.UploadDate.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>No results found for "@Model.SearchTerm".</p>
+}

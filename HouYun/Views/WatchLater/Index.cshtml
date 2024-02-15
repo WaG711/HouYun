@@ -1,0 +1,43 @@
+﻿@using System.Security.Claims
+@model IEnumerable<Video>
+
+<h2>Список видео "Смотреть позже"</h2>
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var video in Model)
+        {
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                        <div class="card-body">
+                            <h5 class="card-title">@video.Title</h5>
+                            <p class="card-text">Uploaded by: @video.Channel.Name</p>
+                            <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
+                            <p class="card-text">Views: @video.Views.Count</p>
+                            <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+                        </div>
+                    </a>
+                    @{
+                        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    }
+
+                    @foreach (var watchLaterItem in video.WatchLaterItems)
+                    {
+                        @if (watchLaterItem.Channel.UserId == userId)
+                        {
+                            <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Список "Смотреть позже" пуст.</p>
+}
