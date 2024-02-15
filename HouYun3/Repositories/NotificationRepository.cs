@@ -20,6 +20,7 @@ namespace HouYun3.Repositories
         {
             return await _context.Notifications
                 .Include(n => n.Video)
+                    .ThenInclude(v => v.Channel)
                 .Where(n => n.ChannelId == channelId)
                 .OrderByDescending(n => n.NotificationDate)
                 .ToListAsync();
@@ -34,7 +35,6 @@ namespace HouYun3.Repositories
 
                 var notify = new Notification
                 {
-                    Message = notification.Message,
                     ChannelId = sub,
                     VideoId = notification.VideoId
                 };
@@ -56,9 +56,9 @@ namespace HouYun3.Repositories
         public async Task DeleteReadNotifications()
         {
             var notificationsGroupedByChannel = await _context.Notifications
-            .Where(n => n.IsRead)
-            .GroupBy(n => n.ChannelId)
-            .ToListAsync();
+                                                    .Where(n => n.IsRead)
+                                                    .GroupBy(n => n.ChannelId)
+                                                    .ToListAsync();
 
             foreach (var group in notificationsGroupedByChannel)
             {

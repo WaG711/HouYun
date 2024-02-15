@@ -8,10 +8,6 @@ namespace HouYun3.Models
         [Key]
         public Guid NotificationId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Сообщение' обязательно для заполнения")]
-        [StringLength(100, ErrorMessage = "Длина 'Сообщения' не должна превышать 100 символов")]
-        public string Message { get; set; }
-
         [ScaffoldColumn(false)]
         [Display(Name = "Дата уведомления")]
         public DateTime NotificationDate { get; set; }

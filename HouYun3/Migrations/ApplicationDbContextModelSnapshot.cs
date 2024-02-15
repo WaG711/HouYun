@@ -133,11 +133,6 @@ namespace HouYun3.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
