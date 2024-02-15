@@ -16,7 +16,8 @@ namespace HouYun3.Repositories
 
         public async Task<Like> GetLikeByChannelIdAndVideoId(Guid channelId, Guid videoId)
         {
-            return await _context.Likes.FirstOrDefaultAsync(v => v.ChannelId == channelId && v.VideoId == videoId);
+            return await _context.Likes
+                .FirstOrDefaultAsync(v => v.ChannelId == channelId && v.VideoId == videoId);
         }
 
         public async Task<Like> AddLike(Like like)
