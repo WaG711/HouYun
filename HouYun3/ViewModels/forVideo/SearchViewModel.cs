@@ -1,6 +1,6 @@
-﻿using HouYun3.Models;
+﻿using HouYun.Models;
 
-namespace HouYun3.ViewModels.forVideo
+namespace HouYun.ViewModels.forVideo
 {
     public class SearchViewModel
     {

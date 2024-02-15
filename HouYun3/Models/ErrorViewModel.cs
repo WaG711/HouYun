@@ -1,4 +1,4 @@
-namespace HouYun3.Models
+namespace HouYun.Models
 {
     public class ErrorViewModel
     {

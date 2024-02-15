@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using HouYun3.IRepositories;
-using HouYun3.Models;
+using HouYun.IRepositories;
+using HouYun.Models;
 using Azure.Identity;
 using System.Security.Claims;
-using HouYun3.ViewModels.forUser;
+using HouYun.ViewModels.forUser;
 
 
-namespace HouYun3.Repositories
+namespace HouYun.Repositories
 {
     public class UserRepository : IUserRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HouYun3.Models;
+using HouYun.Models;
 
-namespace HouYun3.ViewModels.forUser
+namespace HouYun.ViewModels.forUser
 {
     public class UpdateChannelViewModel
     {

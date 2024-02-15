@@ -1,8 +1,8 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.Models;
-using HouYun3.Data;
+﻿using HouYun.IRepositories;
+using HouYun.Models;
+using HouYun.Data;
 
-namespace HouYun3.Repositories
+namespace HouYun.Repositories
 {
     public class CommentRepository : ICommentRepository
     {

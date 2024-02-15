@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\signalr\**" />
     <Compile Remove="wwwroot\microsoft\**" />
+    <Content Remove="wwwroot\js\signalr\**" />
     <Content Remove="wwwroot\microsoft\**" />
+    <EmbeddedResource Remove="wwwroot\js\signalr\**" />
     <EmbeddedResource Remove="wwwroot\microsoft\**" />
+    <None Remove="wwwroot\js\signalr\**" />
     <None Remove="wwwroot\microsoft\**" />
   </ItemGroup>
 
@@ -96,10 +100,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\signalr\dist\browser\" />
-    <Folder Include="wwwroot\js\signalr\dist\cjs\" />
-    <Folder Include="wwwroot\js\signalr\dist\esm\" />
-    <Folder Include="wwwroot\js\signalr\dist\webworker\" />
     <Folder Include="wwwroot\posters\" />
     <Folder Include="wwwroot\videos\" />
   </ItemGroup>

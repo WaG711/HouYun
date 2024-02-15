@@ -1,8 +1,8 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.ViewModels.forVideo;
+﻿using HouYun.IRepositories;
+using HouYun.ViewModels.forVideo;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HouYun3.Controllers
+namespace HouYun.Controllers
 {
     //[Authorize(Roles = "Admin")]
     public class VideoController : Controller

@@ -1,8 +1,8 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.Models;
+﻿using HouYun.IRepositories;
+using HouYun.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HouYun3.Controllers
+namespace HouYun.Controllers
 {
     public class CategoryController : Controller
     {

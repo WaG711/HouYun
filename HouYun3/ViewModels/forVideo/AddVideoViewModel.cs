@@ -1,7 +1,7 @@
-﻿using HouYun3.Models;
+﻿using HouYun.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace HouYun3.ViewModels.forVideo
+namespace HouYun.ViewModels.forVideo
 {
     public class AddVideoViewModel
     {
