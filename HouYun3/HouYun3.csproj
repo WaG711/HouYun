@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\microsoft\**" />
+    <Content Remove="wwwroot\microsoft\**" />
+    <EmbeddedResource Remove="wwwroot\microsoft\**" />
+    <None Remove="wwwroot\microsoft\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
@@ -93,10 +100,6 @@
     <Folder Include="wwwroot\js\signalr\dist\cjs\" />
     <Folder Include="wwwroot\js\signalr\dist\esm\" />
     <Folder Include="wwwroot\js\signalr\dist\webworker\" />
-    <Folder Include="wwwroot\microsoft\signalr\dist\browser\" />
-    <Folder Include="wwwroot\microsoft\signalr\dist\cjs\" />
-    <Folder Include="wwwroot\microsoft\signalr\dist\esm\" />
-    <Folder Include="wwwroot\microsoft\signalr\dist\webworker\" />
     <Folder Include="wwwroot\posters\" />
     <Folder Include="wwwroot\videos\" />
   </ItemGroup>
