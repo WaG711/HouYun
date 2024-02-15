@@ -30,7 +30,7 @@ namespace HouYun.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "Ошибка при регистрации.");
+                ModelState.AddModelError(string.Empty, "Проверьте введенные данные");
             }
             return View(model);
         }
