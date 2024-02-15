@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace HouYun3.Migrations
+namespace HouYun.Migrations
 {
     /// <inheritdoc />
     public partial class hy : Migration

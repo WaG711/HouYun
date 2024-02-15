@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HouYun3.ViewModels.forUser
+namespace HouYun.ViewModels.forUser
 {
     public class LoginViewModel
     {

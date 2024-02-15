@@ -1,6 +1,6 @@
-﻿using HouYun3.Models;
+﻿using HouYun.Models;
 
-namespace HouYun3.IRepositories
+namespace HouYun.IRepositories
 {
     public interface INotificationRepository
     {

@@ -1,9 +1,9 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.Models;
+﻿using HouYun.IRepositories;
+using HouYun.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace HouYun3.Controllers
+namespace HouYun.Controllers
 {
     public class CommentController : Controller
     {

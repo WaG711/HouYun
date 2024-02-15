@@ -1,11 +1,11 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.Models;
-using HouYun3.ViewModels.forVideo;
-using HouYun3.ViewModels.forUser;
+﻿using HouYun.IRepositories;
+using HouYun.Models;
+using HouYun.ViewModels.forVideo;
+using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace HouYun3.Controllers
+namespace HouYun.Controllers
 {
     public class ChannelController : Controller
     {

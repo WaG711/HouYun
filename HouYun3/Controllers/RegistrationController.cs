@@ -1,8 +1,8 @@
-﻿using HouYun3.IRepositories;
-using HouYun3.ViewModels.forUser;
+﻿using HouYun.IRepositories;
+using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HouYun3.Controllers
+namespace HouYun.Controllers
 {
     public class RegistrationController : Controller
     {

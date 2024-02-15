@@ -1,8 +1,8 @@
-﻿using HouYun3.Models;
+﻿using HouYun.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun3.Data
+namespace HouYun.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {

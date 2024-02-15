@@ -1,7 +1,7 @@
-﻿using HouYun3.Models;
-using HouYun3.ViewModels.forUser;
+﻿using HouYun.Models;
+using HouYun.ViewModels.forUser;
 
-namespace HouYun3.IRepositories
+namespace HouYun.IRepositories
 {
     public interface IUserRepository
     {

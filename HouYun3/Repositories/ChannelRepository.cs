@@ -1,10 +1,10 @@
-﻿using HouYun3.Data;
-using HouYun3.IRepositories;
-using HouYun3.Models;
+﻿using HouYun.Data;
+using HouYun.IRepositories;
+using HouYun.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouYun3.Repositories
+namespace HouYun.Repositories
 {
     public class ChannelRepository : IChannelRepository
     {

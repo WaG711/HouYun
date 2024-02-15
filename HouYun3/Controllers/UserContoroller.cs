@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HouYun3.IRepositories;
+using HouYun.IRepositories;
 using System.Security.Claims;
-using HouYun3.ViewModels.forUser;
+using HouYun.ViewModels.forUser;
 
-namespace HouYun3.Controllers.UserContoller
+namespace HouYun.Controllers.UserContoller
 {
 
     public class UserController : Controller
