@@ -120,13 +120,6 @@ namespace HouYun3.Repositories
             }
         }
 
-        public async Task<Video> UpdateVideo(Video video)
-        {
-            _context.Entry(video).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return video;
-        }
-
         public async Task DeleteVideo(Guid id)
         {
             var video = await _context.Videos.FindAsync(id);

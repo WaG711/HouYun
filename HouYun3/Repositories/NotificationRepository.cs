@@ -24,22 +24,19 @@ namespace HouYun3.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Notification> GetNotificationById(Guid id)
-        {
-            return await _context.Notifications.FindAsync(id);
-        }
-
         public async Task AddNotification(Notification notification)
         {
             var subscribers = await _subscriptionRepository.GetSubscriptionsByChannelId(notification.ChannelId);
             foreach (var subscriber in subscribers)
             {
                 var sub = subscriber.User.Channel.ChannelId;
+
                 var notify = new Notification
                 {
                     Message = notification.Message,
                     ChannelId = sub
                 };
+
                 _context.Notifications.Add(notify);
                 await _context.SaveChangesAsync();
             }
@@ -48,6 +45,7 @@ namespace HouYun3.Repositories
         public async Task<Notification> UpdateNotification(Notification notification)
         {
             notification.IsRead = true;
+
             _context.Entry(notification).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return notification;

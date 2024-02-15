@@ -7,7 +7,6 @@ namespace HouYun3.IRepositories
         Task<WatchHistory> GetWatchHistoryByChannelIdAndVideoId(Guid channelId, Guid videoId);
         Task<IEnumerable<WatchHistory>> GetWatchHistoryByChannelId(Guid channelId);
         Task AddWatchHistory(WatchHistory watchHistory);
-        Task DeleteWatchHistory(Guid id);
         Task UpdateWatchHistory(WatchHistory existingWatchHistory);
         Task DeleteAllWatchHistory(Guid channelId);
     }

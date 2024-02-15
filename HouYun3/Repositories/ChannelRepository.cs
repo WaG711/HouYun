@@ -39,20 +39,9 @@ namespace HouYun3.Repositories
                 .FirstOrDefaultAsync(c => c.UserId == userId);
         }
 
-        public async Task<Channel> GetChannelById(Guid id)
-        {
-            return await _context.Channels.FindAsync(id);
-        }
-
         public async Task<IEnumerable<Channel>> GetAllChannels()
         {
             return await _context.Channels.ToListAsync();
-        }
-
-        public async Task CreateChannel(Channel channel)
-        {
-            await _context.Channels.AddAsync(channel);
-            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateChannel(Channel channel)
@@ -75,6 +64,7 @@ namespace HouYun3.Repositories
         public async Task DeleteChannel(Guid id)
         {
             var channel = await _context.Channels.FindAsync(id);
+
             if (channel != null)
             {
                 _context.Channels.Remove(channel);

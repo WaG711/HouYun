@@ -16,6 +16,7 @@ namespace HouYun3.Controllers
             _channelRepository = channelRepository;
 
         }
+
         public async Task<ActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
