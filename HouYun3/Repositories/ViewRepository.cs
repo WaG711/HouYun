@@ -16,33 +16,14 @@ namespace HouYun3.Repositories
 
         public async Task<View> GetViewByVideoAndChannel(Guid videoId, Guid channelId)
         {
-            return await _context.Views.FirstOrDefaultAsync(v => v.VideoId == videoId && v.ChannelId == channelId);
-        }
-
-        public async Task<IEnumerable<View>> GetAllViews()
-        {
-            return await _context.Views.ToListAsync();
-        }
-
-        public async Task<View> GetViewById(Guid id)
-        {
-            return await _context.Views.FindAsync(id);
+            return await _context.Views
+                .FirstOrDefaultAsync(v => v.VideoId == videoId && v.ChannelId == channelId);
         }
 
         public async Task AddView(View view)
         {
             _context.Views.Add(view);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteView(Guid id)
-        {
-            var view = await _context.Views.FindAsync(id);
-            if (view != null)
-            {
-                _context.Views.Remove(view);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

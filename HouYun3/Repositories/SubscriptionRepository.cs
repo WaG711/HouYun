@@ -14,19 +14,16 @@ namespace HouYun3.Repositories
             _context = context;
         }
 
-        public async Task<Subscription> GetSubscriptionById(Guid id)
-        {
-            return await _context.Subscriptions.FindAsync(id);
-        }
-
         public async Task<Subscription> GetSubscriptionByChannelAndUser(Guid channelId, string userId)
         {
-            return await _context.Subscriptions.FirstOrDefaultAsync(s => s.ChannelId == channelId && s.UserId == userId);
+            return await _context.Subscriptions
+                .FirstOrDefaultAsync(s => s.ChannelId == channelId && s.UserId == userId);
         }
 
         public async Task<IEnumerable<Subscription>> GetSubscriptionsByUserId(string userId)
         {
-            return await _context.Subscriptions.Where(s => s.UserId == userId).ToListAsync();
+            return await _context.Subscriptions
+                .Where(s => s.UserId == userId).ToListAsync();
         }
 
         public async Task<IEnumerable<Subscription>> GetSubscriptionsByChannelId(Guid channelId)
@@ -36,12 +33,7 @@ namespace HouYun3.Repositories
                     .ThenInclude(f => f.User.Channel)
                 .FirstOrDefaultAsync(c => c.ChannelId == channelId);
 
-            if (channel != null)
-            {
-                return channel.Subscribers;
-            }
-
-            return null;
+            return channel.Subscribers;
         }
 
 
@@ -51,15 +43,10 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateSubscription(Subscription subscription)
-        {
-            _context.Subscriptions.Update(subscription);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task DeleteSubscription(Guid id)
         {
             var subscription = await _context.Subscriptions.FindAsync(id);
+
             if (subscription != null)
             {
                 _context.Subscriptions.Remove(subscription);

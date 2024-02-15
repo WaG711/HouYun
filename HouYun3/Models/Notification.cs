@@ -8,10 +8,6 @@ namespace HouYun3.Models
         [Key]
         public Guid NotificationId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Сообщение' обязательно для заполнения")]
-        [StringLength(100, ErrorMessage = "Длина 'Сообщения' не должна превышать 100 символов")]
-        public string Message { get; set; }
-
         [ScaffoldColumn(false)]
         [Display(Name = "Дата уведомления")]
         public DateTime NotificationDate { get; set; }
@@ -22,6 +18,10 @@ namespace HouYun3.Models
         public Guid ChannelId { get; set; }
         [ForeignKey("ChannelId")]
         public Channel Channel { get; set; }
+
+        public Guid VideoId { get; set; }
+        [ForeignKey("VideoId")]
+        public Video Video { get; set; }
 
         public Notification()
         {

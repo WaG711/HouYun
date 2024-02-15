@@ -1,6 +1,5 @@
 ﻿using HouYun3.IRepositories;
 using HouYun3.ViewModels.forUser;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun3.Controllers

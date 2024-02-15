@@ -28,13 +28,8 @@ namespace HouYun3.Repositories
             return videos;
         }
 
-        public async Task<WatchLater> GetWatchLaterItemById(Guid id)
-        {
-            return await _context.WatchLaterItems.FindAsync(id);
-        }
-
         public async Task AddWatchLaterItem(WatchLater watchLaterItem)
-            {
+        {
             _context.WatchLaterItems.Add(watchLaterItem);
             await _context.SaveChangesAsync();
         }

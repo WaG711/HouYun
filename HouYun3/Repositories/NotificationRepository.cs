@@ -2,7 +2,6 @@
 using HouYun3.Models;
 using HouYun3.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Channels;
 
 namespace HouYun3.Repositories
 {
@@ -19,25 +18,12 @@ namespace HouYun3.Repositories
 
         public async Task<IEnumerable<Notification>> GetAllNotificationsByChannelId(Guid channelId)
         {
-            var notifications = await _context.Notifications
-            .Include(c => c.Channel)
-            .Where(c => c.ChannelId == channelId)
-            .OrderByDescending(w => w.NotificationDate)
-            .ToListAsync();
-
-            foreach (var notification in notifications)
-            {
-                notification.IsRead = true;
-            }
-
-            await _context.SaveChangesAsync();
-
-            return notifications;
-        }
-
-        public async Task<Notification> GetNotificationById(Guid id)
-        {
-            return await _context.Notifications.FindAsync(id);
+            return await _context.Notifications
+                .Include(n => n.Video)
+                    .ThenInclude(v => v.Channel)
+                .Where(n => n.ChannelId == channelId)
+                .OrderByDescending(n => n.NotificationDate)
+                .ToListAsync();
         }
 
         public async Task AddNotification(Notification notification)
@@ -46,11 +32,13 @@ namespace HouYun3.Repositories
             foreach (var subscriber in subscribers)
             {
                 var sub = subscriber.User.Channel.ChannelId;
+
                 var notify = new Notification
                 {
-                    Message = notification.Message,
-                    ChannelId = sub
+                    ChannelId = sub,
+                    VideoId = notification.VideoId
                 };
+
                 _context.Notifications.Add(notify);
                 await _context.SaveChangesAsync();
             }
@@ -58,19 +46,30 @@ namespace HouYun3.Repositories
 
         public async Task<Notification> UpdateNotification(Notification notification)
         {
+            notification.IsRead = true;
+
             _context.Entry(notification).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return notification;
         }
 
-        public async Task DeleteNotification(Guid id)
+        public async Task DeleteReadNotifications()
         {
-            var notification = await _context.Notifications.FindAsync(id);
-            if (notification != null)
+            var notificationsGroupedByChannel = await _context.Notifications
+                                                    .Where(n => n.IsRead)
+                                                    .GroupBy(n => n.ChannelId)
+                                                    .ToListAsync();
+
+            foreach (var group in notificationsGroupedByChannel)
             {
-                _context.Notifications.Remove(notification);
-                await _context.SaveChangesAsync();
+                var lastTenNotifications = group.OrderByDescending(n => n.NotificationDate).Take(10);
+
+                var notificationsToRemove = group.Except(lastTenNotifications);
+
+                _context.Notifications.RemoveRange(notificationsToRemove);
             }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -47,16 +47,6 @@ namespace HouYun3.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWatchHistory(Guid id)
-        {
-            var watchHistory = await _context.WatchHistories.FindAsync(id);
-            if (watchHistory != null)
-            {
-                _context.WatchHistories.Remove(watchHistory);
-                await _context.SaveChangesAsync();
-            }
-        }
-
         public async Task DeleteAllWatchHistory(Guid channelId)
         {
             var watchHistories = await _context.WatchHistories

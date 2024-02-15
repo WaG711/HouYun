@@ -9,7 +9,7 @@
         {
             <div class="col-md-3 mb-3">
                 <div class="card">
-                    <a href="@Url.Action("Details", "Video", new { id = item.Video.VideoId })">
+                    <a href="@Url.Action("Details", "Video", new { videoId = item.Video.VideoId })">
                         <div class="card-body">
                             <h5 class="card-title">@item.Video.Title - Watched on @item.WatchDate</h5>
                             <p class="card-text">Uploaded by: @item.Video.Channel.Name</p>
