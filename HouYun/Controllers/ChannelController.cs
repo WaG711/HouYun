@@ -4,9 +4,11 @@ using HouYun.ViewModels.forVideo;
 using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
         private readonly IChannelRepository _channelRepository;

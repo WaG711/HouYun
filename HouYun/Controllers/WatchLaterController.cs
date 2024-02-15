@@ -1,10 +1,12 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;

@@ -1,11 +1,13 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-   public class WatchHistoryController : Controller
+    [Authorize(Roles = "Admin,User")]
+    public class WatchHistoryController : Controller
     {
         private readonly IWatchHistoryRepository _watchHistoryRepository;
         private readonly IChannelRepository _channelRepository;

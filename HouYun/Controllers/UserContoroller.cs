@@ -2,10 +2,11 @@
 using HouYun.IRepositories;
 using System.Security.Claims;
 using HouYun.ViewModels.forUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers.UserContoller
 {
-
+    [Authorize(Roles = "Admin,User")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
