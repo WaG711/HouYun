@@ -100,8 +100,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\posters\" />
     <Folder Include="wwwroot\videos\" />
+    <Folder Include="wwwroot\posters\" />
   </ItemGroup>
 
 </Project>
