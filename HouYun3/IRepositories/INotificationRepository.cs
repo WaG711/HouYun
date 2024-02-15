@@ -8,6 +8,6 @@ namespace HouYun3.IRepositories
         Task<Notification> GetNotificationById(Guid id);
         Task AddNotification(Notification notification);
         Task<Notification> UpdateNotification(Notification notification);
-        Task DeleteNotification(Guid id);
+        Task DeleteReadNotifications();
     }
 }

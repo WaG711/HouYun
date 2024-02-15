@@ -1,6 +1,5 @@
 ﻿using HouYun3.IRepositories;
-using HouYun3.Repositories;
-using Microsoft.AspNetCore.Http;
+using HouYun3.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -22,7 +21,29 @@ namespace HouYun3.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
             var notifys = await _notificationRepository.GetAllNotificationsByChannelId(channelId);
+
+            await Update(notifys);
+
             return View(notifys);
+        }
+
+        private async Task<ActionResult> Update(IEnumerable<Notification> notifications)
+        {
+            foreach (var notification in notifications)
+            {
+                await _notificationRepository.UpdateNotification(notification);
+            }
+
+            await DeleteNotifications();
+
+            return Ok();
+        }
+
+        private async Task<ActionResult> DeleteNotifications()
+        {
+            await _notificationRepository.DeleteReadNotifications();
+
+            return Ok();
         }
     }
 }

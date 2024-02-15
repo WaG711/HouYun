@@ -20,6 +20,7 @@ namespace HouYun3.Repositories
         {
             return await _context.Notifications
                 .Where(c => c.ChannelId == channelId)
+                .OrderByDescending(n => n.NotificationDate)
                 .ToListAsync();
         }
 
@@ -46,17 +47,19 @@ namespace HouYun3.Repositories
 
         public async Task<Notification> UpdateNotification(Notification notification)
         {
+            notification.IsRead = true;
             _context.Entry(notification).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return notification;
         }
 
-        public async Task DeleteNotification(Guid id)
+        public async Task DeleteReadNotifications()
         {
-            var notification = await _context.Notifications.FindAsync(id);
-            if (notification != null)
+            var notifications = await _context.Notifications.Where(n => n.IsRead).ToListAsync();
+
+            if (notifications.Count != 0)
             {
-                _context.Notifications.Remove(notification);
+                _context.Notifications.RemoveRange(notifications);
                 await _context.SaveChangesAsync();
             }
         }
