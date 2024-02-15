@@ -50,38 +50,35 @@ namespace HouYun3.Repositories
             return videosExceptId;
         }
 
+        public async Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId)
+        {
+            return await _context.Videos
+                .Include(v => v.Category)
+                .Include(v => v.Channel)
+                .Include(v => v.Views)
+                .Where(v => v.ChannelId == channelId)
+                .ToListAsync();
+        }
+
         public async Task<Video> GetVideoById(Guid id)
         {
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Channel)
                 .Include(v => v.Comments)
-                    .ThenInclude(v => v.Channel)
+                    .ThenInclude(c => c.Channel)
                 .Include(v => v.Likes)
                 .Include(v => v.Views)
-                .FirstOrDefaultAsync(v => v.VideoId == id);
+                .SingleOrDefaultAsync(v => v.VideoId == id);
         }
 
         public async Task AddVideo(Video video, IFormFile videoFile, IFormFile posterFile)
         {
+            var videoFileName = await SaveFile(videoFile, "videos");
+            var posterFileName = await SaveFile(posterFile, "posters");
+
             try
             {
-                var videoFileName = Guid.NewGuid().ToString() + Path.GetExtension(videoFile.FileName);
-                var videoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", videoFileName);
-
-                using (var videoStream = new FileStream(videoFilePath, FileMode.Create))
-                {
-                    await videoFile.CopyToAsync(videoStream);
-                }
-
-                var posterFileName = Guid.NewGuid().ToString() + Path.GetExtension(posterFile.FileName);
-                var posterFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "posters", posterFileName);
-
-                using (var posterStream = new FileStream(posterFilePath, FileMode.Create))
-                {
-                    await posterFile.CopyToAsync(posterStream);
-                }
-
                 video.VideoPath = videoFileName;
                 video.PosterPath = posterFileName;
 
@@ -97,25 +94,8 @@ namespace HouYun3.Repositories
             }
             catch (Exception)
             {
-                if (!string.IsNullOrEmpty(video.VideoPath))
-                {
-                    var videoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.VideoPath);
-
-                    if (File.Exists(videoFilePath))
-                    {
-                        File.Delete(videoFilePath);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(video.PosterPath))
-                {
-                    var posterFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "posters", video.PosterPath);
-
-                    if (File.Exists(posterFilePath))
-                    {
-                        File.Delete(posterFilePath);
-                    }
-                }
+                await DeleteFile(videoFileName, "videos");
+                await DeleteFile(posterFileName, "posters");
                 throw;
             }
         }
@@ -124,61 +104,89 @@ namespace HouYun3.Repositories
         {
             var video = await _context.Videos.FindAsync(id);
 
-            if (video != null)
+            try
             {
-                try
-                {
-                    var comments = _context.Comments.Where(c => c.VideoId == id);
-                    _context.Comments.RemoveRange(comments);
+                await DeleteNotifications(id);
+                await DeleteComments(id);
+                await DeleteLikes(id);
+                await DeleteViews(id);
+                await DeleteWatchLaterItem(id);
+                await DeleteWatchHistory(id);
 
-                    var likes = _context.Likes.Where(l => l.VideoId == id);
-                    _context.Likes.RemoveRange(likes);
+                await DeleteFile(video.VideoPath, "videos");
+                await DeleteFile(video.PosterPath, "posters");
 
-                    var views = _context.Views.Where(v => v.VideoId == id);
-                    _context.Views.RemoveRange(views);
-
-                    var watchLater = await _context.WatchLaterItems.SingleOrDefaultAsync(w => w.VideoId == id);
-                    if (watchLater != null)
-                    {
-                        _context.WatchLaterItems.Remove(watchLater);
-                    }
-
-                    var watchHistory = await _context.WatchHistories.SingleOrDefaultAsync(w => w.VideoId == id);
-                    if (watchHistory != null)
-                    {
-                        _context.WatchHistories.Remove(watchHistory);
-                    }
-
-                    var videoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "videos", video.VideoPath);
-                    if (File.Exists(videoFilePath))
-                    {
-                        File.Delete(videoFilePath);
-                    }
-
-                    var posterFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "posters", video.PosterPath);
-                    if (File.Exists(posterFilePath))
-                    {
-                        File.Delete(posterFilePath);
-                    }
-
-                    _context.Videos.Remove(video);
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                _context.Videos.Remove(video);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
-        public async Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId)
+        private async Task<string> SaveFile(IFormFile file, string folderName)
         {
-            return await _context.Videos
-                .Include(v => v.Category)
-                .Include(v => v.Channel)
-                .Include(v => v.Views)
-                .Where(v => v.ChannelId == channelId)
-                .ToListAsync();
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return fileName;
+        }
+
+        private async Task DeleteFile(string fileName, string folderName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+                return;
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+
+            if (File.Exists(filePath))
+            {
+                await Task.Run(() => File.Delete(filePath));
+            }
+        }
+
+        private async Task DeleteNotifications(Guid id)
+        {
+            var notifications = await _context.Notifications.Where(n => n.VideoId == id).ToListAsync();
+            _context.Notifications.RemoveRange(notifications);
+        }
+
+        private async Task DeleteComments(Guid id)
+        {
+            var comments = await _context.Comments.Where(c => c.VideoId == id).ToListAsync();
+            _context.Comments.RemoveRange(comments);
+        }
+
+        private async Task DeleteLikes(Guid id)
+        {
+            var likes = await _context.Likes.Where(l => l.VideoId == id).ToListAsync();
+            _context.Likes.RemoveRange(likes);
+        }
+
+        private async Task DeleteViews(Guid id)
+        {
+            var views = await _context.Views.Where(v => v.VideoId == id).ToListAsync();
+            _context.Views.RemoveRange(views);
+        }
+
+        private async Task DeleteWatchLaterItem(Guid id)
+        {
+            var watchLater = await _context.WatchLaterItems.FirstOrDefaultAsync(w => w.VideoId == id);
+            if (watchLater != null)
+                _context.WatchLaterItems.Remove(watchLater);
+        }
+
+        private async Task DeleteWatchHistory(Guid id)
+        {
+            var watchHistory = await _context.WatchHistories.FirstOrDefaultAsync(w => w.VideoId == id);
+            if (watchHistory != null)
+                _context.WatchHistories.Remove(watchHistory);
         }
     }
 }

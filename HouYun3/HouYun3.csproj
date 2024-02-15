@@ -97,6 +97,8 @@
     <Folder Include="wwwroot\microsoft\signalr\dist\cjs\" />
     <Folder Include="wwwroot\microsoft\signalr\dist\esm\" />
     <Folder Include="wwwroot\microsoft\signalr\dist\webworker\" />
+    <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
 </Project>
