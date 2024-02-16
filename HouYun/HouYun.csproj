@@ -37,8 +37,6 @@
     <None Include="Views\Channel\Delete.cshtml" />
     <None Include="Views\Channel\Index.cshtml" />
     <None Include="Views\Channel\Update.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Login\Index.cshtml" />
     <None Include="Views\Notifications\Index.cshtml" />
     <None Include="Views\Registration\Index.cshtml" />

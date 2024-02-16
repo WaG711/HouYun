@@ -4,6 +4,7 @@ using HouYun.IRepositories;
 using HouYun.Repositories;
 using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
+using Microsoft.Data.SqlClient;
 
 
 namespace HouYun
@@ -54,7 +55,7 @@ namespace HouYun
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -68,7 +69,12 @@ namespace HouYun
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Video}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "Notifications",
+                pattern: "Notifications",
+                defaults: new { controller = "Notifications", action = "Index" });
 
             app.MapControllerRoute(
                 name: "AddView",
@@ -99,6 +105,7 @@ namespace HouYun
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
+
 
             app.MapControllerRoute(
                 name: "unsubscribe",

@@ -1,48 +1,162 @@
 ﻿@model HouYun.ViewModels.forVideo.VideoViewModel
 
 @{
-    ViewData["Title"] = "Video Index";
+    ViewData["Title"] = "HouYun";
 }
+
+<style>
+    .card-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .video-card {
+        background-color: inherit;
+        border: none;
+    }
+
+    .card-title a,
+    .card-text a {
+        color: inherit;
+        text-decoration: none;
+    }
+</style>
+
 
 <div class="row mb-3">
     <div class="col-md-12">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Video">Все</a>
-                    </li>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Video?category=@category.Name">@category.Name</a>
-                        </li>
-                    }
-                </ul>
+        <div class="overflow-hidden">
+            <div class="d-flex flex-nowrap">
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="mr-3">
+                        <a class="nav-link" href="@Url.Action("Index", "Video", new { category = category.Name })">@category.Name</a>
+                    </div>
+                }
             </div>
-        </nav>
+        </div>
     </div>
 </div>
 
-<div class="row">
-    @foreach (var video in Model.Videos)
-    {
-        <div class="col-md-3 mb-3">
-            <div class="card">
-                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <div class="card-body">
-                        <h5 class="card-title">@video.Title</h5>
-                        <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                        <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                        <p class="card-text">Views: @video.Views.Count</p>
-                        <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var video in Model.Videos)
+        {
+            <div class="col-md-3">
+                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })" class="card-link">
+                    <div class="card video-card">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                            <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a></h5>
+                            <p class="card-text">
+                                <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                            </p>
+                            <p class="card-text">@FormatViews(video.Views.Count) | @TimeAgo(video.UploadDate)</p>
+                        </div>
                     </div>
                 </a>
-                <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="btn btn-primary">Добавить в "Смотреть позже"</a>
             </div>
-        </div>
-    }
+        }
+    </div>
 </div>
+
+@section Scripts
+{
+    @functions {
+    public static string TimeAgo(DateTime dateTime)
+    {
+        var timeSpan = DateTime.UtcNow - dateTime;
+
+        if (timeSpan.TotalMinutes < 1)
+        {
+            return "менее минуты назад";
+        }
+        if (timeSpan.TotalMinutes < 60)
+        {
+            var minutes = (int)timeSpan.TotalMinutes;
+            return $"{minutes} {(minutes == 1 ? "минуту" : minutes < 5 ? "минуты" : "минут")} назад";
+        }
+        if (timeSpan.TotalHours < 24)
+        {
+            var hours = (int)timeSpan.TotalHours;
+            if (hours == 1)
+            {
+                return "час назад";
+            }
+            else if (hours == 2 || hours == 3 || hours == 4)
+            {
+                return $"{hours} часа назад";
+            }
+            else
+            {
+                return $"{hours} часов назад";
+            }
+        }
+        if (timeSpan.TotalDays < 30)
+        {
+            var days = (int)timeSpan.TotalDays;
+            if (days == 1)
+            {
+                return "день назад";
+            }
+            else if (days == 2 || days == 3 || days == 4)
+            {
+                return $"{days} дня назад";
+            }
+            else
+            {
+                return $"{days} дней назад";
+            }
+        }
+        if (timeSpan.TotalDays < 365)
+        {
+            var months = (int)(timeSpan.TotalDays / 30);
+            if (months == 1)
+            {
+                return "месяц назад";
+            }
+            else if (months == 2 || months == 3 || months == 4)
+            {
+                return $"{months} месяца назад";
+            }
+            else
+            {
+                return $"{months} месяцев назад";
+            }
+        }
+        var years = (int)(timeSpan.TotalDays / 365);
+        if (years == 1)
+        {
+            return "год назад";
+        }
+        else if (years == 2 || years == 3 || years == 4)
+        {
+            return $"{years} года назад";
+        }
+        else
+        {
+            return $"{years} лет назад";
+        }
+    }
+
+    public static string FormatViews(int views)
+    {
+        if (views < 10000)
+        {
+            return $"{views} {(views == 1 ? "просмотр" : views < 5 ? "просмотра" : "просмотров")}";
+        }
+        else if (views < 1000000)
+        {
+            double thousands = views / 1000.0;
+            return $"{thousands:0.#}K просмотров";
+        }
+        else
+        {
+            double millions = views / 1000000.0;
+            return $"{millions:0.#}M просмотров";
+        }
+    }
+}
+}
