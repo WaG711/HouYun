@@ -1,5 +1,6 @@
 ﻿using HouYun.IRepositories;
 using HouYun.ViewModels.forUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun.Controllers
@@ -25,12 +26,12 @@ namespace HouYun.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _userRepository.RegisterUser(model);
+                var result = await _userRepository.RegistrationUser(model);
                 if (result)
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "Ошибка при регистрации.");
+                ModelState.AddModelError(string.Empty, "Проверьте введенные данные");
             }
             return View(model);
         }

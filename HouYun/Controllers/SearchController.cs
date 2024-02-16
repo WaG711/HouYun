@@ -1,11 +1,13 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
 using HouYun.ViewModels.forVideo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class SearchController : Controller
     {
         private readonly ISearchHistoryRepository _searchHistoryRepository;

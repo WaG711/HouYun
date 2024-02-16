@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using HouYun.IRepositories;
 using HouYun.Models;
-using Azure.Identity;
-using System.Security.Claims;
 using HouYun.ViewModels.forUser;
 
 
@@ -27,38 +25,6 @@ namespace HouYun.Repositories
             return await _userManager.Users.ToListAsync();
         }
 
-        public async Task<User> GetUserById(string id)
-        {
-            return await _userManager.FindByIdAsync(id);
-        }
-
-        public async Task<User> AddUser(User user)
-        {
-            var result = await _userManager.CreateAsync(user);
-            if (result.Succeeded)
-            {
-                return user;
-            }
-            return null;
-        }
-
-        public async Task<User> UpdateUser(User user)
-        {
-            var existingUser = await _userManager.FindByIdAsync(user.Id);
-            if (existingUser != null)
-            {
-                existingUser.Email = user.Email;
-                existingUser.UserName = user.UserName;
-
-                var result = await _userManager.UpdateAsync(existingUser);
-                if (result.Succeeded)
-                {
-                    return existingUser;
-                }
-            }
-            return null;
-        }
-
         public async Task DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -72,11 +38,6 @@ namespace HouYun.Repositories
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if (user == null)
-            {
-                return false;
-            }
-
             var passwordValid = await _userManager.CheckPasswordAsync(user, oldPassword);
             if (!passwordValid)
             {
@@ -89,25 +50,14 @@ namespace HouYun.Repositories
                 return false;
             }
 
-            var result = await _userManager.SetUserNameAsync(user, newUsername);
-
-            if (!result.Succeeded)
-            {
-                return false;
-            }
+            await _userManager.SetUserNameAsync(user, newUsername);
 
             return true;
         }
 
-
         public async Task<bool> ChangeUserPassword(string userId, string oldPassword, string newPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                return false; 
-            }
 
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
 
@@ -120,9 +70,8 @@ namespace HouYun.Repositories
             return result.Succeeded;
         }
 
-        public async Task<bool> RegisterUser(RegisterViewModel model)
+        public async Task<bool> RegistrationUser(RegisterViewModel model)
         {
-            var user = new User { Email = model.Email, UserName = model.UserName, Channel = { Name = model.UserName, Description = $"This is the {model.UserName} user's channel" } };
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
             if (existingUser != null)
@@ -130,34 +79,45 @@ namespace HouYun.Repositories
                 return false;
             }
 
+            var user = new User
+            {
+                Email = model.Email,
+                UserName = model.UserName,
+                Channel =
+                {
+                    Name = model.UserName,
+                    Description = $"This is the {model.UserName} user's channel"
+                }
+            };
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                if (!_roleManager.RoleExistsAsync("admin").GetAwaiter().GetResult())
-                {
-                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                    await _roleManager.CreateAsync(new IdentityRole("User"));
-                }
-
-                if (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com")
-                {
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                }
-                else
-                {
-                    await _userManager.AddToRoleAsync(user, "User");
-                }
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return true;
+                return false;
             }
 
-            return false;
+            await ManageRoles(user);
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return true;
         }
 
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        private async Task ManageRoles(User user)
+        {
+            if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
+            {
+                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await _roleManager.CreateAsync(new IdentityRole("User"));
+            }
+
+            var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";
+            await _userManager.AddToRoleAsync(user, role);
         }
     }
 }

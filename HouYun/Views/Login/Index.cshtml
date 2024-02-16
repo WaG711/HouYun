@@ -15,8 +15,10 @@
     </div>
     <div>
         <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
+        <input asp-for="RememberMe" type="checkbox" value="true" />
+        <input type="hidden" asp-for="RememberMe" value="false" />
     </div>
+
     <div>
         <input type="submit" value="Войти" />
     </div>

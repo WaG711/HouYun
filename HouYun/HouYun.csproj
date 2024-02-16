@@ -45,7 +45,6 @@
     <None Include="Views\Search\SearchResult.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\User\ChangePassword.cshtml" />
     <None Include="Views\User\ChangeUsername.cshtml" />
@@ -102,6 +101,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\videos\" />
     <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\videos\" />
   </ItemGroup>
 
 </Project>
