@@ -71,11 +71,6 @@ namespace HouYun
                 pattern: "{controller=Video}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-                name: "login",
-                pattern: "Login",
-                defaults: new { controller = "Login", action = "Index" });
-
-            app.MapControllerRoute(
                 name: "AddView",
                 pattern: "View/AddView/{videoId}",
                 defaults: new { controller = "View", action = "AddView" });
