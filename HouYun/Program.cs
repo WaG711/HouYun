@@ -5,6 +5,9 @@ using HouYun.Repositories;
 using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
 using Microsoft.Data.SqlClient;
+using HouYun.Controllers;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace HouYun
@@ -50,6 +53,16 @@ namespace HouYun
                 options.Filters.Add(typeof(CustomAuthorizationFilter));
             });
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Login/Index";
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Login/Index";
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -59,7 +72,7 @@ namespace HouYun
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+    
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -121,6 +134,18 @@ namespace HouYun
                 name: "search",
                 pattern: "Search/SearchResult/{searchTerm?}",
                 defaults: new { controller = "Search", action = "SearchResult" }
+            );
+
+            app.MapControllerRoute(
+                name: "login",
+                pattern: "login/{Index}",
+                defaults: new { controller = "Login", action = "" }
+            );
+
+            app.MapControllerRoute(
+                name: "registration",
+                pattern: "registration/{Index}",
+                defaults: new { controller = "Registration", action = "" }
             );
 
             app.Run();
