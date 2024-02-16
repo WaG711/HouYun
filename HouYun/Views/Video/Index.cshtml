@@ -1,7 +1,7 @@
 ﻿@model HouYun.ViewModels.forVideo.VideoViewModel
 
 @{
-    ViewData["Title"] = "Video Index";
+    ViewData["Title"] = "HouYun";
 }
 
 <div class="row mb-3">
@@ -12,9 +12,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Video")">Все</a>
-                    </li>
                     @foreach (var category in Model.Categories)
                     {
                         <li class="nav-item">

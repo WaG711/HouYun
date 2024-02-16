@@ -1,6 +1,10 @@
 ﻿@using System.Security.Claims
 @model IEnumerable<Video>
 
+@{
+    ViewData["Title"] = "Смотреть позже";
+}
+
 <h2>Список видео "Смотреть позже"</h2>
 
 @if (Model.Any())

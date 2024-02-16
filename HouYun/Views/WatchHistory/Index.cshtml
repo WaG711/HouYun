@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<WatchHistory>
 
-<h2>Watch History</h2>
+@{
+    ViewData["Title"] = "История просмотров";
+}
+
+<h2>История просмотров</h2>
 
 @if (Model.Any())
 {
