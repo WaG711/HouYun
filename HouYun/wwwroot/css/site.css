@@ -24,11 +24,6 @@ body {
     color: #e0e0e0;
 }
 
-.poster-image {
-    width: 20px;
-    height: 30px;
-}
-
 .nav-link.btn {
     color: #e0e0e0;
     background-color: transparent; /* прозрачный фон */

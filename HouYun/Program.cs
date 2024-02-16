@@ -4,6 +4,7 @@ using HouYun.IRepositories;
 using HouYun.Repositories;
 using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
+using Microsoft.Data.SqlClient;
 
 
 namespace HouYun
@@ -104,6 +105,7 @@ namespace HouYun
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
+
 
             app.MapControllerRoute(
                 name: "unsubscribe",
