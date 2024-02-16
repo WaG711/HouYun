@@ -114,7 +114,7 @@ namespace HouYun.Controllers
 
             if (model.ChannelName == channel.Name && model.Description == channel.Description)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Channel");
             }
 
             channel.Name = model.ChannelName ?? channel.Name;
@@ -123,7 +123,7 @@ namespace HouYun.Controllers
             try
             {
                 await _channelRepository.UpdateChannel(channel);
-                return RedirectToAction("Index");
+                return RedirectToAction("Channel");
             }
             catch (Exception ex)
             {

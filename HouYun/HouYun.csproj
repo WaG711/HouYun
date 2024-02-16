@@ -101,6 +101,7 @@
     <Folder Include="wwwroot\posters\" />
     <Folder Include="wwwroot\posters\" />
     <Folder Include="wwwroot\videos\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
