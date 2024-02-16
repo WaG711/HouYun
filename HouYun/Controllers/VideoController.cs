@@ -17,20 +17,21 @@ namespace HouYun.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        [HttpGet("")]
-        public async Task<IActionResult> Index([FromQuery(Name = "category")] string category)
+        [HttpGet("{category?}")]
+        public async Task<IActionResult> Index(string category)
         {
-            if (!string.IsNullOrEmpty(category))
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
             var model = new VideoViewModel
             {
-                Videos = await _videoRepository.GetAllVideos(),
                 Categories = await _categoryRepository.GetAllCategories()
             };
 
+            if (!string.IsNullOrEmpty(category))
+            {
+                model.Videos = await _videoRepository.GetVideosByCategory(category);
+                return View(model);
+            }
+
+            model.Videos = await _videoRepository.GetAllVideos();
             return View(model);
         }
 
