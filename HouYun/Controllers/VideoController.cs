@@ -26,7 +26,7 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories()
             };
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && model.Categories.Any(c => c.Name == category))
             {
                 model.Videos = await _videoRepository.GetVideosByCategory(category);
                 return View(model);
