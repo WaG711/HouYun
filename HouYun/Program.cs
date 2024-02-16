@@ -54,7 +54,7 @@ namespace HouYun
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -68,7 +68,12 @@ namespace HouYun
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Video}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "login",
+                pattern: "Login",
+                defaults: new { controller = "Login", action = "Index" });
 
             app.MapControllerRoute(
                 name: "AddView",

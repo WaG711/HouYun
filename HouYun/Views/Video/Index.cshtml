@@ -13,12 +13,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Video">Все</a>
+                        <a class="nav-link" href="@Url.Action("Index", "Video")">Все</a>
                     </li>
                     @foreach (var category in Model.Categories)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" href="/Video?category=@category.Name">@category.Name</a>
+                            <a class="nav-link" href="@Url.Action("Index", "Video", new { category = category.Name })">@category.Name</a>
                         </li>
                     }
                 </ul>

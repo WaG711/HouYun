@@ -21,7 +21,7 @@ namespace HouYun.Controllers.UserContoller
         public async Task<IActionResult> Logout()
         {
             await _userRepository.Logout();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Video");
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace HouYun.Controllers.UserContoller
 
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Video");
             }
             else
             {
@@ -73,7 +73,7 @@ namespace HouYun.Controllers.UserContoller
 
             if (result)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Video");
             }
             else
             {
