@@ -17,6 +17,7 @@ namespace HouYun.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [HttpGet("")]
         [HttpGet("{category?}")]
         public async Task<IActionResult> Index(string category)
         {
