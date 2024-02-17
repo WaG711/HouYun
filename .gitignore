@@ -14,11 +14,12 @@
 *.userprefs
 appsettings.json
 appsettings.Development.json
-wwwroot/videos/*
-wwwroot/posters/*
+wwwroot/videos/
+wwwroot/posters/
 
 # Mono auto generated files
 mono_crash.*
+Migrations/
 
 # Build results
 [Dd]ebug/
