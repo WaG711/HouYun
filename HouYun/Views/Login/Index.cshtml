@@ -1,25 +1,36 @@
 ﻿@model HouYun.ViewModels.forUser.LoginViewModel
+<style>
+    body {
+        background-color: #0F1020;
+        padding: 20px;
+        border-radius: 10px;
+        color: #e0e0e0;
+    }
+</style>
+<body>
+    <div class="Login">
+        <h2><img src="~/imges/Logo.png" />HouYun</h2>
+        <form method="post" asp-controller="Login" asp-action="">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="UserName"></label><br />
+                <input asp-for="UserName" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div>
+                <label asp-for="Password"></label><br />
+                <input asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div>
+                <label asp-for="RememberMe"></label><br />
+                <input asp-for="RememberMe" type="checkbox" value="true" />
+                <input type="hidden" asp-for="RememberMe" value="false" />
+            </div>
 
-<h2>Вход в приложение</h2>
-<form method="post" asp-controller="Login" asp-action="">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="UserName"></label><br />
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+            <div>
+                <input type="submit" value="Войти" />
+            </div>
+        </form>
     </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" type="checkbox" value="true" />
-        <input type="hidden" asp-for="RememberMe" value="false" />
-    </div>
-
-    <div>
-        <input type="submit" value="Войти" />
-    </div>
-</form>
+</body>

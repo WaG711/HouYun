@@ -56,11 +56,14 @@ namespace HouYun
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Login/Index";
+                options.LoginPath = "/Login/Index";
             });
 
-            builder.Services.ConfigureApplicationCookie(options =>
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
             {
-                options.LoginPath = "/Login/Index";
+                options.Cookie.Name = "HouYunCookie";
+                options.Cookie.HttpOnly = true;
             });
 
             var app = builder.Build();
@@ -77,6 +80,9 @@ namespace HouYun
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAuthorization();
 

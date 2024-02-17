@@ -70,7 +70,7 @@
   }
 }
 
-body {
+#myHeader {
     margin: 0;
     font-family: "Myanmar Khyay Font", Arial, sans-serif;
     font-size: var(--bs-body-font-size);
