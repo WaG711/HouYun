@@ -79,7 +79,7 @@
                         <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title d-flex justify-content-between">
+                        <h4 class="card-title d-flex justify-content-between">
                             <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
                             <div class="dropdown">
                                 <button id="dropdownButton" onclick="toggleMenu('@video.VideoId')" class="btn btn-outline-secondary btn-sm" aria-haspopup="true" aria-expanded="false">
@@ -89,7 +89,7 @@
                                     <a class="dropdown-item" href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })">Смотреть позже</a>
                                 </div>
                             </div>
-                        </h5>
+                        </h4>
                         <p class="card-text">
                             <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                         </p>

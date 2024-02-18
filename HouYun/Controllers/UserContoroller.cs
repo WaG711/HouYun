@@ -21,11 +21,11 @@ namespace HouYun.Controllers.UserContoller
         public async Task<IActionResult> Logout()
         {
             await _userRepository.Logout();
-            return RedirectToAction("Index", "Video");
+            return RedirectToAction("", "Video");
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword()
+        public IActionResult ChangePassword()
         {
             return View();
         }
@@ -40,11 +40,11 @@ namespace HouYun.Controllers.UserContoller
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _userRepository.ChangeUserPassword(userId.ToString(), model.OldPassword, model.NewPassword);
+            var result = await _userRepository.ChangeUserPassword(userId, model.OldPassword, model.NewPassword);
 
             if (result)
             {
-                return RedirectToAction("Index", "Video");
+                return RedirectToAction("", "Video");
             }
             else
             {
@@ -54,7 +54,7 @@ namespace HouYun.Controllers.UserContoller
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangeUsername()
+        public IActionResult ChangeUsername()
         {
             return View();
         }
@@ -73,7 +73,7 @@ namespace HouYun.Controllers.UserContoller
 
             if (result)
             {
-                return RedirectToAction("Index", "Video");
+                return RedirectToAction("", "Video");
             }
             else
             {
