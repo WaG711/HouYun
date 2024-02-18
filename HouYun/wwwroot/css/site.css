@@ -29,7 +29,7 @@ html {
   min-height: 100%;
 }
 
-#myHeader {
+body {
     margin-bottom: 60px;
     background-color: #0F1020;
     font-family: "Myanmar Khyay Font", sans-serif;

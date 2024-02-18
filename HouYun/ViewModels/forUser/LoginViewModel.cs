@@ -4,7 +4,7 @@ namespace HouYun.ViewModels.forUser
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Введете Логин")]
+        [Required(ErrorMessage = "Логин")]
         [Display(Name = "Логин")]
         public string UserName { get; set; }
 

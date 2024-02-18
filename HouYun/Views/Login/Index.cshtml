@@ -1,36 +1,188 @@
 ﻿@model HouYun.ViewModels.forUser.LoginViewModel
+@{
+    Layout = null;
+}
 <style>
     body {
-        background-color: #0F1020;
-        padding: 20px;
-        border-radius: 10px;
+        background: #0F1120;
+        background: radial-gradient(ellipse at right top, #0F1120, #020E2D);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Roboto", sans-serif;
         color: #e0e0e0;
     }
+
+    h2 {
+        font-size: 64px;
+        font-weight: normal;
+        position: absolute;
+        left: 911px;
+        top: 160px;
+    }
+
+    .square-container {
+        position: absolute;
+        width: 650px;
+        height: 313px;
+        background-color: #171830;
+        border-radius: 25px;
+        left: 635px;
+        top: 305px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .square-container form {
+            width: 100%;
+            height: 100%;
+        }
+
+    .login-text {
+        color: #e0e0e0;
+        font-size: 36px;
+        margin-bottom: 10px;
+        font-weight: normal;
+        display: block;
+    }
+
+    .separator {
+        width: 590px;
+        height: 1px;
+        background-color: #707070;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        font-size: 20px;
+        border-radius: 10px;
+        padding: 5px;
+        margin-bottom: 10px;
+        background-color: #282940;
+        color: #E0e0e0;
+        width: 580px;
+        height: 45px;
+        outline: none;
+        border: 2px solid transparent;
+        margin: 15 auto;
+        display: block;
+    }
+
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #707070;
+            border-width: 2px;
+        }
+
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px #282940 inset !important;
+        -webkit-text-fill-color: #E0e0e0 !important;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+        padding-left: 5px;
+    }
+
+    input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        background-color: #282940;
+        border: 2px solid #707070; 
+        outline: none;
+        cursor: pointer;
+        vertical-align: middle;
+        position: relative;
+        display: block;
+    }
+
+        input[type="checkbox"]:checked {
+            background-color: #5487B7;
+        }
+
+    input[type="hidden"] {
+        display: none;
+    }
+
+    .rememberme {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        margin-left: 32px;
+        margin-bottom: 10px;
+    }
+
+        .rememberme label {
+            margin-left: 5px;
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+
+        .rememberme input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+    .sunbit-but {
+        position: absolute;
+        left: 55px;
+        bottom:45px;
+    }
+
+        .sunbit-but input[type="submit"] {
+            width: 180px;
+            height: 45px;
+            background-color: #1F1B3C;
+            color: #e0e0e0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .sunbit-but input[type="submit"]:hover {
+            background-color: #2B2751;
+        }
 </style>
 <body>
     <div class="Login">
-        <h2><img src="~/imges/Logo.png" />HouYun</h2>
-        <form method="post" asp-controller="Login" asp-action="">
-            <div asp-validation-summary="ModelOnly"></div>
-            <div>
-                <label asp-for="UserName"></label><br />
-                <input asp-for="UserName" />
-                <span asp-validation-for="UserName"></span>
-            </div>
-            <div>
-                <label asp-for="Password"></label><br />
-                <input asp-for="Password" />
-                <span asp-validation-for="Password"></span>
-            </div>
-            <div>
-                <label asp-for="RememberMe"></label><br />
-                <input asp-for="RememberMe" type="checkbox" value="true" />
-                <input type="hidden" asp-for="RememberMe" value="false" />
-            </div>
+        <h2>HouYun</h2>
+        <div class="square-container">
+            <div class="login-text">Вход</div>
+            <div class="separator"></div>
+            <form method="post" asp-controller="Login" asp-action="">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div>
+                    <input asp-for="UserName" placeholder="Введите логин" />
+                </div>
 
-            <div>
-                <input type="submit" value="Войти" />
-            </div>
-        </form>
+                <div>
+                    <input asp-for="Password" placeholder="Введите пароль" />
+                </div>
+                <div class="rememberme">
+                    <input type="hidden" asp-for="RememberMe" value="false" />
+                    <input asp-for="RememberMe" type="checkbox" id="rememberMe" value="true" />
+                    <label for="rememberMe">Запомнить?</label>
+                </div>
+                <div class="sunbit-but">
+                    <input type="submit" value="Войти" />
+                </div>
+            </form>
+        </div>
     </div>
 </body>
+
+            
