@@ -22,6 +22,11 @@ html {
     border: none;
 }
 
+.btn.btn-outline-secondary.btn-sm {
+    color: inherit;
+    background-color: transparent;
+}
+
 .card-title a,
 .card-text a {
     color: inherit;

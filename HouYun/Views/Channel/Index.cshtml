@@ -5,47 +5,70 @@
     ViewData["Title"] = @Model.Name;
 }
 
-<h1>@Model.Name</h1>
-<p>@Model.Description</p>
-<p>@Model.Subscribers.Count</p>
-
-@if (User.Identity.IsAuthenticated)
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
-    var isAuthor = Model.UserId == userId;
-
-    if (isAuthor)
-    {
-        <a href="@Url.Action("Add", "Channel")" class="btn btn-primary">Загрузить видео</a>
-
-        <a href="@Url.Action("Delete", "Channel")" class="btn btn-danger">Удалить видео</a>
-
-        <a href="@Url.Action("Update", "Channel")" class="btn btn-primary">Изменить</a>
+<style>
+    .spacer {
+        flex-grow: 0.02;
     }
-    else
+</style>
+
+<h1 style="font-size: 3em; font-weight: bold;">@Model.Name</h1>
+<p>@Model.Description</p>
+<p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
+<div>
+    @if (User.Identity.IsAuthenticated)
     {
-        if (!isAuthor)
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
+        var isAuthor = Model.UserId == userId;
+
+        if (isAuthor)
         {
-            if (isSubscribed)
+            <p>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group">
+                        <a href="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Загрузить видео</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="btn-group mr-2" role="group" aria-label="Second group">
+                        <a href="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Удалить видео</a>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="btn-group" role="group" aria-label="Third group">
+                        <a href="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Изменить канал</a>
+                    </div>
+                </div>
+            </p>
+        }
+        else
+        {
+            if (!isAuthor)
             {
-                <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
-                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                    <button type="button" onclick="unsubscribe()">Отписаться</button>
-                </form>
-            }
-            else
-            {
-                <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
-                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                    <button type="button" onclick="subscribe()">Подписаться</button>
-                </form>
+                if (isSubscribed)
+                {
+                    <p>
+                        <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
+                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
+                        </form>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
+                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
+                        </form>
+                    </p>
+                }
             }
         }
     }
-}
+</div>
 
-<h2>Videos:</h2>
+
+<p>Видео:</p>
+
 <div class="container mt-4">
     <div class="row">
         @foreach (var video in Model.Videos)

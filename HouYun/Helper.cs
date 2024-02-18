@@ -95,5 +95,29 @@
                 return $"{millions:0.#}M просмотров";
             }
         }
+
+        public static string FormatSubscribers(int count)
+        {
+            if (count == 0)
+            {
+                return "0 подписчиков";
+            }
+            else if (count == 1)
+            {
+                return "1 подписчик";
+            }
+            else if (count < 1000)
+            {
+                return $"{count} подписчик{(count != 1 ? "ов" : "")}";
+            }
+            else if (count < 1000000)
+            {
+                return $"{Math.Round((double)count / 1000, 1)}K подписчиков";
+            }
+            else
+            {
+                return $"{Math.Round((double)count / 1000000, 1)}M подписчиков";
+            }
+        }
     }
 }
