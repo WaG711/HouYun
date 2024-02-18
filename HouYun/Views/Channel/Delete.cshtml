@@ -13,13 +13,18 @@
                 @foreach (var video in Model)
                 {
                     <tr>
-                        <td><img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster"></td>
-                        <td><h5>@video.Title</h5></td>
+                        <td>
+                            <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                        </td>
+                        <td>
+                            <p>
+                                @video.Title
+                            </p>
+                        </td>
                         <td>
                             <form asp-action="Delete" method="post">
                                 <input type="hidden" name="id" value="@video.VideoId" />
-                                <label for="deleteButton">Удалить</label>
-                                <input type="submit" id="deleteButton" style="display: none;" />
+                                <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
                     </tr>
@@ -32,3 +37,5 @@ else
 {
     <p>Нет видео для удаления.</p>
 }
+
+<link rel="stylesheet" href="~/css/channelDelete.css" asp-append-version="true" />
