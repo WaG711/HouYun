@@ -5,13 +5,7 @@
     ViewData["Title"] = @Model.Name;
 }
 
-<style>
-    .spacer {
-        flex-grow: 0.02;
-    }
-</style>
-
-<h1 style="font-size: 3em; font-weight: bold;">@Model.Name</h1>
+<h1 id="Title">@Model.Name</h1>
 <p>@Model.Description</p>
 <p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
 <div>
@@ -79,9 +73,17 @@
                         <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h4 class="card-title d-flex justify-content-between">
                             <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
-                        </h5>
+                            <div class="dropdown">
+                                <button id="dropdownButton" onclick="toggleMenu('@video.VideoId')" class="btn btn-outline-secondary btn-sm" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div id="menuItems_@video.VideoId" class="dropdown-menu" style="display: none;">
+                                    <a class="dropdown-item" href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })">Смотреть позже</a>
+                                </div>
+                            </div>
+                        </h4>
                         <p class="card-text">
                             <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                         </p>
