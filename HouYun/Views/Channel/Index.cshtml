@@ -5,13 +5,7 @@
     ViewData["Title"] = @Model.Name;
 }
 
-<style>
-    .spacer {
-        flex-grow: 0.02;
-    }
-</style>
-
-<h1 style="font-size: 3em; font-weight: bold;">@Model.Name</h1>
+<h1 id="Title">@Model.Name</h1>
 <p>@Model.Description</p>
 <p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
 <div>

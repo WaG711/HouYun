@@ -12,6 +12,10 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+.spacer {
+    flex-grow: 0.02;
+}
+
 #Title {
     font-size: 3em;
     font-weight: bold;
