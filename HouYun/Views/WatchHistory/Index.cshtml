@@ -8,28 +8,35 @@
 
 @if (Model.Any())
 {
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-3 mb-3">
-                <div class="card">
-                    <a href="@Url.Action("Details", "Video", new { videoId = item.Video.VideoId })">
+    <div class="container mt-4">
+        <form method="post" asp-action="DeleteAllWatchHistory" asp-controller="WatchHistory" class="mt-3">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-light btn-sm">Delete All Watch History</button>
+        </form>
+        <div class="row">
+            @foreach (var video in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card video-card">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                            <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.Video.PosterPath)" alt="Video Poster">
+                        </a>
                         <div class="card-body">
-                            <h5 class="card-title">@item.Video.Title - Watched on @item.WatchDate</h5>
-                            <p class="card-text">Uploaded by: @item.Video.Channel.Name</p>
-                            <p class="card-text">Upload Date: @item.Video.UploadDate.ToString("dd/MM/yyyy")</p>
-                            <p class="card-text">Views: @item.Video.Views.Count</p>
-                            <img src="@Url.Content("~/posters/" + item.Video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+                            <h5 class="card-title">
+                                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Video.Title</a>
+                            </h5>
+                            <p class="card-text">
+                                <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Video.Channel.Name</a>
+                            </p>
+                            <p class="card-text">
+                                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Video.Views.Count) | @Helper.TimeAgo(video.Video.UploadDate)</a>
+                            </p>
                         </div>
-                    </a>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-    <form method="post" asp-action="DeleteAllWatchHistory" asp-controller="WatchHistory" class="mt-3">
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-danger">Delete All Watch History</button>
-    </form>
 }
 else
 {
