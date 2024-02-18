@@ -80,9 +80,6 @@ namespace HouYun.Controllers.UserContoller
                 ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
                 return View(model);
             }
-
-
         }
-
     }
 }

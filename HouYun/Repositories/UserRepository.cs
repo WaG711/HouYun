@@ -119,5 +119,10 @@ namespace HouYun.Repositories
             var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";
             await _userManager.AddToRoleAsync(user, role);
         }
+        public async Task<string> GetUsernameById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return user?.UserName;
+        }
     }
 }

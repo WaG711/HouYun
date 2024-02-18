@@ -31,7 +31,7 @@ namespace HouYun.Controllers
                 {
                     return RedirectToAction("Index", "Video");
                 }
-                ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
+/*                ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");*/
             }
             return View(model);
         }

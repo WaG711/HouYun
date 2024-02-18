@@ -36,48 +36,5 @@ body {
     color: #e0e0e0;
 }
 
-.nav-link.btn {
-    color: #e0e0e0;
-    background-color: transparent; /* прозрачный фон */
-    border: none; /* убираем границу */
-    margin-right: 10px; /* добавляем немного отступа между кнопками */
-}
-
-.nav-link.btn {
-    color: #e0e0e0;
-    background-color: transparent; /* прозрачный фон */
-    border: none; /* убираем границу */
-    margin-right: 10px; /* добавляем немного отступа между кнопками */
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* добавляем тень */
-    transition: background-color 0.3s ease; /* плавное изменение цвета при наведении курсора */
-}
-
-    .nav-link.btn:hover {
-        background-color: rgba(255, 255, 255, 0.1); /* изменяем цвет фона при наведении курсора */
-    }
-
-/* Стили для поля ввода */
-#searchTerm {
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* Стили для кнопки */
-#searchForm button {
-    padding: 8px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-    /* Стили для кнопки при наведении курсора */
-    #searchForm button:hover {
-        background-color: #0056b3;
-    }
 
 
