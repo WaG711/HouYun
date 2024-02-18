@@ -4,7 +4,6 @@
 }
 <style>
     body {
-        background: #0F1120;
         background: radial-gradient(ellipse at right top, #0F1120, #020E2D);
         height: 100vh;
         margin: 0;
@@ -79,15 +78,19 @@
 
 
         input[type="text"]:focus,
-        input[type="password"]:focus {
+        input[type="password"]:focus, {
             border-color: #707070;
             border-width: 2px;
         }
 
     input:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px #282940 inset !important;
-        -webkit-text-fill-color: #E0e0e0 !important;
+        -webkit-box-shadow: 0 0 0 30px #282940 inset !important; /* Измените значение с 1000px на 30px */
+        -webkit-text-fill-color: #e0e0e0 !important;
+        border: none !important; /* Убираем границу */
+        outline: none !important; /* Убираем контур */
     }
+
+
 
     input[type="text"]::placeholder,
     input[type="password"]::placeholder {
@@ -134,12 +137,14 @@
 
         .rememberme input[type="checkbox"] {
             margin-right: 5px;
+            margin-left: 5px;
         }
 
     .sunbit-but {
         position: absolute;
         left: 55px;
         bottom:45px;
+        font-family: "Roboto", sans-serif;
     }
 
         .sunbit-but input[type="submit"] {
@@ -149,13 +154,35 @@
             color: #e0e0e0;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 20px;
             cursor: pointer;
+            font-weight: normal;
         }
 
         .sunbit-but input[type="submit"]:hover {
             background-color: #2B2751;
         }
+
+    .registration-button {
+        font-family: "Roboto", sans-serif;
+        margin-left: 215px;
+        width: 180px;
+        height: 45px;
+        background-color: #1F1B3C;
+        color: #e0e0e0;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        font-weight: normal;
+    }
+
+        .registration-button:hover {
+            background-color: #2B2751;
+        }
+
+
+    
 </style>
 <body>
     <div class="Login">
@@ -166,11 +193,11 @@
             <form method="post" asp-controller="Login" asp-action="">
                 <div asp-validation-summary="ModelOnly"></div>
                 <div>
-                    <input asp-for="UserName" placeholder="Введите логин" />
+                    <input asp-for="UserName" placeholder="Введите логин" autocomplete="off">
                 </div>
 
                 <div>
-                    <input asp-for="Password" placeholder="Введите пароль" />
+                    <input asp-for="Password" placeholder="Введите пароль" autocomplete="off">
                 </div>
                 <div class="rememberme">
                     <input type="hidden" asp-for="RememberMe" value="false" />
@@ -179,10 +206,13 @@
                 </div>
                 <div class="sunbit-but">
                     <input type="submit" value="Войти" />
+                    <a href="@Url.Action("Index", "Registration")"><input type="button" value="Регистрация" class="registration-button" /></a>
                 </div>
             </form>
         </div>
     </div>
 </body>
+
+
 
             
