@@ -18,7 +18,7 @@ namespace HouYun.Controllers
         }
 
         [HttpGet("")]
-        [HttpGet("{category?}")]
+        [HttpGet("Vds/{category?}")]
         public async Task<IActionResult> Index(string category)
         {
             var model = new VideoViewModel

@@ -5,40 +5,47 @@
     ViewData["Title"] = "Смотреть позже";
 }
 
-<h2>Список видео "Смотреть позже"</h2>
+<h1 style="font-size: 3em; font-weight: bold;">Смотреть позже</h1>
 
 @if (Model.Any())
 {
+    <div class="container mt-4">
     <div class="row">
-        @foreach (var video in Model)
-        {
-            <div class="col-md-3 mb-3">
-                <div class="card">
+            @foreach (var video in Model)
+            {
+                <div class="col-md-3">
+                    <div class="card video-card">
                     <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                        <div class="card-body">
-                            <h5 class="card-title">@video.Title</h5>
-                            <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                            <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                            <p class="card-text">Views: @video.Views.Count</p>
-                            <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
-                        </div>
+                        <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                     </a>
-                    @{
-                        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    }
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                            </h5>
+                            <p class="card-text">
+                                <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                            </p>
+                            <p class="card-text">
+                                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | @Helper.TimeAgo(video.UploadDate)</a>
+                            </p>
+                        </div>
 
-                    @foreach (var watchLaterItem in video.WatchLaterItems)
-                    {
-                        @if (watchLaterItem.Channel.UserId == userId)
-                        {
-                            <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                        @{
+                            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                         }
-                    }
+                        @foreach (var watchLaterItem in video.WatchLaterItems)
+                        {
+                            @if (watchLaterItem.Channel.UserId == userId)
+                            {
+                                <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
+                                    <button type="submit" class="btn btn-light btn-sm">Delete</button>
+                                </form>
+                            }
+                        }
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
 else
