@@ -6,6 +6,19 @@
 
 <form asp-action="Add" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label asp-for="PosterFile" class="control-label">Файл постера</label>
+        <input asp-for="PosterFile" type="file" id="upload" class="form-control" accept="image/*" />
+        <span asp-validation-for="PosterFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="VideoFile" class="control-label">Файл видео</label>
+        <input asp-for="VideoFile" type="file" id="upload" class="form-control" accept=".mp4" />
+        <span asp-validation-for="VideoFile" class="text-danger"></span>
+    </div>
+
     <div class="form-group">
         <label asp-for="Title" class="control-label">Название видео</label>
         <input asp-for="Title" id="upload" class="form-control" />
@@ -19,30 +32,22 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="CategoryId" class="control-label">Категория видео</label>
-        <select asp-for="CategoryId" class="form-control">
-            <option value="">Выберите категорию</option>
+        <label class="control-label">Категория видео</label>
+        <div>
             @foreach (var category in Model.Categories)
             {
-                <option value="@category.CategoryId">@category.Name</option>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="CategoryId" id="@($"category_{category.CategoryId}")" value="@category.CategoryId">
+                    <label class="form-check-label" for="@($"category_{category.CategoryId}")">@category.Name</label>
+                </div>
             }
-        </select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
     </div>
 
     <div class="form-group">
-        <label asp-for="VideoFile" class="control-label">Файл видео</label>
-        <input asp-for="VideoFile" type="file" id="upload" class="form-control" accept=".mp4" />
-        <span asp-validation-for="VideoFile" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PosterFile" class="control-label">Файл постера</label>
-        <input asp-for="PosterFile" type="file" id="upload" class="form-control" accept="image/*" />
-        <span asp-validation-for="PosterFile" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Добавить видео</button>
+        <p>
+            <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill">Опубликовать</button>
+        </p>
     </div>
 </form>
