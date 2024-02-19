@@ -17,9 +17,9 @@
                             <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                         </td>
                         <td>
-                            <p>
+                            <h5 id="DeleteTitle">
                                 @video.Title
-                            </p>
+                            </h5>
                         </td>
                         <td>
                             <form asp-action="Delete" method="post">
