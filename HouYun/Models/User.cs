@@ -22,7 +22,7 @@ namespace HouYun.Models
         public User()
         {
             Subscriptions = new List<Subscription>();
-            Channel = new Channel { UserId = Id, Subscribers = Subscriptions };
+            Channel = new Channel { UserId = Id };
         }
     }
 }
