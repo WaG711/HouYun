@@ -11,6 +11,8 @@ namespace HouYun.Controllers
     [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
+        private const long MaxVideoSize = 100L * 1024 * 1024 * 1024;
+        private const long MaxPosterSize = 5 * 1024 * 1024;
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IVideoRepository _videoRepository;
@@ -51,11 +53,13 @@ namespace HouYun.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model = new AddVideoViewModel
-                {
-                    Categories = await _categoryRepository.GetAllCategories(),
-                };
+                model.Categories = await _categoryRepository.GetAllCategories();
+                return View(model);
+            }
 
+            if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
+            {
+                model.Categories = await _categoryRepository.GetAllCategories();
                 return View(model);
             }
 
@@ -130,6 +134,47 @@ namespace HouYun.Controllers
                 ModelState.AddModelError("", ex.Message);
                 return View(model);
             }
+        }
+
+        private bool ValidateVideoFile(AddVideoViewModel model)
+        {
+            if (model.VideoFile.Length > MaxVideoSize)
+            {
+                ModelState.AddModelError("VideoFile", "Размер файла видео превышает максимально допустимый.");
+                return false;
+            }
+
+            var allowedVideoExtensions = new[] { ".mp4" };
+            var videoExtension = Path.GetExtension(model.VideoFile.FileName).ToLower();
+            if (!allowedVideoExtensions.Contains(videoExtension))
+            {
+                ModelState.AddModelError("VideoFile", "Формат видео должен быть MP4.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidatePosterFile(AddVideoViewModel model)
+        {
+            if (model.PosterFile != null)
+            {
+                if (model.PosterFile.Length > MaxPosterSize)
+                {
+                    ModelState.AddModelError("PosterFile", "Размер файла постера превышает максимально допустимый.");
+                    return false;
+                }
+
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(model.PosterFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла постера.");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

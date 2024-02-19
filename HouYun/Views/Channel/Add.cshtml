@@ -8,13 +8,13 @@
     @Html.AntiForgeryToken()
     <div class="form-group">
         <label asp-for="Title" class="control-label">Название видео</label>
-        <input asp-for="Title" class="form-control" />
+        <input asp-for="Title" id="upload" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="Description" class="control-label">Описание видео</label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <textarea asp-for="Description" id="upload" class="form-control"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
@@ -32,13 +32,13 @@
 
     <div class="form-group">
         <label asp-for="VideoFile" class="control-label">Файл видео</label>
-        <input asp-for="VideoFile" type="file" class="form-control" />
+        <input asp-for="VideoFile" type="file" id="upload" class="form-control" accept=".mp4" />
         <span asp-validation-for="VideoFile" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="PosterFile" class="control-label">Файл постера</label>
-        <input asp-for="PosterFile" type="file" class="form-control" />
+        <input asp-for="PosterFile" type="file" id="upload" class="form-control" accept="image/*" />
         <span asp-validation-for="PosterFile" class="text-danger"></span>
     </div>
 
