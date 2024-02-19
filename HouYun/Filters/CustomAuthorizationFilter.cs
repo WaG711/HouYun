@@ -6,8 +6,8 @@ public class CustomAuthorizationFilter : IAuthorizationFilter
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         if (context.HttpContext.User.Identity.IsAuthenticated
-            && (context.HttpContext.Request.Path == "/login/index"
-            || context.HttpContext.Request.Path == "/registration/index"))
+            && (context.HttpContext.Request.Path == "/login"
+            || context.HttpContext.Request.Path == "/registration"))
         {
             context.Result = new RedirectToActionResult("index", "video", null);
         }

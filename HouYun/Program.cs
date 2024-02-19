@@ -55,8 +55,8 @@ namespace HouYun
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/Login/Index";
-                options.LoginPath = "/Login/Index";
+                options.AccessDeniedPath = "/Login";
+                options.LoginPath = "/Login";
             });
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -144,14 +144,14 @@ namespace HouYun
 
             app.MapControllerRoute(
                 name: "login",
-                pattern: "login/{Index}",
-                defaults: new { controller = "Login", action = "" }
+                pattern: "login",
+                defaults: new { controller = "Login" }
             );
 
             app.MapControllerRoute(
                 name: "registration",
-                pattern: "registration/{Index}",
-                defaults: new { controller = "Registration", action = "" }
+                pattern: "registration",
+                defaults: new { controller = "Registration"}
             );
 
             app.Run();
