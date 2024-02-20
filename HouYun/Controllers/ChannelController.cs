@@ -44,7 +44,7 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories(),
             };
 
-            return View(model);
+            return PartialView("_AddVideoPartial", model);
         }
 
         [HttpPost]
@@ -54,13 +54,13 @@ namespace HouYun.Controllers
             if (!ModelState.IsValid)
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return View(model);
+                return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
             }
 
             if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return View(model);
+                return Json(new { success = false, error = "Неверный формат видео или изображения" });
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -75,7 +75,7 @@ namespace HouYun.Controllers
             };
 
             await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
 
         [HttpGet]
