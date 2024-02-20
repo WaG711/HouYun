@@ -21,64 +21,76 @@
     <header id="myHeader">
         <nav class="navbar">
             <div class="container-fluid">
+                <button id="toggleSidebarButton" class="btn btn-outline-secondary btn-sm" onclick="toggleSidebar()">
+                    <span class="burger-line" style="background-color: #e0e0e0;"></span>
+                    <span class="burger-line" style="background-color: #d0d0d0;"></span>
+                    <span class="burger-line" style="background-color: #b6b6b6;"></span>
+                </button>
                 <a class="navbar-brand" asp-area="" asp-controller="Video" asp-action="" asp-route-category=@null>HouYun</a>
+                <div class="profileinfo">
+                    <button id="toggleMenuButton" class="menu custom-btn" onclick="toggleMenu()">@username</button>
+                    <div id="menuContent" class="dropdown-menu1" style="display: none;">
+                        <a class="dropdown-item" href="@Url.Action("ChangeUsername", "User")">Сменить имя</a>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")">Сменить пароль</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "User")">Выйти</a>
+                    </div>
+                </div>
+
             </div>
         </nav>
     </header>
 
+
     <div class="sidebar">
         <ul class="navbar-nav">
-            @if (_signInManager.IsSignedIn(User))
+            <li class="nav-item">
+                <form method="get" asp-action="" asp-controller="Video" asp-route-category=@null>
+                    <button type="submit" class="Main custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                        Главная
+                    </button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form method="post" asp-action="Index" asp-controller="Subscibe">
+                    <button type="submit" class="Sub custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                        Подписки
+                    </button>
+                </form>
+            </li>
+            <div class="separator"></div>
+            <li class="nav-item">
+                <form asp-action="Index" asp-controller="Channel">
+                    <button type="submit" class="Channel custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                        Мой канал
+                    </button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form method="Get" asp-action="Index" asp-controller="WatchHistory">
+                    <button type="submit" class="Watchh custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                        История
+                    </button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <form method="Get" asp-action="Index" asp-controller="WatchLater">
+                    <button type="submit" class="Watchl custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                        Смотреть позже
+                    </button>
+                </form>
+            </li>
+            @* @if (User.IsInRole("Admin"))
             {
-                <li class="nav-item">
-                    <form method="post" asp-action="Logout" asp-controller="User">
-                        <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-                            Logout @username!
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form method="post" asp-action="ChangePassword" asp-controller="User">
-                        <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-                            Change Password
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form method="post" asp-action="ChangeUsername" asp-controller="User">
-                        <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-                            Change Username
-                        </button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <form method="post" asp-action="Index" asp-controller="Channel">
-                        <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-                            My Channel
-                        </button>
-                    </form>
-                </li>
-                @if (User.IsInRole("Admin"))
-                {
-                    <li class="nav-item">
-                        <form method="post" asp-action="Index" asp-controller="AdminPanel">
-                            <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-                                Admin Panel
-                            </button>
-                        </form>
-                    </li>
-                }
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a href="@Url.RouteUrl("registration", new {index="Index"})" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">Registration</a>
-                </li>
-                <li class="nav-item">
-                    <a href="@Url.RouteUrl("login", new {index="Index"})" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">Login</a>
-                </li>
-            }
-        </ul>
+            <li class="nav-item">
+            <form method="post" asp-action="Index" asp-controller="AdminPanel">
+            <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
+            Admin Panel
+            </button>
+            </form>
+            </li>
+            } *@
+		</ul>
     </div>
 
 

@@ -86,41 +86,114 @@ body {
 }
 
 #myHeader {
-    position: relative; /* Относительное позиционирование для корректного позиционирования текста */
+    position: relative;
 }
 
     #myHeader .navbar-brand {
-        font-size: 28px; /* Размер шрифта 32 пикселя */
-        color: #e0e0e0; /* Цвет текста e0e0e0 */
-        position: absolute; /* Абсолютное позиционирование для точного расположения текста */
-        top: 20px; /* Расстояние по y -27 пикселей от верхнего края родительского элемента */
+        font-size: 28px;
+        color: #e0e0e0;
+        position: absolute;
+        top: 12px;
         left: 100px;
     }
 
 .sidebar {
-    position: fixed; /* Фиксируем позицию */
-    top: 120px; /* Располагаем её с учетом смещения по вертикали */
-    left: 35px; /* Располагаем её с учетом смещения по горизонтали */
-    height: 100%; /* Занимает всю высоту экрана */
-    width: 270px; /* Ширина боковой панели */
-    background-color: #0f1020; /* Цвет фона боковой панели */
-    padding-top: 20px; /* Добавляем отступ сверху */
+    position: fixed;
+    top: 100px;
+    left: 35px;
+    height: 100%;
+    width: 270px;
+    transition: width 0.3s ease;
 }
+    .sidebar.hidden {
+        display: block;
+        width: 0;
+    }
 
     .sidebar ul li {
-        list-style-type: none; /* Убираем маркеры списка */
+        list-style-type: none;
     }
 
         .sidebar ul li a {
-            display: block; /* Делаем ссылки блочными элементами */
-            padding: 10px; /* Добавляем отступы */
-            text-decoration: none; /* Убираем подчеркивание ссылок */
-            color: #e0e0e0; /* Цвет текста e0e0e0 */
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #e0e0e0;
         }
 
             .sidebar ul li a:hover {
-                background-color: #ddd; /* Изменяем цвет фона при наведении */
+                background-color: #ddd;
             }
+
+.custom-btn {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 7px;
+    font-family: "Myanmar Khyay Font", sans-serif;
+    color: #e0e0e0;
+}
+
+.separator {
+    margin-top: 10px;
+    height: 1px;
+    background-color: #707070;
+    width: 230px;
+}
+
+.Channel{
+    margin-top: 10px;
+}
+
+.burger-line {
+    display: block;
+    width: 30px;
+    height: 1px;
+    margin: 6px 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+#toggleSidebarButton {
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+    #toggleSidebarButton:focus,
+    .burger-line:focus {
+        outline: none !important;
+        border: none;
+    }
+
+.container {
+    margin-top: 85px;
+    transition: margin-left 0.3s ease;
+}
+
+    .container.collapsed {
+        margin-left: 25px;
+    }
+
+.hidden {
+    display: none;
+}
+
+.menu {
+    font-size: 20px;
+    color: #e0e0e0;
+    position: absolute;
+    top: 12px;
+    right: 25px;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
 
 
 
