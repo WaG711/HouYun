@@ -21,7 +21,7 @@
     <header id="myHeader">
         <nav class="navbar">
             <div class="container-fluid">
-                <button id="toggleSidebarButton" class="btn btn-outline-secondary btn-sm" onclick="toggleSidebar()">
+                <button id="toggleSidebarButton" class="btn" onclick="toggleSidebar()">
                     <span class="burger-line" style="background-color: #e0e0e0;"></span>
                     <span class="burger-line" style="background-color: #d0d0d0;"></span>
                     <span class="burger-line" style="background-color: #b6b6b6;"></span>
@@ -32,9 +32,12 @@
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
                         <a class="dropdown-item" href="@Url.Action("ChangeUsername", "User")">Сменить имя</a>
                         <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")">Сменить пароль</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
+                        @if (User.IsInRole("Admin")){
+                            <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
+                        }
                         <a class="dropdown-item" href="@Url.Action("Logout", "User")">Выйти</a>
                     </div>
+
                 </div>
 
             </div>
@@ -50,9 +53,6 @@
                         Главная
                     </button>
                 </form>
-                <a class="Main custom-btn" asp-controller="Video" asp-action="" style="color: #e0e0e0; text-decoration: none; background-color: transparent !important;">
-                    Главная
-                </a>
             </li>
             <li class="nav-item">
                 <form method="post" asp-action="Index" asp-controller="Subscription">
@@ -83,16 +83,10 @@
                     </button>
                 </form>
             </li>
-            @* @if (User.IsInRole("Admin"))
-            {
+            <div class="separator"></div>
             <li class="nav-item">
-            <form method="post" asp-action="Index" asp-controller="AdminPanel">
-            <button type="submit" class="btn btn-link nav-link py-0" style="color: #e0e0e0; text-decoration: none;">
-            Admin Panel
-            </button>
-            </form>
+                <div class="SubView custom-btn">Подписки</div>
             </li>
-            } *@
 		</ul>
     </div>
 

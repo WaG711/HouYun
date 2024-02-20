@@ -11,26 +11,29 @@ function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.container');
 
-    var computedStyle = window.getComputedStyle(sidebar);
-    
-    if (computedStyle.display === 'none' || computedStyle.display === '') {
-        sidebar.style.display = 'block';
+    var isHidden = sidebar.classList.contains('hidden');
+
+    if (isHidden) {
+        sidebar.classList.remove('hidden');
         container.style.marginLeft = '292px';
     }
     else {
-        sidebar.style.display = 'none';
+        sidebar.classList.add('hidden');
         container.style.marginLeft = '25px';
     }
 }
 
+
 function toggleMenu() {
     var menuContent = document.getElementById('menuContent');
-    if (menuContent.style.display === 'none' || menuContent.style.display === '') {
+
+    if (menuContent.style.display === 'none') {
         menuContent.style.display = 'block';
     } else {
         menuContent.style.display = 'none';
     }
 }
+
 
 
 document.addEventListener('click', function (event) {

@@ -103,12 +103,7 @@ body {
     left: 35px;
     height: 100%;
     width: 270px;
-    transition: width 0.3s ease;
 }
-    .sidebar.hidden {
-        display: block;
-        width: 0;
-    }
 
     .sidebar ul li {
         list-style-type: none;
@@ -124,6 +119,7 @@ body {
             .sidebar ul li a:hover {
                 background-color: #ddd;
             }
+
 
 .custom-btn {
     background-color: transparent;
@@ -173,7 +169,6 @@ body {
 
 .container {
     margin-top: 85px;
-    transition: margin-left 0.3s ease;
 }
 
     .container.collapsed {
@@ -185,14 +180,49 @@ body {
 }
 
 .menu {
-    font-size: 20px;
-    color: #e0e0e0;
+    cursor: pointer;
+    margin-right: 35px;
+    font-size: 22px;
     position: absolute;
-    top: 12px;
-    right: 25px;
-    background-color: transparent;
-    border: 1px solid transparent;
+    right: 35px;
 }
+
+
+.dropdown-menu1 {
+    position: absolute;
+    top: 48px;
+    right: 35px;
+    display: none;
+    background-color: #0B0922;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: none;
+    border: none;
+    width: 185px;
+}
+
+
+    .dropdown-menu1 a {
+        display: block;
+        color: #e0e0e0;
+        text-decoration: none;
+        padding: 8px 10px;
+        outline: none;
+        border-radius: 15px;
+    }
+
+        .dropdown-menu1 a:hover {
+            background-color: #282940;
+            color: #e0e0e0;
+        }
+
+.SubView {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #e0e0e0;
+}
+
+
 
 
 
