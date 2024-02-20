@@ -16,6 +16,14 @@ namespace HouYun.Controllers
             _subscriptionRepository = subscriptionRepository;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedVideos(userId);
+
+            return View(subscribedChannels);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Subscribe(Guid channelId)
         {
