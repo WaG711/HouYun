@@ -98,6 +98,27 @@
 </div>
 
 <script>
+    function loadAddVideoForm() {
+        fetch('@Url.Action("Add", "Channel")', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                $('#addVideoModal .modal-body').html(data);
+                $('#addVideoModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке формы:', error);
+            });
+    }
+
+    loadAddVideoForm();
+</script>
+
+<script>
     function subscribe() {
         document.getElementById("subscribeForm").submit();
     }
