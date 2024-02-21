@@ -5,6 +5,7 @@ using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun.Controllers
 {
@@ -85,7 +86,7 @@ namespace HouYun.Controllers
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
             var videos = await _videoRepository.GetVideosByChannelId(channelId);
-            return View(videos);
+            return PartialView("_DeleteVideoPartical", videos);
         }
 
         [HttpPost]
@@ -107,7 +108,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return View(model);
+            return PartialView("_UpdateVideoPartical", model);
         }
 
         [HttpPost]
