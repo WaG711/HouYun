@@ -1,0 +1,8 @@
+﻿#update .modal-dialog {
+    max-width: 900px;
+}
+
+#update .modal-content {
+    background-color: #0B0922;
+    color: inherit;
+}

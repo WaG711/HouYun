@@ -33,10 +33,7 @@
   <ItemGroup>
     <None Include="Views\Category\Add.cshtml" />
     <None Include="Views\Category\Index.cshtml" />
-    <None Include="Views\Channel\Add.cshtml" />
-    <None Include="Views\Channel\Delete.cshtml" />
     <None Include="Views\Channel\Index.cshtml" />
-    <None Include="Views\Channel\Update.cshtml" />
     <None Include="Views\Login\Index.cshtml" />
     <None Include="Views\Notifications\Index.cshtml" />
     <None Include="Views\Registration\Index.cshtml" />

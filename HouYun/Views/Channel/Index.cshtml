@@ -19,28 +19,41 @@
         {
             <p>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <button id="btnclickAdd" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#upload">Загрузить видео</button>
+                    <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Загрузить видео</button>
                     <div class="modal fade" id="upload">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Загрузить видео</h5>
+                                </div>
                                 <div class="modal-body" id="modal-bodyAdd"></div>
                             </div>
                         </div>
                     </div>
+
                     <div class="spacer"></div>
-                    <button id="btnclickDelete" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#delete">Удалить видео</button>
+
+                    <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Удалить видео</button>
                     <div class="modal fade" id="delete">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Удалить видео</h5>
+                                </div>
                                 <div class="modal-body" id="modal-bodyDelete"></div>
                             </div>
                         </div>
                     </div>
+
                     <div class="spacer"></div>
-                    <button id="btnclickUpdate" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#update">Изменить канал</button>
+
+                    <button id="btnclickUpdate" data-url="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Обновить канал</button>
                     <div class="modal fade" id="update">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Изменить канал</h5>
+                                </div>
                                 <div class="modal-body" id="modal-bodyUpdate"></div>
                             </div>
                         </div>
@@ -113,57 +126,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#btnclickAdd").click(function () {
-            $.get('@Url.Action("Add", "Channel")', function (data) {
-                $("#modal-bodyAdd").html(data);
-                $("#upload").modal('show');
-            });
-        });
-
-        $("#HidebtnModal").click(function () {
-            $("#upload").modal('hide');
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#btnclickDelete").click(function () {
-            $.get('@Url.Action("Delete", "Channel")', function (data) {
-                $("#modal-bodyDelete").html(data);
-                $("#delete").modal('show');
-            });
-        });
-
-        $("#HidebtnModal").click(function () {
-            $("#delete").modal('hide');
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#btnclickUpdate").click(function () {
-            $.get('@Url.Action("Update", "Channel")', function (data) {
-                $("#modal-bodyUpdate").html(data);
-                $("#update").modal('show');
-            });
-        });
-
-        $("#HidebtnModal").click(function () {
-            $("#update").modal('hide');
-        });
-    });
-</script>
-
-<script>
-    function subscribe() {
-        document.getElementById("subscribeForm").submit();
-    }
-
-    function unsubscribe() {
-        document.getElementById("unsubscribeForm").submit();
-    }
-</script>
+<link rel="stylesheet" href="~/css/channelUpload.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/channelDelete.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/channelUpdate.css" asp-append-version="true" />
+<script src="~/js/channel.js"></script>
