@@ -17,7 +17,6 @@ namespace HouYun.Controllers.UserContoller
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _userRepository.Logout();
