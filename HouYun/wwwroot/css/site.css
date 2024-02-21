@@ -214,9 +214,52 @@ body {
     color: #e0e0e0;
 }
 
+.zxc {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    border: none;
+    margin-right: -25px;
+    outline: none;
+    box-shadow: none;
+}
+    .zxc.dropdown-toggle::after {
+        display: none;
+    }
+
+button.zxc:focus,
+button.zxc:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
 
 
+.dropdown-menu {
+    background-color: transparent; /* Прозрачный фон */
+    border-radius: 5px;
+    color: #e0e0e0;
+    position: absolute; /* Абсолютное позиционирование */
+    right: -25px;
+    top: 100%;
+    text-decoration: none;
+}
 
+.dropdown-item {
+    background-color: #0B0922;
+    border-radius: 5px;
+    color: #e0e0e0;
+}
+
+
+    .dropdown-item:hover {
+        background-color: #282940;
+        color: #e0e0e0;
+        border-radius: 5px;
+    }
+
+    .dropdown-item:active {
+        background-color: #282940;
+    }
 
 
 
