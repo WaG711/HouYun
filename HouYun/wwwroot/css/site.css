@@ -235,10 +235,10 @@ button.zxc:active {
 
 
 .dropdown-menu {
-    background-color: transparent; /* Прозрачный фон */
+    background-color: transparent;
     border-radius: 5px;
     color: #e0e0e0;
-    position: absolute; /* Абсолютное позиционирование */
+    position: absolute;
     right: -25px;
     top: 100%;
     text-decoration: none;
