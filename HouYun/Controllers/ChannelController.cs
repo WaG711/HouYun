@@ -5,6 +5,7 @@ using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun.Controllers
 {
@@ -44,7 +45,7 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories(),
             };
 
-            return PartialView("_AddVideoPartial", model);
+            return PartialView("_AddVideoPartical", model);
         }
 
         [HttpPost]
@@ -54,13 +55,13 @@ namespace HouYun.Controllers
             if (!ModelState.IsValid)
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+                return PartialView("_AddVideoPartical", model);
             }
 
             if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return Json(new { success = false, error = "Неверный формат видео или изображения" });
+                return PartialView("_AddVideoPartical", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -75,7 +76,7 @@ namespace HouYun.Controllers
             };
 
             await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
-            return Json(new { success = true });
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -85,7 +86,7 @@ namespace HouYun.Controllers
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
             var videos = await _videoRepository.GetVideosByChannelId(channelId);
-            return View(videos);
+            return PartialView("_DeleteVideoPartical", videos);
         }
 
         [HttpPost]
@@ -107,7 +108,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return View(model);
+            return PartialView("_UpdateVideoPartical", model);
         }
 
         [HttpPost]

@@ -1,9 +1,11 @@
 ﻿function toggleMenu(videoId) {
-    var menu = document.getElementById("menuItems_" + videoId);
-    if (menu.style.display === "none") {
-        menu.style.display = "block";
+    var menu = document.getElementById('menuItems_' + videoId);
+    var computedStyle = window.getComputedStyle(menu);
+
+    if (computedStyle.display === 'none' || computedStyle.display === '') {
+        menu.style.display = 'block';
     } else {
-        menu.style.display = "none";
+        menu.style.display = 'none';
     }
 }
 

@@ -21,14 +21,6 @@ html {
     font-weight: bold;
 }
 
-#dropdownButton {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    border: none;
-    outline: none;
-    box-shadow: none;
-}
-
 .card {
     display: flex;
     flex-direction: column;
@@ -89,13 +81,13 @@ body {
     position: relative;
 }
 
-    #myHeader .navbar-brand {
-        font-size: 28px;
-        color: #e0e0e0;
-        position: absolute;
-        top: 12px;
-        left: 100px;
-    }
+#myHeader .navbar-brand {
+    font-size: 28px;
+    color: #e0e0e0;
+    position: absolute;
+    top: 12px;
+    left: 100px;
+}
 
 .sidebar {
     position: fixed;
@@ -105,20 +97,20 @@ body {
     width: 270px;
 }
 
-    .sidebar ul li {
-        list-style-type: none;
-    }
+.sidebar ul li {
+    list-style-type: none;
+}
 
-        .sidebar ul li a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #e0e0e0;
-        }
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #e0e0e0;
+}
 
-            .sidebar ul li a:hover {
-                background-color: #ddd;
-            }
+.sidebar ul li a:hover {
+    background-color: #ddd;
+}
 
 
 .custom-btn {
@@ -202,19 +194,19 @@ body {
 }
 
 
-    .dropdown-menu1 a {
-        display: block;
-        color: #e0e0e0;
-        text-decoration: none;
-        padding: 8px 10px;
-        outline: none;
-        border-radius: 15px;
-    }
+.dropdown-menu1 a {
+    display: block;
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 8px 10px;
+    outline: none;
+    border-radius: 15px;
+}
 
-        .dropdown-menu1 a:hover {
-            background-color: #282940;
-            color: #e0e0e0;
-        }
+.dropdown-menu1 a:hover {
+    background-color: #282940;
+    color: #e0e0e0;
+}
 
 .SubView {
     font-size: 18px;

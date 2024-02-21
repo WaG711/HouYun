@@ -19,16 +19,31 @@
         {
             <p>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <a href="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Загрузить видео</a>
+                    <button id="btnclickAdd" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#upload">Загрузить видео</button>
+                    <div class="modal fade" id="upload">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyAdd"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="spacer"></div>
-                    <div class="btn-group mr-2" role="group" aria-label="Second group">
-                        <a href="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Удалить видео</a>
+                    <button id="btnclickDelete" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#delete">Удалить видео</button>
+                    <div class="modal fade" id="delete">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyDelete"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="spacer"></div>
-                    <div class="btn-group" role="group" aria-label="Third group">
-                        <a href="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill">Изменить канал</a>
+                    <button id="btnclickUpdate" class="btn btn-outline-secondary btn-sm rounded-pill" type="button" data-toggle="modal" data-target="#update">Изменить канал</button>
+                    <div class="modal fade" id="update">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyUpdate"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </p>
@@ -97,25 +112,50 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    function loadAddVideoForm() {
-        fetch('@Url.Action("Add", "Channel")', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-            .then(response => response.text())
-            .then(data => {
-                $('#addVideoModal .modal-body').html(data);
-                $('#addVideoModal').modal('show');
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке формы:', error);
+    $(document).ready(function () {
+        $("#btnclickAdd").click(function () {
+            $.get('@Url.Action("Add", "Channel")', function (data) {
+                $("#modal-bodyAdd").html(data);
+                $("#upload").modal('show');
             });
-    }
+        });
 
-    loadAddVideoForm();
+        $("#HidebtnModal").click(function () {
+            $("#upload").modal('hide');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnclickDelete").click(function () {
+            $.get('@Url.Action("Delete", "Channel")', function (data) {
+                $("#modal-bodyDelete").html(data);
+                $("#delete").modal('show');
+            });
+        });
+
+        $("#HidebtnModal").click(function () {
+            $("#delete").modal('hide');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnclickUpdate").click(function () {
+            $.get('@Url.Action("Update", "Channel")', function (data) {
+                $("#modal-bodyUpdate").html(data);
+                $("#update").modal('show');
+            });
+        });
+
+        $("#HidebtnModal").click(function () {
+            $("#update").modal('hide');
+        });
+    });
 </script>
 
 <script>
