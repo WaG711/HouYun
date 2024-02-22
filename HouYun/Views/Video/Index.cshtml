@@ -31,12 +31,14 @@
                     <div class="card-body">
                         <h4 class="card-title d-flex justify-content-between">
                             <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
-                            <div class="dropdown">
-                                <button id="dropdownButton" onclick="toggleMenu('@video.VideoId')" class="btn btn-outline-secondary btn-sm">
-                                    ...
-                                </button>
-                                <div id="menuItems_@video.VideoId" class="dropdown-menu" style="display: none;">
-                                    <a class="dropdown-item" href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })">Смотреть позже</a>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu" style="display: none;">
+                                        <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                    </div>
                                 </div>
                             </div>
                         </h4>
@@ -52,3 +54,7 @@
         }
     </div>
 </div>
+
+<sript>
+
+</sript>

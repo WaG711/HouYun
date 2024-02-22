@@ -46,8 +46,37 @@ document.addEventListener('click', function (event) {
     }
 });
 
+function toggleDropdown(button) {
+    var dropdownMenu = button.nextElementSibling;
+    if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+        dropdownMenu.style.display = "block";
+        document.addEventListener("click", closeDropdownOutside);
+    } else {
+        dropdownMenu.style.display = "none";
+        document.removeEventListener("click", closeDropdownOutside);
+    }
+}
+
+function closeDropdownOutside(event) {
+    var dropdownMenu = document.querySelector(".dropdown-menu");
+    var button = document.querySelector(".zxc");
+    if (!dropdownMenu.contains(event.target) && !button.contains(event.target)) {
+        dropdownMenu.style.display = "none";
+        document.removeEventListener("click", closeDropdownOutside);
+    }
+}
+
+function watchLater(videoId) {
+    var dropdownMenu = document.querySelector(".dropdown-menu");
+    dropdownMenu.style.display = "none";
+}
 
 
-
-
-
+function toggleNotification() {
+    var popup = document.getElementById("notificationPopup");
+    if (popup.style.display === "none" || popup.style.display === "") {
+        popup.style.display = "block";
+    } else {
+        popup.style.display = "none";
+    }
+}

@@ -27,6 +27,7 @@ namespace HouYun.Controllers
             var notifications = await _notificationRepository.GetAllNotificationsByChannelId(channelId);
             await Update(notifications);
 
+
             return View(notifications);
         }
 
