@@ -71,7 +71,7 @@ namespace HouYun.Controllers
             {
                 Title = model.Title,
                 Description = model.Description,
-                CategoryId = model.CategoryId,
+                CategoryId = (Guid)model.CategoryId,
                 ChannelId = channelId
             };
 
@@ -90,10 +90,11 @@ namespace HouYun.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _videoRepository.DeleteVideo(id);
-            return RedirectToAction("Delete");
+            return Json(new { success = true });
         }
 
         [HttpGet]
@@ -119,7 +120,7 @@ namespace HouYun.Controllers
 
             if (model.ChannelName == channel.Name && model.Description == channel.Description)
             {
-                return RedirectToAction("Channel");
+                return Json(new { success = true });
             }
 
             channel.Name = model.ChannelName ?? channel.Name;
@@ -128,12 +129,12 @@ namespace HouYun.Controllers
             try
             {
                 await _channelRepository.UpdateChannel(channel);
-                return RedirectToAction("Channel");
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(model);
+                return PartialView("_UpdateVideoPartical", model);
             }
         }
 

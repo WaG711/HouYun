@@ -16,8 +16,8 @@ namespace HouYun.ViewModels.forVideo
         public string Description { get; set; }
 
         [Display(Name = "Категория видео")]
-        [Required(ErrorMessage = "Категория видео обязательно для заполнения")]
-        public Guid CategoryId { get; set; }
+        [Required(ErrorMessage = "Категория обязательна для выбора")]
+        public Guid? CategoryId { get; set; }
 
         [Display(Name = "Файл видео")]
         [Required(ErrorMessage = "Выберите видеофайл")]
@@ -26,10 +26,6 @@ namespace HouYun.ViewModels.forVideo
         [Display(Name = "Файл постера")]
         [Required(ErrorMessage = "Выберите постер")]
         public IFormFile PosterFile { get; set; }
-
-        [Display(Name = "Категория видео")]
-        [Required(ErrorMessage = "Выберите категорию видео")]
-        public string SelectedCategory { get; set; }
 
         public IEnumerable<Category>? Categories { get; set; }
     }
