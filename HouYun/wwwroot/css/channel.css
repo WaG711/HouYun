@@ -43,8 +43,9 @@
 }
 
 #update .modal-dialog {
-    width: 910px;
+    width: 610px;
     height: 580px;
+    border-radius: 15px;
 }
 
 #update .modal-content {
