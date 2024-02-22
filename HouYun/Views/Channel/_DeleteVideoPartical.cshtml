@@ -8,7 +8,7 @@
                 @foreach (var video in Model)
                 {
                     <tr>
-                        <td>
+                        <td id="posterDelete">
                             <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                         </td>
                         <td>
@@ -16,11 +16,11 @@
                                 @video.Title
                             </h5>
                         </td>
-                        <td>
-                            <form id="deleteForm">
+                        <td style="vertical-align: middle;">
+                            <form id="deleteForm-@video.VideoId">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@video.VideoId" />
-                                <button type="button" id="submitBtn" class="btn btn-danger">Удалить</button>
+                                <button type="button" class="btn btn-danger deleteBtn" data-video-id="@video.VideoId">Удалить</button>
                             </form>
                         </td>
                     </tr>
@@ -31,13 +31,14 @@
 }
 else
 {
-    <p>Нет видео для удаления.</p>
+    <p>Нет видео для удаления</p>
 }
 
 <script>
     $(document).ready(function () {
-        $('#submitBtn').click(function () {
-            var formData = new FormData($('#deleteForm')[0]);
+        $('.deleteBtn').click(function () {
+            var videoId = $(this).data('video-id');
+            var formData = new FormData($('#deleteForm-' + videoId)[0]);
 
             $.ajax({
                 url: '@Url.Action("Delete", "Channel")',
@@ -46,8 +47,7 @@ else
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    $('#delete #modal-bodyDelete').html(response);
-                    $('#deleteForm')[0].reset();
+                    location.reload();
                 }
             });
         });
