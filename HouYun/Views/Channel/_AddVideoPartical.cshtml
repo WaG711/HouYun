@@ -1,6 +1,6 @@
 ﻿@model HouYun.ViewModels.forVideo.AddVideoViewModel
 
-<form asp-action="Add" method="post" enctype="multipart/form-data">
+<form id="uploadForm" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
     <div class="form-group">
@@ -33,7 +33,7 @@
             @foreach (var category in Model.Categories)
             {
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="CategoryId" id="@($"category_{category.CategoryId}")" value="@category.CategoryId">
+                    <input class="form-check-input" type="radio" name="CategoryId" id="@($"category_{category.CategoryId}")" value="@category.CategoryId" required>
                     <label class="form-check-label" for="@($"category_{category.CategoryId}")">@category.Name</label>
                 </div>
             }
@@ -43,7 +43,32 @@
 
     <div class="form-group">
         <p>
-            <button type="submit" class="btn btn-outline-secondary btn-sm rounded-pill">Опубликовать</button>
+            <button type="button" id="submitBtn" class="btn btn-outline-secondary btn-sm rounded-pill">Опубликовать</button>
         </p>
     </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+        $('#submitBtn').click(function () {
+            var formData = new FormData($('#uploadForm')[0]);
+
+            $.ajax({
+                url: '@Url.Action("Add", "Channel")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#upload').modal('hide');
+                        $('#uploadForm')[0].reset();
+                        location.reload();
+                    } else {
+                        $('#modal-bodyAdd').html(response);
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -21,6 +21,27 @@
                         <div class="card-body">
                             <h4 class="card-title d-flex justify-content-between">
                                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                                <div class="dropdown-container">
+                                    <div class="dropdown">
+                                        <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                            ...
+                                        </button>
+                                        <div class="dropdown-menu" style="display: none;">
+                                            @{
+                                                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                                            }
+                                            @foreach (var watchLaterItem in video.WatchLaterItems)
+                                            {
+                                                @if (watchLaterItem.Channel.UserId == userId)
+                                                {
+                                                    <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
+                                                        <button type="submit" class="dropdown-item">Удалить из "Смотреть позже"</button>
+                                                    </form>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </h4>
                             <p class="card-text">
                                 <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
@@ -29,18 +50,6 @@
                                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | @Helper.TimeAgo(video.UploadDate)</a>
                             </p>
                         </div>
-                        @{
-                            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                        }
-                        @foreach (var watchLaterItem in video.WatchLaterItems)
-                        {
-                            @if (watchLaterItem.Channel.UserId == userId)
-                            {
-                                <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
-                                    <button type="submit" class="btn btn-light btn-sm">Delete</button>
-                                </form>
-                            }
-                        }
                     </div>
                 </div>
             }

@@ -16,8 +16,8 @@ namespace HouYun.ViewModels.forVideo
         public string Description { get; set; }
 
         [Display(Name = "Категория видео")]
-        [Required(ErrorMessage = "Категория видео обязательно для заполнения")]
-        public Guid CategoryId { get; set; }
+        [Required(ErrorMessage = "Категория обязательна для выбора")]
+        public Guid? CategoryId { get; set; }
 
         [Display(Name = "Файл видео")]
         [Required(ErrorMessage = "Выберите видеофайл")]

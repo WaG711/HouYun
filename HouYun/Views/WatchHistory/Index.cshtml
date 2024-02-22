@@ -20,26 +20,28 @@
             {
                 <div class="col-md-3">
                     <div class="card video-card">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.Video.VideoId })">
                             <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.Video.PosterPath)" alt="Video Poster">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title d-flex justify-content-between">
                                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Video.Title</a>
-                                <div class="dropdown">
-                                    <button id="dropdownButton" onclick="toggleMenu('@video.VideoId')" class="btn btn-outline-secondary btn-sm" aria-haspopup="true" aria-expanded="false">
-                                        ...
-                                    </button>
-                                    <div id="menuItems_@video.VideoId" class="dropdown-menu" style="display: none;">
-                                        <a class="dropdown-item" href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })">Смотреть позже</a>
+                                <div class="dropdown-container">
+                                    <div class="dropdown">
+                                        <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                            ...
+                                        </button>
+                                        <div class="dropdown-menu" style="display: none;">
+                                            <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.Video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                        </div>
                                     </div>
                                 </div>
                             </h4>
                             <p class="card-text">
-                                <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                                <a href="@Url.RouteUrl("channel", new { channelName = video.Video.Channel.Name })">@video.Video.Channel.Name</a>
                             </p>
                             <p class="card-text">
-                                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Video.Views.Count) | @Helper.TimeAgo(video.Video.UploadDate)</a>
+                                <a href="@Url.Action("Details", "Video", new { videoId = video.Video.VideoId })">@Helper.FormatViews(video.Video.Views.Count) | @Helper.TimeAgo(video.Video.UploadDate)</a>
                             </p>
                         </div>
                     </div>

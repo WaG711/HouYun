@@ -2,7 +2,6 @@
 
 @if (Model != null && Model.Any())
 {
-    <h1 id="Title">Список видео</h1>
     <div class="container mt-4">
         <table class="table">
             <tbody>
@@ -18,9 +17,10 @@
                             </h5>
                         </td>
                         <td>
-                            <form asp-action="Delete" method="post">
+                            <form id="deleteForm">
+                                @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@video.VideoId" />
-                                <button type="submit" class="btn btn-danger">Удалить</button>
+                                <button type="button" id="submitBtn" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
                     </tr>
@@ -34,4 +34,22 @@ else
     <p>Нет видео для удаления.</p>
 }
 
-<link rel="stylesheet" href="~/css/channelDelete.css" asp-append-version="true" />
+<script>
+    $(document).ready(function () {
+        $('#submitBtn').click(function () {
+            var formData = new FormData($('#deleteForm')[0]);
+
+            $.ajax({
+                url: '@Url.Action("Delete", "Channel")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    $('#delete #modal-bodyDelete').html(response);
+                    $('#deleteForm')[0].reset();
+                }
+            });
+        });
+    });
+</script>
