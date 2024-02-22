@@ -1,1 +1,36 @@
-﻿
+﻿#upload .modal-dialog {
+    max-width: 900px;
+}
+
+#upload .modal-content {
+    background-color: #0B0922;
+    color: inherit;
+}
+
+#delete .modal-dialog {
+    max-width: 1300px;
+}
+
+#delete .modal-content {
+    background-color: #0B0922;
+    color: inherit;
+}
+
+.table {
+    color: inherit;
+}
+
+#DeleteTitle {
+    max-width: 800px;
+    overflow-wrap: break-word;
+    text-align: left;
+}
+
+#update .modal-dialog {
+    max-width: 900px;
+}
+
+#update .modal-content {
+    background-color: #0B0922;
+    color: inherit;
+}
