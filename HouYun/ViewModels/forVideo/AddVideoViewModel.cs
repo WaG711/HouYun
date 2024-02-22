@@ -27,6 +27,10 @@ namespace HouYun.ViewModels.forVideo
         [Required(ErrorMessage = "Выберите постер")]
         public IFormFile PosterFile { get; set; }
 
+        [Display(Name = "Категория видео")]
+        [Required(ErrorMessage = "Выберите категорию видео")]
+        public string SelectedCategory { get; set; }
+
         public IEnumerable<Category>? Categories { get; set; }
     }
 }

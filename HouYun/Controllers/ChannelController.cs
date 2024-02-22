@@ -76,7 +76,7 @@ namespace HouYun.Controllers
             };
 
             await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
 
         [HttpGet]
