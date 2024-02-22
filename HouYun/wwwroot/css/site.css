@@ -262,4 +262,33 @@ button.zxc:active {
     }
 
 
+#notificationButton{
+    margin-right: 110px;
+}
+
+
+.popup {
+    position: absolute;
+    background-color: #0B0922;
+    width: 310px;
+    height: 160px;
+    border-radius: 15px;
+    z-index: 999;
+    top: calc(100% + 30px);
+    right: 140px;
+
+.popup-header {
+    padding: 10px;
+    background-color: #0B0922;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.separatorheader {
+    width: 280px;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 0 auto;
+}
 

@@ -72,4 +72,11 @@ function watchLater(videoId) {
 }
 
 
-
+function toggleNotification() {
+    var popup = document.getElementById("notificationPopup");
+    if (popup.style.display === "none" || popup.style.display === "") {
+        popup.style.display = "block";
+    } else {
+        popup.style.display = "none";
+    }
+}

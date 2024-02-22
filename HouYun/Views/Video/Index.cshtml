@@ -37,7 +37,7 @@
                                         ...
                                     </button>
                                     <div class="dropdown-menu" style="display: none;">
-                                        <button onclick="watchLater('@video.VideoId')" class="dropdown-item">Смотреть позже</button>
+                                        <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
                                     </div>
                                 </div>
                             </div>
