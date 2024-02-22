@@ -8,7 +8,7 @@
                 @foreach (var video in Model)
                 {
                     <tr>
-                        <td>
+                        <td id="posterDelete">
                             <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                         </td>
                         <td>
@@ -16,7 +16,7 @@
                                 @video.Title
                             </h5>
                         </td>
-                        <td>
+                        <td style="vertical-align: middle;">
                             <form id="deleteForm-@video.VideoId">
                                 @Html.AntiForgeryToken()
                                 <input type="hidden" name="id" value="@video.VideoId" />
