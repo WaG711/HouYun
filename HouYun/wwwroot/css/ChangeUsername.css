@@ -1,5 +1,5 @@
-﻿input[type="text"],
-input[type="password"] {
+﻿#ChangeUsername input[type="text"],
+#ChangeUsername input[type="password"] {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -12,18 +12,18 @@ input[type="password"] {
     border: 2px solid transparent;
 }
 
-input[type="text"]::placeholder,
-input[type="password"]::placeholder {
+#ChangeUsername input[type="text"]::placeholder,
+#ChangeUsername input[type="password"]::placeholder {
     padding-left: 5px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+#ChangeUsername input[type="text"]:focus,
+#ChangeUsername input[type="password"]:focus {
     border-color: #707070;
     border-width: 2px;
 }
 
-.sunbit-but input[type="submit"] {
+#ChangeUsername .sunbit-but input[type="submit"] {
     width: 180px;
     height: 45px;
     background-color: #1F1B3C;
@@ -35,14 +35,14 @@ input[type="password"]:focus {
     font-weight: normal;
 }
 
-.sunbit-but input[type="submit"]:hover {
+#ChangeUsername .sunbit-but input[type="submit"]:hover {
     background-color: #2B2751;
 }
 
-h2 {
+/*h2 {
     font-size: 64px;
     font-weight: normal;
     position: absolute;
     left: 911px;
     top: 160px;
-}
+}*/
