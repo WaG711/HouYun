@@ -28,6 +28,12 @@
                     <span class="burger-line" style="background-color: #b6b6b6;"></span>
                 </button>
                 <a class="navbar-brand" asp-controller="Video" asp-action="">HouYun</a>
+                <div class="container2">
+                    <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
+                        <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск" autocomplete="off">
+                        <button type="submit" class="search-button">Искать</button>
+                    </form>
+                </div>
                 <div class="profileinfo">
                     <div class="profileinfo">
                         <button id="notificationButton" class="menu custom-btn" onclick="toggleNotification()">
@@ -136,15 +142,6 @@
             @RenderBody()
         </main>
     </div>
-
-@*     <footer class="border-top footer text-muted">
-        <div class="container">
-            <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
-                <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск">
-                <button type="submit">Поиск</button>
-            </form>
-        </div>
-    </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

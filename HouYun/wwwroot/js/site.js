@@ -81,6 +81,20 @@ function toggleNotification() {
     }
 }
 
+function closeNotificationOutside(event) {
+    var notificationPopup = document.getElementById('notificationPopup');
+    var notificationButton = document.getElementById('notificationButton');
+
+    if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
+        notificationPopup.style.display = 'none';
+        document.removeEventListener('click', closeNotificationOutside);
+    }
+}
+
+document.addEventListener('click', closeNotificationOutside);
+
+
+
 $(function () {
     $("#btnclickChangeUsername").on('click', function () {
         var url = $(this).data('url');
