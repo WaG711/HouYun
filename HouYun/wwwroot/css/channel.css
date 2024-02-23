@@ -3,19 +3,9 @@
     height: 580px;
 }
 
-#upload .modal-content {
-    background-color: #0B0922;
-    color: inherit;
-}
-
 #delete .modal-dialog {
     max-width: 1100px;
     height: 580px;
-}
-
-#delete .modal-content {
-    background-color: #0B0922;
-    color: inherit;
 }
 
 .table {
@@ -46,9 +36,4 @@
     width: 610px;
     height: 580px;
     border-radius: 15px;
-}
-
-#update .modal-content {
-    background-color: #0B0922;
-    color: inherit;
 }

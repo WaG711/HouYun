@@ -112,7 +112,6 @@ body {
     background-color: #ddd;
 }
 
-
 .custom-btn {
     background-color: transparent;
     border: 1px solid transparent;
@@ -153,19 +152,19 @@ body {
     box-shadow: none;
 }
 
-    #toggleSidebarButton:focus,
-    .burger-line:focus {
-        outline: none !important;
-        border: none;
-    }
+#toggleSidebarButton:focus,
+.burger-line:focus {
+    outline: none !important;
+    border: none;
+}
 
 .container {
     margin-top: 85px;
 }
 
-    .container.collapsed {
-        margin-left: 25px;
-    }
+.container.collapsed {
+    margin-left: 25px;
+}
 
 .hidden {
     display: none;
@@ -179,7 +178,6 @@ body {
     right: 35px;
 }
 
-
 .dropdown-menu1 {
     position: absolute;
     top: 48px;
@@ -192,7 +190,6 @@ body {
     border: none;
     width: 185px;
 }
-
 
 .dropdown-menu1 a {
     display: block;
@@ -222,9 +219,9 @@ body {
     outline: none;
     box-shadow: none;
 }
-    .zxc.dropdown-toggle::after {
-        display: none;
-    }
+.zxc.dropdown-toggle::after {
+    display: none;
+}
 
 button.zxc:focus,
 button.zxc:active {
@@ -232,7 +229,6 @@ button.zxc:active {
     box-shadow: none !important;
     border: none !important;
 }
-
 
 .dropdown-menu {
     background-color: transparent;
@@ -250,22 +246,20 @@ button.zxc:active {
     color: #e0e0e0;
 }
 
+.dropdown-item:hover {
+    background-color: #282940;
+    color: #e0e0e0;
+    border-radius: 5px;
+}
 
-    .dropdown-item:hover {
-        background-color: #282940;
-        color: #e0e0e0;
-        border-radius: 5px;
-    }
-
-    .dropdown-item:active {
-        background-color: #282940;
-    }
+.dropdown-item:active {
+    background-color: #282940;
+}
 
 
 #notificationButton{
     margin-right: 110px;
 }
-
 
 .popup {
     position: absolute;
@@ -276,6 +270,7 @@ button.zxc:active {
     z-index: 999;
     top: calc(100% + 30px);
     right: 140px;
+}
 
 .popup-header {
     padding: 10px;
@@ -292,3 +287,15 @@ button.zxc:active {
     margin: 0 auto;
 }
 
+.modal-content {
+    background-color: #0B0922;
+    color: inherit;
+}
+
+#ChangeUsername .modal-dialog {
+    width: 615px;
+}
+
+#ChangePassword .modal-dialog {
+    width: 615px;
+}

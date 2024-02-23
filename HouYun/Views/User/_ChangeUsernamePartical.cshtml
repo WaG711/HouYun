@@ -1,6 +1,6 @@
 ﻿@model HouYun.ViewModels.forUser.ChangeUsenameViewModel
 
-<form id="ChangeUsenameForm" method="post" asp-controller="User" asp-action="ChangeUsername" class="custom-form">
+<form id="ChangeUsernameForm" method="post" asp-controller="User" asp-action="ChangeUsername">
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
@@ -12,31 +12,33 @@
     </div>
 
     <div class="sunbit-but">
-        <input type="submit" id="submitBtn" value="Изменить пароль" />
+        <input type="submit" id="submitBtn" value="Изменить имя" />
     </div>
 
 </form>
 
-@* <link rel="stylesheet" href="~/css/ChangeUsername.css" asp-append-version="true" /> *@
+<link rel="stylesheet" href="~/css/ChangeUsername.css" asp-append-version="true" />
 
 <script>
     $(document).ready(function () {
-        $('#submitBtn').click(function () {
-            var formData = new FormData($('#ChangeUsenameForm')[0]);
+        $('#ChangeUsernameForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
 
             $.ajax({
-                url: '@Url.Action("ChangeUsename", "User")',
+                url: '@Url.Action("ChangeUsername", "User")',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
-                        $('#ChangeUsename').modal('hide');
-                        $('#ChangeUsenameForm')[0].reset();
+                        $('#ChangeUsername').modal('hide');
+                        $('#ChangeUsernameForm')[0].reset();
                         location.reload();
                     } else {
-                        $('#modal-bodyChangeUsename').html(response);
+                        $('#modal-bodyChangeUsername').html(response);
                     }
                 },
                 error: function (xhr, status, error) {
