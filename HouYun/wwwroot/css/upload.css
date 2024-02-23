@@ -1,0 +1,62 @@
+﻿.sunbit-but input[type="submit"] {
+    width: 180px;
+    height: 45px;
+    background-color: #1F1B3C;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.sunbit-but input[type="submit"]:hover {
+    background-color: #2B2751;
+}
+
+input[type="text"] {
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #282940;
+    color: #E0e0e0;
+    width: 766px;
+    height: 45px;
+    outline: none;
+    border: 2px solid transparent;
+}
+
+input[type="text"]::placeholder {
+    padding-left: 5px;
+}
+
+input[type="text"]:focus {
+    border-color: #707070;
+    border-width: 2px;
+}
+
+textarea {
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #282940;
+    color: #E0e0e0;
+    width: 766px;
+    min-height: 100px;
+    max-height: 150px;
+    resize: none;
+    outline: none;
+    border: 2px solid transparent;
+}
+
+textarea::placeholder {
+    padding-left: 5px;
+}
+
+textarea:focus {
+    background-color: #282940;
+    border-color: #707070;
+    border-width: 2px;
+}

@@ -26,7 +26,7 @@ namespace HouYun.Controllers.UserContoller
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            return View();
+            return PartialView("_ChangePasswordPartical");
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace HouYun.Controllers.UserContoller
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView("_ChangePasswordPartical", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -43,19 +43,19 @@ namespace HouYun.Controllers.UserContoller
 
             if (result)
             {
-                return RedirectToAction("", "Video");
+                return Json(new { success = true });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить пароль");
-                return View(model);
+                return PartialView("_ChangePasswordPartical", model);
             }
         }
 
         [HttpGet]
         public IActionResult ChangeUsername()
         {
-            return View();
+            return PartialView("_ChangeUsernamePartical");
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace HouYun.Controllers.UserContoller
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView("_ChangeUsernamePartical", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -72,12 +72,12 @@ namespace HouYun.Controllers.UserContoller
 
             if (result)
             {
-                return RedirectToAction("", "Video");
+                return Json(new { success = true });
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
-                return View(model);
+                return PartialView("_ChangeUsernamePartical", model);
             }
         }
     }

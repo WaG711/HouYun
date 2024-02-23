@@ -41,8 +41,8 @@
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\User\ChangePassword.cshtml" />
-    <None Include="Views\User\ChangeUsername.cshtml" />
+    <None Include="Views\User\_ChangePasswordPartical.cshtml" />
+    <None Include="Views\User\_ChangeUsernamePartical.cshtml" />
     <None Include="Views\User\Login.cshtml" />
     <None Include="Views\User\Registration.cshtml" />
     <None Include="Views\Video\Details.cshtml" />

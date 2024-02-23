@@ -55,8 +55,24 @@
                     </div>
                     <button id="toggleMenuButton" class="menu custom-btn" onclick="toggleMenu()">@username</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
-                        <a class="dropdown-item" href="@Url.Action("ChangeUsername", "User")">Сменить имя</a>
-                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")">Сменить пароль</a>
+                        <button id="btnclickChangeUsername" data-url="@Url.Action("ChangeUsername", "User")" class="dropdown-item" type="button">Сменить имя</button>
+                        <div class="modal fade" id="ChangeUsername">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="modal-bodyChangeUsername"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @* <a class="dropdown-item" href="@Url.Action("ChangeUsername", "User")">Сменить имя</a> *@
+                        <button id="btnclickChangePassword" data-url="@Url.Action("ChangePassword", "User")" class="dropdown-item" type="button">Сменить пароль</button>
+                        <div class="modal fade" id="ChangePassword">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="modal-bodyChangePassword"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @* <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")">Сменить пароль</a> *@
                         @if (User.IsInRole("Admin")){
                             <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
                         }

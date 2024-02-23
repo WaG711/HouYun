@@ -97,8 +97,9 @@
         background-color: #888;
     }
 </style>
-<form method="post" asp-controller="Channel" asp-action="Update" class="custom-form">
-        <div asp-validation-summary="ModelOnly"></div>
+<form id="updateForm" method="post" asp-controller="Channel" asp-action="Update">
+    <div asp-validation-summary="ModelOnly"></div>
+
     <div>
         <input asp-for="ChannelName" placeholder="Новый ник" autocomplete="off">
     </div>
@@ -108,14 +109,16 @@
     </div>
 
     <div class="sunbit-but">
-        <input type="submit" value="Изменить канал" />
+        <input type="submit" id="submitBtn" value="Изменить канал" />
     </div>
 </form>
 
 <script>
     $(document).ready(function () {
-        $('#submitBtn').click(function () {
-            var formData = new FormData($('#updateForm')[0]);
+        $('#updateForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
 
             $.ajax({
                 url: '@Url.Action("Update", "Channel")',

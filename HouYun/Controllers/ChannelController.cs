@@ -129,7 +129,7 @@ namespace HouYun.Controllers
             try
             {
                 await _channelRepository.UpdateChannel(channel);
-                return RedirectToAction("Index", "Channel");
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {

@@ -80,3 +80,26 @@ function toggleNotification() {
         popup.style.display = "none";
     }
 }
+
+$(function () {
+    $("#btnclickChangeUsername").on('click', function () {
+        var url = $(this).data('url');
+        $.get(url, function (data) {
+            $("#modal-bodyChangeUsername").html(data);
+            $("#ChangeUsername").modal('show');
+        });
+    });
+
+    $("#btnclickChangePassword").on('click', function () {
+        var url = $(this).data('url');
+        $.get(url, function (data) {
+            $("#modal-bodyChangePassword").html(data);
+            $("#ChangePassword").modal('show');
+        });
+    });
+
+    $("#HidebtnModal").on('click', function () {
+        var modalToHide = $(this).attr('data-target');
+        $(modalToHide).modal('hide');
+    });
+});
