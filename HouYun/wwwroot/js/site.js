@@ -82,16 +82,20 @@ function toggleNotification() {
 }
 
 $(function () {
-    $("#btnclickChangeUsername").on('click', function () {
-        var url = $(this).data('url');
+    $(document).on('click', '#btnclickChangeUsername', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
         $.get(url, function (data) {
             $("#modal-bodyChangeUsername").html(data);
             $("#ChangeUsername").modal('show');
         });
     });
 
-    $("#btnclickChangePassword").on('click', function () {
-        var url = $(this).data('url');
+    $(document).on('click', '#btnclickChangePassword', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
         $.get(url, function (data) {
             $("#modal-bodyChangePassword").html(data);
             $("#ChangePassword").modal('show');
