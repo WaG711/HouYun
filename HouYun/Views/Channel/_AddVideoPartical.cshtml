@@ -15,15 +15,13 @@
         <span asp-validation-for="VideoFile" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Title" class="control-label">Название видео</label>
-        <input asp-for="Title" id="upload" class="form-control" />
+    <div>
+        <input asp-for="Title" id="upload" placeholder="Название видео" autocomplete="off">
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Description" class="control-label">Описание видео</label>
-        <textarea asp-for="Description" id="upload" class="form-control"></textarea>
+    <div>
+        <textarea asp-for="Description" id="upload" placeholder="Описание" autocomplete="off"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
@@ -41,12 +39,12 @@
         </div>
     </div>
 
-    <div class="form-group">
-        <p>
-            <button type="button" id="submitBtn" class="btn btn-outline-secondary btn-sm rounded-pill">Опубликовать</button>
-        </p>
+    <div class="sunbit-but">
+        <input type="submit" id="submitBtn" value="Опубликовать" />
     </div>
 </form>
+
+<link rel="stylesheet" href="~/css/upload.css" asp-append-version="true" />
 
 <script>
     $(document).ready(function () {
