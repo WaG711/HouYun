@@ -11,13 +11,13 @@
 
 function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
-    var container = document.querySelector('.container');
+    var container = document.querySelector('.content');
 
     var isHidden = sidebar.classList.contains('hidden');
 
     if (isHidden) {
         sidebar.classList.remove('hidden');
-        container.style.marginLeft = '292px';
+        container.style.marginLeft = '270px';
     }
     else {
         sidebar.classList.add('hidden');

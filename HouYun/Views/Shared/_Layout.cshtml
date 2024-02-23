@@ -87,58 +87,57 @@
         </nav>
     </header>
 
+    <div class="wrapper">
+        <div class="sidebar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form method="get" asp-area="" asp-action="" asp-controller="Video">
+                        <button type="submit" class="Main custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                            Главная
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form method="post" asp-action="Index" asp-controller="Subscription">
+                        <button type="submit" class="Sub custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                            Подписки
+                        </button>
+                    </form>
+                </li>
+                <div class="separator"></div>
+                <li class="nav-item">
+                    <form asp-action="Index" asp-controller="Channel">
+                        <button type="submit" class="Channel custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                            Мой канал
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form method="Get" asp-action="Index" asp-controller="WatchHistory">
+                        <button type="submit" class="Watchh custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                            История
+                        </button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form method="Get" asp-action="Index" asp-controller="WatchLater">
+                        <button type="submit" class="Watchl custom-btn" style="color: #e0e0e0; text-decoration: none;">
+                            Смотреть позже
+                        </button>
+                    </form>
+                </li>
+                <div class="separator"></div>
+                <li class="nav-item">
+                    <div class="SubView custom-btn">Подписки</div>
+                </li>
+		    </ul>
+        </div>
 
-    <div class="sidebar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <form method="get" asp-area="" asp-action="" asp-controller="Video">
-                    <button type="submit" class="Main custom-btn" style="color: #e0e0e0; text-decoration: none;">
-                        Главная
-                    </button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <form method="post" asp-action="Index" asp-controller="Subscription">
-                    <button type="submit" class="Sub custom-btn" style="color: #e0e0e0; text-decoration: none;">
-                        Подписки
-                    </button>
-                </form>
-            </li>
-            <div class="separator"></div>
-            <li class="nav-item">
-                <form asp-action="Index" asp-controller="Channel">
-                    <button type="submit" class="Channel custom-btn" style="color: #e0e0e0; text-decoration: none;">
-                        Мой канал
-                    </button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <form method="Get" asp-action="Index" asp-controller="WatchHistory">
-                    <button type="submit" class="Watchh custom-btn" style="color: #e0e0e0; text-decoration: none;">
-                        История
-                    </button>
-                </form>
-            </li>
-            <li class="nav-item">
-                <form method="Get" asp-action="Index" asp-controller="WatchLater">
-                    <button type="submit" class="Watchl custom-btn" style="color: #e0e0e0; text-decoration: none;">
-                        Смотреть позже
-                    </button>
-                </form>
-            </li>
-            <div class="separator"></div>
-            <li class="nav-item">
-                <div class="SubView custom-btn">Подписки</div>
-            </li>
-		</ul>
-    </div>
-
-
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
