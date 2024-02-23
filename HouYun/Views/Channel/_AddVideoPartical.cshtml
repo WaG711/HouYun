@@ -48,8 +48,10 @@
 
 <script>
     $(document).ready(function () {
-        $('#submitBtn').click(function () {
-            var formData = new FormData($('#uploadForm')[0]);
+        $('#uploadForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
 
             $.ajax({
                 url: '@Url.Action("Add", "Channel")',

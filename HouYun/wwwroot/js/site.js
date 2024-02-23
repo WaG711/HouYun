@@ -81,7 +81,7 @@ function toggleNotification() {
     }
 }
 
-/*$(function () {
+$(function () {
     $("#btnclickChangeUsername").on('click', function () {
         var url = $(this).data('url');
         $.get(url, function (data) {
@@ -102,4 +102,4 @@ function toggleNotification() {
         var modalToHide = $(this).attr('data-target');
         $(modalToHide).modal('hide');
     });
-}); */
+});
