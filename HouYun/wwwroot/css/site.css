@@ -176,6 +176,7 @@ body {
     font-size: 20px;
     position: absolute;
     right: 35px;
+    top:6px;
 }
 
 .dropdown-menu1 {
@@ -268,7 +269,7 @@ button.zxc:active {
     height: 160px;
     border-radius: 15px;
     z-index: 999;
-    top: calc(100% + 30px);
+    top: 48px;
     right: 140px;
 }
 
@@ -298,4 +299,45 @@ button.zxc:active {
 
 #ChangePassword .modal-dialog {
     width: 615px;
+}
+
+.container2 {
+    width: 620px;
+    height: 30px;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+
+#searchForm {
+    display: flex;
+}
+
+#searchTerm {
+    background-color: #0F1020;
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #707070;
+    border-radius: 25px;
+    color: #e0e0e0;
+}
+
+    #searchTerm:-webkit-autofill,
+    #searchTerm:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #0F1020 inset !important;
+        -webkit-text-fill-color: #e0e0e0 !important;
+        border-color: #707070 !important;
+    }
+
+
+.search-button {
+    background-color: #0F1020;
+    border: 1px solid #707070;
+    border-radius: 25px;
+    color: #e0e0e0;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+#searchTerm::placeholder {
+    color: #707070;
 }
