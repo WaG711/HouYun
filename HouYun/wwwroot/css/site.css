@@ -206,6 +206,7 @@ button.zxc:active {
 }
 
 .dropdown-menu {
+    display: none;
     background-color: transparent;
     border-radius: 5px;
     color: #e0e0e0;
@@ -216,6 +217,7 @@ button.zxc:active {
 }
 
 .dropdown-item {
+    height: 100%;
     background-color: #0B0922;
     border-radius: 5px;
     color: #e0e0e0;
