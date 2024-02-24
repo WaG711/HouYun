@@ -21,6 +21,7 @@ body {
 }
 
 .wrapper {
+    padding-top: 70px;
     padding-right: 0;
     padding-left: 0;
     display: flex;
@@ -71,17 +72,20 @@ body {
 }
 
 #myHeader {
-    height: 70px;
-    position: relative;
+    background-color: #0F1020;
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    z-index: 9000;
 }
 
-#myHeader .navbar-brand {
-    font-size: 28px;
-    color: #e0e0e0;
-    position: absolute;
-    top: 12px;
-    left: 100px;
-}
+    #myHeader .navbar-brand {
+        font-size: 28px;
+        color: #e0e0e0;
+        position: absolute;
+        top: 12px;
+        left: 100px;
+    }
 
 .custom-btn {
     background-color: transparent;
@@ -145,7 +149,7 @@ body {
     font-size: 20px;
     position: absolute;
     right: 35px;
-    top:6px;
+    top: 6px;
 }
 
 .dropdown-menu1 {
@@ -202,6 +206,7 @@ button.zxc:active {
 }
 
 .dropdown-menu {
+    display: none;
     background-color: transparent;
     border-radius: 5px;
     color: #e0e0e0;
@@ -212,6 +217,7 @@ button.zxc:active {
 }
 
 .dropdown-item {
+    height: 100%;
     background-color: #0B0922;
     border-radius: 5px;
     color: #e0e0e0;
@@ -233,12 +239,12 @@ button.zxc:active {
 }
 
 .popup {
+    display: none;
     position: absolute;
     background-color: #0B0922;
     width: 310px;
     height: 160px;
     border-radius: 15px;
-    z-index: 999;
     top: 48px;
     right: 140px;
 }
@@ -258,6 +264,15 @@ button.zxc:active {
     margin: 0 auto;
 }
 
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9100;
+}
+
 .modal-content {
     background-color: #0B0922;
     color: inherit;
@@ -265,10 +280,12 @@ button.zxc:active {
 
 #ChangeUsername .modal-dialog {
     width: 615px;
+    z-index: 9101;
 }
 
 #ChangePassword .modal-dialog {
     width: 615px;
+    z-index: 9101;
 }
 
 .container2 {

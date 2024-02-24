@@ -4,11 +4,11 @@
     ViewData["Title"] = @Model.Video.Title;
 }
 
-<div class="row">
+<div class="video-list">
     @foreach (var video in Model.Videos)
     {
-        <div class="my-custom-col">
-            <div class="card video-card">
+        <div class="video-item">
+            <div class="video-card">
                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
                     <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                 </a>
@@ -20,7 +20,7 @@
                                 <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
                                     ...
                                 </button>
-                                <div class="dropdown-menu" style="display: none;">
+                                <div class="dropdown-menu">
                                     <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
                                 </div>
                             </div>
@@ -36,46 +36,50 @@
             </div>
         </div>
     }
-    <div class="col-md-6">
-        <h2>@Model.Video.Title</h2>
-        <p>@Model.Video.Description</p>
-        <p>Uploaded by: @Model.Video.Channel.Name</p>
-        <p>Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-        <p>Views: @Model.Video.Views.Count</p>
+</div>
+<div class="main-video">
+    <video id="videoPlayer" controls style="max-width: 100%;">
+        <source src="@Url.Content("~/videos/" + Model.Video.VideoPath)" type="video/mp4">
+    </video>
 
-        <video id="videoPlayer" controls style="max-width: 100%;">
-            <source src="@Url.Content("~/videos/" + Model.Video.VideoPath)" type="video/mp4">
-        </video>
+    <h2>@Model.Video.Title</h2>
 
-        <p>Likes: @Model.Video.Likes.Count</p>
-        <form id="likeForm">
-            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
-            <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
-        </form>
-        <div id="commentsSection">
-            <h3>Comments</h3>
-            @foreach (var comment in Model.Video.Comments)
-            {
-                <div>
-                    <p>@comment.Text</p>
-                    <p>Posted by: @comment.Channel.Name</p>
-                </div>
-            }
-        </div>
-        <div id="addCommentSection">
-            <h3>Add Comment</h3>
-            <form id="addCommentForm">
+    <h4 class="video-channel">
+        <a href="@Url.RouteUrl("channel", new { channelName = @Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
+        <span>
+            <form id="likeForm" style="display: inline-block;">
                 <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
-                <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
+                <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
+                <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
             </form>
+        </span>
+    </h4>
+
+    <div class="video-details">
+        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate)</p>
+        <div class="details-content">
+            <p>@Model.Video.Description</p>
         </div>
+    </div>
+
+    <div id="commentsSection">
+        <h3>Comments</h3>
+        <form id="addCommentForm">
+            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+            <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
+            <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
+        </form>
+        @foreach (var comment in Model.Video.Comments)
+        {
+            <div>
+                <a href="@Url.RouteUrl("channel", new { channelName = @comment.Channel.Name })">Posted by: @comment.Channel.Name</a>
+                <p>@comment.Text</p>
+            </div>
+        }
     </div>
 </div>
 
 <link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
 
 <script>

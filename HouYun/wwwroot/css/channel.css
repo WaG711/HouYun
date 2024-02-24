@@ -22,14 +22,20 @@
 }
 
 #posterDelete {
-    width: 300px;
-    height: 180px;
-    border-radius: 10px;
+    width: 310px;
+    height: 190px;
+    padding-right: 0px;
 }
 
+    #posterDelete .poster-image {
+        width: 300px;
+        height: 180px;
+        border-radius: 10px;
+    }
+
 #DeleteTitle {
-    width: 550px;
-    height: 170px;
+    width: 640px;
+    height: 180px;
     overflow-wrap: break-word;
     text-align: left;
     margin: 0;
