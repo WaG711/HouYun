@@ -76,7 +76,7 @@ body {
     width: 100%;
     height: 60px;
     position: fixed;
-    z-index: 9999;
+    z-index: 9000;
 }
 
     #myHeader .navbar-brand {
@@ -262,6 +262,15 @@ button.zxc:active {
     margin: 0 auto;
 }
 
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9100;
+}
+
 .modal-content {
     background-color: #0B0922;
     color: inherit;
@@ -269,10 +278,12 @@ button.zxc:active {
 
 #ChangeUsername .modal-dialog {
     width: 615px;
+    z-index: 9101;
 }
 
 #ChangePassword .modal-dialog {
     width: 615px;
+    z-index: 9101;
 }
 
 .container2 {
