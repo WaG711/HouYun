@@ -18,6 +18,7 @@ body {
     background-color: #0F1020;
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
+    transition: none !important;
 }
 
 #myHeader {
@@ -93,13 +94,17 @@ body {
     padding: 7px;
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
+    transition: none !important;
 }
 
     .custom-btn:focus,
     .custom-btn:active {
-        outline: none;
-        border: none;
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        animation: none !important;
     }
+
 
 .separator {
     margin-top: 10px;
