@@ -2,21 +2,41 @@
     width: 322px;
 }
 
+    .my-custom-col.full-width {
+        width: 370px;
+    }
+
 .card {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 305px;
     height: 360px;
     background-color: inherit;
     border: none;
 }
 
+    .card.full-width {
+        display: flex;
+        flex-direction: column;
+        width: 355px;
+        height: 405px;
+        background-color: inherit;
+        border: none;
+    }
+
 .card-img-top {
-    width: 300px;
+    width: 305px;
     height: 180px;
     object-fit: cover;
     border-radius: 10px;
 }
+
+    .card-img-top.full-width {
+        width: 355px;
+        height: 225px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
 
 .card-body {
     flex-grow: 1;
