@@ -5,28 +5,37 @@
 }
 
 <div class="row">
-    <div class="col-md-6">
-        <h3>All Videos</h3>
-        <div class="row">
-            @foreach (var video in Model.Videos)
-            {
-                <div class="col-md-6 mb-3">
-                    <div class="card">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                            <div class="card-body">
-                                <h5 class="card-title">@video.Title</h5>
-                                <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                                <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                                <p class="card-text">Views: @video.Views.Count</p>
-                                <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+    @foreach (var video in Model.Videos)
+    {
+        <div class="my-custom-col">
+            <div class="card video-card">
+                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                    <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                        <div class="dropdown-container">
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" style="display: none;">
+                                    <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                </div>
                             </div>
-                        </a>
-                        <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="btn btn-primary">Добавить в "Смотреть позже"</a>
-                    </div>
+                        </div>
+                    </h4>
+                    <p class="card-text">
+                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                    </p>
+                    <p class="card-text">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | @Helper.TimeAgo(video.UploadDate)</a>
+                    </p>
                 </div>
-            }
+            </div>
         </div>
-    </div>
+    }
     <div class="col-md-6">
         <h2>@Model.Video.Title</h2>
         <p>@Model.Video.Description</p>
@@ -66,6 +75,7 @@
 </div>
 
 <link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
 
 <script>

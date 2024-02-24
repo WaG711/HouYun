@@ -14,16 +14,16 @@
         border: 2px solid transparent;
     }
 
-        input[type="text"]::placeholder,
-        input[type="password"]::placeholder {
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
             padding-left: 5px;
-        }
+    }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
+    input[type="text"]:focus,
+    input[type="password"]:focus {
             border-color: #707070;
             border-width: 2px;
-        }
+    }
 
 
     .sunbit-but input[type="submit"] {
@@ -38,17 +38,17 @@
         font-weight: normal;
     }
 
-        .sunbit-but input[type="submit"]:hover {
+    .sunbit-but input[type="submit"]:hover {
             background-color: #2B2751;
-        }
+    }
 
-    h2 {
+    /* h2 {
         font-size: 64px;
         font-weight: normal;
         position: absolute;
         left: 911px;
         top: 160px;
-    }
+    } */
 
     textarea {
         font-size: 16px;
@@ -65,15 +65,15 @@
         border: 2px solid transparent;
     }
 
-        textarea::placeholder {
+    textarea::placeholder {
             padding-left: 5px;
-        }
+    }
 
-        textarea:focus {
+    textarea:focus {
             background-color: #282940;
             border-color: #707070;
             border-width: 2px;
-        }
+    }
 
 
     ::-webkit-scrollbar {
@@ -101,15 +101,15 @@
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
-        <input asp-for="ChannelName" placeholder="Новый ник" autocomplete="off">
+        <input asp-for="ChannelName" id="ChannelUpdate" placeholder="Новый ник" autocomplete="off">
     </div>
 
     <div>
-        <textarea asp-for="Description" placeholder="Здесь должно быть ваше описание" autocomplete="off"></textarea>
+        <textarea asp-for="Description" id="ChannelUpdate" placeholder="Здесь должно быть ваше описание" autocomplete="off"></textarea>
     </div>
 
     <div class="sunbit-but">
-        <input type="submit" id="submitBtn" value="Изменить канал" />
+        <input type="submit" id="ChannelUpdate" value="Изменить канал" />
     </div>
 </form>
 
@@ -139,6 +139,10 @@
                     console.error(xhr.responseText);
                 }
             });
+        });
+
+        $('#update').on('hidden.bs.modal', function (e) {
+            $('#updateForm')[0].reset();
         });
     });
 </script>

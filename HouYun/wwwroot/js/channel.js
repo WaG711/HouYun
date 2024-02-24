@@ -35,4 +35,4 @@ $(function () {
         var modalToHide = $(this).attr('data-target');
         $(modalToHide).modal('hide');
     });
-}); 
+});

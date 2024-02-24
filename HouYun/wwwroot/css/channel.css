@@ -1,4 +1,8 @@
-﻿#upload .modal-dialog {
+﻿.spacer {
+    flex-grow: 0.02;
+}
+
+#upload .modal-dialog {
     width: 910px;
     height: 580px;
 }

@@ -11,13 +11,13 @@
 
 function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
-    var container = document.querySelector('.container');
+    var container = document.querySelector('.content');
 
     var isHidden = sidebar.classList.contains('hidden');
 
     if (isHidden) {
         sidebar.classList.remove('hidden');
-        container.style.marginLeft = '292px';
+        container.style.marginLeft = '270px';
     }
     else {
         sidebar.classList.add('hidden');
@@ -96,16 +96,20 @@ document.addEventListener('click', closeNotificationOutside);
 
 
 $(function () {
-    $("#btnclickChangeUsername").on('click', function () {
-        var url = $(this).data('url');
+    $(document).on('click', '#btnclickChangeUsername', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
         $.get(url, function (data) {
             $("#modal-bodyChangeUsername").html(data);
             $("#ChangeUsername").modal('show');
         });
     });
 
-    $("#btnclickChangePassword").on('click', function () {
-        var url = $(this).data('url');
+    $(document).on('click', '#btnclickChangePassword', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
         $.get(url, function (data) {
             $("#modal-bodyChangePassword").html(data);
             $("#ChangePassword").modal('show');
