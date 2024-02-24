@@ -7,12 +7,22 @@
     if (isHidden) {
         sidebar.classList.remove('hidden');
         container.style.marginLeft = '270px';
-    }
-    else {
+        localStorage.setItem('sidebarHidden', 'false');
+    } else {
         sidebar.classList.add('hidden');
         container.style.marginLeft = '25px';
+        localStorage.setItem('sidebarHidden', 'true');
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var sidebarHidden = localStorage.getItem('sidebarHidden');
+
+    if (sidebarHidden === 'true') {
+        document.querySelector('.sidebar').classList.add('hidden');
+        document.querySelector('.content').style.marginLeft = '25px';
+    }
+});
 
 function toggleMenu() {
     var menuContent = document.getElementById('menuContent');
