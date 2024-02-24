@@ -4,11 +4,11 @@
     ViewData["Title"] = @Model.Video.Title;
 }
 
-<div class="row">
+<div class="video-list">
     @foreach (var video in Model.Videos)
     {
-        <div class="my-custom-col">
-            <div class="card video-card">
+        <div class="video-item">
+            <div class="video-card">
                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
                     <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                 </a>
@@ -36,7 +36,8 @@
             </div>
         </div>
     }
-    <div class="col-md-6">
+</div>
+    @* <div class="col-md-6">
         <h2>@Model.Video.Title</h2>
         <p>@Model.Video.Description</p>
         <p>Uploaded by: @Model.Video.Channel.Name</p>
@@ -72,10 +73,9 @@
             </form>
         </div>
     </div>
-</div>
+</div> *@
 
 <link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
 
 <script>
