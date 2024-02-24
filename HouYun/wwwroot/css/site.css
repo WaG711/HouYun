@@ -20,6 +20,22 @@ body {
     color: #e0e0e0;
 }
 
+#myHeader {
+    background-color: #0F1020;
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    z-index: 9000;
+}
+
+    #myHeader .navbar-brand {
+        font-size: 28px;
+        color: #e0e0e0;
+        position: absolute;
+        top: 12px;
+        left: 100px;
+    }
+
 .wrapper {
     padding-top: 70px;
     padding-right: 0;
@@ -70,22 +86,6 @@ body {
     color: inherit;
     background-color: transparent;
 }
-
-#myHeader {
-    background-color: #0F1020;
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    z-index: 9000;
-}
-
-    #myHeader .navbar-brand {
-        font-size: 28px;
-        color: #e0e0e0;
-        position: absolute;
-        top: 12px;
-        left: 100px;
-    }
 
 .custom-btn {
     background-color: transparent;
