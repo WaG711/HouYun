@@ -73,15 +73,16 @@ body {
 #myHeader {
     height: 70px;
     position: relative;
+    z-index: 9999;
 }
 
-#myHeader .navbar-brand {
-    font-size: 28px;
-    color: #e0e0e0;
-    position: absolute;
-    top: 12px;
-    left: 100px;
-}
+    #myHeader .navbar-brand {
+        font-size: 28px;
+        color: #e0e0e0;
+        position: absolute;
+        top: 12px;
+        left: 100px;
+    }
 
 .custom-btn {
     background-color: transparent;
@@ -145,7 +146,7 @@ body {
     font-size: 20px;
     position: absolute;
     right: 35px;
-    top:6px;
+    top: 6px;
 }
 
 .dropdown-menu1 {
@@ -238,7 +239,6 @@ button.zxc:active {
     width: 310px;
     height: 160px;
     border-radius: 15px;
-    z-index: 999;
     top: 48px;
     right: 140px;
 }
