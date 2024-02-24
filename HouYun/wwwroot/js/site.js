@@ -1,15 +1,4 @@
-﻿function toggleMenu(videoId) {
-    var menu = document.getElementById('menuItems_' + videoId);
-    var computedStyle = window.getComputedStyle(menu);
-
-    if (computedStyle.display === 'none' || computedStyle.display === '') {
-        menu.style.display = 'block';
-    } else {
-        menu.style.display = 'none';
-    }
-}
-
-function toggleSidebar() {
+﻿function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
 
@@ -25,7 +14,6 @@ function toggleSidebar() {
     }
 }
 
-
 function toggleMenu() {
     var menuContent = document.getElementById('menuContent');
 
@@ -35,8 +23,6 @@ function toggleMenu() {
         menuContent.style.display = 'none';
     }
 }
-
-
 
 document.addEventListener('click', function (event) {
     var menu = document.getElementById('menuContent');
@@ -50,38 +36,25 @@ function toggleDropdown(button) {
     var dropdownMenu = button.nextElementSibling;
     if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
         dropdownMenu.style.display = "block";
-        document.addEventListener("click", closeDropdownOutside);
     } else {
         dropdownMenu.style.display = "none";
-        document.removeEventListener("click", closeDropdownOutside);
     }
 }
 
-function closeDropdownOutside(event) {
-    var dropdownMenu = document.querySelector(".dropdown-menu");
-    var button = document.querySelector(".zxc");
-    if (!dropdownMenu.contains(event.target) && !button.contains(event.target)) {
-        dropdownMenu.style.display = "none";
-        document.removeEventListener("click", closeDropdownOutside);
+document.addEventListener("click", function (event) {
+    if (!event.target.closest('.dropdown')) {
+        var dropdownMenus = document.querySelectorAll(".dropdown-menu");
+        dropdownMenus.forEach(function (menu) {
+            menu.style.display = "none";
+        });
     }
-}
-
-function watchLater(videoId) {
-    var dropdownMenu = document.querySelector(".dropdown-menu");
-    dropdownMenu.style.display = "none";
-}
-
+});
 
 function toggleNotification() {
-    var popup = document.getElementById("notificationPopup");
-    if (popup.style.display === "none" || popup.style.display === "") {
-        popup.style.display = "block";
-    } else {
-        popup.style.display = "none";
-    }
+    $("#notificationPopup").toggle();
 }
 
-function closeNotificationOutside(event) {
+/*function closeNotificationOutside(event) {
     var notificationPopup = document.getElementById('notificationPopup');
     var notificationButton = document.getElementById('notificationButton');
 
@@ -91,9 +64,7 @@ function closeNotificationOutside(event) {
     }
 }
 
-document.addEventListener('click', closeNotificationOutside);
-
-
+document.addEventListener('click', closeNotificationOutside);*/
 
 $(function () {
     $(document).on('click', '#btnclickChangeUsername', function (e) {

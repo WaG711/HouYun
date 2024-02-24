@@ -234,6 +234,7 @@ button.zxc:active {
 }
 
 .popup {
+    display: none;
     position: absolute;
     background-color: #0B0922;
     width: 310px;
