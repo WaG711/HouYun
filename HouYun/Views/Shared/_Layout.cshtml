@@ -43,22 +43,11 @@
                         <div id="notificationPopup" class="popup">
                             <div class="popup-header">Уведомления</div>
                             <div class="separatorheader"></div>
-                           @*  <div class="notification-list">
-                                @if (Model.Any())
-                                {
-                                    <ul>
-                                        @foreach (var notification in Model)
-                                        {
-                                            <li>На канале @notification.Channel выгло новое видео с названием @notification.Video</li>
-                                        }
-                                    </ul>
-                                }
-                                else
-                                {
-                                    <p>Уведомления отсутствуют.</p>
-                                }
-                            </div> *@
+                            <div class="notification-list">
+                                @RenderSection("NotificationsSection", false)
+                            </div>
                         </div>
+
                     </div>
                     <button id="toggleMenuButton" class="menu custom-btn" onclick="toggleMenu()">@username</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
@@ -131,6 +120,7 @@
                 <li class="nav-item">
                     <div class="SubView custom-btn">Подписки</div>
                 </li>
+                @* @RenderSection("SubscribedUsers", required: false) *@
 		    </ul>
         </div>
 
