@@ -1,19 +1,77 @@
 ﻿@model HouYun.ViewModels.forVideo.SearchViewModel
+<style>
+    .my-custom-col {
+        width: 322px;
+        padding-top: 15px;
+    }
 
-@if (Model.Videos.Any())
-{
+    .card {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 360px;
+        background-color: inherit;
+        border: none;
+    }
+
+    .card-img-top {
+        width: 300px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .card-body {
+        flex-grow: 1;
+    }
+
+    .card-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .card-title a,
+        .card-text a {
+            color: inherit;
+            text-decoration: none;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+</style>
+@if (Model.Videos.Any()){
+    <a>Результаты поиска по запросу "<strong>@Model.SearchTerm</strong>"</a>
     <div class="row">
         @foreach (var video in Model.Videos)
         {
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
+            <div class="my-custom-col">
+                <div class="card video-card">
+                    <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                        <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                    </a>
                     <div class="card-body">
-                        <h5 class="card-title">@video.Title</h5>
-                        <p class="card-text">@video.Description</p>
-                        <p class="card-text">@video.UploadDate.ToString("dd/MM/yyyy")</p>
+                        <h4 class="card-title">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </h4>
+                        <p class="card-text">
+                            <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                        </p>
+                        <p class="card-text">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | @Helper.TimeAgo(video.UploadDate)</a>
+                        </p>
                     </div>
-                    <a href="@Url.Action("Details", "Video", new { id = video.VideoId })" class="btn btn-primary">Watch Video</a>
                 </div>
             </div>
         }
@@ -21,5 +79,5 @@
 }
 else
 {
-    <p>No results found for "@Model.SearchTerm".</p>
+    <p>По вашему запросу "@Model.SearchTerm" ничего не найдено.</p>
 }
