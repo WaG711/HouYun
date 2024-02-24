@@ -48,6 +48,21 @@
         overflow: hidden;
     }
 
-.col-video {
+.main-video {
     padding-right: 310px;
 }
+
+.video-channel {
+    padding-right: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.video-details {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .video-details p {
+        margin-bottom: 0px;
+    }
