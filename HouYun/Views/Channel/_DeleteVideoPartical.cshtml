@@ -2,37 +2,37 @@
 
 @if (Model != null && Model.Any())
 {
-    <div class="container mt-4">
-        <table class="table">
-            <tbody>
-                @foreach (var video in Model)
-                {
-                    <tr>
-                        <td id="posterDelete">
-                            <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
-                        </td>
-                        <td>
-                            <h5 id="DeleteTitle">
-                                @video.Title
-                            </h5>
-                        </td>
-                        <td style="vertical-align: middle;">
-                            <form id="deleteForm-@video.VideoId">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@video.VideoId" />
-                                <button type="button" class="btn btn-danger deleteBtn" data-video-id="@video.VideoId">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <table class="table">
+        <tbody>
+            @foreach (var video in Model)
+            {
+                <tr>
+                    <td id="posterDelete">
+                        <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                    </td>
+                    <td>
+                        <h5 id="DeleteTitle">
+                            @video.Title
+                        </h5>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <form id="deleteForm-@video.VideoId">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@video.VideoId" />
+                            <button type="button" class="btn btn-danger deleteBtn" data-video-id="@video.VideoId">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {
     <p>Нет видео для удаления</p>
 }
+
+<link rel="stylesheet" href="~/css/channel.css" asp-append-version="true" />
 
 <script>
     $(document).ready(function () {
