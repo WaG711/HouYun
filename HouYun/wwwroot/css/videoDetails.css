@@ -1,6 +1,6 @@
 ﻿.video-list {
-    width: 300px;
-    height: 300px;
+    width: 410px;
+    height: auto;
     flex-direction: column;
     float: right;
 }
@@ -19,8 +19,8 @@
 }
 
 .poster-image {
-    width: 300px;
-    height: 180px;
+    width: 160px;
+    height: 100px;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -36,6 +36,8 @@
 .card-title {
     display: flex;
     justify-content: space-between;
+    max-width: 400px;
+    word-wrap: break-word;
 }
 
     .card-title a,
@@ -49,10 +51,16 @@
     }
 
 .main-video {
-    padding-right: 310px;
+    padding-right: 410px;
+}
+
+h2 {
+    width: 1420px;
+    word-wrap: break-word;
 }
 
 .video-channel {
+    width: 1420px;
     padding-right: 50px;
     display: flex;
     justify-content: space-between;
@@ -66,3 +74,8 @@
     .video-details p {
         margin-bottom: 0px;
     }
+
+.details-content {
+    max-width: 1420px;
+    word-wrap: break-word;
+}
