@@ -47,3 +47,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+
+.col-video {
+    padding-right: 310px;
+}

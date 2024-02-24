@@ -37,43 +37,41 @@
         </div>
     }
 </div>
-    @* <div class="col-md-6">
-        <h2>@Model.Video.Title</h2>
-        <p>@Model.Video.Description</p>
-        <p>Uploaded by: @Model.Video.Channel.Name</p>
-        <p>Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
-        <p>Views: @Model.Video.Views.Count</p>
+<div class="col-video">
+    <video id="videoPlayer" controls style="max-width: 100%;">
+        <source src="@Url.Content("~/videos/" + Model.Video.VideoPath)" type="video/mp4">
+    </video>
+    <h2>@Model.Video.Title</h2>
+    <p>@Model.Video.Description</p>
+    <p>Uploaded by: @Model.Video.Channel.Name</p>
+    <p>Upload Date: @Model.Video.UploadDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+    <p>Views: @Model.Video.Views.Count</p>
 
-        <video id="videoPlayer" controls style="max-width: 100%;">
-            <source src="@Url.Content("~/videos/" + Model.Video.VideoPath)" type="video/mp4">
-        </video>
-
-        <p>Likes: @Model.Video.Likes.Count</p>
-        <form id="likeForm">
-            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
-            <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
-        </form>
-        <div id="commentsSection">
-            <h3>Comments</h3>
-            @foreach (var comment in Model.Video.Comments)
-            {
-                <div>
-                    <p>@comment.Text</p>
-                    <p>Posted by: @comment.Channel.Name</p>
-                </div>
-            }
-        </div>
-        <div id="addCommentSection">
-            <h3>Add Comment</h3>
-            <form id="addCommentForm">
-                <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
-                <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
-            </form>
-        </div>
+    <p>Likes: @Model.Video.Likes.Count</p>
+    <form id="likeForm">
+        <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+        <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
+        <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
+    </form>
+    <div id="commentsSection">
+        <h3>Comments</h3>
+        @foreach (var comment in Model.Video.Comments)
+        {
+            <div>
+                <p>@comment.Text</p>
+                <p>Posted by: @comment.Channel.Name</p>
+            </div>
+        }
     </div>
-</div> *@
+    <div id="addCommentSection">
+        <h3>Add Comment</h3>
+        <form id="addCommentForm">
+            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+            <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
+            <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
+        </form>
+    </div>
+</div>
 
 <link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
