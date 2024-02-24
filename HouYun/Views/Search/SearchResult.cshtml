@@ -1,46 +1,7 @@
 ﻿@model HouYun.ViewModels.forVideo.SearchViewModel
-<style>
-    .my-custom-col {
-        width: 322px;
-        padding-top: 15px;
-    }
 
-    .card {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        height: 360px;
-        background-color: inherit;
-        border: none;
-    }
+<link rel="stylesheet" href="~/css/SeachResult.css" asp-append-version="true" />
 
-    .card-img-top {
-        width: 300px;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .card-body {
-        flex-grow: 1;
-    }
-
-    .card-title {
-        display: flex;
-        justify-content: space-between;
-    }
-
-        .card-title a,
-        .card-text a {
-            color: inherit;
-            text-decoration: none;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            overflow: hidden;
-        }
-
-</style>
 @if (Model.Videos.Any()){
     <a>Результаты поиска по запросу "<strong>@Model.SearchTerm</strong>"</a>
     <div class="row">
