@@ -31,6 +31,7 @@ body {
     left: 35px;
     height: 100%;
     width: 250px;
+    font-size: 16px;
 }
 
     .sidebar ul li {
@@ -89,6 +90,12 @@ body {
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
 }
+
+    .custom-btn:focus,
+    .custom-btn:active {
+        outline: none;
+        border: none;
+    }
 
 .separator {
     margin-top: 10px;

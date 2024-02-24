@@ -66,5 +66,12 @@ namespace HouYun.Controllers
 
             return Redirect(refererUrl);
         }
+
+        public async Task<IActionResult> SubscribedChannels(string userId)
+        {
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
+            var userNicknames = subscribedChannels.Select(channel => channel.Name);
+            return View(userNicknames);
+        }
     }
 }
