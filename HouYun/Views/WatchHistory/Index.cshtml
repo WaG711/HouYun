@@ -23,7 +23,7 @@
                         <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + wH.Video.PosterPath)" alt="Video Poster">
                     </a>
                     <div class="card-body">
-                        <h4 class="card-title">
+                        <h3 class="card-title">
                             <a href="@Url.Action("Details", "Video", new { videoId = wH.VideoId })">@wH.Video.Title</a>
                             <div class="dropdown-container">
                                 <div class="dropdown">
@@ -35,8 +35,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </h4>
-                        <p class="card-text">
+                        </h3>
+                        <p class="card-channel">
                             <a href="@Url.RouteUrl("channel", new { channelName = wH.Video.Channel.Name })">@wH.Video.Channel.Name</a>
                         </p>
                         <p class="card-text">

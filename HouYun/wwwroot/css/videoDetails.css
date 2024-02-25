@@ -43,7 +43,17 @@
     word-wrap: break-word;
 }
 
+.card-channel {
+    margin-bottom: 5px;
+}
+
+.card-text {
+    margin-bottom: 0px;
+    font-size: 12px;
+}
+
     .card-title a,
+    .card-channel a,
     .card-text a {
         color: inherit;
         text-decoration: none;
@@ -52,11 +62,6 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
-
-.card-text {
-    margin-bottom: 0px;
-    font-size: 12.5px;
-}
 
 .main-video {
     padding-right: 410px;
@@ -73,10 +78,16 @@ h2 {
     display: flex;
     justify-content: space-between;
 }
+    .video-channel a,
+    #commentsSection a {
+        color: inherit;
+        text-decoration: none;
+    }
 
 .video-details {
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: 12px;
 }
 
     .video-details p {
@@ -86,4 +97,9 @@ h2 {
 .details-content {
     max-width: 1420px;
     word-wrap: break-word;
+    font-size: 19px;
+}
+
+#commentsSection form {
+    margin-bottom: 10px;
 }
