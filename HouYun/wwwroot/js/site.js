@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (sidebarHidden === null) {
         localStorage.setItem('sidebarHidden', 'true');
     }
+
+    toggleSidebar();
 });
 
 function toggleMenu() {
@@ -98,6 +100,13 @@ function toggleNotification() {
         });
     }
 });*/
+
+function addToWatchLater(url, videoId) {
+    $.post(url, { videoId: videoId })
+        .fail(function (error) {
+            console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
+        });
+}
 
 $(function () {
     $(document).on('click', '#btnclickChangeUsername', function (e) {

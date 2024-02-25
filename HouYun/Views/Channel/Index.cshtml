@@ -99,7 +99,7 @@
                                     ...
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId')">Смотреть позже</a>
                                 </div>
                             </div>
                         </div>

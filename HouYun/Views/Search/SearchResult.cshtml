@@ -1,6 +1,6 @@
 ﻿@model HouYun.ViewModels.forVideo.SearchViewModel
 
-<link rel="stylesheet" href="~/css/SeachResult.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
 
 @if (Model.Videos.Any()){
     <a>Результаты поиска по запросу "<strong>@Model.SearchTerm</strong>"</a>
@@ -21,7 +21,7 @@
                                         ...
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="dropdown-item">Смотреть позже</a>
+                                        <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId')">Смотреть позже</a>
                                     </div>
                                 </div>
                             </div>
