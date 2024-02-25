@@ -1,22 +1,69 @@
 ﻿@model IEnumerable<Notification>
 
-<h2>Notifications</h2>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* @section NotificationsSection {
+
+    @if (Model.Any())
+    {
+        <ul>
+            @foreach (var notification in Model)
+            {
+                <li>На канале @notification.Video.Channel.Name вышло новое видео с названием @notification.Video.Title</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Уведомления отсутствуют.</p>
+    }
+} *@
+
+
 
 @if (Model.Any())
 {
-    <ul>
+    <ul class="notification-list">
         @foreach (var notification in Model)
         {
-            <li>
-                <a href="@Url.Action("Details", "Video", new { videoId = notification.VideoId })">
-                    <p>Автор канала "@notification.Video.Channel.Name" загрузил новое видео: "@notification.Video.Title"</p>
-                    <img src="@Url.Content("~/posters/" + notification.Video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
-                </a>
-            </li>
+            <li>На канале @notification.Video.Channel.Name вышло новое видео с названием @notification.Video.Title</li>
         }
     </ul>
 }
 else
 {
-    <p>No notifications found.</p>
+    <p>Уведомления отсутствуют.</p>
 }
+
+
+<style>
+    .notification-list {
+        list-style-type: none;
+        list-style: none;
+        padding-left: 10px;
+        padding-top: 15px;
+    }
+
+        .notification-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+            .notification-list li:before {
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                position: absolute;
+                left: 0;
+                top: 5px;
+            }
+
+            .notification-list li:last-child {
+                margin-bottom: 0;
+            }
+
+</style>

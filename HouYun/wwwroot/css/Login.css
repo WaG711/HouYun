@@ -71,7 +71,6 @@ input[type="password"] {
     display: block;
 }
 
-
     input[type="text"]:focus,
     input[type="password"]:focus, {
         border-color: #707070;
@@ -84,8 +83,6 @@ input:-webkit-autofill {
     border: none !important;
     outline: none !important;
 }
-
-
 
 input[type="text"]::placeholder,
 input[type="password"]::placeholder {

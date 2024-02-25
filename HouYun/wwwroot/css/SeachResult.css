@@ -1,42 +1,23 @@
 ﻿.my-custom-col {
     width: 322px;
+    padding-top: 15px;
 }
-
-    .my-custom-col.full-width {
-        width: 370px;
-    }
 
 .card {
     display: flex;
     flex-direction: column;
-    width: 305px;
+    width: 300px;
     height: 360px;
     background-color: inherit;
     border: none;
 }
 
-    .card.full-width {
-        display: flex;
-        flex-direction: column;
-        width: 355px;
-        height: 405px;
-        background-color: inherit;
-        border: none;
-    }
-
 .card-img-top {
-    width: 305px;
+    width: 300px;
     height: 180px;
     object-fit: cover;
     border-radius: 10px;
 }
-
-    .card-img-top.full-width {
-        width: 355px;
-        height: 225px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
 
 .card-body {
     flex-grow: 1;
@@ -56,7 +37,3 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
-
-#Title{
-    font-size: 2em;
-}

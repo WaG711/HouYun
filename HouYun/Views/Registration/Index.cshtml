@@ -12,21 +12,18 @@
                 <div asp-validation-summary="ModelOnly"></div>
                 <div>
                     <input asp-for="Email" placeholder="Введите email" autocomplete="off">
-                    <span asp-validation-for="Email"></span>
                 </div>
 
                 <div>
                     <input asp-for="UserName" placeholder="Введите логин" autocomplete="off">
-                    <span asp-validation-for="UserName"></span>
                 </div>
 
                 <div>
                     <input asp-for="Password" placeholder="Введите пароль" autocomplete="off">
-                    <span asp-validation-for="Password"></span>
                 </div>
                 <div class="sunbit-but">
                     <input type="submit" value="Зарегистрироваться" />
-                    <a href="@Url.Action("Index", "Login")"><input type="button" value="Вход" class="enter-button" /></a>
+                    <input type="button" value="Вход" onclick="location.href='@Url.Action("Index", "Login")'" class="enter-button" />
                 </div>
             </form>
         </div>
