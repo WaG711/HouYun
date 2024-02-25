@@ -67,12 +67,12 @@
         <h3>Comments</h3>
         <form id="addCommentForm">
             <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <textarea id="commentText" name="commentText" rows="4" cols="50" required></textarea><br>
-            <button type="button" onclick="addComment()" class="btn btn-primary">Add Comment</button>
+            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required></textarea><br>
+            <button type="button" onclick="addComment()" class="btn btn-primary">Добавить комментарий</button>
         </form>
         @foreach (var comment in Model.Video.Comments)
         {
-            <div>
+            <div class="comment-container">
                 <a href="@Url.RouteUrl("channel", new { channelName = @comment.Channel.Name })">Posted by: @comment.Channel.Name</a>
                 <p>@comment.Text</p>
             </div>
