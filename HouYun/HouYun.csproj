@@ -43,8 +43,6 @@
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\User\_ChangePasswordPartical.cshtml" />
     <None Include="Views\User\_ChangeUsernamePartical.cshtml" />
-    <None Include="Views\User\Login.cshtml" />
-    <None Include="Views\User\Registration.cshtml" />
     <None Include="Views\Video\Details.cshtml" />
     <None Include="Views\Video\Index.cshtml" />
     <None Include="Views\WatchHistory\Index.cshtml" />
