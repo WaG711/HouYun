@@ -14,20 +14,20 @@
 .nav-link {
     color: #e0e0e0;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 0.25rem;
-    margin-right: 0.5rem;
+    padding: 0rem 0.4rem;
+    border: 0.2px solid #6c757d;
+    border-radius: 0.55rem;
+    margin-right: 1rem;
 }
 
     .nav-link:hover {
         background-color: #0F1020;
-        color: #fff;
+        color: #e0e0e0;
     }
 
     .nav-link.active {
         background-color: #0F1020;
-        color: #fff;
+        color: #e0e0e0;
     }
 
 .my-custom-col {

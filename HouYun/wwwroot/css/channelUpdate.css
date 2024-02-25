@@ -1,4 +1,4 @@
-﻿#updateChannel input[type="text"] {
+﻿input#ChannelUpdate[type="text"] {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -11,18 +11,18 @@
     border: 2px solid transparent;
 }
 
-    #updateChannel input[type="text"]::placeholder,
-    #updateChannel input[type="password"]::placeholder {
+    input#ChannelUpdate[type="text"]::placeholder,
+    input#ChannelUpdate[type="password"]::placeholder {
         padding-left: 5px;
     }
 
-    #updateChannel input[type="text"]:focus,
-    #updateChannel input[type="password"]:focus {
+    input#ChannelUpdate[type="text"]:focus,
+    input#ChannelUpdate[type="password"]:focus {
         border-color: #707070;
         border-width: 2px;
     }
 
-#updateChannel .sunbit-but input[type="submit"] {
+.sunbit-but input#ChannelUpdate[type="submit"] {
     width: 180px;
     height: 45px;
     background-color: #1F1B3C;
@@ -34,11 +34,11 @@
     font-weight: normal;
 }
 
-    #updateChannel .sunbit-but input[type="submit"]:hover {
+    .sunbit-but input#ChannelUpdate[type="submit"]:hover {
         background-color: #2B2751;
     }
 
-#updateChannel textarea {
+textarea#ChannelUpdate {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -53,33 +53,33 @@
     border: 2px solid transparent;
 }
 
-    #updateChannel textarea::placeholder {
+    textarea#ChannelUpdate::placeholder {
         padding-left: 5px;
     }
 
-    #updateChannel textarea:focus {
-    background-color: #282940;
-    border-color: #707070;
-    border-width: 2px;
+    textarea#ChannelUpdate:focus {
+        background-color: #282940;
+        border-color: #707070;
+        border-width: 2px;
     }
 
-    #updateChannel ::-webkit-scrollbar {
+    #ChannelUpdate::-webkit-scrollbar {
         width: 12px;
         border-radius: 20px;
     }
 
 
-#updateChannel ::-webkit-scrollbar-thumb {
+#ChannelUpdate::-webkit-scrollbar-thumb {
     background-color: #6d6d6d;
     border-radius: 6px;
 }
 
-#updateChannel ::-webkit-scrollbar-track {
+#ChannelUpdate::-webkit-scrollbar-track {
     background-color: #282940;
     border-radius: 30px;
     border: 2px solid transparent;
 }
 
-#updateChannel ::-webkit-scrollbar-thumb:hover {
+#ChannelUpdate::-webkit-scrollbar-thumb:hover {
     background-color: #888;
 }
