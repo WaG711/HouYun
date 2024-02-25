@@ -56,3 +56,7 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+
+#Title{
+    font-size: 2em;
+}

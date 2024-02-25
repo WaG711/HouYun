@@ -4,9 +4,10 @@
     ViewData["Title"] = "Подписки";
 }
 
+<h1 id="Title">Новые</h1>
+
 @if (Model.Any())
 {
-    <h1>Новые</h1>
     <div class="row">
         @foreach (var video in Model)
         {
