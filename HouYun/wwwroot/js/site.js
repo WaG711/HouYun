@@ -90,17 +90,14 @@ function toggleNotification() {
     $("#notificationPopup").toggle();
 }
 
-/*function closeNotificationOutside(event) {
-    var notificationPopup = document.getElementById('notificationPopup');
-    var notificationButton = document.getElementById('notificationButton');
-
-    if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
-        notificationPopup.style.display = 'none';
-        document.removeEventListener('click', closeNotificationOutside);
+/*document.addEventListener("click", function (event) {
+    if (!event.target.closest('.profileinfo')) {
+        var notificationPopups = document.querySelectorAll(".popup");
+        notificationPopups.forEach(function (popup) {
+            popup.style.display = "none";
+        });
     }
-}
-
-document.addEventListener('click', closeNotificationOutside);*/
+});*/
 
 $(function () {
     $(document).on('click', '#btnclickChangeUsername', function (e) {

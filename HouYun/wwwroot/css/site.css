@@ -74,7 +74,6 @@ body {
     flex-grow: 1;
 }
 
-
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,
@@ -104,7 +103,6 @@ body {
         border: none !important;
         animation: none !important;
     }
-
 
 .separator {
     margin-top: 10px;
