@@ -5,7 +5,6 @@ using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HouYun.Controllers
 {
@@ -109,7 +108,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return PartialView("_UpdateVideoPartical", model);
+            return PartialView("_ChannelUpdatePartical", model);
         }
 
         [HttpPost]
@@ -134,7 +133,7 @@ namespace HouYun.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return PartialView("_UpdateVideoPartical", model);
+                return PartialView("_ChannelUpdatePartical", model);
             }
         }
 

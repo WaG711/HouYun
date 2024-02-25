@@ -37,6 +37,10 @@ body {
         left: 100px;
     }
 
+#toggleSidebarButton .burger-line {
+    background-color: #e0e0e0;
+}
+
 .wrapper {
     padding-top: 70px;
     padding-right: 0;
@@ -54,6 +58,8 @@ body {
 
     .sidebar ul li {
         list-style-type: none;
+        color: #e0e0e0;
+        text-decoration: none;
     }
 
         .sidebar ul li a {
@@ -85,6 +91,7 @@ body {
 .btn.btn-outline-secondary.btn-sm {
     color: inherit;
     background-color: transparent;
+    box-shadow: none;
 }
 
 .custom-btn {
