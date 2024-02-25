@@ -1,4 +1,36 @@
-﻿.my-custom-col {
+﻿.row.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.d-flex.flex-nowrap {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.nav-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+}
+
+    .nav-link:hover {
+        background-color: #0F1020;
+        color: #fff;
+    }
+
+    .nav-link.active {
+        background-color: #0F1020;
+        color: #fff;
+    }
+
+.my-custom-col {
     width: 322px;
 }
 
@@ -10,7 +42,7 @@
     display: flex;
     flex-direction: column;
     width: 305px;
-    height: 360px;
+    height: 330px;
     background-color: inherit;
     border: none;
 }
@@ -19,7 +51,7 @@
         display: flex;
         flex-direction: column;
         width: 355px;
-        height: 405px;
+        height: 375px;
         background-color: inherit;
         border: none;
     }
@@ -40,14 +72,30 @@
 
 .card-body {
     flex-grow: 1;
+    padding-left: 5px;
+    padding-bottom: 0px;
+    padding-top: 10px;
+    padding-right: 15px;
 }
 
 .card-title {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.card-channel {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.card-text {
+    font-size: 12px;
+    float: right;
 }
 
     .card-title a,
+    .card-channel a,
     .card-text a {
         color: inherit;
         text-decoration: none;

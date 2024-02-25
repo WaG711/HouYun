@@ -1,4 +1,6 @@
-﻿function addView(videoId) {
+﻿
+
+function addView(videoId) {
     var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
     fetch(`/View/AddView/${videoId}`, {
@@ -162,3 +164,17 @@ function addComment() {
             console.error("Error:", error);
         });
 }
+
+function adjustTextareaHeight() {
+    var textarea = document.getElementById('commentText');
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+}
+
+document.getElementById('commentText').addEventListener('input', function () {
+    adjustTextareaHeight();
+});
+
+window.addEventListener('load', function () {
+    adjustTextareaHeight();
+});

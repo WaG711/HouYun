@@ -15,6 +15,7 @@
 }
 
 #upload input[type="text"] {
+    margin-top: 10px;
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -40,7 +41,7 @@
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     background-color: #282940;
     color: #E0e0e0;
     width: 766px;
