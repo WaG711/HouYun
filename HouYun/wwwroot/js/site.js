@@ -2,16 +2,40 @@
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
 
-    var isHidden = sidebar.classList.contains('hidden');
+    var columns = document.querySelectorAll('.my-custom-col');
+    var cards = document.querySelectorAll('.card');
+    var imgs = document.querySelectorAll('.card-img-top');
 
-    if (isHidden) {
+    var isOpen = sidebar.classList.contains('hidden');
+
+    if (isOpen) {
         sidebar.classList.remove('hidden');
         container.style.marginLeft = '270px';
         localStorage.setItem('sidebarHidden', 'false');
+
+        columns.forEach(function (column) {
+            column.classList.remove('full-width');
+        });
+        cards.forEach(function (card) {
+            card.classList.remove('full-width');
+        });
+        imgs.forEach(function (img) {
+            img.classList.remove('full-width');
+        });
     } else {
         sidebar.classList.add('hidden');
         container.style.marginLeft = '25px';
         localStorage.setItem('sidebarHidden', 'true');
+
+        columns.forEach(function (column) {
+            column.classList.add('full-width');
+        });
+        cards.forEach(function (card) {
+            card.classList.add('full-width');
+        });
+        imgs.forEach(function (img) {
+            img.classList.add('full-width');
+        });
     }
 }
 
@@ -21,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (sidebarHidden === 'true') {
         document.querySelector('.sidebar').classList.add('hidden');
         document.querySelector('.content').style.marginLeft = '25px';
+    } else if (sidebarHidden === null) {
+        localStorage.setItem('sidebarHidden', 'true');
     }
 });
 

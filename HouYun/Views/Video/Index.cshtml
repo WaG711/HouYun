@@ -22,10 +22,10 @@
 <div class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="my-custom-col">
-            <div class="card video-card">
+        <div class="my-custom-col full-width">
+            <div class="card video-card full-width">
                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                    <img class="card-img-top poster-image full-width" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                 </a>
                 <div class="card-body">
                     <h4 class="card-title">
