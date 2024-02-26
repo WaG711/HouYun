@@ -51,9 +51,9 @@
         <span>
             <form id="likeForm" style="display: inline-block;">
                 <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
-                <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
+                <button type="button" onclick="toggleLike('like')" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
             </form>
+            <a href="#" class="btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');">Смотреть позже</a>
         </span>
     </h4>
 
@@ -68,8 +68,8 @@
         <h3>Comments</h3>
         <form id="addCommentForm">
             <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required></textarea><br>
-            <button type="button" onclick="addComment()" class="btn btn-primary">Добавить комментарий</button>
+            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required maxlength="500"></textarea><br>
+            <button type="button" onclick="addComment()" class="btn btn-addCom">Добавить комментарий</button>
         </form>
         @foreach (var comment in Model.Video.Comments)
         {
