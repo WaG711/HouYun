@@ -99,7 +99,8 @@
                                     ...
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId')">Смотреть позже</a>
+                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
+                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
                                 </div>
                             </div>
                         </div>
