@@ -78,6 +78,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
+    margin-top: 20px;
 }
 
 .btn:focus,
