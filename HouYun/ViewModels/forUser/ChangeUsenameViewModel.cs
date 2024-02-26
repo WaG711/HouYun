@@ -5,10 +5,9 @@ namespace HouYun.ViewModels.forUser
     public class ChangeUsenameViewModel
     {
         [Required]
-        [Display(Name = "Новый Никнейм")]
+        [StringLength(15, MinimumLength = 4)]
         public string NewUsername { get; set; }
         [Required]
-        [Display(Name = "Подтверждение поролем")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

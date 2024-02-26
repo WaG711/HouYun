@@ -243,9 +243,15 @@ button.zxc:active {
         background-color: #282940;
     }
 
-
-#notificationButton{
-    margin-right: 110px;
+.menuheader {
+    cursor: pointer;
+    margin-right: 30px;
+    font-size: 20px;
+    right: 35px;
+}
+#notificationButton {
+    padding: 15px;
+    cursor: pointer;
 }
 
 .popup {
