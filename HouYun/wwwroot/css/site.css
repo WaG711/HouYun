@@ -78,6 +78,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
+    margin-top: 20px;
 }
 
 .btn:focus,
@@ -136,7 +137,6 @@ body {
     background: none;
     cursor: pointer;
     position: absolute;
-    top: 20px;
     left: 20px;
     border: none;
     outline: none;
@@ -243,9 +243,15 @@ button.zxc:active {
         background-color: #282940;
     }
 
-
-#notificationButton{
-    margin-right: 110px;
+.menuheader {
+    cursor: pointer;
+    margin-right: 30px;
+    font-size: 20px;
+    right: 35px;
+}
+#notificationButton {
+    padding: 15px;
+    cursor: pointer;
 }
 
 .popup {
