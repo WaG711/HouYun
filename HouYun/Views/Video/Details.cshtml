@@ -58,14 +58,14 @@
     </h4>
 
     <div class="video-details">
-        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate)</p>
+        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate) || Количество "Нравится": @Model.Video.Likes.Count</p>
         <div class="details-content">
             <p>@Model.Video.Description</p>
         </div>
     </div>
 
     <div id="commentsSection">
-        <h3>Comments</h3>
+        <h3>Комментарии</h3>
         <form id="addCommentForm">
             <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
             <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required maxlength="500"></textarea><br>
