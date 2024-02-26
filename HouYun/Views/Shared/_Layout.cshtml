@@ -30,7 +30,10 @@
                     <span class="burger-line"></span>
                     <span class="burger-line"></span>
                 </button>
-                <a class="navbar-brand" asp-controller="Video" asp-action="">HouYun</a>
+                <a class="navbar-brand" asp-controller="Video" asp-action="">
+                    <img src="~/imges/Logos.png" style="width: 48.98px; height: 28.67px; margin-top:-8px;"/> HouYun
+                </a>
+
                 <div class="container2">
                     <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
                         <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск" autocomplete="off">
