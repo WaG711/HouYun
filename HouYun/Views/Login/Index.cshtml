@@ -1,23 +1,36 @@
 ﻿@model HouYun.ViewModels.forUser.LoginViewModel
+@{
+    Layout = null;
+}
+<body>
+    <div class="Login">
+        <h2>HouYun</h2>
+        <div class="square-container">
+            <div class="login-text">Вход</div>
+            <div class="separator"></div>
+            <form method="post" asp-controller="Login" asp-action="">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div>
+                    <input asp-for="UserName" placeholder="Введите логин" autocomplete="off">
+                </div>
 
-<h2>Вход в приложение</h2>
-<form method="post" asp-controller="Login" asp-action="">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="UserName"></label><br />
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+                <div>
+                    <input asp-for="Password" placeholder="Введите пароль" autocomplete="off">
+                </div>
+                <div class="rememberme">
+                    <input type="hidden" asp-for="RememberMe" value="false" />
+                    <input asp-for="RememberMe" type="checkbox" id="rememberMe" value="true" />
+                    <label for="rememberMe">Запомнить?</label>
+                </div>
+                <div class="sunbit-but">
+                    <input type="submit" value="Войти" />
+                    <input type="button" value="Регистрация" class="registration-button" onclick="window.location.href='@Url.Action("Index", "Registration")'" />
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Войти" />
-    </div>
-</form>
+</body>
+
+<link rel="stylesheet" href="~/css/\Login.css" asp-append-version="true" />
+
+            

@@ -33,24 +33,16 @@
   <ItemGroup>
     <None Include="Views\Category\Add.cshtml" />
     <None Include="Views\Category\Index.cshtml" />
-    <None Include="Views\Channel\Add.cshtml" />
-    <None Include="Views\Channel\Delete.cshtml" />
     <None Include="Views\Channel\Index.cshtml" />
-    <None Include="Views\Channel\Update.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Login\Index.cshtml" />
     <None Include="Views\Notifications\Index.cshtml" />
     <None Include="Views\Registration\Index.cshtml" />
     <None Include="Views\Search\SearchResult.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\User\ChangePassword.cshtml" />
-    <None Include="Views\User\ChangeUsername.cshtml" />
-    <None Include="Views\User\Login.cshtml" />
-    <None Include="Views\User\Registration.cshtml" />
+    <None Include="Views\User\_ChangePasswordPartical.cshtml" />
+    <None Include="Views\User\_ChangeUsernamePartical.cshtml" />
     <None Include="Views\Video\Details.cshtml" />
     <None Include="Views\Video\Index.cshtml" />
     <None Include="Views\WatchHistory\Index.cshtml" />
@@ -102,6 +94,9 @@
   <ItemGroup>
     <Folder Include="wwwroot\videos\" />
     <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\posters\" />
+    <Folder Include="wwwroot\videos\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

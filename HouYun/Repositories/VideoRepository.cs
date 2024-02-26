@@ -141,7 +141,9 @@ namespace HouYun.Repositories
         private async Task DeleteFile(string fileName, string folderName)
         {
             if (string.IsNullOrEmpty(fileName))
+            {
                 return;
+            }
 
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
 
@@ -179,14 +181,18 @@ namespace HouYun.Repositories
         {
             var watchLater = await _context.WatchLaterItems.FirstOrDefaultAsync(w => w.VideoId == id);
             if (watchLater != null)
+            {
                 _context.WatchLaterItems.Remove(watchLater);
+            }
         }
 
         private async Task DeleteWatchHistory(Guid id)
         {
             var watchHistory = await _context.WatchHistories.FirstOrDefaultAsync(w => w.VideoId == id);
             if (watchHistory != null)
+            {
                 _context.WatchHistories.Remove(watchHistory);
+            }
         }
     }
 }

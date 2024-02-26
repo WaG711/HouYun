@@ -4,11 +4,15 @@ using HouYun.ViewModels.forVideo;
 using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
+        private const long MaxVideoSize = 100L * 1024 * 1024 * 1024;
+        private const long MaxPosterSize = 5 * 1024 * 1024;
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IVideoRepository _videoRepository;
@@ -40,7 +44,7 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories(),
             };
 
-            return View(model);
+            return PartialView("_AddVideoPartical", model);
         }
 
         [HttpPost]
@@ -49,12 +53,14 @@ namespace HouYun.Controllers
         {
             if (!ModelState.IsValid)
             {
-                model = new AddVideoViewModel
-                {
-                    Categories = await _categoryRepository.GetAllCategories(),
-                };
+                model.Categories = await _categoryRepository.GetAllCategories();
+                return PartialView("_AddVideoPartical", model);
+            }
 
-                return View(model);
+            if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
+            {
+                model.Categories = await _categoryRepository.GetAllCategories();
+                return PartialView("_AddVideoPartical", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -64,12 +70,12 @@ namespace HouYun.Controllers
             {
                 Title = model.Title,
                 Description = model.Description,
-                CategoryId = model.CategoryId,
+                CategoryId = (Guid)model.CategoryId,
                 ChannelId = channelId
             };
 
             await _videoRepository.AddVideo(video, model.VideoFile, model.PosterFile);
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
 
         [HttpGet]
@@ -79,14 +85,15 @@ namespace HouYun.Controllers
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
             var videos = await _videoRepository.GetVideosByChannelId(channelId);
-            return View(videos);
+            return PartialView("_DeleteVideoPartical", videos);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _videoRepository.DeleteVideo(id);
-            return RedirectToAction("Delete");
+            return Json(new { success = true });
         }
 
         [HttpGet]
@@ -101,7 +108,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return View(model);
+            return PartialView("_ChannelUpdatePartical", model);
         }
 
         [HttpPost]
@@ -112,7 +119,7 @@ namespace HouYun.Controllers
 
             if (model.ChannelName == channel.Name && model.Description == channel.Description)
             {
-                return RedirectToAction("Index");
+                return Json(new { success = true });
             }
 
             channel.Name = model.ChannelName ?? channel.Name;
@@ -121,13 +128,54 @@ namespace HouYun.Controllers
             try
             {
                 await _channelRepository.UpdateChannel(channel);
-                return RedirectToAction("Index");
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(model);
+                return PartialView("_ChannelUpdatePartical", model);
             }
+        }
+
+        private bool ValidateVideoFile(AddVideoViewModel model)
+        {
+            if (model.VideoFile.Length > MaxVideoSize)
+            {
+                ModelState.AddModelError("VideoFile", "Размер файла видео превышает максимально допустимый.");
+                return false;
+            }
+
+            var allowedVideoExtensions = new[] { ".mp4" };
+            var videoExtension = Path.GetExtension(model.VideoFile.FileName).ToLower();
+            if (!allowedVideoExtensions.Contains(videoExtension))
+            {
+                ModelState.AddModelError("VideoFile", "Формат видео должен быть MP4.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidatePosterFile(AddVideoViewModel model)
+        {
+            if (model.PosterFile != null)
+            {
+                if (model.PosterFile.Length > MaxPosterSize)
+                {
+                    ModelState.AddModelError("PosterFile", "Размер файла постера превышает максимально допустимый.");
+                    return false;
+                }
+
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(model.PosterFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла постера.");
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

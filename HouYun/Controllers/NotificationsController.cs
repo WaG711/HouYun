@@ -1,10 +1,12 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class NotificationsController : Controller
     {
         private readonly INotificationRepository _notificationRepository;
@@ -24,6 +26,7 @@ namespace HouYun.Controllers
 
             var notifications = await _notificationRepository.GetAllNotificationsByChannelId(channelId);
             await Update(notifications);
+
 
             return View(notifications);
         }

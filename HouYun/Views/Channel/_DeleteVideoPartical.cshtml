@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HouYun.Models.Video>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <tbody>
+            @foreach (var video in Model)
+            {
+                <tr>
+                    <td id="posterDelete">
+                        <img class="poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                    </td>
+                    <td>
+                        <h5 id="DeleteTitle">
+                            @video.Title
+                        </h5>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <form id="deleteForm-@video.VideoId">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@video.VideoId" />
+                            <button type="button" class="btn btn-danger deleteBtn" data-video-id="@video.VideoId">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Нет видео для удаления</p>
+}
+
+<script>
+    $(document).ready(function () {
+        $('.deleteBtn').click(function () {
+            var videoId = $(this).data('video-id');
+            var formData = new FormData($('#deleteForm-' + videoId)[0]);
+
+            $.ajax({
+                url: '@Url.Action("Delete", "Channel")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>

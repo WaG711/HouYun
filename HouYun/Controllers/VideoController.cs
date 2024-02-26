@@ -1,10 +1,11 @@
 ﻿using HouYun.IRepositories;
 using HouYun.ViewModels.forVideo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,User")]
     public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
@@ -16,21 +17,22 @@ namespace HouYun.Controllers
             _categoryRepository = categoryRepository;
         }
 
+        [HttpGet("")]
+        [HttpGet("Vds/{category?}")]
         public async Task<IActionResult> Index(string category)
         {
-            var model = new VideoViewModel();
+            var model = new VideoViewModel
+            {
+                Categories = await _categoryRepository.GetAllCategories()
+            };
 
-            if (!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category) && model.Categories.Any(c => c.Name == category))
             {
                 model.Videos = await _videoRepository.GetVideosByCategory(category);
-            }
-            else
-            {
-                model.Videos = await _videoRepository.GetAllVideos();
+                return View(model);
             }
 
-            model.Categories = await _categoryRepository.GetAllCategories();
-
+            model.Videos = await _videoRepository.GetAllVideos();
             return View(model);
         }
 

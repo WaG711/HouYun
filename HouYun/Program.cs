@@ -4,6 +4,10 @@ using HouYun.IRepositories;
 using HouYun.Repositories;
 using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
+using Microsoft.Data.SqlClient;
+using HouYun.Controllers;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace HouYun
@@ -44,27 +48,52 @@ namespace HouYun
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
             builder.Services.AddScoped<IChannelRepository, ChannelRepository>();
             builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(CustomAuthorizationFilter));
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Login";
+                options.LoginPath = "/Login";
+            });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = "HouYunCookie";
+                options.Cookie.HttpOnly = true;
+            });
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+    
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Video}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "Notifications",
+                pattern: "Notifications",
+                defaults: new { controller = "Notifications", action = "Index" });
 
             app.MapControllerRoute(
                 name: "AddView",
@@ -96,6 +125,7 @@ namespace HouYun
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
 
+
             app.MapControllerRoute(
                 name: "unsubscribe",
                 pattern: "Subscription/Unsubscribe",
@@ -110,6 +140,18 @@ namespace HouYun
                 name: "search",
                 pattern: "Search/SearchResult/{searchTerm?}",
                 defaults: new { controller = "Search", action = "SearchResult" }
+            );
+
+            app.MapControllerRoute(
+                name: "login",
+                pattern: "login",
+                defaults: new { controller = "Login" }
+            );
+
+            app.MapControllerRoute(
+                name: "registration",
+                pattern: "registration",
+                defaults: new { controller = "Registration"}
             );
 
             app.Run();

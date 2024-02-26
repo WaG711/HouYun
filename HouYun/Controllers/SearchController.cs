@@ -1,11 +1,12 @@
 ﻿using HouYun.IRepositories;
-using HouYun.Models;
 using HouYun.ViewModels.forVideo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class SearchController : Controller
     {
         private readonly ISearchHistoryRepository _searchHistoryRepository;
@@ -23,7 +24,7 @@ namespace HouYun.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            var existingSearch = await _searchHistoryRepository.GetSearchHistoryByChannelIdAndQuery(channelId, searchTerm);
+            /*var existingSearch = await _searchHistoryRepository.GetSearchHistoryByChannelIdAndQuery(channelId, searchTerm);
             if (existingSearch == null)
             {
                 var searchHistory = new SearchHistory
@@ -33,7 +34,7 @@ namespace HouYun.Controllers
                 };
 
                 await _searchHistoryRepository.AddSearchHistory(searchHistory);
-            }
+            }*/
 
             var lastSearches = await _searchHistoryRepository.GetSearchHistoryByChannelId(channelId);
 

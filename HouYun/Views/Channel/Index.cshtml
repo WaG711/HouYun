@@ -2,77 +2,122 @@
 @using System.Security.Claims
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = @Model.Name;
 }
 
-<h1>@Model.Name</h1>
+<h1 id="Title">@Model.Name</h1>
 <p>@Model.Description</p>
-<p>@Model.Subscribers.Count</p>
-
-@if (User.Identity.IsAuthenticated)
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
-    var isAuthor = Model.UserId == userId;
-
-    if (isAuthor)
+<p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
+<div>
+    @if (User.Identity.IsAuthenticated)
     {
-        <a href="@Url.Action("Add", "Channel")" class="btn btn-primary">Загрузить видео</a>
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
+        var isAuthor = Model.UserId == userId;
 
-        <a href="@Url.Action("Delete", "Channel")" class="btn btn-danger">Удалить видео</a>
-
-        <a href="@Url.Action("Update", "Channel")" class="btn btn-primary">Изменить</a>
-    }
-    else
-    {
-        if (!isAuthor)
+        if (isAuthor)
         {
-            if (isSubscribed)
+            <p>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Загрузить видео</button>
+                    <div class="modal fade" id="upload">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyAdd"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Удалить видео</button>
+                    <div class="modal fade" id="delete">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyDelete"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <button id="btnclickUpdate" data-url="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Обновить канал</button>
+                    <div class="modal fade" id="update">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyUpdate"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p>
+        }
+        else
+        {
+            if (!isAuthor)
             {
-                <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
-                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                    <button type="button" onclick="unsubscribe()">Отписаться</button>
-                </form>
-            }
-            else
-            {
-                <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
-                    <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                    <button type="button" onclick="subscribe()">Подписаться</button>
-                </form>
+                if (isSubscribed)
+                {
+                    <p>
+                        <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
+                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
+                        </form>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
+                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
+                        </form>
+                    </p>
+                }
             }
         }
     }
-}
+</div>
 
-<h2>Videos:</h2>
+
+<p>Видео:</p>
+
 <div class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="col-md-3 mb-3">
-            <div class="card">
+        <div class="my-custom-col">
+            <div class="card video-card">
                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <div class="card-body">
-                        <h5 class="card-title">@video.Title</h5>
-                        <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                        <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                        <p class="card-text">Views: @video.Views.Count</p>
-                        <video width="100%" controls>
-                            <source src="@Url.Content($"~/videos/{video.VideoPath}")" type="video/mp4">
-                        </video>
-                    </div>
+                    <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                 </a>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                        <div class="dropdown-container">
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
+                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
+                                </div>
+                            </div>
+                        </div>
+                    </h3>
+                    <p class="card-channel">
+                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                    </p>
+                    <p class="card-text">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
+                    </p>
+                </div>
             </div>
         </div>
     }
 </div>
 
-<script>
-    function subscribe() {
-        document.getElementById("subscribeForm").submit();
-    }
-
-    function unsubscribe() {
-        document.getElementById("unsubscribeForm").submit();
-    }
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="~/css/channel.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
+<script src="~/js/channel.js"></script>

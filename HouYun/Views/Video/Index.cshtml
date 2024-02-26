@@ -1,48 +1,57 @@
 ﻿@model HouYun.ViewModels.forVideo.VideoViewModel
 
 @{
-    ViewData["Title"] = "Video Index";
+    ViewData["Title"] = "HouYun";
 }
 
 <div class="row mb-3">
     <div class="col-md-12">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Video">Все</a>
-                    </li>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Video?category=@category.Name">@category.Name</a>
-                        </li>
-                    }
-                </ul>
+        <div class="overflow-hidden">
+            <div class="d-flex flex-nowrap">
+                @foreach (var category in Model.Categories)
+                {
+                    <div class="mr-3">
+                        <a class="nav-link" href="@Url.Action("Index", "Video", new { category = category.Name })">@category.Name</a>
+                    </div>
+                }
             </div>
-        </nav>
+        </div>
     </div>
 </div>
 
 <div class="row">
     @foreach (var video in Model.Videos)
     {
-        <div class="col-md-3 mb-3">
-            <div class="card">
+        <div class="my-custom-col">
+            <div class="card video-card">
                 <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <div class="card-body">
-                        <h5 class="card-title">@video.Title</h5>
-                        <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                        <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                        <p class="card-text">Views: @video.Views.Count</p>
-                        <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
-                    </div>
+                    <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                 </a>
-                <a href="@Url.Action("AddToWatchLater", "WatchLater", new { videoId = video.VideoId })" class="btn btn-primary">Добавить в "Смотреть позже"</a>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                        <div class="dropdown-container">
+                            <div class="dropdown">
+                                <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
+                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
+                                </div>
+                            </div>
+                        </div>
+                    </h3>
+                    <p class="card-channel">
+                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                    </p>
+                    <p class="card-text">
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
+                    </p>
+                </div>
             </div>
         </div>
     }
 </div>
+
+<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />

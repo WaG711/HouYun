@@ -1,10 +1,12 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class SubscriptionController : Controller
     {
         private readonly ISubscriptionRepository _subscriptionRepository;
@@ -12,6 +14,14 @@ namespace HouYun.Controllers
         public SubscriptionController(ISubscriptionRepository subscriptionRepository)
         {
             _subscriptionRepository = subscriptionRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedVideos(userId);
+
+            return View(subscribedChannels);
         }
 
         [HttpPost]
@@ -55,6 +65,13 @@ namespace HouYun.Controllers
             await _subscriptionRepository.DeleteSubscription(subscriptionToUnsubscribe.SubscriptionId);
 
             return Redirect(refererUrl);
+        }
+
+        public async Task<IActionResult> SubscribedChannels(string userId)
+        {
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
+            var userNicknames = subscribedChannels.Select(channel => channel.Name);
+            return View(userNicknames);
         }
     }
 }

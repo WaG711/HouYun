@@ -1,10 +1,12 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;
@@ -26,7 +28,7 @@ namespace HouYun.Controllers
             return View(watchLaterItems);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> AddToWatchLater(Guid videoId)
         {
             string refererUrl = Request.Headers.Referer.ToString();
@@ -37,7 +39,7 @@ namespace HouYun.Controllers
             var existingItem = await _watchLaterRepository.GetWatchLaterItemByChannelIdAndVideoId(channelId, videoId);
             if (existingItem != null)
             {
-                return Redirect(refererUrl);
+                return Ok();
             }
 
             var watchLaterItem = new WatchLater
@@ -48,7 +50,7 @@ namespace HouYun.Controllers
 
             await _watchLaterRepository.AddWatchLaterItem(watchLaterItem);
 
-            return Redirect(refererUrl);
+            return Ok();
         }
 
         [HttpPost]

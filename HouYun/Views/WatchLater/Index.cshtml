@@ -1,37 +1,54 @@
 ﻿@using System.Security.Claims
 @model IEnumerable<Video>
 
-<h2>Список видео "Смотреть позже"</h2>
+@{
+    ViewData["Title"] = "Смотреть позже";
+}
+
+<h1 id="Title">Смотреть позже</h1>
 
 @if (Model.Any())
 {
     <div class="row">
         @foreach (var video in Model)
         {
-            <div class="col-md-3 mb-3">
-                <div class="card">
+            <div class="my-custom-col">
+                <div class="card video-card">
                     <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                        <div class="card-body">
-                            <h5 class="card-title">@video.Title</h5>
-                            <p class="card-text">Uploaded by: @video.Channel.Name</p>
-                            <p class="card-text">Upload Date: @video.UploadDate.ToString("dd/MM/yyyy")</p>
-                            <p class="card-text">Views: @video.Views.Count</p>
-                            <img src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster" style="max-width: 100%;">
-                        </div>
+                        <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                     </a>
-                    @{
-                        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    }
-
-                    @foreach (var watchLaterItem in video.WatchLaterItems)
-                    {
-                        @if (watchLaterItem.Channel.UserId == userId)
-                        {
-                            <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        }
-                    }
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @{
+                                            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                                        }
+                                        @foreach (var watchLaterItem in video.WatchLaterItems)
+                                        {
+                                            @if (watchLaterItem.Channel.UserId == userId)
+                                            {
+                                                <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
+                                                    <button type="submit" class="dropdown-item">Удалить из "Смотреть позже"</button>
+                                                </form>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </h3>
+                        <p class="card-channel">
+                            <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                        </p>
+                        <p class="card-text">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         }
@@ -41,3 +58,5 @@ else
 {
     <p>Список "Смотреть позже" пуст.</p>
 }
+
+<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
