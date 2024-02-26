@@ -54,26 +54,23 @@
         }
         else
         {
-            if (!isAuthor)
+            if (isSubscribed)
             {
-                if (isSubscribed)
-                {
-                    <p>
-                        <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
-                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
-                        </form>
-                    </p>
-                }
-                else
-                {
-                    <p>
-                        <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
-                            <input type="hidden" name="channelId" value="@Model.ChannelId" />
-                            <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
-                        </form>
-                    </p>
-                }
+                <p>
+                    <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
+                        <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
+                    </form>
+                </p>
+            }
+            else
+            {
+                <p>
+                    <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
+                        <input type="hidden" name="channelId" value="@Model.ChannelId" />
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
+                    </form>
+                </p>
             }
         }
     }

@@ -19,7 +19,6 @@ namespace HouYun.Repositories
         public async Task<IEnumerable<Video>> GetAllVideos()
         {
             return await _context.Videos
-                .Include(v => v.Category)
                 .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .OrderByDescending(v => v.UploadDate)
@@ -39,7 +38,6 @@ namespace HouYun.Repositories
         public async Task<IEnumerable<Video>> GetAllVideosExceptId(Guid id)
         {
             var allVideos = await _context.Videos
-                .Include(v => v.Category)
                 .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .OrderByDescending(v => v.UploadDate)
@@ -65,6 +63,7 @@ namespace HouYun.Repositories
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Channel)
+                    .ThenInclude(c => c.Subscribers)
                 .Include(v => v.Comments)
                     .ThenInclude(c => c.Channel)
                 .Include(v => v.Likes)

@@ -1,4 +1,5 @@
-﻿@model HouYun.ViewModels.forVideo.DetailsViewModel
+﻿@using System.Security.Claims
+@model HouYun.ViewModels.forVideo.DetailsViewModel
 
 @{
     ViewData["Title"] = @Model.Video.Title;
@@ -48,6 +49,28 @@
 
     <h4 class="video-channel">
         <a href="@Url.RouteUrl("channel", new { channelName = @Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
+        @{
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var isAuthor = Model.Video.Channel.UserId == userId;
+            var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
+            if (!isAuthor)
+            {
+                if (isSubscribed)
+                {
+                    <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
+                        <input type="hidden" name="channelId" value="@Model.Video.ChannelId" />
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
+                    </form>
+                }
+                else
+                {
+                    <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
+                        <input type="hidden" name="channelId" value="@Model.Video.ChannelId" />
+                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
+                    </form>
+                }
+            }
+        }
         <span>
             <form id="likeForm" style="display: inline-block;">
                 <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
@@ -83,6 +106,7 @@
 
 <link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
+<script src="~/js/channel.js"></script>
 
 <script>
     var player = videojs('videoPlayer');
