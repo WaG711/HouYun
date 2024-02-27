@@ -58,6 +58,7 @@ body {
 
     .sidebar ul li {
         list-style-type: none;
+        margin-top: 10px;
         color: #e0e0e0;
         text-decoration: none;
     }
@@ -316,9 +317,7 @@ button.zxc:active {
 
 .container2 {
     width: 620px;
-    height: 30px;
     margin: 0 auto;
-    margin-top: 5px;
 }
 
 #searchForm {
