@@ -1,6 +1,4 @@
-﻿
-
-function addView(videoId) {
+﻿function addView(videoId) {
     var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
     fetch(`/View/AddView/${videoId}`, {
@@ -24,36 +22,6 @@ function AddToWatchHistory(videoId) {
         },
         body: JSON.stringify({})
     })
-}
-
-function toggleLike(button) {
-    var likeButton = document.getElementById("likeButton");
-    var removeLikeButton = document.getElementById("removeLikeButton");
-    if (button === "like") {
-        if (likeButton.innerText === "Like") {
-            likeButton.innerText = "Remove Like";
-            likeButton.className = "btn btn-danger";
-            likeButton.setAttribute("onclick", "toggleButtonState('like')");
-            removeLikeButton.style.display = "none";
-        } else {
-            likeButton.innerText = "Like";
-            likeButton.className = "btn btn-primary";
-            likeButton.setAttribute("onclick", "toggleButtonState('like')");
-            removeLikeButton.style.display = "none";
-        }
-    } else if (button === "removeLike") {
-        if (removeLikeButton.innerText === "Remove Like") {
-            removeLikeButton.innerText = "Like";
-            removeLikeButton.className = "btn btn-primary";
-            removeLikeButton.setAttribute("onclick", "toggleButtonState('removeLike')");
-            likeButton.style.display = "none";
-        } else {
-            removeLikeButton.innerText = "Remove Like";
-            removeLikeButton.className = "btn btn-danger";
-            removeLikeButton.setAttribute("onclick", "toggleButtonState('removeLike')");
-            likeButton.style.display = "none";
-        }
-    }
 }
 
 function addLike() {
@@ -99,12 +67,12 @@ function removeLike() {
 function toggleButtonState(button) {
     var likeButton = document.getElementById("likeButton");
     if (button === "like") {
-        likeButton.innerText = "Remove Like";
-        likeButton.className = "btn btn-danger";
+        likeButton.innerText = "Не нравится";
+        likeButton.className = "btn btn-like btn-unlike";
         likeButton.setAttribute("onclick", "removeLike()");
     } else {
-        likeButton.innerText = "Like";
-        likeButton.className = "btn btn-primary";
+        likeButton.innerText = "Нравится";
+        likeButton.className = "btn btn-like";
         likeButton.setAttribute("onclick", "addLike()");
     }
 }
