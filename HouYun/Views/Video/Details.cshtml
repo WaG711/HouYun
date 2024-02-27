@@ -74,7 +74,7 @@
         <span>
             <form id="likeForm" style="display: inline-block;">
                 <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <button type="button" onclick="toggleLike('like')" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
+                <button type="button" onclick="toggleButtonState('like')" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
             </form>
             <a href="#" class="btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');">Смотреть позже</a>
         </span>
