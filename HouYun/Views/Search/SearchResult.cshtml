@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
 
 @if (Model.Videos.Any()){
-    <a>Результаты поиска по запросу "<strong>@Model.SearchTerm</strong>"</a>
+    <h3>Результаты поиска по запросу "@Model.SearchTerm"</h3>
     <div class="row">
         @foreach (var video in Model.Videos)
         {
