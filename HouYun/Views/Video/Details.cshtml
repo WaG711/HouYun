@@ -49,35 +49,50 @@
 
     <h4 class="video-channel">
         <a href="@Url.RouteUrl("channel", new { channelName = @Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
-        @{
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAuthor = Model.Video.Channel.UserId == userId;
-            var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
-            if (!isAuthor)
-            {
-                if (isSubscribed)
+            @{
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var isAuthor = Model.Video.Channel.UserId == userId;
+                var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
+                var isLiked = Model.Video.Likes.Any(l => l.Channel.UserId == userId);
+
+                if (!isAuthor)
                 {
-                    <form id="unsubscribeForm" method="post" action="/Subscription/Unsubscribe">
-                        <input type="hidden" name="channelId" value="@Model.Video.ChannelId" />
-                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="unsubscribe()">Отписаться</button>
-                    </form>
-                }
-                else
-                {
-                    <form id="subscribeForm" method="post" action="/Subscription/Subscribe">
-                        <input type="hidden" name="channelId" value="@Model.Video.ChannelId" />
-                        <button type="button" class="btn btn-light btn-sm rounded-pill" onclick="subscribe()">Подписаться</button>
-                    </form>
+                    if (isSubscribed)
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="unsubscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Отписаться</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="subscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Подписаться</button>
+                        </form>
+                    }
                 }
             }
-        }
-        <span>
-            <form id="likeForm" style="display: inline-block;">
-                <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <button type="button" onclick="toggleLike('like')" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
-            </form>
-            <a href="#" class="btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');">Смотреть позже</a>
-        </span>
+
+            <span>
+                @{
+                    if (isLiked)
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="removeLike()" class="btn btn-like btn-unlike" id="likeButton" data-like="like">Не нравится</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="addLike()" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
+                        </form>
+                    }
+                }
+            <button class="btn btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');" data-WL="WL">Смотреть позже</button>
+            </span>
     </h4>
 
     <div class="video-details">

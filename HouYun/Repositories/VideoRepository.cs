@@ -67,6 +67,7 @@ namespace HouYun.Repositories
                 .Include(v => v.Comments)
                     .ThenInclude(c => c.Channel)
                 .Include(v => v.Likes)
+                    .ThenInclude(l => l.Channel)
                 .Include(v => v.Views)
                 .SingleOrDefaultAsync(v => v.VideoId == id);
         }
