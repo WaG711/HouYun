@@ -21,9 +21,10 @@
 
 .poster-image {
     width: 225px;
-    height: 110px;
+    height: 120px;
     border-radius: 10px;
     margin-right: 5px;
+    object-fit: cover;
 }
 
 .card-body {
@@ -81,16 +82,52 @@ h2 {
     margin-top: 8px;
 }
 
+.video-channel {
+    width: 1420px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+    .video-channel a {
+        padding-top: 17px;
+    }
+
+    .video-channel a,
+    #commentsSection a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+#unsubscribeForm,
+#subscribeForm {
+    margin-right: auto;
+    padding-left: 10px;
+    padding-top: 14px;
+}
+
+    #unsubscribeForm .btn,
+    #subscribeForm .btn {
+        padding-right: 10px;
+        box-shadow: none;
+        outline: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
 .btn-like {
     color: inherit;
     font-size: 16px;
     transition: background-color 0.3s ease;
     box-shadow: none;
     outline: none;
-    padding-top: 2px;
-    padding-right: 5px;
-    padding-bottom: 0px;
+    border-top-width: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
     padding-left: 0px;
+    padding-bottom: 0px;
 }
 
     .btn-like[data-like="like"] {
@@ -105,21 +142,34 @@ h2 {
             outline: none;
         }
 
-.video-channel {
-    width: 1420px;
-    padding-right: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-    .video-channel a,
-    #commentsSection a {
-        color: inherit;
-        text-decoration: none;
-    }
-
 .btn-wl {
+    color: inherit;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    box-shadow: none;
+    outline: none;
+    border-top-width: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
     font-size: 16px;
 }
+
+    .btn-wl[data-WL="WL"] {
+        color: inherit;
+        box-shadow: none;
+        outline: none;
+    }
+
+        .btn-wl[data-WL="WL"]:hover {
+            color: inherit;
+            box-shadow: none;
+            outline: none;
+        }
 
 .video-details {
     margin-top: 10px;

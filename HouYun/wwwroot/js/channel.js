@@ -1,9 +1,37 @@
 ﻿function subscribe() {
-    document.getElementById("subscribeForm").submit();
+    var channelId = document.getElementById("channelId").value;
+    fetch("/Subscription/Subscribe?channelId=" + channelId, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+        }
+    })
+        .then(() => {
+            document.getElementById("subscribeButton").innerText = "Отписаться";
+            document.getElementById("subscribeButton").setAttribute("onclick", "unsubscribe()");
+        })
+        .catch(error => {
+            console.error('Error subscribe:', error);
+        });
 }
 
 function unsubscribe() {
-    document.getElementById("unsubscribeForm").submit();
+    var channelId = document.getElementById("channelId").value;
+    fetch("/Subscription/Unsubscribe?channelId=" + channelId, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+        }
+    })
+        .then(() => {
+            document.getElementById("subscribeButton").innerText = "Подписаться";
+            document.getElementById("subscribeButton").setAttribute("onclick", "subscribe()");
+        })
+        .catch(error => {
+            console.error('Error subscribe:', error);
+        });
 }
 
 $(function () {

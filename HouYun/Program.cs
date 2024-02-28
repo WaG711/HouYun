@@ -106,11 +106,6 @@ namespace HouYun
                 defaults: new { controller = "WatchHistory", action = "AddToWatchHistory" });
 
             app.MapControllerRoute(
-                name: "like",
-                pattern: "like/{action}/{videoId?}",
-                defaults: new { controller = "Like" });
-
-            app.MapControllerRoute(
                 name: "addComment",
                 pattern: "Comment/AddComment",
                 defaults: new { controller = "Comment", action = "AddComment" });
@@ -124,17 +119,6 @@ namespace HouYun
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
-
-
-            app.MapControllerRoute(
-                name: "unsubscribe",
-                pattern: "Subscription/Unsubscribe",
-                defaults: new { controller = "Subscription", action = "Unsubscribe" });
-
-            app.MapControllerRoute(
-                name: "subscribe",
-                pattern: "Subscription/Subscribe",
-                defaults: new { controller = "Subscription", action = "Subscribe" });
 
             app.MapControllerRoute(
                 name: "search",
