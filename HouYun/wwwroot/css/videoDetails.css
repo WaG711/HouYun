@@ -98,14 +98,12 @@ h2 {
         text-decoration: none;
     }
 
-#unsubscribeForm,
 #subscribeForm {
     margin-right: auto;
     padding-left: 10px;
     padding-top: 14px;
 }
 
-    #unsubscribeForm .btn,
     #subscribeForm .btn {
         padding-right: 10px;
         box-shadow: none;
