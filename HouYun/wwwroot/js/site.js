@@ -92,15 +92,6 @@ function toggleNotification() {
     $("#notificationPopup").toggle();
 }
 
-/*document.addEventListener("click", function (event) {
-    if (!event.target.closest('.profileinfo')) {
-        var notificationPopups = document.querySelectorAll(".popup");
-        notificationPopups.forEach(function (popup) {
-            popup.style.display = "none";
-        });
-    }
-});*/
-
 function addToWatchLater(url, videoId) {
     $.post(url, { videoId: videoId })
         .fail(function (error) {

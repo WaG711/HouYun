@@ -1,37 +1,35 @@
-﻿function subscribe() {
+﻿async function subscribe() {
     var channelId = document.getElementById("channelId").value;
-    fetch("/Subscription/Subscribe?channelId=" + channelId, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
-        }
-    })
-        .then(() => {
-            document.getElementById("subscribeButton").innerText = "Отписаться";
-            document.getElementById("subscribeButton").setAttribute("onclick", "unsubscribe()");
-        })
-        .catch(error => {
-            console.error('Error subscribe:', error);
+    try {
+        await fetch("/Subscription/Subscribe?channelId=" + channelId, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
         });
+        document.getElementById("subscribeButton").innerText = "Отписаться";
+        document.getElementById("subscribeButton").setAttribute("onclick", "unsubscribe()");
+    } catch (error) {
+        console.error('Error subscribe:', error);
+    }
 }
 
-function unsubscribe() {
+async function unsubscribe() {
     var channelId = document.getElementById("channelId").value;
-    fetch("/Subscription/Unsubscribe?channelId=" + channelId, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
-        }
-    })
-        .then(() => {
-            document.getElementById("subscribeButton").innerText = "Подписаться";
-            document.getElementById("subscribeButton").setAttribute("onclick", "subscribe()");
-        })
-        .catch(error => {
-            console.error('Error subscribe:', error);
+    try {
+        await fetch("/Subscription/Unsubscribe?channelId=" + channelId, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
         });
+        document.getElementById("subscribeButton").innerText = "Подписаться";
+        document.getElementById("subscribeButton").setAttribute("onclick", "subscribe()");
+    } catch (error) {
+        console.error('Error unsubscribe:', error);
+    }
 }
 
 $(function () {

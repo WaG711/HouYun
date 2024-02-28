@@ -94,11 +94,6 @@ namespace HouYun
                 pattern: "{controller=Video}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-                name: "addComment",
-                pattern: "Comment/AddComment",
-                defaults: new { controller = "Comment", action = "AddComment" });
-
-            app.MapControllerRoute(
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });

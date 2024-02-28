@@ -1,83 +1,116 @@
-﻿function addView(videoId) {
-    var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+﻿async function addView(videoId) {
+    try {
+        var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
 
-    fetch(`/View/AddView/${videoId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'RequestVerificationToken': csrfToken
-        },
-        body: JSON.stringify({})
-    })
-}
+        const response = await fetch(`/View/AddView/${videoId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': csrfToken
+            },
+            body: JSON.stringify({})
+        });
 
-function AddToWatchHistory(videoId) {
-    var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
-
-    fetch(`/WatchHistory/AddToWatchHistory/${videoId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'RequestVerificationToken': csrfToken
-        },
-        body: JSON.stringify({})
-    })
-}
-
-function addLike() {
-    var videoId = document.getElementById("videoId").value;
-    fetch("/Like/AddLike?videoId=" + videoId, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+        if (!response.ok) {
+            throw new Error(`Ошибка при добавлении просмотра: ${response.status}`);
         }
-    })
-    .then(() => {
+
+    } catch (error) {
+        console.error('Ошибка при добавлении просмотра:', error);
+    }
+}
+
+async function AddToWatchHistory(videoId) {
+    try {
+        var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        const response = await fetch(`/WatchHistory/AddToWatchHistory/${videoId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': csrfToken
+            },
+            body: JSON.stringify({})
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при добавлении в историю просмотров: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Ошибка при добавлении в историю просмотров:', error);
+    }
+}
+
+async function addLike() {
+    try {
+        var videoId = document.getElementById("videoId").value;
+        const response = await fetch("/Like/AddLike?videoId=" + videoId, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при добавлении лайка: ${response.status}`);
+        }
+
         document.getElementById("likeButton").innerText = "Не нравится";
         document.getElementById("likeButton").setAttribute("onclick", "removeLike()");
-    })
-    .catch(error => {
-        console.error('Error adding like:', error);
-    });
+    } catch (error) {
+        console.error('Ошибка при добавлении лайка:', error);
+    }
 }
 
-function removeLike() {
-    var videoId = document.getElementById("videoId").value;
-    fetch("/Like/RemoveLike?videoId=" + videoId, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+async function removeLike() {
+    try {
+        var videoId = document.getElementById("videoId").value;
+        const response = await fetch("/Like/RemoveLike?videoId=" + videoId, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при удалении лайка: ${response.status}`);
         }
-    })
-    .then(() => {
+
         document.getElementById("likeButton").innerText = "Нравится";
         document.getElementById("likeButton").setAttribute("onclick", "addLike()");
-    })
-    .catch(error => {
-        console.error('Error removing like:', error);
-    });
+    } catch (error) {
+        console.error('Ошибка при удалении лайка:', error);
+    }
 }
 
-function addComment() {
-    var videoId = document.getElementById("videoId").value;
-    var commentText = document.getElementById("commentText").value;
+async function addComment() {
+    try {
+        var videoId = document.getElementById("videoId").value;
+        var commentText = document.getElementById("commentText").value;
 
-    var formData = new FormData();
-    formData.append("videoId", videoId);
-    formData.append("commentText", commentText);
+        var formData = new FormData();
+        formData.append("videoId", videoId);
+        formData.append("commentText", commentText);
 
-    fetch("/Comment/AddComment", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+        const response = await fetch("/Comment/AddComment", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "RequestVerificationToken": document.querySelector('input[name="__RequestVerificationToken"]').value
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при отправке комментария: ${response.status}`);
         }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+
+        location.reload();
+    } catch (error) {
+        console.error("Ошибка:", error);
+    }
 }
 
 function adjustTextareaHeight() {

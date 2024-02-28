@@ -28,8 +28,6 @@ namespace HouYun.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Subscribe(Guid channelId)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var existingSubscription = await _subscriptionRepository.GetSubscriptionByChannelAndUser(channelId, userId);
@@ -53,8 +51,6 @@ namespace HouYun.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Unsubscribe(Guid channelId)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userSubscriptions = await _subscriptionRepository.GetSubscriptionsByUserId(userId);
 
