@@ -11,7 +11,7 @@ namespace HouYun.Controllers
     [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
-        private const long MaxVideoSize = 100L * 1024 * 1024 * 1024;
+        private const long MaxVideoSize = 50L * 1024 * 1024 * 1024;
         private const long MaxPosterSize = 5 * 1024 * 1024;
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -49,6 +49,7 @@ namespace HouYun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(51L * 1024 * 1024 * 1024)]
         public async Task<IActionResult> Add(AddVideoViewModel model)
         {
             if (!ModelState.IsValid)

@@ -8,6 +8,8 @@ using Microsoft.Data.SqlClient;
 using HouYun.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Http.Features;
 
 
 namespace HouYun
@@ -66,6 +68,11 @@ namespace HouYun
                 options.Cookie.HttpOnly = true;
             });
 
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 51L * 1024 * 1024 * 1024;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -75,7 +82,7 @@ namespace HouYun
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-    
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

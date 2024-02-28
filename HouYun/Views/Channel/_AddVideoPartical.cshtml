@@ -53,6 +53,8 @@
 
             var formData = new FormData(this);
 
+            $('#uploadForm').find(':submit').prop('disabled', true);
+
             $.ajax({
                 url: '@Url.Action("Add", "Channel")',
                 type: 'POST',
@@ -67,6 +69,9 @@
                     } else {
                         $('#modal-bodyAdd').html(response);
                     }
+                },
+                complete: function () {
+                    $('#uploadForm').find(':submit').prop('disabled', false);
                 }
             });
         });
