@@ -62,6 +62,14 @@ body {
     background-color: #e0e0e0;
 }
 
+#notification-list {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    max-height: 172px;
+    overflow-y: auto;
+}
+
 .wrapper {
     padding-top: 70px;
     padding-right: 0;
@@ -280,8 +288,8 @@ button.zxc:active {
     display: none;
     position: absolute;
     background-color: #0B0922;
-    width: 310px;
-    height: 160px;
+    width: 350px;
+    height: 230px;
     border-radius: 15px;
     top: 48px;
     right: 140px;
@@ -296,7 +304,7 @@ button.zxc:active {
 }
 
 .separatorheader {
-    width: 280px;
+    width: 320px;
     height: 1px;
     background-color: #e0e0e0;
     margin: 0 auto;

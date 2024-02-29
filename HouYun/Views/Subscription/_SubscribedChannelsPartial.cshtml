@@ -3,16 +3,12 @@
 
 @if (Model.Any())
 {
-    <ul>
-        @foreach (var channel in Model)
-        {
-            <li>
-                <a href="@Url.Action("Index", "Channel", new { channelName = channel.Name })">
-                    @channel.Name
-                </a>
-            </li>
-        }
-    </ul>
+    @foreach (var channel in Model)
+    {
+        <a href="@Url.Action("Index", "Channel", new { channelName = channel.Name })">
+            @channel.Name
+        </a>
+    }
 }
 else
 {
