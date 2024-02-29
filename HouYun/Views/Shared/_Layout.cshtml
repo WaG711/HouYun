@@ -45,8 +45,7 @@
                     <div id="notificationPopup" class="popup">
                         <div class="popup-header">Уведомления</div>
                         <div class="separatorheader"></div>
-                        <div class="notification-list" id="notification-list">
-                        </div>
+                        <div class="notification-list" id="notification-list"></div>
                     </div>
                     <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@username</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
@@ -119,7 +118,7 @@
                 <li class="nav-item">
                     <div class="SubView custom-btn">Подписки</div>
                 </li>
-                @* @RenderSection("SubscribedUsers", required: false) *@
+                <div id="channels-list"></div>
 		    </ul>
         </div>
 
@@ -133,6 +132,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            channelList();
+        });
+    </script>
 
     <script>
         window.onload = function () {

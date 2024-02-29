@@ -103,6 +103,20 @@ function toggleNotification() {
     });
 }
 
+function channelList() {
+    var url = '/Subscription/SubscribedChannels';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (data) {
+            $("#channels-list").html(data);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
+    });
+}
+
 function addToWatchLater(url, videoId) {
     $.post(url, { videoId: videoId })
         .fail(function (error) {

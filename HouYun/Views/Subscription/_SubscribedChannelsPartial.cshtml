@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Channel>
+
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var channel in Model)
+        {
+            <li>
+                <a href="@Url.Action("Index", "Channel", new { channelName = channel.Name })">
+                    @channel.Name
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Пусто</p>
+}
