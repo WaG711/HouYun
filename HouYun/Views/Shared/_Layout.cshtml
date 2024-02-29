@@ -1,7 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-@* @model IEnumerable<Notification> *@
-@* @model IEnumerable<string> *@
 @using Microsoft.AspNetCore.Identity
 @using HouYun.IRepositories
 @using System.Security.Claims
@@ -47,8 +45,7 @@
                     <div id="notificationPopup" class="popup">
                         <div class="popup-header">Уведомления</div>
                         <div class="separatorheader"></div>
-                        <div class="notification-list">
-                            @* @RenderSection("NotificationsSection", false) *@
+                        <div class="notification-list" id="notification-list">
                         </div>
                     </div>
                     <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@username</button>

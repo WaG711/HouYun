@@ -89,7 +89,18 @@ document.addEventListener("click", function (event) {
 });
 
 function toggleNotification() {
-    $("#notificationPopup").toggle();
+    var url = '/Notifications/Index';
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (data) {
+            $("#notificationPopup").toggle();
+            $("#notification-list").html(data);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.error('Error:', errorThrown);
+        }
+    });
 }
 
 function addToWatchLater(url, videoId) {

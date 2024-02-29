@@ -26,7 +26,7 @@ namespace HouYun.Controllers.UserContoller
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            return PartialView("_ChangePasswordPartical");
+            return PartialView("_ChangePasswordPartial");
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace HouYun.Controllers.UserContoller
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_ChangePasswordPartical", model);
+                return PartialView("_ChangePasswordPartial", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -48,14 +48,14 @@ namespace HouYun.Controllers.UserContoller
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить пароль");
-                return PartialView("_ChangePasswordPartical", model);
+                return PartialView("_ChangePasswordPartial", model);
             }
         }
 
         [HttpGet]
         public IActionResult ChangeUsername()
         {
-            return PartialView("_ChangeUsernamePartical");
+            return PartialView("_ChangeUsernamePartial");
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace HouYun.Controllers.UserContoller
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_ChangeUsernamePartical", model);
+                return PartialView("_ChangeUsernamePartial", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -77,7 +77,7 @@ namespace HouYun.Controllers.UserContoller
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
-                return PartialView("_ChangeUsernamePartical", model);
+                return PartialView("_ChangeUsernamePartial", model);
             }
         }
     }

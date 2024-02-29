@@ -1,34 +1,15 @@
 ﻿@model IEnumerable<Notification>
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@* @section NotificationsSection {
-
-    @if (Model.Any())
-    {
-        <ul>
-            @foreach (var notification in Model)
-            {
-                <li>На канале @notification.Video.Channel.Name вышло новое видео с названием @notification.Video.Title</li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>Уведомления отсутствуют.</p>
-    }
-} *@
-
-
-
 @if (Model.Any())
 {
     <ul class="notification-list">
         @foreach (var notification in Model)
         {
-            <li>На канале @notification.Video.Channel.Name вышло новое видео с названием @notification.Video.Title</li>
+            <li>
+                <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })">
+                    На канале @notification.Video.Channel.Name вышло новое видео: @notification.Video.Title
+                </a>
+            </li>
         }
     </ul>
 }
