@@ -24,19 +24,7 @@ namespace HouYun.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
-            /*var existingSearch = await _searchHistoryRepository.GetSearchHistoryByChannelIdAndQuery(channelId, searchTerm);
-            if (existingSearch == null)
-            {
-                var searchHistory = new SearchHistory
-                {
-                    ChannelId = channelId,
-                    SearchQuery = searchTerm
-                };
-
-                await _searchHistoryRepository.AddSearchHistory(searchHistory);
-            }*/
-
-            var lastSearches = await _searchHistoryRepository.GetSearchHistoryByChannelId(channelId);
+            /*var lastSearches = await _searchHistoryRepository.GetSearchHistoryByChannelId(channelId);*/
 
             var searchResults = await _searchHistoryRepository.SearchVideosByTitle(searchTerm);
 
@@ -44,7 +32,6 @@ namespace HouYun.Controllers
             {
                 SearchTerm = searchTerm,
                 Videos = searchResults,
-                LastSearches = lastSearches
             };
 
             return View(viewModel);
