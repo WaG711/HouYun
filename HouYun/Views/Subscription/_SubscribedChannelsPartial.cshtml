@@ -5,12 +5,16 @@
 {
     @foreach (var channel in Model)
     {
-        <a href="@Url.Action("Index", "Channel", new { channelName = channel.Name })">
-            @channel.Name
-        </a>
+        <div class="channel-item">
+            <a href="@Url.Action("Index", "Channel", new { channelName = channel.Name })">
+                @channel.Name
+            </a>
+        </div>
     }
 }
 else
 {
-    <p>Пусто</p>
+    <div>Пусто</div>
 }
+
+<link rel="stylesheet" href="~/css/subscribedChannels.css" asp-append-version="true" />

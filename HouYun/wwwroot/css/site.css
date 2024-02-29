@@ -103,6 +103,11 @@ body {
                 background-color: #ddd;
             }
 
+#channels-list {
+    margin-left: 8px;
+    width: 225px;
+}
+
 .content {
     margin-left: 270px;
     padding-left: 15px;
