@@ -7,6 +7,8 @@
         <tr>
             <th>Id</th>
             <th>Никнейм</th>
+            <th>Id канала</th>
+            <th>Имя канала</th>
             <th>Действие</th>
         </tr>
     </thead>
@@ -15,7 +17,9 @@
         {
             <tr>
                 <td id="Id">@user.Id</td>
-                <td id="Words">@user.UserName</td>
+                <td id="Username">@user.UserName</td>
+                <td id ="Id">@user.Channel.ChannelId</td>
+                <td id="ChannelName">@user.Channel.Name</td>
                 <td>
                     <form asp-action="RemoveUser" asp-route-id="@user.Id" method="post">
                         @Html.AntiForgeryToken()

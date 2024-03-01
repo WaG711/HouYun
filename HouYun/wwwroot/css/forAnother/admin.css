@@ -10,6 +10,14 @@
     width: 900px;
 }
 
+#Username {
+    width: 350px;
+}
+
+#ChannelName {
+    width: 350px;
+}
+
 a {
     color: inherit;
     text-decoration: none;

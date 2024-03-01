@@ -25,7 +25,9 @@ namespace HouYun.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _userManager.Users.ToListAsync();
+            return await _userManager.Users
+                .Include(u => u.Channel)
+                .ToListAsync();
         }
 
         public async Task DeleteUser(string id)
