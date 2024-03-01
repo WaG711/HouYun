@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Identity
 @using HouYun.IRepositories
 @using System.Security.Claims
-@inject SignInManager<User> _signInManager;
 @inject IUserRepository UserRepository
 @{
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
