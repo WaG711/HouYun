@@ -1,5 +1,5 @@
-﻿#ChangeUserName input[type="text"],
-#ChangeUserName input[type="password"] {
+﻿#ChangeUserNameForm input[type="text"],
+#ChangeUserNameForm input[type="password"] {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -12,18 +12,18 @@
     border: 2px solid transparent;
 }
 
-    #ChangeUserName input[type="text"]::placeholder,
-    #ChangeUserName input[type="password"]::placeholder {
+    #ChangeUserNameForm input[type="text"]::placeholder,
+    #ChangeUserNameForm input[type="password"]::placeholder {
         padding-left: 5px;
     }
 
-    #ChangeUserName input[type="text"]:focus,
-    #ChangeUserName input[type="password"]:focus {
+    #ChangeUserNameForm input[type="text"]:focus,
+    #ChangeUserNameForm input[type="password"]:focus {
         border-color: #707070;
         border-width: 2px;
     }
 
-#ChangeUserName .sunbit-but input[type="submit"] {
+#ChangeUserNameForm .sunbit-but input[type="submit"] {
     width: 180px;
     height: 45px;
     background-color: #1F1B3C;
@@ -35,6 +35,6 @@
     font-weight: normal;
 }
 
-    #ChangeUserName .sunbit-but input[type="submit"]:hover {
+    #ChangeUserNameForm .sunbit-but input[type="submit"]:hover {
         background-color: #2B2751;
     }
