@@ -71,18 +71,20 @@ body {
 }
 
 .wrapper {
-    padding-top: 70px;
+    padding-top: 60px;
     padding-right: 0;
     padding-left: 0;
     display: flex;
 }
 
 .sidebar {
+    background-color: #0F1020;
     position: fixed;
-    left: 35px;
+    padding-left: 30px;
     height: 100%;
-    width: 250px;
+    width: 280px;
     font-size: 16px;
+    z-index: 999;
 }
 
     .sidebar ul li {

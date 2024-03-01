@@ -6,11 +6,17 @@
     var cards = document.querySelectorAll('.card');
     var imgs = document.querySelectorAll('.card-img-top');
 
+    var video = document.querySelector('.main-video');
+
     var isOpen = sidebar.classList.contains('hidden');
 
     if (isOpen) {
         sidebar.classList.remove('hidden');
-        container.style.marginLeft = '270px';
+
+        if (!video) {
+            container.style.marginLeft = '270px';
+        }
+
         localStorage.setItem('sidebarHidden', 'false');
 
         columns.forEach(function (column) {
