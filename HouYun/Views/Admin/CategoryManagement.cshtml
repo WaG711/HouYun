@@ -2,7 +2,7 @@
 
 <h2>Категории</h2>
 <p>
-    <a href="@Url.Action("Add", "Category")">Добавить категорию</a>
+    <a href="@Url.Action("AddCategory", "Admin")">Добавить категорию</a>
 </p>
 
 <table class="table">
@@ -20,7 +20,7 @@
                 <td id="Id">@category.CategoryId</td>
                 <td id="Words">@category.Name</td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@category.CategoryId" method="post">
+                    <form asp-action="RemoveCategory" asp-route-id="@category.CategoryId" method="post">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger">Удалить категорию</button>
                     </form>

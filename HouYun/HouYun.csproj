@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Category\Add.cshtml" />
-    <None Include="Views\Category\Index.cshtml" />
+    <None Include="Views\Admin\AddCategory.cshtml" />
+    <None Include="Views\Admin\CategoryManagement.cshtml" />
     <None Include="Views\Channel\Index.cshtml" />
     <None Include="Views\Login\Index.cshtml" />
     <None Include="Views\Registration\Index.cshtml" />
