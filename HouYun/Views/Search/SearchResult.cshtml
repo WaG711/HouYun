@@ -1,7 +1,5 @@
 ﻿@model HouYun.ViewModels.forVideo.SearchViewModel
 
-<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
-
 @if (Model.Videos.Any()){
     <h3>Результаты поиска по запросу "@Model.SearchTerm"</h3>
     <div class="row">
@@ -43,3 +41,5 @@ else
 {
     <h3>По вашему запросу "@Model.SearchTerm" ничего не найдено.</h3>
 }
+
+<link rel="stylesheet" href="~/css/forVideo/indexVideos.css" asp-append-version="true" />
