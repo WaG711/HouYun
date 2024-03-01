@@ -28,7 +28,7 @@ namespace HouYun.Controllers
             await Update(notifications);
 
 
-            return View(notifications);
+            return PartialView("_NotificationsPartial", notifications);
         }
 
         private async Task<ActionResult> Update(IEnumerable<Notification> notifications)

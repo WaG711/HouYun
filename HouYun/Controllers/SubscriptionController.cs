@@ -19,9 +19,17 @@ namespace HouYun.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedVideos(userId);
+            var subscribedVideos = await _subscriptionRepository.GetUserSubscribedVideos(userId);
 
-            return View(subscribedChannels);
+            return View(subscribedVideos);
+        }
+
+        public async Task<IActionResult> SubscribedChannels()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
+
+            return PartialView("_SubscribedChannelsPartial", subscribedChannels);
         }
 
         [HttpPost]
@@ -63,13 +71,6 @@ namespace HouYun.Controllers
             await _subscriptionRepository.DeleteSubscription(subscriptionToUnsubscribe.SubscriptionId);
 
             return Ok();
-        }
-
-        public async Task<IActionResult> SubscribedChannels(string userId)
-        {
-            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
-            var userNicknames = subscribedChannels.Select(channel => channel.Name);
-            return View(userNicknames);
         }
     }
 }

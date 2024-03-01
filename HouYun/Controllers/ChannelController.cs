@@ -44,7 +44,7 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories(),
             };
 
-            return PartialView("_AddVideoPartical", model);
+            return PartialView("_AddVideoPartial", model);
         }
 
         [HttpPost]
@@ -55,13 +55,13 @@ namespace HouYun.Controllers
             if (!ModelState.IsValid)
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return PartialView("_AddVideoPartical", model);
+                return PartialView("_AddVideoPartial", model);
             }
 
             if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return PartialView("_AddVideoPartical", model);
+                return PartialView("_AddVideoPartial", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -86,7 +86,7 @@ namespace HouYun.Controllers
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
             var videos = await _videoRepository.GetVideosByChannelId(channelId);
-            return PartialView("_DeleteVideoPartical", videos);
+            return PartialView("_DeleteVideoPartial", videos);
         }
 
         [HttpPost]
@@ -109,7 +109,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return PartialView("_ChannelUpdatePartical", model);
+            return PartialView("_ChannelUpdatePartial", model);
         }
 
         [HttpPost]
@@ -134,7 +134,7 @@ namespace HouYun.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return PartialView("_ChannelUpdatePartical", model);
+                return PartialView("_ChannelUpdatePartial", model);
             }
         }
 

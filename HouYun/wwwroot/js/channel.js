@@ -10,6 +10,7 @@
         });
         document.getElementById("subscribeButton").innerText = "Отписаться";
         document.getElementById("subscribeButton").setAttribute("onclick", "unsubscribe()");
+        channelList();
     } catch (error) {
         console.error('Error subscribe:', error);
     }
@@ -27,6 +28,7 @@ async function unsubscribe() {
         });
         document.getElementById("subscribeButton").innerText = "Подписаться";
         document.getElementById("subscribeButton").setAttribute("onclick", "subscribe()");
+        channelList();
     } catch (error) {
         console.error('Error unsubscribe:', error);
     }
