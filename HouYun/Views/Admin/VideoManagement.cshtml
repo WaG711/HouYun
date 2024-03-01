@@ -5,8 +5,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
+            <th>Id видео</th>
             <th>Название</th>
+            <th>Id канала</th>
+            <th>Имя канала</th>
             <th>Действие</th>
         </tr>
     </thead>
@@ -16,6 +18,8 @@
             <tr>
                 <td id="Id">@video.VideoId</td>
                 <td id="Words">@video.Title</td>
+                <td id="Id">@video.Channel.ChannelId</td>
+                <td id="ChannelName">@video.Channel.Name</td>
                 <td>
                     <form asp-action="RemoveVideo" asp-route-id="@video.VideoId" method="post">
                         @Html.AntiForgeryToken()
