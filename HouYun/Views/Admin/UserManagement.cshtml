@@ -17,7 +17,7 @@
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                    <form asp-action="RemoveUser" asp-route-id="@user.Id" method="post">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger">Удалить пользователя</button>
                     </form>

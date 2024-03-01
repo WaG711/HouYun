@@ -3,21 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using HouYun.IRepositories;
 using HouYun.Models;
 using HouYun.ViewModels.forUser;
+using HouYun.Data;
 
 
 namespace HouYun.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -28,8 +31,10 @@ namespace HouYun.Repositories
         public async Task DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+
             if (user != null)
             {
+                await DeleteChannel(user.Id);
                 await _userManager.DeleteAsync(user);
             }
         }
@@ -108,6 +113,12 @@ namespace HouYun.Repositories
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<string> GetUsernameById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return user.UserName;
+        }
+
         private async Task ManageRoles(User user)
         {
             if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
@@ -119,10 +130,14 @@ namespace HouYun.Repositories
             var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";
             await _userManager.AddToRoleAsync(user, role);
         }
-        public async Task<string> GetUsernameById(string userId)
+
+        private async Task DeleteChannel(string id)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            return user?.UserName;
+            var channel = await _context.Channels.FirstOrDefaultAsync(c => c.UserId == id);
+            if (channel != null)
+            {
+                _context.Channels.Remove(channel);
+            }
         }
     }
 }

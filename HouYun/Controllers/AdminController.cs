@@ -34,7 +34,7 @@ namespace HouYun.Controllers
         public async Task<IActionResult> RemoveUser(string id)
         {
             await _userRepository.DeleteUser(id);
-            return View("UserManagement");
+            return RedirectToAction("UserManagement");
         }
 
         public async Task<IActionResult> VideoManagement()
@@ -49,7 +49,7 @@ namespace HouYun.Controllers
         public async Task<IActionResult> RemoveVideo(Guid id)
         {
             await _videoRepository.DeleteVideo(id);
-            return View("VideoManagement");
+            return RedirectToAction("VideoManagement");
         }
     }
 }
