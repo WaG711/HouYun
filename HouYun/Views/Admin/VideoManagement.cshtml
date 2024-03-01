@@ -14,8 +14,8 @@
         @foreach (var video in Model)
         {
             <tr>
-                <td>@video.VideoId</td>
-                <td>@video.Title</td>
+                <td id="Id">@video.VideoId</td>
+                <td id="Words">@video.Title</td>
                 <td>
                     <form asp-action="RemoveVideo" asp-route-id="@video.VideoId" method="post">
                         @Html.AntiForgeryToken()

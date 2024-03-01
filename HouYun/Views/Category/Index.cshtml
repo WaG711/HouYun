@@ -17,8 +17,8 @@
         @foreach (var category in Model)
         {
             <tr>
-                <td>@category.CategoryId</td>
-                <td>@category.Name</td>
+                <td id="Id">@category.CategoryId</td>
+                <td id="Words">@category.Name</td>
                 <td>
                     <form asp-action="Delete" asp-route-id="@category.CategoryId" method="post">
                         @Html.AntiForgeryToken()

@@ -14,8 +14,8 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
+                <td id="Id">@user.Id</td>
+                <td id="Words">@user.UserName</td>
                 <td>
                     <form asp-action="RemoveUser" asp-route-id="@user.Id" method="post">
                         @Html.AntiForgeryToken()

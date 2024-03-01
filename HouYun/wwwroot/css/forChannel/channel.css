@@ -30,10 +30,10 @@
     color: inherit;
 }
 
-.table td {
-    border: none;
-    text-align: left;
-}
+    .table td {
+        border: none;
+        text-align: left;
+    }
 
 #posterDelete {
     width: 310px;
@@ -51,7 +51,6 @@
     width: 640px;
     height: 180px;
     overflow-wrap: break-word;
-    text-align: left;
     margin: 0;
     padding: 0
 }
