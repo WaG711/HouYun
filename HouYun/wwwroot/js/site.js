@@ -125,13 +125,13 @@ function addToWatchLater(url, videoId) {
 }
 
 $(function () {
-    $(document).on('click', '#btnclickChangeUsername', function (e) {
+    $(document).on('click', '#btnclickChangeUserName', function (e) {
         e.preventDefault();
 
         var url = $(this).attr('href');
         $.get(url, function (data) {
-            $("#modal-bodyChangeUsername").html(data);
-            $("#ChangeUsername").modal('show');
+            $("#modal-bodyChangeUserName").html(data);
+            $("#ChangeUserName").modal('show');
         });
     });
 

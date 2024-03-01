@@ -34,7 +34,7 @@ namespace HouYun.Repositories
             }
         }
 
-        public async Task<bool> ChangeUsername(string userId, string newUsername, string oldPassword)
+        public async Task<bool> ChangeUserName(string userId, string newUserName, string oldPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -44,13 +44,13 @@ namespace HouYun.Repositories
                 return false;
             }
 
-            var existingUser = await _userManager.FindByNameAsync(newUsername);
+            var existingUser = await _userManager.FindByNameAsync(newUserName);
             if (existingUser != null && existingUser.Id != userId)
             {
                 return false;
             }
 
-            await _userManager.SetUserNameAsync(user, newUsername);
+            await _userManager.SetUserNameAsync(user, newUserName);
 
             return true;
         }

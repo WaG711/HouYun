@@ -2,11 +2,11 @@
 
 namespace HouYun.ViewModels.forUser
 {
-    public class ChangeUsenameViewModel
+    public class ChangeUserNameViewModel
     {
         [Required]
         [StringLength(15, MinimumLength = 4)]
-        public string NewUsername { get; set; }
+        public string NewUserName { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

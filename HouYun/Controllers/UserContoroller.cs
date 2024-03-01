@@ -53,22 +53,22 @@ namespace HouYun.Controllers.UserContoller
         }
 
         [HttpGet]
-        public IActionResult ChangeUsername()
+        public IActionResult ChangeUserName()
         {
-            return PartialView("_ChangeUsernamePartial");
+            return PartialView("_ChangeUserNamePartial");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeUsername(ChangeUsenameViewModel model)
+        public async Task<IActionResult> ChangeUserName(ChangeUserNameViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_ChangeUsernamePartial", model);
+                return PartialView("_ChangeUserNamePartial", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _userRepository.ChangeUsername(userId, model.NewUsername, model.Password);
+            var result = await _userRepository.ChangeUserName(userId, model.NewUserName, model.Password);
 
             if (result)
             {
@@ -77,7 +77,7 @@ namespace HouYun.Controllers.UserContoller
             else
             {
                 ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
-                return PartialView("_ChangeUsernamePartial", model);
+                return PartialView("_ChangeUserNamePartial", model);
             }
         }
     }

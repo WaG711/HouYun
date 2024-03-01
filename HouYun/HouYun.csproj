@@ -41,7 +41,7 @@
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\User\_ChangePasswordPartial.cshtml" />
-    <None Include="Views\User\_ChangeUsernamePartial.cshtml" />
+    <None Include="Views\User\_ChangeUserNamePartial.cshtml" />
     <None Include="Views\Video\Details.cshtml" />
     <None Include="Views\Video\Index.cshtml" />
     <None Include="Views\WatchHistory\Index.cshtml" />

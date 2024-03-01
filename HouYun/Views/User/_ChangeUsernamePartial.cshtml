@@ -1,44 +1,44 @@
-﻿@model HouYun.ViewModels.forUser.ChangeUsenameViewModel
+﻿@model HouYun.ViewModels.forUser.ChangeUserNameViewModel
 
-<form id="ChangeUsernameForm" method="post" asp-controller="User" asp-action="ChangeUsername">
+<form id="ChangeUserNameForm" method="post" asp-controller="User" asp-action="ChangeUserName">
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
-        <input asp-for="NewUsername" id="ChangeUsername" placeholder="Новый ник" autocomplete="off">
+        <input asp-for="NewUserName" id="ChangeUserName" placeholder="Новый ник" autocomplete="off">
     </div>
 
     <div>
-        <input asp-for="Password" id="ChangeUsername" placeholder="Пароль" autocomplete="off">
+        <input asp-for="Password" id="ChangeUserName" placeholder="Пароль" autocomplete="off">
     </div>
 
     <div class="sunbit-but">
-        <input type="submit" id="ChangeUsername" value="Изменить имя" />
+        <input type="submit" id="ChangeUserName" value="Изменить имя" />
     </div>
 
 </form>
 
-<link rel="stylesheet" href="~/css/forUser/changeUsername.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/forUser/changeUserName.css" asp-append-version="true" />
 
 <script>
     $(document).ready(function () {
-        $('#ChangeUsernameForm').submit(function (event) {
+        $('#ChangeUserNameForm').submit(function (event) {
             event.preventDefault();
 
             var formData = new FormData($(this)[0]);
 
             $.ajax({
-                url: '@Url.Action("ChangeUsername", "User")',
+                url: '@Url.Action("ChangeUserName", "User")',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function (response) {
                     if (response.success) {
-                        $('#ChangeUsername').modal('hide');
-                        $('#ChangeUsernameForm')[0].reset();
+                        $('#ChangeUserName').modal('hide');
+                        $('#ChangeUserNameForm')[0].reset();
                         location.reload();
                     } else {
-                        $('#modal-bodyChangeUsername').html(response);
+                        $('#modal-bodyChangeUserName').html(response);
                     }
                 },
                 error: function (xhr, status, error) {
