@@ -55,6 +55,7 @@ namespace HouYun.Repositories
                 .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .Where(v => v.ChannelId == channelId)
+                .OrderByDescending(v => v.UploadDate)
                 .ToListAsync();
         }
 

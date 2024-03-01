@@ -19,7 +19,7 @@ namespace HouYun.Repositories
         {
             return await _context.Channels
                 .Include(v => v.Subscribers)
-                .Include(v => v.Videos)
+                .Include(v => v.Videos.OrderByDescending(v => v.UploadDate))
                     .ThenInclude(v => v.Views)
                 .FirstOrDefaultAsync(c => c.Name == channelName);
         }
