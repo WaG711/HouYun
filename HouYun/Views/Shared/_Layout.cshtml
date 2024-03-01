@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Identity
 @using HouYun.IRepositories
 @using System.Security.Claims
-@inject SignInManager<User> _signInManager;
 @inject IUserRepository UserRepository
 @{
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -68,7 +67,7 @@
                         @if (User.IsInRole("Admin")){
                             <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
                         }
-                        <a class="dropdown-item" href="@Url.Action("Logout", "User")">Выйти</a>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "User")" onclick="logout()">Выйти</a>
                     </div>
                 </div>
             </div>
@@ -151,6 +150,10 @@
             var searchTerm = document.getElementById('searchTerm').value;
             localStorage.setItem('searchTerm', searchTerm);
         });
+
+        function logout() {
+            localStorage.removeItem('searchTerm');
+        }
     </script>
 
     <script>
