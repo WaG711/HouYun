@@ -67,21 +67,21 @@ input[type="password"] {
     height: 45px;
     outline: none;
     border: 2px solid transparent;
-    margin: 15 auto;
+    margin: 15px auto;
     display: block;
 }
 
     input[type="text"]:focus,
-    input[type="password"]:focus, {
+    input[type="password"]:focus {
         border-color: #707070;
         border-width: 2px;
     }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px #282940 inset !important;
-    -webkit-text-fill-color: #e0e0e0 !important;
-    border: none !important;
-    outline: none !important;
+    -webkit-box-shadow: 0 0 0 30px #282940 inset;
+    -webkit-text-fill-color: #e0e0e0;
+    border: none;
+    outline: none;
 }
 
 input[type="text"]::placeholder,
