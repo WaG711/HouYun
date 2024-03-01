@@ -1,9 +1,6 @@
-﻿@model IEnumerable<Category>
+﻿@model IEnumerable<Video>
 
-<h2>Категории</h2>
-<p>
-    <a href="@Url.Action("Add", "Category")">Добавить категорию</a>
-</p>
+<h2>Видео</h2>
 
 <table class="table">
     <thead>
@@ -14,15 +11,15 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in Model)
+        @foreach (var video in Model)
         {
             <tr>
-                <td>@category.CategoryId</td>
-                <td>@category.Name</td>
+                <td>@video.VideoId</td>
+                <td>@video.Title</td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@category.CategoryId" method="post">
+                    <form asp-action="RemoveVideo" asp-route-id="@video.VideoId" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Удалить видео</button>
                     </form>
                 </td>
             </tr>

@@ -29,6 +29,7 @@ namespace HouYun.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(Category category)
         {
             await _categoryRepository.AddCategory(category);
@@ -36,6 +37,7 @@ namespace HouYun.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _categoryRepository.DeleteCategory(id);
