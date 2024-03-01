@@ -18,7 +18,7 @@ body {
     background-color: #0F1020;
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
-    transition: none !important;
+    transition: none;
     overflow-y: scroll;
 }
 
@@ -136,15 +136,14 @@ body {
     padding: 7px;
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
-    transition: none !important;
+    transition: none;
 }
 
     .custom-btn:focus,
     .custom-btn:active {
-        outline: none !important;
-        box-shadow: none !important;
-        border: none !important;
-        animation: none !important;
+        outline: none;
+        box-shadow: none;
+        animation: none;
     }
 
 .separator {
@@ -180,7 +179,7 @@ body {
 
 #toggleSidebarButton:focus,
 .burger-line:focus {
-    outline: none !important;
+    outline: none;
     border: none;
 }
 
@@ -245,9 +244,9 @@ body {
 
 button.zxc:focus,
 button.zxc:active {
-    outline: none !important;
-    box-shadow: none !important;
-    border: none !important;
+    outline: none;
+    box-shadow: none;
+    border: none;
 }
 
 .dropdown-menu {
@@ -370,15 +369,15 @@ button.zxc:active {
 
     #searchTerm:-webkit-autofill,
     #searchTerm:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0px 1000px #0F1020 inset !important;
-        -webkit-text-fill-color: #e0e0e0 !important;
-        border-color: #707070 !important;
+        -webkit-box-shadow: 0 0 0px 1000px #0F1020 inset;
+        -webkit-text-fill-color: #e0e0e0;
+        border-color: #707070;
     }
 
     #searchTerm:focus,
     #searchTerm:active {
-        outline: none !important;
-        box-shadow: none !important;
+        outline: none;
+        box-shadow: none;
         border: 1px solid #707070;
     }
 
