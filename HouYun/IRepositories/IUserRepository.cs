@@ -10,7 +10,7 @@ namespace HouYun.IRepositories
         Task<bool> ChangeUserName(string userId, string newUsername, string Password);
         Task<bool> ChangeUserPassword(string userId, string OldPassword, string NewPassword);
         Task<bool> LoginUser(string userName, string password, bool rememberMe);
-        Task<bool> RegistrationUser(RegisterViewModel model);
+        Task<bool> RegistrationUser(RegistrationViewModel model);
         Task Logout();
         Task<string> GetUsernameById(string userId);
     }

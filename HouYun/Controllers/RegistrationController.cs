@@ -21,7 +21,7 @@ namespace HouYun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(RegisterViewModel model)
+        public async Task<IActionResult> Index(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {

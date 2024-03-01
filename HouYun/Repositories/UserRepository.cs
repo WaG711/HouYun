@@ -70,7 +70,7 @@ namespace HouYun.Repositories
             return result.Succeeded;
         }
 
-        public async Task<bool> RegistrationUser(RegisterViewModel model)
+        public async Task<bool> RegistrationUser(RegistrationViewModel model)
         {
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
