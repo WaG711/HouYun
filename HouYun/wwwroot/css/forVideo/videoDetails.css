@@ -76,6 +76,11 @@
         border-radius: 10px;
     }
 
+    .video-js .vjs-poster img {
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
 h2 {
     width: 1420px;
     word-wrap: break-word;
