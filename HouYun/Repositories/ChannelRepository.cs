@@ -3,6 +3,7 @@ using HouYun.IRepositories;
 using HouYun.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace HouYun.Repositories
 {
@@ -15,28 +16,20 @@ namespace HouYun.Repositories
             _context = context;
         }
 
-        public async Task<Channel> GetChannelByName(string channelName)
-        {
-            return await _context.Channels
-                .Include(v => v.Subscribers)
-                .Include(v => v.Videos.OrderByDescending(v => v.UploadDate))
-                    .ThenInclude(v => v.Views)
-                .FirstOrDefaultAsync(c => c.Name == channelName);
-        }
-
         public async Task<Guid> GetChannelIdByUserId(string userId)
         {
             var channel = await _context.Channels.FirstOrDefaultAsync(c => c.UserId == userId);
             return channel.ChannelId;
         }
 
+        public async Task<Channel> GetChannelByName(string channelName)
+        {
+            return await GetChannelInfo(c => c.Name == channelName);
+        }
+
         public async Task<Channel> GetChannelByUserId(string userId)
         {
-            return await _context.Channels
-                .Include(v => v.Videos)
-                    .ThenInclude(v => v.Views)
-                .Include(v => v.Subscribers)
-                .FirstOrDefaultAsync(c => c.UserId == userId);
+            return await GetChannelInfo(c => c.UserId == userId);
         }
 
         public async Task<IEnumerable<Channel>> GetAllChannels()
@@ -60,7 +53,6 @@ namespace HouYun.Repositories
             }
         }
 
-
         public async Task DeleteChannel(Guid id)
         {
             var channel = await _context.Channels.FindAsync(id);
@@ -70,6 +62,15 @@ namespace HouYun.Repositories
                 _context.Channels.Remove(channel);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        private async Task<Channel> GetChannelInfo(Expression<Func<Channel, bool>> expression)
+        {
+            return await _context.Channels
+                .Include(v => v.Videos.OrderByDescending(v => v.UploadDate))
+                    .ThenInclude(v => v.Views)
+                .Include(v => v.Subscribers)
+                .FirstOrDefaultAsync(expression);
         }
     }
 }
