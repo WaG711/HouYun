@@ -1,4 +1,8 @@
-﻿function toggleSidebar() {
+﻿document.addEventListener('DOMContentLoaded', async function () {
+    await channelList();
+});
+
+function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
 
@@ -94,40 +98,39 @@ document.addEventListener("click", function (event) {
     }
 });
 
-function toggleNotification() {
-    var url = '/Notifications/Index';
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (data) {
-            $("#notificationPopup").toggle();
-            $("#notification-list").html(data);
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            console.error('Error:', errorThrown);
+async function toggleNotification() {
+    try {
+        const response = await fetch('/Notifications/Index');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    });
+        const data = await response.text();
+        $("#notificationPopup").toggle();
+        $("#notification-list").html(data);
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
 }
 
-function channelList() {
-    var url = '/Subscription/SubscribedChannels';
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (data) {
-            $("#channels-list").html(data);
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            console.error('Error:', errorThrown);
+async function channelList() {
+    try {
+        const response = await fetch('/Subscription/SubscribedChannels');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-    });
+        const data = await response.text();
+        document.getElementById("channels-list").innerHTML = data;
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
 }
 
-function addToWatchLater(url, videoId) {
-    $.post(url, { videoId: videoId })
-        .fail(function (error) {
-            console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
-        });
+async function addToWatchLater(url, videoId) {
+    try {
+        await $.post(url, { videoId: videoId });
+    } catch (error) {
+        console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
+    }
 }
 
 $(function () {
@@ -156,3 +159,22 @@ $(function () {
         $(modalToHide).modal('hide');
     });
 });
+
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+    var searchTerm = document.getElementById('searchTerm').value;
+    localStorage.setItem('searchTerm', searchTerm);
+    if (!searchTerm.trim()) {
+        event.preventDefault();
+    }
+});
+
+window.onload = function () {
+    var searchTerm = localStorage.getItem('searchTerm');
+    if (searchTerm) {
+        document.getElementById('searchTerm').value = searchTerm;
+    }
+};
+
+function logout() {
+    localStorage.removeItem('searchTerm');
+}
