@@ -16,7 +16,7 @@ namespace HouYun.Repositories
 
         public async Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId)
         {
-            var videos = await _context.WatchLaterItems
+            return await _context.WatchLaterItems
                 .Where(item => item.ChannelId == channelId)
                 .Include(item => item.Video.Channel)
                 .Include(item => item.Video.Views)
@@ -24,8 +24,6 @@ namespace HouYun.Repositories
                     .ThenInclude(v => v.Channel)
                 .Select(item => item.Video)
                 .ToListAsync();
-
-            return videos;
         }
 
         public async Task AddWatchLaterItem(WatchLater watchLaterItem)

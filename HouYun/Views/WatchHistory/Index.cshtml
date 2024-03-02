@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WatchHistory>
+﻿@model IEnumerable<Video>
 
 @{
     ViewData["Title"] = "История просмотров";
@@ -14,33 +14,33 @@
         </form>
     </p>
     <div class="row">
-        @foreach (var wH in Model)
+        @foreach (var video in Model)
         {
             <div class="my-custom-col">
                 <div class="card video-card">
-                    <a href="@Url.Action("Details", "Video", new { videoId = wH.Video.VideoId })">
-                        <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + wH.Video.PosterPath)" alt="Video Poster">
+                    <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                        <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
                     </a>
                     <div class="card-body">
                         <h3 class="card-title">
-                            <a href="@Url.Action("Details", "Video", new { videoId = wH.VideoId })">@wH.Video.Title</a>
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
                             <div class="dropdown-container">
                                 <div class="dropdown">
                                     <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
                                         ...
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@wH.Video.VideoId');
+                                        <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
                                         toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
                                     </div>
                                 </div>
                             </div>
                         </h3>
                         <p class="card-channel">
-                            <a href="@Url.RouteUrl("channel", new { channelName = wH.Video.Channel.Name })">@wH.Video.Channel.Name</a>
+                            <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                         </p>
                         <p class="card-text">
-                            <a href="@Url.Action("Details", "Video", new { videoId = wH.Video.VideoId })">@Helper.FormatViews(wH.Video.Views.Count) || @Helper.TimeAgo(wH.Video.UploadDate)</a>
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
                         </p>
                     </div>
                 </div>
