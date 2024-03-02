@@ -4,10 +4,9 @@
     ViewData["Title"] = "История просмотров";
 }
 
-<h1 id="Title">История просмотров</h1>
-
 @if (Model.Any())
 {
+    <h1 id="Title">История просмотров</h1>
     <p>
         <form method="post" asp-action="DeleteAllWatchHistory" asp-controller="WatchHistory" class="mt-3">
             @Html.AntiForgeryToken()
@@ -51,7 +50,7 @@
 }
 else
 {
-    <p>Список историй пуст.</p>
+    <h1 id="Title">У вас нет истории просмотров</h1>
 }
 
 <link rel="stylesheet" href="~/css/forVideo/indexVideos.css" asp-append-version="true" />
