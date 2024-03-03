@@ -80,5 +80,15 @@ namespace HouYun.Controllers.UserContoller
                 return PartialView("_ChangeUserNamePartial", model);
             }
         }
+
+        [HttpGet("/api/user/username")]
+        public async Task<IActionResult> GetUsername()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var username = await _userRepository.GetUsernameById(userId);
+
+            return Ok(username);
+        }
     }
 }
