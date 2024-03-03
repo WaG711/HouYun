@@ -7,16 +7,13 @@
 - Страница с информацией о канале  
 ![Screenshot 2024-03-03 104615](https://github.com/WaG711/HouYun/assets/137266836/bbb3cd97-932c-4d53-bcc8-647fd23efe06)
 - На странице вашего канала есть функционал загрузки/удаления видео и обновления данных о канале. Данные о канале не связанны с информацией об аккаунте и редактируются отдельно  
-![Screenshot 2024-03-03 111003](https://github.com/WaG711/HouYun/assets/137266836/7a2735b4-ce7b-4257-906f-74857ead5dfc)  
-![Screenshot 2024-03-03 111016](https://github.com/WaG711/HouYun/assets/137266836/803530f8-e8bc-4a50-a7dc-62e79536ec68)  
-![Screenshot 2024-03-03 113531](https://github.com/WaG711/HouYun/assets/137266836/7ec25764-23af-46c6-9514-724f43acb75e)  
+![Screenshot 2024-03-03 122348](https://github.com/WaG711/HouYun/assets/137266836/aa93cb79-39b1-4941-a4b9-2b4989059e8a)
 - Вклдака с видео только подписанных каналах, плейлист "Смотреть позже" и "История просмотров"  
 ![Screenshot 2024-03-03 105457](https://github.com/WaG711/HouYun/assets/137266836/3a1234ec-8f24-4484-9de3-cd282aba9d05)
  - Заходим на просмотр видео  
 ![Screenshot 2024-03-03 110657](https://github.com/WaG711/HouYun/assets/137266836/b84a0b49-a703-4771-9375-fc27c076caac)
 - Реализована возможность смены имени и пароля от аккаунта  
-![Screenshot 2024-03-03 110935](https://github.com/WaG711/HouYun/assets/137266836/800bf0fa-2535-4628-918d-d70ddb1cb5b3)  
-![Screenshot 2024-03-03 113509](https://github.com/WaG711/HouYun/assets/137266836/82d93cd5-17f7-4c7e-94a8-822f7f9e40c6)  
+![Screenshot 2024-03-03 122015](https://github.com/WaG711/HouYun/assets/137266836/83a3642d-68c9-412c-915d-c53db7b29baa)
 - У пользователя есть просмотр уведомлений о загрузке новых видео на подписанные каналы, нажатием на уведомление можно перейти на просмотр видео  
 ![Screenshot 2024-03-03 111144](https://github.com/WaG711/HouYun/assets/137266836/15749bde-7ab3-4db3-8e75-5b9776c8d5be)
 - Так же реализована админ панель для пользователей с таким статусом  
