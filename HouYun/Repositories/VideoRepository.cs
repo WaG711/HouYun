@@ -55,6 +55,7 @@ namespace HouYun.Repositories
                 .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .Where(v => v.ChannelId == channelId)
+                .OrderByDescending(v => v.UploadDate)
                 .ToListAsync();
         }
 
@@ -64,7 +65,7 @@ namespace HouYun.Repositories
                 .Include(v => v.Category)
                 .Include(v => v.Channel)
                     .ThenInclude(c => c.Subscribers)
-                .Include(v => v.Comments)
+                .Include(v => v.Comments.OrderByDescending(c => c.CommentDate))
                     .ThenInclude(c => c.Channel)
                 .Include(v => v.Likes)
                     .ThenInclude(l => l.Channel)

@@ -76,45 +76,8 @@
     }
 </div>
 
-
 <p>Видео:</p>
+<partial name="VideoCard" model="Model.Videos" />
 
-<div class="row">
-    @foreach (var video in Model.Videos)
-    {
-        <div class="my-custom-col">
-            <div class="card video-card">
-                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <img class="card-img-top poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
-                </a>
-                <div class="card-body">
-                    <h3 class="card-title">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
-                        <div class="dropdown-container">
-                            <div class="dropdown">
-                                <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
-                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
-                                </div>
-                            </div>
-                        </div>
-                    </h3>
-                    <p class="card-channel">
-                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
-                    </p>
-                    <p class="card-text">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<link rel="stylesheet" href="~/css/channel.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/forChannel/channel.css" asp-append-version="true" />
 <script src="~/js/channel.js"></script>

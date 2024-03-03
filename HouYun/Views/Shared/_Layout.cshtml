@@ -4,19 +4,23 @@
 @using HouYun.IRepositories
 @using System.Security.Claims
 @inject IUserRepository UserRepository
+
 @{
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     var username = await UserRepository.GetUsernameById(userId);
 }
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/video-js.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <link href="~/lib/video-js.min.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/video.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 <body>
     <header id="myHeader">
@@ -48,11 +52,11 @@
                     </div>
                     <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@username</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
-                        <a id="btnclickChangeUsername" href="@Url.Action("ChangeUsername", "User")" class="dropdown-item">Сменить имя</a>
-                        <div class="modal fade" id="ChangeUsername">
+                        <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Сменить имя</a>
+                        <div class="modal fade" id="ChangeUserName">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-body" id="modal-bodyChangeUsername"></div>
+                                    <div class="modal-body" id="modal-bodyChangeUserName"></div>
                                 </div>
                             </div>
                         </div>
@@ -128,42 +132,7 @@
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            channelList();
-        });
-    </script>
-
-    <script>
-        window.onload = function () {
-            var searchTerm = localStorage.getItem('searchTerm');
-            if (searchTerm) {
-                document.getElementById('searchTerm').value = searchTerm;
-            }
-        };
-
-        document.getElementById('searchForm').addEventListener('submit', function (event) {
-            var searchTerm = document.getElementById('searchTerm').value;
-            localStorage.setItem('searchTerm', searchTerm);
-        });
-
-        function logout() {
-            localStorage.removeItem('searchTerm');
-        }
-    </script>
-
-    <script>
-        document.getElementById('searchForm').addEventListener('submit', function (event) {
-            var searchTerm = document.getElementById('searchTerm').value;
-            if (!searchTerm.trim()) {
-                event.preventDefault();
-            }
-        });
-    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

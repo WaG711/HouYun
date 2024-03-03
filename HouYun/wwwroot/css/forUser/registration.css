@@ -1,0 +1,136 @@
+body {
+    background: radial-gradient(ellipse at right top, #0F1120, #020E2D);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
+    color: #e0e0e0;
+}
+
+h2 {
+    font-size: 64px;
+    font-weight: normal;
+    position: absolute;
+    left: 830px;
+    top: 160px;
+}
+
+.square-container {
+    position: absolute;
+    width: 650px;
+    height: 340px;
+    background-color: #171830;
+    border-radius: 25px;
+    left: 635px;
+    top: 305px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .square-container form {
+        width: 100%;
+        height: 100%;
+    }
+
+.register-text {
+    color: #e0e0e0;
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    display: block;
+}
+
+.login-text {
+    color: #e0e0e0;
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    display: block;
+}
+
+.separator {
+    width: 590px;
+    height: 1px;
+    background-color: #707070;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #282940;
+    color: #E0e0e0;
+    width: 580px;
+    height: 45px;
+    outline: none;
+    border: 2px solid transparent;
+    margin: 15px auto;
+    display: block;
+}
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border-color: #707070;
+        border-width: 2px;
+    }
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #282940 inset;
+    -webkit-text-fill-color: #e0e0e0;
+    border: none;
+    outline: none;
+}
+
+.sunbit-but {
+    position: absolute;
+    left: 55px;
+    bottom: 45px;
+    font-family: "Roboto", sans-serif;
+}
+
+    .sunbit-but input[type="submit"] {
+        width: 220px;
+        height: 45px;
+        background-color: #1F1B3C;
+        color: #e0e0e0;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        font-weight: normal;
+    }
+
+        .sunbit-but input[type="submit"]:hover {
+            background-color: #2B2751;
+        }
+
+.enter-button {
+    font-family: "Roboto", sans-serif;
+    margin-left: 175px;
+    width: 180px;
+    height: 45px;
+    background-color: #1F1B3C;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+    .enter-button:hover {
+        background-color: #2B2751;
+    }
