@@ -178,3 +178,22 @@ window.onload = function () {
 function logout() {
     localStorage.removeItem('searchTerm');
 }
+
+async function updateUsername() {
+    try {
+        var response = await fetch('/api/user/username');
+        var username = await response.text();
+
+        document.getElementById('toggleMenuButton').innerText = username;
+    } catch (error) {
+        console.error('Ошибка при получении имени пользователя:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateUsername();
+});
+
+document.getElementById('toggleMenuButton').addEventListener('click', function () {
+    updateUsername();
+});

@@ -1,15 +1,6 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
-@using Microsoft.AspNetCore.Identity
-@using HouYun.IRepositories
-@using System.Security.Claims
-@inject IUserRepository UserRepository
-
-@{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var username = await UserRepository.GetUsernameById(userId);
-}
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +23,7 @@
                     <span class="burger-line"></span>
                 </button>
                 <a class="navbar-brand" asp-controller="Video" asp-action="">
-                    <img src="~/imges/Logos.png" style="width: 48.98px; height: 28.67px; margin-top:-8px;"/> HouYun
+                    <img src="~/imges/Logos.png" style="width: 48.98px; height: 28.67px; margin-top:-8px;" /> HouYun
                 </a>
 
                 <div class="container2">
@@ -50,7 +41,7 @@
                         <div class="separatorheader"></div>
                         <div class="notification-list" id="notification-list"></div>
                     </div>
-                    <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@username</button>
+                    <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">Loading...</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
                         <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Сменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
@@ -68,7 +59,8 @@
                                 </div>
                             </div>
                         </div>
-                        @if (User.IsInRole("Admin")){
+                        @if (User.IsInRole("Admin"))
+                        {
                             <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
                         }
                         <a class="dropdown-item" href="@Url.Action("Logout", "User")" onclick="logout()">Выйти</a>
@@ -122,7 +114,7 @@
                     <div class="SubView custom-btn">Подписки</div>
                 </li>
                 <div id="channels-list"></div>
-		    </ul>
+            </ul>
         </div>
 
         <div class="content">
