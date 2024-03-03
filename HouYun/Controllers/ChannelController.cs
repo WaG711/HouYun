@@ -11,7 +11,7 @@ namespace HouYun.Controllers
     [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
-        private const long MaxVideoSize = 100L * 1024 * 1024 * 1024;
+        private const long MaxVideoSize = 50L * 1024 * 1024 * 1024;
         private const long MaxPosterSize = 5 * 1024 * 1024;
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
@@ -44,23 +44,24 @@ namespace HouYun.Controllers
                 Categories = await _categoryRepository.GetAllCategories(),
             };
 
-            return PartialView("_AddVideoPartical", model);
+            return PartialView("_AddVideoPartial", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestSizeLimit(51L * 1024 * 1024 * 1024)]
         public async Task<IActionResult> Add(AddVideoViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return PartialView("_AddVideoPartical", model);
+                return PartialView("_AddVideoPartial", model);
             }
 
             if (!ValidateVideoFile(model) || !ValidatePosterFile(model))
             {
                 model.Categories = await _categoryRepository.GetAllCategories();
-                return PartialView("_AddVideoPartical", model);
+                return PartialView("_AddVideoPartial", model);
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -85,7 +86,7 @@ namespace HouYun.Controllers
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
             var videos = await _videoRepository.GetVideosByChannelId(channelId);
-            return PartialView("_DeleteVideoPartical", videos);
+            return PartialView("_DeleteVideoPartial", videos);
         }
 
         [HttpPost]
@@ -108,7 +109,7 @@ namespace HouYun.Controllers
                 Description = channel.Description
             };
 
-            return PartialView("_ChannelUpdatePartical", model);
+            return PartialView("_ChannelUpdatePartial", model);
         }
 
         [HttpPost]
@@ -133,7 +134,7 @@ namespace HouYun.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return PartialView("_ChannelUpdatePartical", model);
+                return PartialView("_ChannelUpdatePartial", model);
             }
         }
 

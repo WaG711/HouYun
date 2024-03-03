@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Notification>
+
+@if (Model.Any())
+{
+    @foreach (var notification in Model)
+    {
+        <div class="notification-item">
+            <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })">
+                На канале @notification.Video.Channel.Name вышло новое видео: @notification.Video.Title
+            </a>
+        </div>
+    }
+}
+else
+{
+    <div>Отсутствуют</div>
+}
+
+<link rel="stylesheet" href="~/css/forAnother/notifications.css" asp-append-version="true" />

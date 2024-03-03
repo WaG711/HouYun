@@ -1,0 +1,14 @@
+﻿@model Category
+
+<form asp-action="AddCategory" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="Name">Название категории:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить категорию</button>
+</form>
+
+
+<link rel="stylesheet" href="~/css/forAnother/admin.css" asp-append-version="true" />

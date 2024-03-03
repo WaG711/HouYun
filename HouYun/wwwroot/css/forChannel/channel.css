@@ -1,0 +1,66 @@
+﻿.spacer {
+    flex-grow: 0.02;
+}
+
+#subscribeForm .btn {
+    box-shadow: none;
+    outline: none;
+}
+
+#upload .modal-dialog {
+    width: 910px;
+    height: 440px;
+    transform: translateY(25%);
+}
+
+#upload .modal-content {
+    border-radius: 20px;
+}
+
+#delete .modal-dialog {
+    max-width: 1100px;
+    height: 580px;
+}
+
+#delete .modal-content {
+    border-radius: 20px;
+}
+
+.table {
+    color: inherit;
+}
+
+    .table td {
+        border: none;
+        text-align: left;
+    }
+
+#posterDelete {
+    width: 310px;
+    height: 190px;
+    padding-right: 0px;
+}
+
+    #posterDelete .poster-image {
+        width: 300px;
+        height: 180px;
+        border-radius: 10px;
+    }
+
+#DeleteTitle {
+    width: 640px;
+    height: 180px;
+    overflow-wrap: break-word;
+    margin: 0;
+    padding: 0
+}
+
+#update .modal-dialog {
+    width: 610px;
+    height: 250px;
+    transform: translateY(50%);
+}
+
+#update .modal-content {
+    border-radius: 20px;
+}

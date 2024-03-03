@@ -4,10 +4,8 @@ using HouYun.IRepositories;
 using HouYun.Repositories;
 using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
-using Microsoft.Data.SqlClient;
-using HouYun.Controllers;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 
 
 namespace HouYun
@@ -66,6 +64,11 @@ namespace HouYun
                 options.Cookie.HttpOnly = true;
             });
 
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 51L * 1024 * 1024 * 1024;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -75,7 +78,7 @@ namespace HouYun
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-    
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -91,68 +94,9 @@ namespace HouYun
                 pattern: "{controller=Video}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-                name: "Notifications",
-                pattern: "Notifications",
-                defaults: new { controller = "Notifications", action = "Index" });
-
-            app.MapControllerRoute(
-                name: "AddView",
-                pattern: "View/AddView/{videoId}",
-                defaults: new { controller = "View", action = "AddView" });
-
-            app.MapControllerRoute(
-                name: "AddToWatchHistory",
-                pattern: "WatchHistory/AddToWatchHistory/{videoId}",
-                defaults: new { controller = "WatchHistory", action = "AddToWatchHistory" });
-
-            app.MapControllerRoute(
-                name: "like",
-                pattern: "like/{action}/{videoId?}",
-                defaults: new { controller = "Like" });
-
-            app.MapControllerRoute(
-                name: "addComment",
-                pattern: "Comment/AddComment",
-                defaults: new { controller = "Comment", action = "AddComment" });
-
-            app.MapControllerRoute(
-                name: "search",
-                pattern: "Video/Search",
-                defaults: new { controller = "Search", action = "Search" });
-
-            app.MapControllerRoute(
                  name: "channel",
                  pattern: "Channel/{channelName}",
                  defaults: new { controller = "Channel", action = "Index" });
-
-
-            app.MapControllerRoute(
-                name: "unsubscribe",
-                pattern: "Subscription/Unsubscribe",
-                defaults: new { controller = "Subscription", action = "Unsubscribe" });
-
-            app.MapControllerRoute(
-                name: "subscribe",
-                pattern: "Subscription/Subscribe",
-                defaults: new { controller = "Subscription", action = "Subscribe" });
-
-            app.MapControllerRoute(
-                name: "search",
-                pattern: "Search/SearchResult/{searchTerm?}",
-                defaults: new { controller = "Search", action = "SearchResult" }
-            );
-
-            app.MapControllerRoute(
-                name: "login",
-                pattern: "login",
-                defaults: new { controller = "Login" }
-            );
-
-            app.MapControllerRoute(
-                name: "registration",
-                pattern: "registration",
-                defaults: new { controller = "Registration"}
-            );
 
             app.Run();
         }

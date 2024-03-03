@@ -3,38 +3,45 @@ using Microsoft.EntityFrameworkCore;
 using HouYun.IRepositories;
 using HouYun.Models;
 using HouYun.ViewModels.forUser;
+using HouYun.Data;
 
 
 namespace HouYun.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return await _userManager.Users.ToListAsync();
+            return await _userManager.Users
+                .Include(u => u.Channel)
+                .ToListAsync();
         }
 
         public async Task DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+
             if (user != null)
             {
+                await DeleteChannel(user.Id);
                 await _userManager.DeleteAsync(user);
             }
         }
 
-        public async Task<bool> ChangeUsername(string userId, string newUsername, string oldPassword)
+        public async Task<bool> ChangeUserName(string userId, string newUserName, string oldPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -44,13 +51,13 @@ namespace HouYun.Repositories
                 return false;
             }
 
-            var existingUser = await _userManager.FindByNameAsync(newUsername);
+            var existingUser = await _userManager.FindByNameAsync(newUserName);
             if (existingUser != null && existingUser.Id != userId)
             {
                 return false;
             }
 
-            await _userManager.SetUserNameAsync(user, newUsername);
+            await _userManager.SetUserNameAsync(user, newUserName);
 
             return true;
         }
@@ -70,7 +77,7 @@ namespace HouYun.Repositories
             return result.Succeeded;
         }
 
-        public async Task<bool> RegistrationUser(RegisterViewModel model)
+        public async Task<bool> RegistrationUser(RegistrationViewModel model)
         {
             var existingUser = await _userManager.FindByEmailAsync(model.Email);
 
@@ -108,6 +115,12 @@ namespace HouYun.Repositories
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<string> GetUsernameById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return user.UserName;
+        }
+
         private async Task ManageRoles(User user)
         {
             if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
@@ -119,10 +132,14 @@ namespace HouYun.Repositories
             var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";
             await _userManager.AddToRoleAsync(user, role);
         }
-        public async Task<string> GetUsernameById(string userId)
+
+        private async Task DeleteChannel(string id)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            return user?.UserName;
+            var channel = await _context.Channels.FirstOrDefaultAsync(c => c.UserId == id);
+            if (channel != null)
+            {
+                _context.Channels.Remove(channel);
+            }
         }
     }
 }

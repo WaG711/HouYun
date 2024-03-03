@@ -22,8 +22,6 @@ namespace HouYun.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddComment(Guid videoId, string commentText)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
@@ -39,7 +37,7 @@ namespace HouYun.Controllers
                 await _commentRepository.AddComment(comment);
             }
 
-            return Redirect(refererUrl);
+            return Ok();
         }
     }
 }

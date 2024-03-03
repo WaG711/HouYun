@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Category>
+
+<h2>Категории</h2>
+<p>
+    <a href="@Url.Action("AddCategory", "Admin")">Добавить категорию</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id категории</th>
+            <th>Название категории</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td id="Id">@category.CategoryId</td>
+                <td id="Words">@category.Name</td>
+                <td>
+                    <form asp-action="RemoveCategory" asp-route-id="@category.CategoryId" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Удалить категорию</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<link rel="stylesheet" href="~/css/forAnother/admin.css" asp-append-version="true" />

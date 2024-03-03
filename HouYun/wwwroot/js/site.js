@@ -1,4 +1,8 @@
-﻿function toggleSidebar() {
+﻿document.addEventListener('DOMContentLoaded', async function () {
+    await channelList();
+});
+
+function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
 
@@ -6,11 +10,17 @@
     var cards = document.querySelectorAll('.card');
     var imgs = document.querySelectorAll('.card-img-top');
 
+    var video = document.querySelector('.main-video');
+
     var isOpen = sidebar.classList.contains('hidden');
 
     if (isOpen) {
         sidebar.classList.remove('hidden');
-        container.style.marginLeft = '270px';
+
+        if (!video) {
+            container.style.marginLeft = '270px';
+        }
+
         localStorage.setItem('sidebarHidden', 'false');
 
         columns.forEach(function (column) {
@@ -88,34 +98,49 @@ document.addEventListener("click", function (event) {
     }
 });
 
-function toggleNotification() {
-    $("#notificationPopup").toggle();
+async function toggleNotification() {
+    try {
+        const response = await fetch('/Notifications/Index');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.text();
+        $("#notificationPopup").toggle();
+        $("#notification-list").html(data);
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
 }
 
-/*document.addEventListener("click", function (event) {
-    if (!event.target.closest('.profileinfo')) {
-        var notificationPopups = document.querySelectorAll(".popup");
-        notificationPopups.forEach(function (popup) {
-            popup.style.display = "none";
-        });
+async function channelList() {
+    try {
+        const response = await fetch('/Subscription/SubscribedChannels');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.text();
+        document.getElementById("channels-list").innerHTML = data;
+    } catch (error) {
+        console.error('Error:', error.message);
     }
-});*/
+}
 
-function addToWatchLater(url, videoId) {
-    $.post(url, { videoId: videoId })
-        .fail(function (error) {
-            console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
-        });
+async function addToWatchLater(url, videoId) {
+    try {
+        await $.post(url, { videoId: videoId });
+    } catch (error) {
+        console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
+    }
 }
 
 $(function () {
-    $(document).on('click', '#btnclickChangeUsername', function (e) {
+    $(document).on('click', '#btnclickChangeUserName', function (e) {
         e.preventDefault();
 
         var url = $(this).attr('href');
         $.get(url, function (data) {
-            $("#modal-bodyChangeUsername").html(data);
-            $("#ChangeUsername").modal('show');
+            $("#modal-bodyChangeUserName").html(data);
+            $("#ChangeUserName").modal('show');
         });
     });
 
@@ -133,4 +158,42 @@ $(function () {
         var modalToHide = $(this).attr('data-target');
         $(modalToHide).modal('hide');
     });
+});
+
+document.getElementById('searchForm').addEventListener('submit', function (event) {
+    var searchTerm = document.getElementById('searchTerm').value;
+    localStorage.setItem('searchTerm', searchTerm);
+    if (!searchTerm.trim()) {
+        event.preventDefault();
+    }
+});
+
+window.onload = function () {
+    var searchTerm = localStorage.getItem('searchTerm');
+    if (searchTerm) {
+        document.getElementById('searchTerm').value = searchTerm;
+    }
+};
+
+function logout() {
+    localStorage.removeItem('searchTerm');
+}
+
+async function updateUsername() {
+    try {
+        var response = await fetch('/api/user/username');
+        var username = await response.text();
+
+        document.getElementById('toggleMenuButton').innerText = username;
+    } catch (error) {
+        console.error('Ошибка при получении имени пользователя:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    updateUsername();
+});
+
+document.getElementById('toggleMenuButton').addEventListener('click', function () {
+    updateUsername();
 });

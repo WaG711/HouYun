@@ -1,4 +1,5 @@
-﻿@model HouYun.ViewModels.forVideo.DetailsViewModel
+﻿@using System.Security.Claims
+@model HouYun.ViewModels.forVideo.DetailsViewModel
 
 @{
     ViewData["Title"] = @Model.Video.Title;
@@ -39,8 +40,10 @@
     }
 </div>
 <div class="main-video">
-    <video id="videoPlayer" class="video-js vjs-default-skin" controls
-           width="1422" height="800">
+    <video id="videoPlayer" class="video-js vjs-default-skin"
+           width="1422" height="800"
+           poster="@Url.Content("~/posters/" + Model.Video.PosterPath)"
+           controls>
         <source src="@Url.Content("~/videos/" + Model.Video.VideoPath)" type="video/mp4">
     </video>
 
@@ -48,28 +51,65 @@
 
     <h4 class="video-channel">
         <a href="@Url.RouteUrl("channel", new { channelName = @Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
-        <span>
-            <form id="likeForm" style="display: inline-block;">
-                <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                <button type="button" onclick="toggleLike('like')" class="btn btn-primary" id="likeButton" data-like="like">Like</button>
-                <button type="button" onclick="toggleLike('removeLike')" class="btn btn-danger" id="removeLikeButton" style="display: none;">Remove Like</button>
-            </form>
-        </span>
+            @{
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var isAuthor = Model.Video.Channel.UserId == userId;
+                var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
+                var isLiked = Model.Video.Likes.Any(l => l.Channel.UserId == userId);
+
+                if (!isAuthor)
+                {
+                    if (isSubscribed)
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="unsubscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Отписаться</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="subscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Подписаться</button>
+                        </form>
+                    }
+                }
+            }
+
+            <span>
+                @{
+                    if (isLiked)
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="removeLike()" class="btn btn-like btn-unlike" id="likeButton" data-like="like">Не нравится</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="addLike()" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
+                        </form>
+                    }
+                }
+            <button class="btn btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');" data-WL="WL">Смотреть позже</button>
+            </span>
     </h4>
 
     <div class="video-details">
-        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate)</p>
+        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate) || Количество "Нравится": @Model.Video.Likes.Count</p>
         <div class="details-content">
             <p>@Model.Video.Description</p>
         </div>
     </div>
 
     <div id="commentsSection">
-        <h3>Comments</h3>
+        <h3>Комментарии</h3>
         <form id="addCommentForm">
             <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required></textarea><br>
-            <button type="button" onclick="addComment()" class="btn btn-primary">Добавить комментарий</button>
+            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required maxlength="500"></textarea><br>
+            <button type="button" onclick="addComment()" class="btn btn-addCom">Добавить комментарий</button>
         </form>
         @foreach (var comment in Model.Video.Comments)
         {
@@ -81,8 +121,9 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="~/css/videoDetails.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/forVideo/videoDetails.css" asp-append-version="true" />
 <script src="~/js/videoDetails.js"></script>
+<script src="~/js/channel.js"></script>
 
 <script>
     var player = videojs('videoPlayer');

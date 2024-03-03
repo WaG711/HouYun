@@ -19,22 +19,29 @@ namespace HouYun.Controllers
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedVideos(userId);
+            var subscribedVideos = await _subscriptionRepository.GetUserSubscribedVideos(userId);
 
-            return View(subscribedChannels);
+            return View(subscribedVideos);
+        }
+
+        public async Task<IActionResult> SubscribedChannels()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
+
+            return PartialView("_SubscribedChannelsPartial", subscribedChannels);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Subscribe(Guid channelId)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var existingSubscription = await _subscriptionRepository.GetSubscriptionByChannelAndUser(channelId, userId);
             if (existingSubscription != null)
             {
-                return Redirect(refererUrl);
+                return Ok();
             }
 
             var subscription = new Subscription
@@ -45,33 +52,25 @@ namespace HouYun.Controllers
 
             await _subscriptionRepository.CreateSubscription(subscription);
 
-            return Redirect(refererUrl);
+            return Ok();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Unsubscribe(Guid channelId)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userSubscriptions = await _subscriptionRepository.GetSubscriptionsByUserId(userId);
 
             var subscriptionToUnsubscribe = userSubscriptions.FirstOrDefault(sub => sub.ChannelId == channelId);
             if (subscriptionToUnsubscribe == null)
             {
-                return Redirect(refererUrl);
+                return Ok();
             }
 
             await _subscriptionRepository.DeleteSubscription(subscriptionToUnsubscribe.SubscriptionId);
 
-            return Redirect(refererUrl);
-        }
-
-        public async Task<IActionResult> SubscribedChannels(string userId)
-        {
-            var subscribedChannels = await _subscriptionRepository.GetUserSubscribedChannels(userId);
-            var userNicknames = subscribedChannels.Select(channel => channel.Name);
-            return View(userNicknames);
+            return Ok();
         }
     }
 }

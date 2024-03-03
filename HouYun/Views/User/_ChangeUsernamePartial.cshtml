@@ -1,0 +1,50 @@
+﻿@model HouYun.ViewModels.forUser.ChangeUserNameViewModel
+
+<form id="ChangeUserNameForm" method="post" asp-controller="User" asp-action="ChangeUserName">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div>
+        <input asp-for="NewUserName" placeholder="Новый ник" autocomplete="off">
+    </div>
+
+    <div>
+        <input asp-for="Password" placeholder="Пароль" autocomplete="off">
+    </div>
+
+    <div class="sunbit-but">
+        <input type="submit" value="Изменить имя" />
+    </div>
+
+</form>
+
+<link rel="stylesheet" href="~/css/forUser/changeUserName.css" asp-append-version="true" />
+
+<script>
+    $(document).ready(function () {
+        $('#ChangeUserNameForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                url: '@Url.Action("ChangeUserName", "User")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#ChangeUserName').modal('hide');
+                        $('#ChangeUserNameForm')[0].reset();
+                        location.reload();
+                    } else {
+                        $('#modal-bodyChangeUserName').html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

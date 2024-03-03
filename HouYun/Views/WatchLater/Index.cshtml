@@ -5,10 +5,9 @@
     ViewData["Title"] = "Смотреть позже";
 }
 
-<h1 id="Title">Смотреть позже</h1>
-
 @if (Model.Any())
 {
+    <h1 id="Title">Смотреть позже</h1>
     <div class="row">
         @foreach (var video in Model)
         {
@@ -56,7 +55,7 @@
 }
 else
 {
-    <p>Список "Смотреть позже" пуст.</p>
+    <h1 id="Title">У вас нет отложенных видео</h1>
 }
 
-<link rel="stylesheet" href="~/css/indexVideos.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/forVideo/indexVideos.css" asp-append-version="true" />

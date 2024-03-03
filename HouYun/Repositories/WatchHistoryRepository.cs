@@ -26,7 +26,7 @@ namespace HouYun.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<WatchHistory>> GetWatchHistoryByChannelId(Guid channelId)
+        public async Task<IEnumerable<Video>> GetWatchHistoryByChannelId(Guid channelId)
         {
             return await _context.WatchHistories
             .Where(w => w.ChannelId == channelId)
@@ -38,6 +38,7 @@ namespace HouYun.Repositories
             .Include(w => w.Video)
                 .ThenInclude(v => v.Comments)
             .OrderByDescending(w => w.WatchDate)
+            .Select(item => item.Video)
             .ToListAsync();
         }
 
