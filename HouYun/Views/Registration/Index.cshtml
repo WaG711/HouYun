@@ -13,6 +13,7 @@
             <form method="post" asp-controller="Registration" asp-action="">
                 <div asp-validation-summary="ModelOnly"></div>
                 <div>
+                    <span asp-validation-for="Email" class="custom-error"></span>
                     <input asp-for="Email" placeholder="Введите email" autocomplete="off">
                 </div>
 
