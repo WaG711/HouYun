@@ -24,7 +24,7 @@
                         </div>
                     </h3>
                     <p class="card-channel">
-                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                        <a href="@Url.Action("Index", "Channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                     </p>
                     <p class="card-text">
                         <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>

@@ -2,6 +2,20 @@
     await channelList();
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    var sidebarHidden = localStorage.getItem('sidebarHidden');
+
+    if (sidebarHidden === 'true') {
+        document.querySelector('.sidebar').classList.add('hidden');
+        document.querySelector('.content').style.marginLeft = '25px';
+    } else if (sidebarHidden === null) {
+        localStorage.setItem('sidebarHidden', 'true');
+    }
+
+    updateUsername();
+    toggleSidebar();
+});
+
 function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
@@ -48,19 +62,6 @@ function toggleSidebar() {
         });
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    var sidebarHidden = localStorage.getItem('sidebarHidden');
-
-    if (sidebarHidden === 'true') {
-        document.querySelector('.sidebar').classList.add('hidden');
-        document.querySelector('.content').style.marginLeft = '25px';
-    } else if (sidebarHidden === null) {
-        localStorage.setItem('sidebarHidden', 'true');
-    }
-
-    toggleSidebar();
-});
 
 function toggleMenu() {
     var menuContent = document.getElementById('menuContent');
@@ -127,7 +128,16 @@ async function channelList() {
 
 async function addToWatchLater(url, videoId) {
     try {
-        await $.post(url, { videoId: videoId });
+        const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+        await $.ajax({
+            url: url,
+            type: 'POST',
+            headers: {
+                'RequestVerificationToken': csrfToken
+            },
+            data: { videoId: videoId },
+        });
     } catch (error) {
         console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
     }
@@ -189,11 +199,3 @@ async function updateUsername() {
         console.error('Ошибка при получении имени пользователя:', error);
     }
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    updateUsername();
-});
-
-document.getElementById('toggleMenuButton').addEventListener('click', function () {
-    updateUsername();
-});

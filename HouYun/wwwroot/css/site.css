@@ -88,25 +88,15 @@ body {
 }
 
     .sidebar ul li {
+        font-size: 18px;
         list-style-type: none;
-        margin-top: 10px;
+        margin-top: 15px;
         color: #e0e0e0;
         text-decoration: none;
     }
 
-        .sidebar ul li a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #e0e0e0;
-        }
-
-            .sidebar ul li a:hover {
-                background-color: #ddd;
-            }
-
 #channels-list {
-    margin-left: 8px;
+    padding: 10px;
     width: 225px;
 }
 
@@ -135,21 +125,24 @@ body {
 .custom-btn {
     background-color: transparent;
     border: 1px solid transparent;
-    padding: 7px;
+    padding-left: 7px;
     font-family: "Myanmar Khyay Font", sans-serif;
     color: #e0e0e0;
     transition: none;
+    text-decoration: none;
 }
 
     .custom-btn:focus,
-    .custom-btn:active {
+    .custom-btn:active,
+    a.custom-btn:hover {
+        color: inherit;
         outline: none;
         box-shadow: none;
         animation: none;
     }
 
 .separator {
-    margin-top: 10px;
+    margin-top: 15px;
     height: 1px;
     background-color: #707070;
     width: 230px;
@@ -227,7 +220,6 @@ body {
 
 .SubView {
     font-size: 18px;
-    margin-top: 10px;
     color: #e0e0e0;
 }
 
