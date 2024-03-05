@@ -30,7 +30,7 @@ namespace HouYun.Controllers
                 {
                     return RedirectToAction("Index", "Video");
                 }
-                /*ModelState.AddModelError(string.Empty, "Проверьте введенные данные");*/
+                ModelState.AddModelError(string.Empty, "Проверьте введенные данные");
             }
             return View(model);
         }
