@@ -29,7 +29,7 @@
                         </div>
                     </h3>
                     <p class="card-channel">
-                        <a href="@Url.RouteUrl("channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                        <a href="@Url.Action("Index", "Channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                     </p>
                     <p class="card-text">
                         <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
@@ -50,7 +50,7 @@
     <h2>@Model.Video.Title</h2>
 
     <h4 class="video-channel">
-        <a href="@Url.RouteUrl("channel", new { channelName = @Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
+        <a href="@Url.Action("Index", "Channel", new { channelName = Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
             @{
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var isAuthor = Model.Video.Channel.UserId == userId;
@@ -114,7 +114,9 @@
         @foreach (var comment in Model.Video.Comments)
         {
             <div class="comment-container">
-                <a href="@Url.RouteUrl("channel", new { channelName = @comment.Channel.Name })">Posted by: @comment.Channel.Name</a>
+                <a href="@Url.Action("Index", "Channel", new { channelName = comment.Channel.Name })">
+                    @comment.Channel.Name || @Helper.TimeAgo(@comment.CommentDate)
+                </a>
                 <p>@comment.Text</p>
             </div>
         }
