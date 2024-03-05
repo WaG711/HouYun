@@ -33,6 +33,7 @@
                                             @if (watchLaterItem.Channel.UserId == userId)
                                             {
                                                 <form asp-action="Delete" asp-route-id="@watchLaterItem.WatchLaterId" method="post">
+                                                    @Html.AntiForgeryToken()
                                                     <button type="submit" class="dropdown-item">Удалить из "Смотреть позже"</button>
                                                 </form>
                                             }

@@ -127,7 +127,16 @@ async function channelList() {
 
 async function addToWatchLater(url, videoId) {
     try {
-        await $.post(url, { videoId: videoId });
+        const csrfToken = $('input[name="__RequestVerificationToken"]').val();
+
+        await $.ajax({
+            url: url,
+            type: 'POST',
+            headers: {
+                'RequestVerificationToken': csrfToken
+            },
+            data: { videoId: videoId },
+        });
     } catch (error) {
         console.error('Ошибка при добавлении видео в список "Просмотреть позже":', error);
     }

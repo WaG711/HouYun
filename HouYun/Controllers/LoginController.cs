@@ -1,6 +1,5 @@
 ﻿using HouYun.IRepositories;
 using HouYun.ViewModels.forUser;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun.Controllers
@@ -29,7 +28,7 @@ namespace HouYun.Controllers
                 var result = await _userRepository.LoginUser(model.UserName, model.Password, model.RememberMe);
                 if (result)
                 {
-                    return RedirectToAction("Index", "Video");
+                    return RedirectToAction("", "Video");
                 }
                 ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
             }

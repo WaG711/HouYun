@@ -74,40 +74,20 @@
         <div class="sidebar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <form method="get" asp-area="" asp-action="" asp-controller="Video">
-                        <button type="submit" class="Main custom-btn">
-                            Главная
-                        </button>
-                    </form>
+                    <a class="Main custom-btn" href="@Url.Action("", "Video")">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <form method="post" asp-action="Index" asp-controller="Subscription">
-                        <button type="submit" class="Sub custom-btn">
-                            Подписки
-                        </button>
-                    </form>
+                    <a class="Subscription custom-btn" href="@Url.Action("Index", "Subscription")">Подписки</a>
                 </li>
                 <div class="separator"></div>
                 <li class="nav-item">
-                    <form asp-action="Index" asp-controller="Channel">
-                        <button type="submit" class="Channel custom-btn">
-                            Мой канал
-                        </button>
-                    </form>
+                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel")">Мой канал</a>
                 </li>
                 <li class="nav-item">
-                    <form method="Get" asp-action="Index" asp-controller="WatchHistory">
-                        <button type="submit" class="Watchh custom-btn">
-                            История
-                        </button>
-                    </form>
+                    <a class="WH custom-btn" href="@Url.Action("Index", "WatchHistory")">История</a>
                 </li>
                 <li class="nav-item">
-                    <form method="Get" asp-action="Index" asp-controller="WatchLater">
-                        <button type="submit" class="Watchl custom-btn">
-                            Смотреть позже
-                        </button>
-                    </form>
+                    <a class="WL custom-btn" href="@Url.Action("Index", "WatchLater")">Смотреть позже</a>
                 </li>
                 <div class="separator"></div>
                 <li class="nav-item">
