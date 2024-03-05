@@ -38,3 +38,14 @@
     #ChangeUserNameForm .sunbit-but input[type="submit"]:hover {
         background-color: #2B2751;
     }
+
+#ChangeUserNameForm ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+    color: #e0e0e0;
+}
+
+.custom-error {
+    color: #e0e0e0;
+}
