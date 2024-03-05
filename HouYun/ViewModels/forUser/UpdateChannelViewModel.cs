@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using HouYun.Models;
 
 namespace HouYun.ViewModels.forUser
 {

@@ -4,10 +4,12 @@
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
+        <span asp-validation-for="NewUserName" class="custom-error"></span>
         <input asp-for="NewUserName" placeholder="Новый ник" autocomplete="off">
     </div>
 
     <div>
+        <span asp-validation-for="Password" class="custom-error"></span>
         <input asp-for="Password" placeholder="Пароль" autocomplete="off">
     </div>
 

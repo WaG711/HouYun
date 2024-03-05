@@ -20,7 +20,7 @@ h2 {
 .square-container {
     position: absolute;
     width: 650px;
-    height: 340px;
+    height: auto;
     background-color: #171830;
     border-radius: 25px;
     left: 635px;
@@ -95,9 +95,8 @@ input:-webkit-autofill {
 }
 
 .sunbit-but {
-    position: absolute;
-    left: 55px;
-    bottom: 45px;
+    display: flex;
+    justify-content: center;
     font-family: "Roboto", sans-serif;
 }
 
@@ -134,3 +133,13 @@ input:-webkit-autofill {
     .enter-button:hover {
         background-color: #2B2751;
     }
+
+.login li {
+    list-style-type: none;
+    color: #e0e0e0;
+}
+
+.custom-error {
+    color: #e0e0e0;
+    margin-left: 35px;
+}

@@ -18,7 +18,6 @@ namespace HouYun.Controllers
             _channelRepository = channelRepository;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -29,10 +28,9 @@ namespace HouYun.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddToWatchLater(Guid videoId)
         {
-            string refererUrl = Request.Headers.Referer.ToString();
-
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channelId = await _channelRepository.GetChannelIdByUserId(userId);
 
@@ -54,6 +52,7 @@ namespace HouYun.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _watchLaterRepository.DeleteWatchLaterItem(id);

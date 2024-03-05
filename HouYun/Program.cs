@@ -91,12 +91,7 @@ namespace HouYun
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Video}/{action=Index}/{id?}");
-
-            app.MapControllerRoute(
-                 name: "channel",
-                 pattern: "Channel/{channelName}",
-                 defaults: new { controller = "Channel", action = "Index" });
+                pattern: "{controller=Video}/{action=Index}");
 
             app.Run();
         }

@@ -28,9 +28,9 @@ namespace HouYun.Controllers
                 var result = await _userRepository.RegistrationUser(model);
                 if (result)
                 {
-                    return RedirectToAction("Index", "Video");
+                    return RedirectToAction("", "Video");
                 }
-                /*ModelState.AddModelError(string.Empty, "Проверьте введенные данные");*/
+                ModelState.AddModelError(string.Empty, "Проверьте введенные данные");
             }
             return View(model);
         }

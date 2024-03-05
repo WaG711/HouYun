@@ -17,10 +17,12 @@
                 </div>
 
                 <div>
+                    <span asp-validation-for="UserName" class="custom-error"></span>
                     <input asp-for="UserName" placeholder="Введите логин" autocomplete="off">
                 </div>
 
                 <div>
+                    <span asp-validation-for="Password" class="custom-error"></span>
                     <input asp-for="Password" placeholder="Введите пароль" autocomplete="off">
                 </div>
                 <div class="sunbit-but">
