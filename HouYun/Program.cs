@@ -91,7 +91,7 @@ namespace HouYun
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Video}/{action=Index}/{id?}");
+                pattern: "{controller=Video}/{action=Index}");
 
             app.Run();
         }
