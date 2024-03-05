@@ -24,6 +24,7 @@ namespace HouYun.Controllers
             _videoRepository = videoRepository;
         }
 
+        [HttpGet("Channel/{channelName?}")]
         public async Task<IActionResult> Index(string channelName)
         {
             var channel = await _channelRepository.GetChannelByName(channelName);
@@ -32,6 +33,8 @@ namespace HouYun.Controllers
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 channel = await _channelRepository.GetChannelByUserId(userId);
+
+                return RedirectToAction("Index", new { channelName = channel.Name });
             }
 
             return View(channel);
