@@ -1,5 +1,4 @@
-﻿﻿
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,7 +40,7 @@
                         <div class="separatorheader"></div>
                         <div class="notification-list" id="notification-list"></div>
                     </div>
-                    <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">Loading...</button>
+                    <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
                         <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Сменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
