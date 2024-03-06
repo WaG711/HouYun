@@ -73,7 +73,7 @@ namespace HouYun.Controllers.UserContoller
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Ошибка при изменении. Возможно, имя уже занято или указан неверный пароль");
+                ModelState.AddModelError(string.Empty, "Возможно, имя пользователя уже занято или указан неверный пароль");
                 return PartialView("_ChangeUserNamePartial", model);
             }
         }
