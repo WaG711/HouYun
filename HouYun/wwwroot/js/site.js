@@ -186,9 +186,6 @@ document.getElementById('searchForm').addEventListener('submit', function (event
     localStorage.setItem('searchTerm', searchTerm);
     if (!searchTerm) {
         event.preventDefault();
-    } else {
-        event.preventDefault();
-        window.location.href = "Search/Term=" + encodeURIComponent(searchTerm);
     }
 });
 

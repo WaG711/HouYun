@@ -1,7 +1,13 @@
 ﻿@model HouYun.ViewModels.forVideo.SearchViewModel
 
-@if (Model.Videos.Any()){
-    <h3>Результаты поиска по запросу "@Model.SearchTerm"</h3>
+@{
+    ViewData["Title"] = @Model.SearchTerm;
+}
+
+@if (Model.Videos.Any()) {
+    <h3 style="margin-bottom: 20px;">
+        Результат по запросу '@Model.SearchTerm'
+    </h3>
     <partial name="VideoCard" model="Model.Videos" />
 }
 else
