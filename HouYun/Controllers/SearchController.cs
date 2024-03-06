@@ -15,14 +15,13 @@ namespace HouYun.Controllers
             _searchHistoryRepository = searchHistoryRepository;
         }
 
-        [HttpGet("Search/Term={searchTerm}")]
-        public async Task<IActionResult> SearchResult(string searchTerm)
+        public async Task<IActionResult> SearchResult(string term)
         {
-            var searchResults = await _searchHistoryRepository.SearchVideosByTitle(searchTerm);
+            var searchResults = await _searchHistoryRepository.SearchVideosByTitle(term);
 
             var viewModel = new SearchViewModel
             {
-                SearchTerm = searchTerm,
+                SearchTerm = term,
                 Videos = searchResults,
             };
 
