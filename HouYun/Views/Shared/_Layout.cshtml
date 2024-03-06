@@ -42,7 +42,7 @@
                     </div>
                     <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
-                        <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Сменить имя</a>
+                        <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Изменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a id="btnclickChangePassword" href="@Url.Action("ChangePassword", "User")" class="dropdown-item">Сменить пароль</a>
+                        <a id="btnclickChangePassword" href="@Url.Action("ChangePassword", "User")" class="dropdown-item">Изменить пароль</a>
                         <div class="modal fade" id="ChangePassword">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -60,7 +60,7 @@
                         </div>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Панель администратора</a>
                         }
                         <a class="dropdown-item" href="@Url.Action("Logout", "User")" onclick="logout()">Выйти</a>
                     </div>

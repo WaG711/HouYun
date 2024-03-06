@@ -16,6 +16,11 @@ h2 {
     left: 830px;
     top: 160px;
 }
+    h2 img {
+        width: 90px;
+        height: 60px;
+        margin-right: 5px;
+    }
 
 .square-container {
     position: absolute;
