@@ -1,6 +1,6 @@
 # HouYun
 Дальше будет представление этого проекта:
-- Страница регистрации/входа  
+- Страница входа/регистрации  
 ![Screenshot 2024-03-06 125945](https://github.com/WaG711/HouYun/assets/137266836/8e3bdeea-2ef1-46fc-bbd4-627da2e1c47c)
 - Основная страница  
 ![Screenshot 2024-03-06 130108](https://github.com/WaG711/HouYun/assets/137266836/aa1cef9e-e697-47d1-811f-b031544cfa2d)
