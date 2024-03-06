@@ -3,7 +3,7 @@
 - Страница регистрации/входа  
 ![Screenshot 2024-03-06 125945](https://github.com/WaG711/HouYun/assets/137266836/8e3bdeea-2ef1-46fc-bbd4-627da2e1c47c)
 - Основная страница  
-![Screenshot 2024-03-05 165819](https://github.com/WaG711/HouYun/assets/137266836/045514b0-103e-45b6-8e00-a64c80dc2733)
+![Screenshot 2024-03-06 130108](https://github.com/WaG711/HouYun/assets/137266836/aa1cef9e-e697-47d1-811f-b031544cfa2d)
 - Информацией о канале  
 ![Screenshot 2024-03-03 104615](https://github.com/WaG711/HouYun/assets/137266836/bbb3cd97-932c-4d53-bcc8-647fd23efe06)
 - На странице вашего канала есть функционал загрузки/удаления видео и обновления данных о канале. Данные о канале не связанны с информацией об аккаунте и редактируются отдельно  
