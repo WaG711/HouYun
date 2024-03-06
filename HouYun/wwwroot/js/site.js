@@ -182,10 +182,13 @@ $(function () {
 });
 
 document.getElementById('searchForm').addEventListener('submit', function (event) {
-    var searchTerm = document.getElementById('searchTerm').value;
+    var searchTerm = document.getElementById('searchTerm').value.trim();
     localStorage.setItem('searchTerm', searchTerm);
-    if (!searchTerm.trim()) {
+    if (!searchTerm) {
         event.preventDefault();
+    } else {
+        event.preventDefault();
+        window.location.href = "Search/Term=" + encodeURIComponent(searchTerm);
     }
 });
 
