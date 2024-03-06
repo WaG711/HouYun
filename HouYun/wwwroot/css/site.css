@@ -58,6 +58,12 @@ body {
         left: 100px;
     }
 
+.logo {
+    width: 48.98px;
+    height: 28.67px;
+    margin-top: -8px;
+}
+
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
 }
