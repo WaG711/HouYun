@@ -24,6 +24,7 @@ namespace HouYun.Controllers
             _videoRepository = videoRepository;
         }
 
+        [HttpGet("Channel/{channelName?}")]
         public async Task<IActionResult> Index(string channelName)
         {
             var channel = await _channelRepository.GetChannelByName(channelName);
@@ -32,6 +33,8 @@ namespace HouYun.Controllers
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 channel = await _channelRepository.GetChannelByUserId(userId);
+
+                return RedirectToAction("Index", new { channelName = channel.Name });
             }
 
             return View(channel);
@@ -79,7 +82,6 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
         public async Task<IActionResult> Delete()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -97,7 +99,6 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
         public async Task<IActionResult> Update()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

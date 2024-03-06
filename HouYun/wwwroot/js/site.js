@@ -1,5 +1,6 @@
 ﻿document.addEventListener('DOMContentLoaded', async function () {
     await channelList();
+    await GetUserName();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -12,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('sidebarHidden', 'true');
     }
 
-    updateUsername();
     toggleSidebar();
 });
 
@@ -113,6 +113,17 @@ async function toggleNotification() {
     }
 }
 
+async function GetUserName() {
+    try {
+        var response = await fetch('/User/GetUserName');
+        var userName = await response.text();
+
+        document.getElementById('toggleMenuButton').innerText = userName;
+    } catch (error) {
+        console.error('Ошибка при получении имени пользователя:', error);
+    }
+}
+
 async function channelList() {
     try {
         const response = await fetch('/Subscription/SubscribedChannels');
@@ -171,10 +182,13 @@ $(function () {
 });
 
 document.getElementById('searchForm').addEventListener('submit', function (event) {
-    var searchTerm = document.getElementById('searchTerm').value;
+    var searchTerm = document.getElementById('searchTerm').value.trim();
     localStorage.setItem('searchTerm', searchTerm);
-    if (!searchTerm.trim()) {
+    if (!searchTerm) {
         event.preventDefault();
+    } else {
+        event.preventDefault();
+        window.location.href = "Search/Term=" + encodeURIComponent(searchTerm);
     }
 });
 
@@ -187,15 +201,4 @@ window.onload = function () {
 
 function logout() {
     localStorage.removeItem('searchTerm');
-}
-
-async function updateUsername() {
-    try {
-        var response = await fetch('/api/user/username');
-        var username = await response.text();
-
-        document.getElementById('toggleMenuButton').innerText = username;
-    } catch (error) {
-        console.error('Ошибка при получении имени пользователя:', error);
-    }
 }

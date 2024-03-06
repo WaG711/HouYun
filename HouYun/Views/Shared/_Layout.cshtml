@@ -22,12 +22,12 @@
                     <span class="burger-line"></span>
                 </button>
                 <a class="navbar-brand" asp-controller="Video" asp-action="">
-                    <img src="~/imges/Logos.png" style="width: 48.98px; height: 28.67px; margin-top:-8px;" /> HouYun
+                    <img src="~/imges/Logos.png" class="logo" /> HouYun
                 </a>
 
                 <div class="container2">
-                    <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
-                        <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск" autocomplete="off">
+                    <form id="searchForm" action="@Url.Action("SearchResult", "Search")">
+                        <input id="searchTerm" type="text" placeholder="Поиск" autocomplete="off">
                         <button type="submit" class="search-button">Искать</button>
                     </form>
                 </div>
@@ -80,7 +80,7 @@
                 </li>
                 <div class="separator"></div>
                 <li class="nav-item">
-                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel")">Мой канал</a>
+                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel", new { channelName = (string?)null })">Мой канал</a>
                 </li>
                 <li class="nav-item">
                     <a class="WH custom-btn" href="@Url.Action("Index", "WatchHistory")">История</a>
