@@ -13,9 +13,15 @@ h2 {
     font-size: 64px;
     font-weight: normal;
     position: absolute;
-    left: 830px;
+    left: 820px;
     top: 160px;
 }
+
+    h2 img {
+        width: 90px;
+        height: 60px;
+        margin-right: 5px;
+    }
 
 .square-container {
     position: absolute;

@@ -4,7 +4,7 @@ namespace HouYun.ViewModels.forUser
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Логин обязателен для заполнения")]
+        [Required(ErrorMessage = "Имя пользователя обязательно для заполнения")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Пароль обязателен для заполнения")]
