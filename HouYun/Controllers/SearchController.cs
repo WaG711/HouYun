@@ -18,7 +18,6 @@ namespace HouYun.Controllers
             _channelRepository = channelRepository;
         }
 
-        [HttpGet]
         public async Task<IActionResult> SearchResult(string searchTerm)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

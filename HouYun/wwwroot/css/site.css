@@ -82,6 +82,7 @@ body {
     position: fixed;
     padding-left: 30px;
     height: 100%;
+    overflow: auto;
     width: 280px;
     font-size: 16px;
     z-index: 999;

@@ -13,7 +13,6 @@ namespace HouYun.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
             return View();

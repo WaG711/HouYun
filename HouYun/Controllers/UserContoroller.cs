@@ -16,14 +16,12 @@ namespace HouYun.Controllers.UserContoller
             _userRepository = userRepository;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _userRepository.Logout();
             return RedirectToAction("", "Video");
         }
 
-        [HttpGet]
         public IActionResult ChangePassword()
         {
             return PartialView("_ChangePasswordPartial");
@@ -52,7 +50,6 @@ namespace HouYun.Controllers.UserContoller
             }
         }
 
-        [HttpGet]
         public IActionResult ChangeUserName()
         {
             return PartialView("_ChangeUserNamePartial");
@@ -76,19 +73,18 @@ namespace HouYun.Controllers.UserContoller
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Не удалось изменить никнейм. Возможно, имя уже занято или указан неверный пароль.");
+                ModelState.AddModelError(string.Empty, "Ошибка при изменении. Возможно, имя уже занято или указан неверный пароль");
                 return PartialView("_ChangeUserNamePartial", model);
             }
         }
 
-        [HttpGet("/api/user/username")]
-        public async Task<IActionResult> GetUsername()
+        public async Task<IActionResult> GetUserName()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var username = await _userRepository.GetUsernameById(userId);
+            var userName = await _userRepository.GetUserNameById(userId);
 
-            return Ok(username);
+            return Ok(userName);
         }
     }
 }

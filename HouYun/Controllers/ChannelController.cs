@@ -82,7 +82,6 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
         public async Task<IActionResult> Delete()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -100,7 +99,6 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
         public async Task<IActionResult> Update()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
