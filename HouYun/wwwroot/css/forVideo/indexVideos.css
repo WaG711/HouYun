@@ -26,17 +26,17 @@
     }
 
 .my-custom-col {
-    width: 322px;
+    width: 324px;
 }
 
     .my-custom-col.full-width {
-        width: 370px;
+        width: 364.5px;
     }
 
 .card {
     display: flex;
     flex-direction: column;
-    width: 305px;
+    width: 310px;
     height: 330px;
     background-color: inherit;
     border: none;
@@ -45,21 +45,21 @@
     .card.full-width {
         display: flex;
         flex-direction: column;
-        width: 355px;
+        width: 350px;
         height: 375px;
         background-color: inherit;
         border: none;
     }
 
 .card-img-top {
-    width: 305px;
+    width: 310px;
     height: 180px;
     object-fit: cover;
     border-radius: 10px;
 }
 
     .card-img-top.full-width {
-        width: 355px;
+        width: 350px;
         height: 225px;
         object-fit: cover;
         border-radius: 10px;
@@ -70,7 +70,7 @@
     padding-left: 5px;
     padding-bottom: 0px;
     padding-top: 10px;
-    padding-right: 15px;
+    padding-right: 11px;
 }
 
 .card-title {

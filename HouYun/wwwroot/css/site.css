@@ -49,13 +49,17 @@ body {
     position: fixed;
     z-index: 9000;
 }
+    #myHeader .navbar {
+        padding-top: 2px;
+        padding-bottom: 0px;
+    }
 
     #myHeader .navbar-brand {
         font-size: 28px;
         color: #e0e0e0;
         position: absolute;
-        top: 12px;
-        left: 100px;
+        top: 6px;
+        left: 85px;
     }
 
 .logo {
@@ -64,20 +68,15 @@ body {
     margin-top: -8px;
 }
 
-.logo1{
-    margin-right: 8px;
+.mini-img-sb {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
     margin-top: -5px;
 }
+
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
-}
-
-#notification-list {
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
-    max-height: 172px;
-    overflow-y: auto;
 }
 
 .wrapper {
@@ -90,7 +89,7 @@ body {
 .sidebar {
     background-color: #0F1020;
     position: fixed;
-    padding-left: 30px;
+    padding-left: 21px;
     height: 100%;
     overflow: auto;
     width: 280px;
@@ -116,7 +115,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .btn:focus,
@@ -177,7 +176,6 @@ body {
     background: none;
     cursor: pointer;
     position: absolute;
-    left: 20px;
     border: none;
     outline: none;
     box-shadow: none;
@@ -292,6 +290,8 @@ button.zxc:active {
 #notificationButton {
     padding: 15px;
     cursor: pointer;
+    position: relative;
+    top: -2px;
 }
 
 .popup {
@@ -311,6 +311,14 @@ button.zxc:active {
     color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+}
+
+#notification-list {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    max-height: 172px;
+    overflow-y: auto;
 }
 
 .separatorheader {
