@@ -113,6 +113,15 @@ async function toggleNotification() {
     }
 }
 
+document.addEventListener('click', async function (event) {
+    var notificationPopup = document.getElementById('notificationPopup');
+    var notificationButton = document.getElementById('notificationButton');
+
+    if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
+        notificationPopup.style.display = 'none';
+    }
+});
+
 async function GetUserName() {
     try {
         var response = await fetch('/User/GetUserName');
