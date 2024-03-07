@@ -118,14 +118,20 @@ async function toggleNotification() {
     }
 }
 
+document.getElementById('notificationImage').addEventListener('click', toggleNotification);
+
 document.addEventListener('click', function (event) {
     var notificationPopup = document.getElementById('notificationPopup');
     var notificationButton = document.getElementById('notificationButton');
 
     if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
         notificationPopup.style.display = 'none';
+    } else if (event.target === notificationButton) {
+
+        notificationPopup.style.display = 'none';
     }
 });
+
 
 async function GetUserName() {
     try {
