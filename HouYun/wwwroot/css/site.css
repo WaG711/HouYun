@@ -64,6 +64,10 @@ body {
     margin-top: -8px;
 }
 
+.logo1{
+    margin-right: 8px;
+    margin-top: -5px;
+}
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
 }
