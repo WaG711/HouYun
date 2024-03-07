@@ -57,12 +57,13 @@
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
-    width: 94%;
+    max-width: 210px;
     word-wrap: break-word;
 }
 
 .card-channel {
     margin-bottom: 5px;
+    max-width: 220px;
 }
 
 .card-text {
@@ -86,13 +87,13 @@
 }
 
     .main-data h2 {
-        width: 99%;
+        max-width: 1413px;
         word-wrap: break-word;
         margin-top: 8px;
     }
 
 .video-channel {
-    width: 99%;
+    max-width: 1413px;
     display: flex;
     justify-content: space-between;
 }
@@ -178,7 +179,7 @@
         }
 
 .video-details {
-    width: 99%;
+    max-width: 1413px;
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 12px;
@@ -189,13 +190,13 @@
     }
 
 .details-content {
-    width: 99%;
+    max-width: 1413px;
     word-wrap: break-word;
     font-size: 19px;
 }
 
 #commentsSection {
-    width: 99%;
+    max-width: 1413px;
 }
 
 #addCommentForm {
