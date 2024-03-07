@@ -1,13 +1,31 @@
-﻿.video-list {
-    width: 410px;
+﻿.video-js {
+    border-radius: 10px;
+}
+
+    .video-js .vjs-tech {
+        border-radius: 10px;
+    }
+
+    .video-js .vjs-poster img {
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+.vjs-control-bar {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.video-list {
+    margin-top: 15px;
+    width: 450px;
     height: auto;
-    flex-direction: column;
     float: right;
 }
 
 .video-item {
     margin-bottom: 20px;
-    width: 410px;
+    width: 450px;
     height: 120px;
     display: flex;
 }
@@ -39,8 +57,7 @@
     margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    max-width: 170px;
+    width: 94%;
     word-wrap: break-word;
 }
 
@@ -64,32 +81,18 @@
         overflow: hidden;
     }
 
-.main-video {
-    padding-right: 410px;
+.main-data {
+    padding-right: 450px;
 }
 
-.video-js {
-    border-radius: 10px;
-}
-
-    .video-js .vjs-tech {
-        border-radius: 10px;
+    .main-data h2 {
+        width: 99%;
+        word-wrap: break-word;
+        margin-top: 8px;
     }
-
-    .video-js .vjs-poster img {
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-h2 {
-    width: 1420px;
-    word-wrap: break-word;
-    margin-top: 8px;
-}
 
 .video-channel {
-    width: 1420px;
-    padding-right: 10px;
+    width: 99%;
     display: flex;
     justify-content: space-between;
 }
@@ -175,6 +178,7 @@ h2 {
         }
 
 .video-details {
+    width: 99%;
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 12px;
@@ -185,9 +189,13 @@ h2 {
     }
 
 .details-content {
-    max-width: 1420px;
+    width: 99%;
     word-wrap: break-word;
     font-size: 19px;
+}
+
+#commentsSection {
+    width: 99%;
 }
 
 #addCommentForm {
@@ -199,14 +207,11 @@ h2 {
 
 #commentText {
     overflow: hidden;
-    background-color: #1F1B3C;
+    background-color: #0F1020;
     color: #e0e0e0;
-    border-radius: 10px;
-    width: 99%;
-    height: 80px;
+    border-radius: 5px;
+    width: 100%;
     border: none;
-    outline: none;
-    resize: none;
     font-size: 16px;
 }
 
@@ -227,7 +232,6 @@ h2 {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-    width: 99%;
 }
 
     .comment-container a {

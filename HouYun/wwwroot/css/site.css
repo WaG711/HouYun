@@ -55,7 +55,7 @@ body {
         color: #e0e0e0;
         position: absolute;
         top: 12px;
-        left: 100px;
+        left: 85px;
     }
 
 .logo {
@@ -64,10 +64,13 @@ body {
     margin-top: -8px;
 }
 
-.logo1{
-    margin-right: 8px;
+.mini-img-sb {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
     margin-top: -5px;
 }
+
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
 }
@@ -90,7 +93,7 @@ body {
 .sidebar {
     background-color: #0F1020;
     position: fixed;
-    padding-left: 30px;
+    padding-left: 21px;
     height: 100%;
     overflow: auto;
     width: 280px;
@@ -116,7 +119,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .btn:focus,
@@ -177,7 +180,6 @@ body {
     background: none;
     cursor: pointer;
     position: absolute;
-    left: 20px;
     border: none;
     outline: none;
     box-shadow: none;
