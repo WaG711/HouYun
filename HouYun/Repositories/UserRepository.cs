@@ -115,7 +115,7 @@ namespace HouYun.Repositories
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<string> GetUsernameById(string userId)
+        public async Task<string> GetUserNameById(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             return user.UserName;

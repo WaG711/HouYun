@@ -2,7 +2,6 @@
 using HouYun.ViewModels.forVideo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
@@ -10,27 +9,19 @@ namespace HouYun.Controllers
     public class SearchController : Controller
     {
         private readonly ISearchHistoryRepository _searchHistoryRepository;
-        private readonly IChannelRepository _channelRepository;
 
-        public SearchController(ISearchHistoryRepository searchHistoryRepository, IChannelRepository channelRepository)
+        public SearchController(ISearchHistoryRepository searchHistoryRepository)
         {
             _searchHistoryRepository = searchHistoryRepository;
-            _channelRepository = channelRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SearchResult(string searchTerm)
+        public async Task<IActionResult> SearchResult(string term)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-
-            /*var lastSearches = await _searchHistoryRepository.GetSearchHistoryByChannelId(channelId);*/
-
-            var searchResults = await _searchHistoryRepository.SearchVideosByTitle(searchTerm);
+            var searchResults = await _searchHistoryRepository.SearchVideosByTitle(term);
 
             var viewModel = new SearchViewModel
             {
-                SearchTerm = searchTerm,
+                SearchTerm = term,
                 Videos = searchResults,
             };
 

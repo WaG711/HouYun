@@ -40,6 +40,7 @@ namespace HouYun.Controllers
             return View(channel);
         }
 
+        [HttpGet("Channel/Add")]
         public async Task<IActionResult> Add()
         {
             var model = new AddVideoViewModel
@@ -82,7 +83,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
+        [HttpGet("Channel/Delete")]
         public async Task<IActionResult> Delete()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -100,7 +101,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet]
+        [HttpGet("Channel/Update")]
         public async Task<IActionResult> Update()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

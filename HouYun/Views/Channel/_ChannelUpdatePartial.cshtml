@@ -4,15 +4,15 @@
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
-        <input asp-for="ChannelName" id="ChannelUpdate" placeholder="Новый ник" autocomplete="off">
+        <input asp-for="ChannelName" placeholder="Имя канала" autocomplete="off">
     </div>
 
     <div>
-        <textarea asp-for="Description" id="ChannelUpdate" placeholder="Здесь должно быть ваше описание" autocomplete="off"></textarea>
+        <textarea asp-for="Description" placeholder="Описание канала" autocomplete="off"></textarea>
     </div>
 
     <div class="sunbit-but">
-        <input type="submit" id="ChannelUpdate" value="Изменить канал" />
+        <input type="submit" value="Изменить канал" />
     </div>
 </form>
 

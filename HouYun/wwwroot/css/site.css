@@ -58,6 +58,12 @@ body {
         left: 100px;
     }
 
+.logo {
+    width: 48.98px;
+    height: 28.67px;
+    margin-top: -8px;
+}
+
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
 }
@@ -82,6 +88,7 @@ body {
     position: fixed;
     padding-left: 30px;
     height: 100%;
+    overflow: auto;
     width: 280px;
     font-size: 16px;
     z-index: 999;
@@ -201,7 +208,7 @@ body {
     border-radius: 15px;
     box-shadow: none;
     border: none;
-    width: 185px;
+    width: 225px;
 }
 
 .dropdown-menu1 a {

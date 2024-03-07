@@ -22,12 +22,12 @@
                     <span class="burger-line"></span>
                 </button>
                 <a class="navbar-brand" asp-controller="Video" asp-action="">
-                    <img src="~/imges/Logos.png" style="width: 48.98px; height: 28.67px; margin-top:-8px;" /> HouYun
+                    <img src="~/imges/Logos.png" class="logo" /> HouYun
                 </a>
 
                 <div class="container2">
-                    <form id="searchForm" action="@Url.Action("SearchResult", "Search")" method="get">
-                        <input id="searchTerm" type="text" name="searchTerm" placeholder="Поиск" autocomplete="off">
+                    <form id="searchForm" action="@Url.Action("SearchResult", "Search")">
+                        <input id="searchTerm" type="text" name="term" placeholder="Поиск" autocomplete="off">
                         <button type="submit" class="search-button">Искать</button>
                     </form>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
                     <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
-                        <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Сменить имя</a>
+                        <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Изменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a id="btnclickChangePassword" href="@Url.Action("ChangePassword", "User")" class="dropdown-item">Сменить пароль</a>
+                        <a id="btnclickChangePassword" href="@Url.Action("ChangePassword", "User")" class="dropdown-item">Изменить пароль</a>
                         <div class="modal fade" id="ChangePassword">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -60,7 +60,7 @@
                         </div>
                         @if (User.IsInRole("Admin"))
                         {
-                            <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Админ панель</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Панель администратора</a>
                         }
                         <a class="dropdown-item" href="@Url.Action("Logout", "User")" onclick="logout()">Выйти</a>
                     </div>

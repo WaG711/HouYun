@@ -1,4 +1,11 @@
-﻿input#ChannelUpdate[type="text"] {
+﻿#updateForm ul {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+    color: #e0e0e0;
+}
+
+#updateForm input[type="text"] {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -11,18 +18,18 @@
     border: 2px solid transparent;
 }
 
-    input#ChannelUpdate[type="text"]::placeholder,
-    input#ChannelUpdate[type="password"]::placeholder {
+    #updateForm input[type="text"]::placeholder,
+    #updateForm input[type="password"]::placeholder {
         padding-left: 5px;
     }
 
-    input#ChannelUpdate[type="text"]:focus,
-    input#ChannelUpdate[type="password"]:focus {
+    #updateForminput[type="text"]:focus,
+    #updateForminput[type="password"]:focus {
         border-color: #707070;
         border-width: 2px;
     }
 
-.sunbit-but input#ChannelUpdate[type="submit"] {
+#updateForm .sunbit-but input[type="submit"] {
     width: 180px;
     height: 45px;
     background-color: #1F1B3C;
@@ -34,11 +41,11 @@
     font-weight: normal;
 }
 
-    .sunbit-but input#ChannelUpdate[type="submit"]:hover {
+    #updateForm .sunbit-but input[type="submit"]:hover {
         background-color: #2B2751;
     }
 
-textarea#ChannelUpdate {
+#updateForm textarea {
     font-size: 16px;
     border-radius: 10px;
     padding: 5px;
@@ -53,33 +60,33 @@ textarea#ChannelUpdate {
     border: 2px solid transparent;
 }
 
-    textarea#ChannelUpdate::placeholder {
+    #updateForm textarea ::placeholder {
         padding-left: 5px;
     }
 
-    textarea#ChannelUpdate:focus {
+    #updateForm textarea:focus {
         background-color: #282940;
         border-color: #707070;
         border-width: 2px;
     }
 
-    #ChannelUpdate::-webkit-scrollbar {
+    #updateForm::-webkit-scrollbar {
         width: 12px;
         border-radius: 20px;
     }
 
 
-#ChannelUpdate::-webkit-scrollbar-thumb {
+#updateForm ::-webkit-scrollbar-thumb {
     background-color: #6d6d6d;
     border-radius: 6px;
 }
 
-#ChannelUpdate::-webkit-scrollbar-track {
+#updateForm ::-webkit-scrollbar-track {
     background-color: #282940;
     border-radius: 30px;
     border: 2px solid transparent;
 }
 
-#ChannelUpdate::-webkit-scrollbar-thumb:hover {
+#updateForm ::-webkit-scrollbar-thumb:hover {
     background-color: #888;
 }

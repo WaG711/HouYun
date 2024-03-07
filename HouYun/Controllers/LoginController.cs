@@ -13,7 +13,6 @@ namespace HouYun.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
             return View();
@@ -30,7 +29,7 @@ namespace HouYun.Controllers
                 {
                     return RedirectToAction("", "Video");
                 }
-                ModelState.AddModelError(string.Empty, "Неправильный логин и (или) пароль");
+                ModelState.AddModelError(string.Empty, "Неправильное имя пользователя и (или) пароль");
             }
             return View(model);
         }
