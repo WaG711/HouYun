@@ -426,3 +426,15 @@ button.zxc:active {
 #searchTerm::placeholder {
     color: #707070;
 }
+
+.container-expanded {
+    margin-left: 270px;
+}
+
+.container-collapsed {
+    margin-left: 65px;
+}
+
+.container-expanded-none{
+    margin-left: 0px;
+}

@@ -33,7 +33,9 @@ function toggleSidebar() {
         miniSidebar.style.display = 'none';
 
         if (!video) {
-            container.style.marginLeft = '270px';
+            container.classList.remove('container-expanded-none');
+            container.classList.remove('container-collapsed');
+            container.classList.add('container-expanded');
         }
 
         localStorage.setItem('hidden', 'false');
@@ -52,9 +54,13 @@ function toggleSidebar() {
         miniSidebar.style.display = 'block';
 
         if (video) {
-            container.style.marginLeft = '0px';
+            container.classList.remove('container-expanded');
+            container.classList.remove('container-collapsed');
+            container.classList.add('container-expanded-none');
         } else {
-            container.style.marginLeft = '65px';
+            container.classList.remove('container-expanded');
+            container.classList.remove('container-expanded-none');
+            container.classList.add('container-collapsed');
         }
 
         localStorage.setItem('hidden', 'true');
@@ -87,7 +93,7 @@ document.addEventListener('click', function (event) {
     var button = document.getElementById('toggleMenuButton');
     if (!menu.contains(event.target) && !button.contains(event.target)) {
         menu.style.display = 'none';
-    }ww
+    }
 });
 
 function toggleDropdown(button) {
