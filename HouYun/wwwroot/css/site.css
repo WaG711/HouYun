@@ -49,12 +49,16 @@ body {
     position: fixed;
     z-index: 9000;
 }
+    #myHeader .navbar {
+        padding-top: 2px;
+        padding-bottom: 0px;
+    }
 
     #myHeader .navbar-brand {
         font-size: 28px;
         color: #e0e0e0;
         position: absolute;
-        top: 12px;
+        top: 6px;
         left: 85px;
     }
 
@@ -73,14 +77,6 @@ body {
 
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
-}
-
-#notification-list {
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
-    max-height: 172px;
-    overflow-y: auto;
 }
 
 .wrapper {
@@ -294,6 +290,8 @@ button.zxc:active {
 #notificationButton {
     padding: 15px;
     cursor: pointer;
+    position: relative;
+    top: -2px;
 }
 
 .popup {
@@ -313,6 +311,14 @@ button.zxc:active {
     color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+}
+
+#notification-list {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    max-height: 172px;
+    overflow-y: auto;
 }
 
 .separatorheader {

@@ -118,7 +118,7 @@ async function toggleNotification() {
     }
 }
 
-document.addEventListener('click', async function (event) {
+document.addEventListener('click', function (event) {
     var notificationPopup = document.getElementById('notificationPopup');
     var notificationButton = document.getElementById('notificationButton');
 
