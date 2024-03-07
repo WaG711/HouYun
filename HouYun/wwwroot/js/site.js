@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
+    var miniSidebar = document.querySelector('.mini-sidebar');
 
     var columns = document.querySelectorAll('.my-custom-col');
     var cards = document.querySelectorAll('.card');
@@ -29,6 +30,7 @@ function toggleSidebar() {
 
     if (isOpen) {
         sidebar.classList.remove('hidden');
+        miniSidebar.style.display = 'none';
 
         if (!video) {
             container.style.marginLeft = '270px';
@@ -47,6 +49,7 @@ function toggleSidebar() {
         });
     } else {
         sidebar.classList.add('hidden');
+        miniSidebar.style.display = 'block';
 
         if (video) {
             container.style.marginLeft = '0px';
@@ -68,6 +71,7 @@ function toggleSidebar() {
     }
 }
 
+
 function toggleMenu() {
     var menuContent = document.getElementById('menuContent');
 
@@ -83,7 +87,7 @@ document.addEventListener('click', function (event) {
     var button = document.getElementById('toggleMenuButton');
     if (!menu.contains(event.target) && !button.contains(event.target)) {
         menu.style.display = 'none';
-    }
+    }ww
 });
 
 function toggleDropdown(button) {
@@ -118,16 +122,11 @@ async function toggleNotification() {
     }
 }
 
-document.getElementById('notificationImage').addEventListener('click', toggleNotification);
-
 document.addEventListener('click', function (event) {
     var notificationPopup = document.getElementById('notificationPopup');
     var notificationButton = document.getElementById('notificationButton');
 
     if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
-        notificationPopup.style.display = 'none';
-    } else if (event.target === notificationButton) {
-
         notificationPopup.style.display = 'none';
     }
 });
