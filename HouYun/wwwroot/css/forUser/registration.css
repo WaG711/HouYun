@@ -96,8 +96,8 @@ input[type="password"] {
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 30px #282940 inset;
     -webkit-text-fill-color: #e0e0e0;
-    border: none;
-    outline: none;
+    border-color: #707070;
+    border-width: 2px;
 }
 
 .sunbit-but {

@@ -73,26 +73,65 @@
         <div class="sidebar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="Main custom-btn" href="@Url.Action("", "Video")">Главная</a>
+                    <a class="Main custom-btn" href="@Url.Action("", "Video")">
+                        <img src="~/imges/Home.png" class="mini-img-sb" />Главная
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="Subscription custom-btn" href="@Url.Action("Index", "Subscription")">Подписки</a>
+                    <a class="Subscription custom-btn" href="@Url.Action("Index", "Subscription")">
+                        <img src="~/imges/Sub.png" class="mini-img-sb" />Подписки
+                    </a>
                 </li>
                 <div class="separator"></div>
                 <li class="nav-item">
-                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel", new { channelName = (string?)null })">Мой канал</a>
+                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel", new { channelName = (string?)null })">
+                        <img src="~/imges/MyChannel.png" class="mini-img-sb" />Мой канал
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="WH custom-btn" href="@Url.Action("Index", "WatchHistory")">История</a>
+                    <a class="WH custom-btn" href="@Url.Action("Index", "WatchHistory")">
+                        <img src="~/imges/WH.png" class="mini-img-sb" />История
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="WL custom-btn" href="@Url.Action("Index", "WatchLater")">Смотреть позже</a>
+                    <a class="WL custom-btn" href="@Url.Action("Index", "WatchLater")">
+                        <img src="~/imges/WL.png" class="mini-img-sb" />Смотреть позже
+                    </a>
                 </li>
                 <div class="separator"></div>
                 <li class="nav-item">
                     <div class="SubView custom-btn">Подписки</div>
                 </li>
                 <div id="channels-list"></div>
+            </ul>
+        </div>
+         <div class="mini-sidebar">
+            <ul class="mininavbar-nav">
+                <li class="nav-item">
+                    <a class="Main custom-btn" href="@Url.Action("", "Video")">
+                        <img src="~/imges/Home.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="Subscription custom-btn" href="@Url.Action("Index", "Subscription")">
+                        <img src="~/imges/Sub.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="Channel custom-btn" href="@Url.Action("Index", "Channel", new { channelName = (string?)null })">
+                        <img src="~/imges/MyChannel.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="WH custom-btn" href="@Url.Action("Index", "WatchHistory")">
+                        <img src="~/imges/WH.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="WL custom-btn" href="@Url.Action("Index", "WatchLater")">
+                        <img src="~/imges/WL.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
             </ul>
         </div>
 

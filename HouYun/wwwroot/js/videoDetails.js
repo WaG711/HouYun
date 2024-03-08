@@ -1,12 +1,19 @@
-﻿async function addView(videoId) {
-    try {
-        var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+﻿document.addEventListener('DOMContentLoaded', function () {
+    var sidebarHidden = localStorage.getItem('hidden');
 
+    if (sidebarHidden !== 'false') {
+        document.querySelector('.sidebar').classList.add('hidden');
+        toggleSidebar();
+    }
+});
+
+async function addView(videoId) {
+    try {
         const response = await fetch(`/View/AddView/${videoId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': csrfToken
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
             },
             body: JSON.stringify({})
         });
@@ -22,13 +29,11 @@
 
 async function AddToWatchHistory(videoId) {
     try {
-        var csrfToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
-
         const response = await fetch(`/WatchHistory/AddToWatchHistory/${videoId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': csrfToken
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
             },
             body: JSON.stringify({})
         });
@@ -90,6 +95,10 @@ async function addComment() {
     try {
         var videoId = document.getElementById("videoId").value;
         var commentText = document.getElementById("commentText").value;
+
+        if (!videoId.trim() || !commentText.trim()) {
+            return;
+        }
 
         var formData = new FormData();
         formData.append("videoId", videoId);

@@ -5,8 +5,14 @@
     @foreach (var notification in Model)
     {
         <div class="notification-item">
+            <p>
+                <a href="@Url.Action("Index", "Channel", new { ChannelName = @notification.Video.Channel.Name })">
+                    @notification.Video.Channel.Name
+                </a>
+                @Helper.TimeAgo(notification.NotificationDate)
+            </p>
             <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })">
-                На канале @notification.Video.Channel.Name вышло новое видео: @notification.Video.Title
+                Новое видео: @notification.Video.Title
             </a>
         </div>
     }

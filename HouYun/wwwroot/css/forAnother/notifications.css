@@ -1,12 +1,15 @@
 ﻿.notification-item {
-    max-height: 50px;
-    margin-bottom: 8px;
+    max-height: 70px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
+    .notification-item p {
+        font-size: small;
+        margin-bottom: 0px;
+    }
+
     .notification-item a {
-        display: block;
-        text-decoration: none;
+        font-weight: 600;
         color: inherit;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
