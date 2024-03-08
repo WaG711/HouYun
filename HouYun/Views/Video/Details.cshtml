@@ -43,7 +43,7 @@
                         <a href="@Url.Action("Index", "Channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
                     </p>
                     <p class="card-text">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) || @Helper.TimeAgo(video.UploadDate)</a>
+                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | | @Helper.TimeAgo(video.UploadDate)</a>
                     </p>
                 </div>
             </div>
@@ -103,7 +103,7 @@
     </h4>
 
     <div class="video-details">
-        <p>@Helper.FormatViews(@Model.Video.Views.Count) || @Helper.TimeAgo(@Model.Video.UploadDate) || Количество "Нравится": @Model.Video.Likes.Count</p>
+        <p>@Helper.FormatViews(@Model.Video.Views.Count) | | @Helper.TimeAgo(@Model.Video.UploadDate) | | Количество "Нравится": @Model.Video.Likes.Count</p>
         <div class="details-content">
             <p>@Model.Video.Description</p>
         </div>

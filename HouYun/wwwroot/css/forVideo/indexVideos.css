@@ -74,6 +74,7 @@
 }
 
 .card-title {
+    font-size: x-large;
     display: flex;
     justify-content: space-between;
     margin-bottom: 2px;

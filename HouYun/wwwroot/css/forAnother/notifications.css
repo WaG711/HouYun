@@ -1,8 +1,13 @@
 ﻿.notification-item {
-    max-height: 50px;
-    margin-bottom: 8px;
+    max-height: 70px;
+    margin-bottom: 10px;
     overflow: hidden;
 }
+
+    .notification-item p {
+        font-size: small;
+        margin-bottom: 0px;
+    }
 
     .notification-item a {
         color: inherit;
