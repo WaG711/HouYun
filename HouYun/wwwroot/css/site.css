@@ -75,6 +75,15 @@ body {
     margin-top: -5px;
 }
 
+.mini-img-mini-sb {
+    width: 30px;
+    height: 30px;
+    margin-left: -16px;
+    margin-top: 20px;
+    top: -7px;
+    position: relative;
+}
+
 #toggleSidebarButton .burger-line {
     background-color: #e0e0e0;
 }
@@ -101,6 +110,16 @@ body {
         font-size: 18px;
         list-style-type: none;
         margin-top: 15px;
+        color: #e0e0e0;
+        text-decoration: none;
+    }
+
+.mini-sidebar {
+    position: fixed;
+}
+
+    .mini-sidebar ul li {
+        list-style-type: none;
         color: #e0e0e0;
         text-decoration: none;
     }
@@ -406,4 +425,16 @@ button.zxc:active {
 
 #searchTerm::placeholder {
     color: #707070;
+}
+
+.container-expanded {
+    margin-left: 270px;
+}
+
+.container-collapsed {
+    margin-left: 65px;
+}
+
+.container-expanded-none{
+    margin-left: 0px;
 }

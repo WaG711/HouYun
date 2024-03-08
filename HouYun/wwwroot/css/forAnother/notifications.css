@@ -1,12 +1,9 @@
 ﻿.notification-item {
     max-height: 50px;
     margin-bottom: 8px;
+    overflow: hidden;
 }
 
     .notification-item a {
-        display: block;
-        text-decoration: none;
         color: inherit;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
