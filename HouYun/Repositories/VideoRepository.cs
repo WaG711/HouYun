@@ -107,12 +107,12 @@ namespace HouYun.Repositories
 
             try
             {
-                await DeleteNotifications(id);
-                await DeleteComments(id);
-                await DeleteLikes(id);
-                await DeleteViews(id);
-                await DeleteWatchLaterItem(id);
-                await DeleteWatchHistory(id);
+                await DeleteEntitiesByVideoId<Notification>(id);
+                await DeleteEntitiesByVideoId<Comment>(id);
+                await DeleteEntitiesByVideoId<Like>(id);
+                await DeleteEntitiesByVideoId<View>(id);
+                await DeleteEntitiesByVideoId<WatchLater>(id);
+                await DeleteEntitiesByVideoId<WatchHistory>(id);
 
                 await DeleteFile(video.VideoPath, "videos");
                 await DeleteFile(video.PosterPath, "posters");
@@ -154,46 +154,10 @@ namespace HouYun.Repositories
             }
         }
 
-        private async Task DeleteNotifications(Guid id)
+        private async Task DeleteEntitiesByVideoId<TEntity>(Guid id) where TEntity : class
         {
-            var notifications = await _context.Notifications.Where(n => n.VideoId == id).ToListAsync();
-            _context.Notifications.RemoveRange(notifications);
-        }
-
-        private async Task DeleteComments(Guid id)
-        {
-            var comments = await _context.Comments.Where(c => c.VideoId == id).ToListAsync();
-            _context.Comments.RemoveRange(comments);
-        }
-
-        private async Task DeleteLikes(Guid id)
-        {
-            var likes = await _context.Likes.Where(l => l.VideoId == id).ToListAsync();
-            _context.Likes.RemoveRange(likes);
-        }
-
-        private async Task DeleteViews(Guid id)
-        {
-            var views = await _context.Views.Where(v => v.VideoId == id).ToListAsync();
-            _context.Views.RemoveRange(views);
-        }
-
-        private async Task DeleteWatchLaterItem(Guid id)
-        {
-            var watchLater = await _context.WatchLaterItems.FirstOrDefaultAsync(w => w.VideoId == id);
-            if (watchLater != null)
-            {
-                _context.WatchLaterItems.Remove(watchLater);
-            }
-        }
-
-        private async Task DeleteWatchHistory(Guid id)
-        {
-            var watchHistory = await _context.WatchHistories.FirstOrDefaultAsync(w => w.VideoId == id);
-            if (watchHistory != null)
-            {
-                _context.WatchHistories.Remove(watchHistory);
-            }
+            var entities = await _context.Set<TEntity>().Where(e => EF.Property<Guid>(e, "VideoId") == id).ToListAsync();
+            _context.Set<TEntity>().RemoveRange(entities);
         }
     }
 }

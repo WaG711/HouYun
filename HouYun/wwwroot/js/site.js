@@ -51,7 +51,6 @@ function toggleSidebar() {
         });
     } else {
         sidebar.classList.add('hidden');
-        miniSidebar.style.display = 'block';
 
         if (video) {
             container.classList.remove('container-expanded');
@@ -61,6 +60,7 @@ function toggleSidebar() {
             container.classList.remove('container-expanded');
             container.classList.remove('container-expanded-none');
             container.classList.add('container-collapsed');
+            miniSidebar.style.display = 'block';
         }
 
         localStorage.setItem('hidden', 'true');
