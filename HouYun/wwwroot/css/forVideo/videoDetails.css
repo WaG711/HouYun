@@ -54,6 +54,7 @@
 }
 
 .card-title {
+    font-weight: 600;
     font-size: 22px;
     margin-bottom: 5px;
     display: flex;
@@ -88,6 +89,7 @@
 }
 
     .main-data h2 {
+        font-weight: 600;
         max-width: 1413px;
         word-wrap: break-word;
         margin-top: 8px;

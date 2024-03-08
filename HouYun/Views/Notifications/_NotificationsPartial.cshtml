@@ -6,7 +6,7 @@
     {
         <div class="notification-item">
             <p>
-                <a href="@Url.Action("Index", "Channel", new { ChannelName = @notification.Video.Channel })">
+                <a href="@Url.Action("Index", "Channel", new { ChannelName = @notification.Video.Channel.Name })">
                     @notification.Video.Channel.Name
                 </a>
                 @Helper.TimeAgo(notification.NotificationDate)

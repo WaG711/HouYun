@@ -4,6 +4,7 @@
 }
 
     .channel-item a {
+        font-weight: 600;
         display: block;
         text-decoration: none;
         color: inherit;
