@@ -33,9 +33,9 @@ function toggleSidebar() {
         miniSidebar.style.display = 'none';
 
         if (!video) {
-            container.classList.remove('container-expanded-none');
-            container.classList.remove('container-collapsed');
-            container.classList.add('container-expanded');
+            container.classList.remove('expanded-none');
+            container.classList.remove('collapsed');
+            container.classList.add('expanded');
         }
 
         localStorage.setItem('hidden', 'false');
@@ -53,13 +53,13 @@ function toggleSidebar() {
         sidebar.classList.add('hidden');
 
         if (video) {
-            container.classList.remove('container-expanded');
-            container.classList.remove('container-collapsed');
-            container.classList.add('container-expanded-none');
+            container.classList.remove('expanded');
+            container.classList.remove('collapsed');
+            container.classList.add('expanded-none');
         } else {
-            container.classList.remove('container-expanded');
-            container.classList.remove('container-expanded-none');
-            container.classList.add('container-collapsed');
+            container.classList.remove('expanded');
+            container.classList.remove('expanded-none');
+            container.classList.add('collapsed');
             miniSidebar.style.display = 'block';
         }
 

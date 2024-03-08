@@ -76,8 +76,8 @@ body {
 }
 
 .mini-img-mini-sb {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: -16px;
     margin-top: 20px;
     top: -7px;
@@ -130,7 +130,6 @@ body {
 }
 
 .content {
-    margin-left: 270px;
     padding-left: 15px;
     padding-right: 15px;
     flex-grow: 1;
@@ -427,14 +426,14 @@ button.zxc:active {
     color: #707070;
 }
 
-.container-expanded {
+.expanded {
     margin-left: 270px;
 }
 
-.container-collapsed {
+.collapsed {
     margin-left: 65px;
 }
 
-.container-expanded-none{
+.expanded-none{
     margin-left: 0px;
 }
