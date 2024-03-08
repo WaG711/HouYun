@@ -146,7 +146,7 @@ namespace HouYun.Controllers
         {
             if (model.VideoFile.Length > MaxVideoSize)
             {
-                ModelState.AddModelError("VideoFile", "Размер файла видео превышает максимально допустимый.");
+                ModelState.AddModelError("VideoFile", "Размер файла видео превышает максимально допустимый");
                 return false;
             }
 
@@ -154,7 +154,7 @@ namespace HouYun.Controllers
             var videoExtension = Path.GetExtension(model.VideoFile.FileName).ToLower();
             if (!allowedVideoExtensions.Contains(videoExtension))
             {
-                ModelState.AddModelError("VideoFile", "Формат видео должен быть MP4.");
+                ModelState.AddModelError("VideoFile", "Формат видео должен быть MP4");
                 return false;
             }
 
@@ -167,7 +167,7 @@ namespace HouYun.Controllers
             {
                 if (model.PosterFile.Length > MaxPosterSize)
                 {
-                    ModelState.AddModelError("PosterFile", "Размер файла постера превышает максимально допустимый.");
+                    ModelState.AddModelError("PosterFile", "Размер файла постера превышает максимально допустимый");
                     return false;
                 }
 
@@ -175,7 +175,7 @@ namespace HouYun.Controllers
                 var extension = Path.GetExtension(model.PosterFile.FileName).ToLower();
                 if (!allowedExtensions.Contains(extension))
                 {
-                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла постера.");
+                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла постера");
                     return false;
                 }
             }
