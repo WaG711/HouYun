@@ -33,14 +33,14 @@
                 </div>
                 <div class="profileinfo">
                     <button id="notificationButton" class="custom-btn" onclick="toggleNotification()">
-                        <img src="/imges/Bell.png" alt="Уведомления" width="18" height="22">
+                        <img src="/imges/Bell.png" alt="Уведомления">
                     </button>
                     <div id="notificationPopup" class="popup">
                         <div class="popup-header">Уведомления</div>
                         <div class="separatorheader"></div>
                         <div class="notification-list" id="notification-list"></div>
                     </div>
-                    <button id="toggleMenuButton" class="menuheader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
+                    <button id="toggleMenuButton" class="menuHeader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
                         <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Изменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
@@ -106,7 +106,7 @@
             </ul>
         </div>
          <div class="mini-sidebar">
-            <ul class="mininavbar-nav">
+            <ul class="mini-navbar-nav">
                 <li class="nav-item">
                     <a class="Main custom-btn" href="@Url.Action("", "Video")">
                         <img src="~/imges/Home.png" class="mini-img-mini-sb" />
@@ -134,7 +134,7 @@
                 </li>
             </ul>
         </div>
-
+        
         <div class="content">
             <main role="main" class="pb-3">
                 @RenderBody()
