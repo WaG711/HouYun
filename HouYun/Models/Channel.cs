@@ -7,17 +7,12 @@ namespace HouYun.Models
     {
         public Guid ChannelId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Название канала' обязательно для заполнения")]
-        [Display(Name = "Название канала")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Описание канала' обязательно для заполнения")]
-        [Display(Name = "Описание канала")]
-        [StringLength(500, ErrorMessage = "Длина 'Описания' не должна превышать 500 символов")]
+        [StringLength(500)]
         public string Description { get; set; }
 
         [ScaffoldColumn(false)]
-        [Display(Name = "Дата регистрации")]
         public DateTime RegistrationDate  { get; set; }
 
         public string UserId { get; set; }

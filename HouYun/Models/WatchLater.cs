@@ -9,7 +9,6 @@ namespace HouYun.Models
         public Guid WatchLaterId { get; set; }
 
         [ScaffoldColumn(false)]
-        [Display(Name = "Дата просмотра")]
         public DateTime WatchLaterDate { get; set; }
 
         public Guid VideoId { get; set; }

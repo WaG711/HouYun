@@ -7,6 +7,7 @@ namespace HouYun.ViewModels.forUser
         [Required(ErrorMessage = "Новый пароль обязателен для заполнения")]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
+
         [Required(ErrorMessage = "Старый пароль обязателен для заполнения")]
         [DataType(DataType.Password)]
         public string OldPassword { get; set; }

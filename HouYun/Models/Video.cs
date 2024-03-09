@@ -8,14 +8,10 @@ namespace HouYun.Models
         [Key]
         public Guid VideoId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Название видео' обязательно для заполнения")]
-        [Display(Name = "Название видео")]
-        [StringLength(100, ErrorMessage = "Длина 'Названия' не должна превышать 100 символов")]
+        [StringLength(100)]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Описание видео' обязательно для заполнения")]
-        [Display(Name = "Описание видео")]
-        [StringLength(500, ErrorMessage = "Длина 'Описания' не должна превышать 500 символов")]
+        [StringLength(500)]
         public string Description { get; set; }
 
         [ScaffoldColumn(false)]
@@ -25,20 +21,14 @@ namespace HouYun.Models
         public string PosterPath { get; set; }
 
         [NotMapped]
-        [Display(Name = "Файл видео")]
-        [Required(ErrorMessage = "Выберите видеофайл")]
         public IFormFile VideoFile { get; set; }
 
         [NotMapped]
-        [Display(Name = "Файл постера")]
-        [Required(ErrorMessage = "Выберите постер")]
         public IFormFile PosterFile { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime UploadDate { get; set; }
 
-        [Display(Name = "Категория видео")]
-        [Required(ErrorMessage = "Поле 'Категория видео' обязательно для заполнения")]
         public Guid CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }

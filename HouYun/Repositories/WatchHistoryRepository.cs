@@ -17,7 +17,7 @@ namespace HouYun.Repositories
         public async Task<WatchHistory> GetWatchHistoryByChannelIdAndVideoId(Guid channelId, Guid videoId)
         {
             return await _context.WatchHistories
-                .FirstOrDefaultAsync(w => w.ChannelId == channelId && w.VideoId == videoId);
+                .FirstOrDefaultAsync(wh => wh.ChannelId == channelId && wh.VideoId == videoId);
         }
 
         public async Task UpdateWatchHistory(WatchHistory existingWatchHistory)
@@ -29,16 +29,16 @@ namespace HouYun.Repositories
         public async Task<IEnumerable<Video>> GetWatchHistoryByChannelId(Guid channelId)
         {
             return await _context.WatchHistories
-            .Where(w => w.ChannelId == channelId)
-            .Include(w => w.Channel)
-            .Include(w => w.Video)
+            .Where(wh => wh.ChannelId == channelId)
+            .Include(wh => wh.Channel)
+            .Include(wh => wh.Video)
                 .ThenInclude(v => v.Channel)
-            .Include(w => w.Video)
+            .Include(wh => wh.Video)
                 .ThenInclude(v => v.Views)
-            .Include(w => w.Video)
+            .Include(wh => wh.Video)
                 .ThenInclude(v => v.Comments)
-            .OrderByDescending(w => w.WatchDate)
-            .Select(item => item.Video)
+            .OrderByDescending(wh => wh.WatchDate)
+            .Select(wh => wh.Video)
             .ToListAsync();
         }
 
@@ -51,7 +51,7 @@ namespace HouYun.Repositories
         public async Task DeleteAllWatchHistory(Guid channelId)
         {
             var watchHistories = await _context.WatchHistories
-                .Where(w => w.ChannelId == channelId)
+                .Where(wh => wh.ChannelId == channelId)
                 .ToListAsync();
 
             _context.WatchHistories.RemoveRange(watchHistories);

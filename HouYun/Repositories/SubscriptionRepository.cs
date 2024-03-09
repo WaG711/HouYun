@@ -17,9 +17,10 @@ namespace HouYun.Repositories
         public async Task<IEnumerable<Video>> GetUserSubscribedVideos(string userId)
         {
             return await _context.Subscriptions
-                .Where(sub => sub.UserId == userId)
-                .SelectMany(sub => sub.Channel.Videos)
+                .Where(s => s.UserId == userId)
+                .SelectMany(s => s.Channel.Videos)
                 .Include(v => v.Channel)
+                .Include(v => v.Views)
                 .OrderByDescending(v => v.UploadDate)
                 .ToListAsync();
         }
@@ -48,7 +49,7 @@ namespace HouYun.Repositories
         {
             var channel = await _context.Channels
                 .Include(c => c.Subscribers)
-                    .ThenInclude(f => f.User.Channel)
+                    .ThenInclude(s => s.User.Channel)
                 .FirstOrDefaultAsync(c => c.ChannelId == channelId);
 
             return channel.Subscribers;

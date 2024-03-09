@@ -7,8 +7,7 @@ namespace HouYun.Models
         [Key]
         public Guid CategoryId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Название' обязательно для заполнения")]
-        [StringLength(50, ErrorMessage = "Длина 'Названия' не должна превышать 50 символов")]
+        [StringLength(50)]
         public string Name { get; set; }
 
         public ICollection<Video> Videos { get; set; }
