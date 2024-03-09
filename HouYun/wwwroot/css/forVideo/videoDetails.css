@@ -63,6 +63,41 @@
     word-wrap: break-word;
 }
 
+.zxc {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    border: none;
+    margin-right: -25px;
+    outline: none;
+    box-shadow: none;
+}
+
+    .zxc:focus,
+    .zxc:active {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .zxc .dropdown-toggle::after {
+        display: none;
+    }
+
+.dropdown-toggle::after {
+    content: none;
+}
+
+.dropdown-menu {
+    display: none;
+    background-color: transparent;
+    border-radius: 5px;
+    color: #e0e0e0;
+    position: absolute;
+    right: -25px;
+    top: 100%;
+    text-decoration: none;
+}
+
 .card-channel {
     margin-bottom: 5px;
     max-width: 220px;

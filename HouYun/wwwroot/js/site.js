@@ -148,13 +148,11 @@ async function channelList() {
 
 async function addToWatchLater(url, videoId) {
     try {
-        const csrfToken = $('input[name="__RequestVerificationToken"]').val();
-
         await $.ajax({
             url: url,
             type: 'POST',
             headers: {
-                'RequestVerificationToken': csrfToken
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
             },
             data: { videoId: videoId },
         });
