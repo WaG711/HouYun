@@ -7,16 +7,15 @@ namespace HouYun.ViewModels.forVideo
     {
         [Required(ErrorMessage = "Название видео обязательно для заполнения")]
         [Display(Name = "Название видео")]
-        [StringLength(100, ErrorMessage = "Название не должна превышать 100 символов")]
+        [StringLength(100, MinimumLength = 4, ErrorMessage = "Название должно быть от 4 до 100 символов")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Описание видео обязательно для заполнения")]
         [Display(Name = "Описание видео")]
-        [StringLength(500, ErrorMessage = "Описание не должна превышать 500 символов")]
+        [StringLength(500, MinimumLength = 4, ErrorMessage = "Описание должно быть от 4 до 500 символов")]
         public string Description { get; set; }
 
         [Display(Name = "Категория видео")]
-        [Required(ErrorMessage = "Категория обязательна для выбора")]
         public Guid? CategoryId { get; set; }
 
         [Display(Name = "Файл видео")]

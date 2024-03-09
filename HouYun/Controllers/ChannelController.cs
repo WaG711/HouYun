@@ -119,6 +119,11 @@ namespace HouYun.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateChannelViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_ChannelUpdatePartial", model);
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channel = await _channelRepository.GetChannelByUserId(userId);
 

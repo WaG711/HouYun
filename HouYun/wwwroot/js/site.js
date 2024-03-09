@@ -19,11 +19,6 @@ function toggleSidebar() {
     var sidebar = document.querySelector('.sidebar');
     var container = document.querySelector('.content');
     var miniSidebar = document.querySelector('.mini-sidebar');
-
-    var columns = document.querySelectorAll('.my-custom-col');
-    var cards = document.querySelectorAll('.card');
-    var imgs = document.querySelectorAll('.card-img-top');
-
     var video = document.querySelector('.main-video');
 
     var isOpen = sidebar.classList.contains('hidden');
@@ -39,16 +34,6 @@ function toggleSidebar() {
         }
 
         localStorage.setItem('hidden', 'false');
-
-        columns.forEach(function (column) {
-            column.classList.remove('full-width');
-        });
-        cards.forEach(function (card) {
-            card.classList.remove('full-width');
-        });
-        imgs.forEach(function (img) {
-            img.classList.remove('full-width');
-        });
     } else {
         sidebar.classList.add('hidden');
 
@@ -64,17 +49,16 @@ function toggleSidebar() {
         }
 
         localStorage.setItem('hidden', 'true');
-
-        columns.forEach(function (column) {
-            column.classList.add('full-width');
-        });
-        cards.forEach(function (card) {
-            card.classList.add('full-width');
-        });
-        imgs.forEach(function (img) {
-            img.classList.add('full-width');
-        });
     }
+
+    var elements = document.querySelectorAll('.my-custom-col, .card, .card-img-top');
+    elements.forEach(function (element) {
+        if (isOpen) {
+            element.classList.remove('full-width');
+        } else {
+            element.classList.add('full-width');
+        }
+    });
 }
 
 

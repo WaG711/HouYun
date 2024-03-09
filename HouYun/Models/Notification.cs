@@ -9,10 +9,8 @@ namespace HouYun.Models
         public Guid NotificationId { get; set; }
 
         [ScaffoldColumn(false)]
-        [Display(Name = "Дата уведомления")]
         public DateTime NotificationDate { get; set; }
 
-        [Display(Name = "Прочитано")]
         public bool IsRead { get; set; }
 
         public Guid ChannelId { get; set; }

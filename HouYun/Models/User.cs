@@ -8,12 +8,10 @@ namespace HouYun.Models
         [Key]
         public override string Id { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Email' обязательно для заполнения")]
-        [EmailAddress(ErrorMessage = "Некорректный формат 'Email'")]
+        [EmailAddress]
         public override string Email { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Логин' обязательно для заполнения")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Длина 'Логина' должна быть от 3 до 50 символов")]
+        [StringLength(50)]
         public override string UserName { get; set; }
 
         public Channel Channel { get; set; }
