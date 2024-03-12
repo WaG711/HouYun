@@ -51,7 +51,7 @@ function toggleSidebar() {
         localStorage.setItem('hidden', 'true');
     }
 
-    var elements = document.querySelectorAll('.my-custom-col, .card, .card-img-top');
+    var elements = document.querySelectorAll('.card, .card-img-top');
     elements.forEach(function (element) {
         if (isOpen) {
             element.classList.remove('full-width');

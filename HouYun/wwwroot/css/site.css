@@ -5,7 +5,7 @@ html {
 }
 
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -372,6 +372,10 @@ body {
     padding-right: 15px;
     flex-grow: 1;
     margin-top: 10px;
+}
+
+.pb-3 {
+    max-width: 196.2vh;
 }
 
 ::-webkit-scrollbar {

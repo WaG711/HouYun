@@ -1,4 +1,4 @@
-﻿.row.mb-3 {
+﻿.row .mb-3 {
     margin-bottom: 3rem;
 }
 
@@ -26,17 +26,13 @@
     }
 
 .my-custom-col {
-    width: 324px;
+    width: 20%;
 }
-
-    .my-custom-col.full-width {
-        width: 364.5px;
-    }
 
 .card {
     display: flex;
     flex-direction: column;
-    width: 310px;
+    width: 100%;
     height: 330px;
     background-color: inherit;
     border: none;
@@ -45,24 +41,22 @@
     .card.full-width {
         display: flex;
         flex-direction: column;
-        width: 350px;
+        width: 100%;
         height: 375px;
         background-color: inherit;
         border: none;
     }
 
 .card-img-top {
-    width: 310px;
+    width: 100%;
     height: 180px;
     object-fit: cover;
     border-radius: 10px;
 }
 
     .card-img-top.full-width {
-        width: 350px;
+        width: 100%;
         height: 205px;
-        object-fit: cover;
-        border-radius: 10px;
     }
 
 .card-body {
