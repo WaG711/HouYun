@@ -15,113 +15,115 @@
     </video>
 </div>
 
-<div class="video-list">
-    @foreach (var video in Model.Videos)
-    {
-        <div class="video-item">
-            <div class="video-card">
-                <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
-                    <img class="card-img-details poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
-                </a>
-                <div class="card-body">
-                    <h3 class="card-title">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
-                        <div class="dropdown-container">
-                            <div class="dropdown">
-                                <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
-                                    ...
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
-                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
-                                </div>
-                            </div>
-                        </div>
-                    </h3>
-                    <p class="card-channel">
-                        <a href="@Url.Action("Index", "Channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
-                    </p>
-                    <p class="card-text">
-                        <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | | @Helper.TimeAgo(video.UploadDate)</a>
-                    </p>
-                </div>
+<div class="datas">
+    <div class="main-data">
+        <h2>@Model.Video.Title</h2>
+
+        <h4 class="video-channel">
+            <a href="@Url.Action("Index", "Channel", new { channelName = Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
+            @{
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var isAuthor = Model.Video.Channel.UserId == userId;
+                var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
+                var isLiked = Model.Video.Likes.Any(l => l.Channel.UserId == userId);
+
+                if (!isAuthor)
+                {
+                    if (isSubscribed)
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="unsubscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Отписаться</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="subscribeForm">
+                            <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
+                            <button type="button" onclick="subscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Подписаться</button>
+                        </form>
+                    }
+                }
+            }
+
+            <span>
+                @{
+                    if (isLiked)
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="removeLike()" class="btn btn-like btn-unlike" id="likeButton" data-like="like">Не нравится</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form id="likeForm">
+                            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                            <button type="button" onclick="addLike()" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
+                        </form>
+                    }
+                }
+                <button class="btn btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');" data-WL="WL">Смотреть позже</button>
+            </span>
+        </h4>
+
+        <div class="video-details">
+            <p>@Helper.FormatViews(@Model.Video.Views.Count) | | @Helper.TimeAgo(@Model.Video.UploadDate) | | Количество "Нравится": @Model.Video.Likes.Count</p>
+            <div class="details-content">
+                <p>@Model.Video.Description</p>
             </div>
         </div>
-    }
-</div>
 
-<div class ="main-data">
-    <h2>@Model.Video.Title</h2>
-
-    <h4 class="video-channel">
-        <a href="@Url.Action("Index", "Channel", new { channelName = Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
-        @{
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var isAuthor = Model.Video.Channel.UserId == userId;
-            var isSubscribed = Model.Video.Channel.Subscribers.Any(s => s.UserId == userId);
-            var isLiked = Model.Video.Likes.Any(l => l.Channel.UserId == userId);
-
-            if (!isAuthor)
+        <div id="commentsSection">
+            <h3>Комментарии</h3>
+            <form id="addCommentForm">
+                <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
+                <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required maxlength="500"></textarea><br>
+                <button type="button" onclick="addComment()" class="btn btn-addCom">Добавить комментарий</button>
+            </form>
+            @foreach (var comment in Model.Video.Comments)
             {
-                if (isSubscribed)
-                {
-                    <form id="subscribeForm">
-                        <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
-                        <button type="button" onclick="unsubscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Отписаться</button>
-                    </form>
-                }
-                else
-                {
-                    <form id="subscribeForm">
-                        <input type="hidden" id="channelId" name="channelId" value="@Model.Video.ChannelId" />
-                        <button type="button" onclick="subscribe()" class="btn btn-light btn-sm rounded-pill" id="subscribeButton">Подписаться</button>
-                    </form>
-                }
+                <div class="comment-container">
+                    <a href="@Url.Action("Index", "Channel", new { channelName = comment.Channel.Name })">
+                        @comment.Channel.Name | | @Helper.TimeAgo(@comment.CommentDate)
+                    </a>
+                    <p>@comment.Text</p>
+                </div>
             }
-        }
-
-        <span>
-            @{
-                if (isLiked)
-                {
-                    <form id="likeForm">
-                        <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                        <button type="button" onclick="removeLike()" class="btn btn-like btn-unlike" id="likeButton" data-like="like">Не нравится</button>
-                    </form>
-                }
-                else
-                {
-                    <form id="likeForm">
-                        <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-                        <button type="button" onclick="addLike()" class="btn btn-like" id="likeButton" data-like="like">Нравится</button>
-                    </form>
-                }
-            }
-            <button class="btn btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');" data-WL="WL">Смотреть позже</button>
-        </span>
-    </h4>
-
-    <div class="video-details">
-        <p>@Helper.FormatViews(@Model.Video.Views.Count) | | @Helper.TimeAgo(@Model.Video.UploadDate) | | Количество "Нравится": @Model.Video.Likes.Count</p>
-        <div class="details-content">
-            <p>@Model.Video.Description</p>
         </div>
     </div>
 
-    <div id="commentsSection">
-        <h3>Комментарии</h3>
-        <form id="addCommentForm">
-            <input type="hidden" id="videoId" name="videoId" value="@Model.Video.VideoId" />
-            <textarea id="commentText" name="commentText" placeholder="Введите комментарий" required maxlength="500"></textarea><br>
-            <button type="button" onclick="addComment()" class="btn btn-addCom">Добавить комментарий</button>
-        </form>
-        @foreach (var comment in Model.Video.Comments)
+    <div class="video-list">
+        @foreach (var video in Model.Videos)
         {
-            <div class="comment-container">
-                <a href="@Url.Action("Index", "Channel", new { channelName = comment.Channel.Name })">
-                    @comment.Channel.Name || @Helper.TimeAgo(@comment.CommentDate)
-                </a>
-                <p>@comment.Text</p>
+            <div class="video-item">
+                <div class="video-card">
+                    <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">
+                        <img class="card-img-details poster-image" src="@Url.Content("~/posters/" + video.PosterPath)" alt="Video Poster">
+                    </a>
+                    <div class="card-body">
+                        <h3 class="card-title">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@video.Title</a>
+                            <div class="dropdown-container">
+                                <div class="dropdown">
+                                    <button onclick="toggleDropdown(this)" class="zxc btn btn-outline-secondary btn-sm custom-btn dropdown-toggle">
+                                        ...
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@video.VideoId');
+                                    toggleDropdown(this.closest('.dropdown').querySelector('.dropdown-toggle'));">Смотреть позже</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </h3>
+                        <p class="card-channel">
+                            <a href="@Url.Action("Index", "Channel", new { channelName = video.Channel.Name })">@video.Channel.Name</a>
+                        </p>
+                        <p class="card-text">
+                            <a href="@Url.Action("Details", "Video", new { videoId = video.VideoId })">@Helper.FormatViews(video.Views.Count) | | @Helper.TimeAgo(video.UploadDate)</a>
+                        </p>
+                    </div>
+                </div>
             </div>
         }
     </div>
