@@ -29,6 +29,18 @@ namespace HouYun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAllWatchHistory()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+
+            await _watchHistoryRepository.DeleteAllWatchHistory(channelId);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         [Route("WatchHistory/AddToWatchHistory/{videoId}")]
         public async Task<IActionResult> AddToWatchHistory(Guid videoId)
         {
@@ -53,18 +65,6 @@ namespace HouYun.Controllers
             }
 
             return Ok();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAllWatchHistory()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
-
-            await _watchHistoryRepository.DeleteAllWatchHistory(channelId);
-
-            return RedirectToAction("Index");
         }
     }
 }
