@@ -17,12 +17,12 @@ namespace HouYun.Repositories
         public async Task<IEnumerable<Video>> GetVideosByChannelId(Guid channelId)
         {
             return await _context.WatchLaterItems
-                .Where(item => item.ChannelId == channelId)
-                .Include(item => item.Video.Channel)
-                .Include(item => item.Video.Views)
-                .Include(item => item.Video.WatchLaterItems)
-                    .ThenInclude(v => v.Channel)
-                .Select(item => item.Video)
+                .Where(wl => wl.ChannelId == channelId)
+                .Include(wl => wl.Video.Channel)
+                .Include(wl => wl.Video.Views)
+                .Include(wl => wl.Video.WatchLaterItems)
+                    .ThenInclude(wl => wl.Channel)
+                .Select(wl => wl.Video)
                 .ToListAsync();
         }
 

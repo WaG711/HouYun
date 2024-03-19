@@ -32,11 +32,6 @@ namespace HouYun.Repositories
             return await GetChannelInfo(c => c.UserId == userId);
         }
 
-        public async Task<IEnumerable<Channel>> GetAllChannels()
-        {
-            return await _context.Channels.ToListAsync();
-        }
-
         public async Task UpdateChannel(Channel channel)
         {
             try
@@ -53,23 +48,12 @@ namespace HouYun.Repositories
             }
         }
 
-        public async Task DeleteChannel(Guid id)
-        {
-            var channel = await _context.Channels.FindAsync(id);
-
-            if (channel != null)
-            {
-                _context.Channels.Remove(channel);
-                await _context.SaveChangesAsync();
-            }
-        }
-
         private async Task<Channel> GetChannelInfo(Expression<Func<Channel, bool>> expression)
         {
             return await _context.Channels
-                .Include(v => v.Videos.OrderByDescending(v => v.UploadDate))
+                .Include(c => c.Videos.OrderByDescending(v => v.UploadDate))
                     .ThenInclude(v => v.Views)
-                .Include(v => v.Subscribers)
+                .Include(c => c.Subscribers)
                 .FirstOrDefaultAsync(expression);
         }
     }

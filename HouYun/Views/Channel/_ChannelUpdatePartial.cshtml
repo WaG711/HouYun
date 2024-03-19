@@ -4,10 +4,12 @@
     <div asp-validation-summary="ModelOnly"></div>
 
     <div>
+        <span asp-validation-for="ChannelName"></span>
         <input asp-for="ChannelName" placeholder="Имя канала" autocomplete="off">
     </div>
 
     <div>
+        <span asp-validation-for="Description"></span>
         <textarea asp-for="Description" placeholder="Описание канала" autocomplete="off"></textarea>
     </div>
 

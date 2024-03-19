@@ -8,12 +8,10 @@ namespace HouYun.Models
         [Key]
         public Guid CommentId { get; set; }
 
-        [Required(ErrorMessage = "Поле 'Текст комментария' обязательно для заполнения")]
-        [StringLength(500, ErrorMessage = "Длина 'Текста комментария' не должна превышать 500 символов")]
+        [StringLength(500)]
         public string Text { get; set; }
 
         [ScaffoldColumn(false)]
-        [Display(Name = "Дата комментария")]
         public DateTime CommentDate { get; set; }
 
         public Guid VideoId { get; set; }

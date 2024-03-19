@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using HouYun.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Features;
+using HouYun.Filters;
 
 
 namespace HouYun
@@ -46,6 +47,7 @@ namespace HouYun
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
             builder.Services.AddScoped<IChannelRepository, ChannelRepository>();
             builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
             builder.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(typeof(CustomAuthorizationFilter));

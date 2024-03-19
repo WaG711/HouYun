@@ -1,17 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-public class CustomAuthorizationFilter : IAuthorizationFilter
+namespace HouYun.Filters
 {
-    public void OnAuthorization(AuthorizationFilterContext context)
+    public class CustomAuthorizationFilter : IAuthorizationFilter
     {
-        if (context.HttpContext.User.Identity.IsAuthenticated
-            && (context.HttpContext.Request.Path == "/login/index"
-            || context.HttpContext.Request.Path == "/registration/index"
-            || context.HttpContext.Request.Path == "/login"
-            || context.HttpContext.Request.Path == "/registration"))
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            context.Result = new RedirectToActionResult("index", "video", null);
+            var isAuthenticated = context.HttpContext.User.Identity.IsAuthenticated;
+            var isLoginPage = IsLoginPage(context.HttpContext.Request.Path);
+
+            if (isAuthenticated && isLoginPage)
+            {
+                context.Result = new RedirectToActionResult("Index", "Video", null);
+            }
+        }
+
+        private bool IsLoginPage(string path)
+        {
+            var normalizedPath = path.ToLowerInvariant();
+            return normalizedPath == "/login" ||
+                   normalizedPath == "/registration";
         }
     }
 }

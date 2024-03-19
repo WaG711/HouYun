@@ -66,7 +66,7 @@ namespace HouYun.Data
 
             modelBuilder.Entity<Like>()
                 .HasOne(l => l.Channel)
-                .WithMany(u => u.Likes)
+                .WithMany(c => c.Likes)
                 .HasForeignKey(l => l.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -80,54 +80,54 @@ namespace HouYun.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
-                .HasOne(c => c.Channel)
-                .WithMany(u => u.Comments)
-                .HasForeignKey(c => c.ChannelId)
+                .HasOne(cm => cm.Channel)
+                .WithMany(ch => ch.Comments)
+                .HasForeignKey(cm => cm.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<View>()
                 .HasKey(v => v.ViewId);
 
             modelBuilder.Entity<View>()
-                .HasOne(v => v.Video)
-                .WithMany(v => v.Views)
-                .HasForeignKey(v => v.VideoId)
+                .HasOne(vw => vw.Video)
+                .WithMany(vd => vd.Views)
+                .HasForeignKey(vw => vw.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<View>()
                 .HasOne(v => v.Channel)
-                .WithMany(u => u.Views)
+                .WithMany(c => c.Views)
                 .HasForeignKey(v => v.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WatchLater>()
-                .HasKey(w => w.WatchLaterId);
+                .HasKey(wl => wl.WatchLaterId);
 
             modelBuilder.Entity<WatchLater>()
-                .HasOne(w => w.Video)
-                .WithMany(w => w.WatchLaterItems)
-                .HasForeignKey(w => w.VideoId)
+                .HasOne(wl => wl.Video)
+                .WithMany(v => v.WatchLaterItems)
+                .HasForeignKey(wl => wl.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchLater>()
-                .HasOne(w => w.Channel)
-                .WithMany(u => u.WatchLaterList)
-                .HasForeignKey(w => w.ChannelId)
+                .HasOne(wl => wl.Channel)
+                .WithMany(c => c.WatchLaterList)
+                .HasForeignKey(wl => wl.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasKey(w => w.WatchHistoryId);
+                .HasKey(wh => wh.WatchHistoryId);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasOne(w => w.Video).
+                .HasOne(wh => wh.Video).
                 WithMany(v => v.WatchHistories)
-                .HasForeignKey(w => w.VideoId)
+                .HasForeignKey(wh => wh.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WatchHistory>()
-                .HasOne(w => w.Channel)
-                .WithMany(u => u.WatchHistories)
-                .HasForeignKey(w => w.ChannelId)
+                .HasOne(wh => wh.Channel)
+                .WithMany(c => c.WatchHistories)
+                .HasForeignKey(wh => wh.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SearchHistory>()
@@ -135,7 +135,7 @@ namespace HouYun.Data
 
             modelBuilder.Entity<SearchHistory>()
                 .HasOne(s => s.Channel)
-                .WithMany(u => u.SearchHistories)
+                .WithMany(c => c.SearchHistories)
                 .HasForeignKey(s => s.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -150,7 +150,7 @@ namespace HouYun.Data
 
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Channel)
-                .WithMany(u => u.Notifications)
+                .WithMany(c => c.Notifications)
                 .HasForeignKey(n => n.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

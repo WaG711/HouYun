@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Video>
 
 <div class="row">
+    @Html.AntiForgeryToken()
     @foreach (var video in Model)
     {
         <div class="my-custom-col">

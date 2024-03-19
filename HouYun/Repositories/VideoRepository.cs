@@ -32,6 +32,7 @@ namespace HouYun.Repositories
                 .Include(v => v.Channel)
                 .Include(v => v.Views)
                 .Where(v => v.Category.Name == categoryName)
+                .OrderByDescending(v => v.UploadDate)
                 .ToListAsync();
         }
 
@@ -64,9 +65,9 @@ namespace HouYun.Repositories
             return await _context.Videos
                 .Include(v => v.Category)
                 .Include(v => v.Channel)
-                    .ThenInclude(c => c.Subscribers)
-                .Include(v => v.Comments.OrderByDescending(c => c.CommentDate))
-                    .ThenInclude(c => c.Channel)
+                    .ThenInclude(ch => ch.Subscribers)
+                .Include(v => v.Comments.OrderByDescending(cm => cm.CommentDate))
+                    .ThenInclude(cm => cm.Channel)
                 .Include(v => v.Likes)
                     .ThenInclude(l => l.Channel)
                 .Include(v => v.Views)
