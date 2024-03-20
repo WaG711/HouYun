@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers.UserContoller
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,Author,User")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;

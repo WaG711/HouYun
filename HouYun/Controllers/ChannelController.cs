@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
         private const long MaxVideoSize = 50L * 1024 * 1024 * 1024;
@@ -24,6 +23,7 @@ namespace HouYun.Controllers
             _videoRepository = videoRepository;
         }
 
+        [Authorize(Roles = "Admin,Author,User")]
         [HttpGet("Channel/{channelName?}")]
         public async Task<IActionResult> Index(string channelName)
         {
@@ -40,6 +40,7 @@ namespace HouYun.Controllers
             return View(channel);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpGet("Channel/Add")]
         public async Task<IActionResult> Add()
         {
@@ -83,6 +84,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpGet("Channel/Delete")]
         public async Task<IActionResult> Delete()
         {
@@ -101,6 +103,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize(Roles = "Admin,Author,User")]
         [HttpGet("Channel/Update")]
         public async Task<IActionResult> Update()
         {

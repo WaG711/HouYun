@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,Author,User")]
     public class SubscriptionController : Controller
     {
         private readonly ISubscriptionRepository _subscriptionRepository;

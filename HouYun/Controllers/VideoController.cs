@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,Author,User")]
     public class VideoController : Controller
     {
         private readonly IVideoRepository _videoRepository;
