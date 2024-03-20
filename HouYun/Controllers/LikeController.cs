@@ -18,6 +18,16 @@ namespace HouYun.Controllers
             _channelRepository = channelRepository;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+
+            var LikedVideos = await _likeRepository.GetChannelLikedVideos(channelId);
+
+            return View(LikedVideos);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddLike(Guid videoId)

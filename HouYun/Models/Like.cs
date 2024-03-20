@@ -8,6 +8,9 @@ namespace HouYun.Models
         [Key]
         public Guid LikeId { get; set; }
 
+        [ScaffoldColumn(false)]
+        public DateTime LikeDate { get; set; }
+
         public Guid VideoId { get; set; }
         [ForeignKey("VideoId")]
         public Video Video { get; set; }
@@ -15,5 +18,10 @@ namespace HouYun.Models
         public Guid ChannelId { get; set; }
         [ForeignKey("ChannelId")]
         public Channel Channel { get; set; }
+
+        public Like()
+        {
+            LikeDate = DateTime.UtcNow;
+        }
     }
 }

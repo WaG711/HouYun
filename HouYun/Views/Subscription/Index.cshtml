@@ -6,10 +6,10 @@
 
 @if (Model.Any())
 {
-    <h1 id="Title">Новые</h1>
+    <h3 style="margin-bottom: 20px;">Новые</h3>
     <partial name="VideoCard" model="Model" />
 }
 else
 {
-    <h1 id="Title">Вы ни на кого не подписаны</h1>
+    <h3>Вы ни на кого не подписаны</h3>
 }
