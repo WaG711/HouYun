@@ -21,8 +21,8 @@ namespace HouYun.Tests
         {
             var channelName = "testChannelName";
             var expectedChannel = new Channel { Name = channelName };
-            var mockChannelRepository = new Mock<IChannelRepository>();
 
+            var mockChannelRepository = new Mock<IChannelRepository>();
             mockChannelRepository.Setup(repo => repo.GetChannelByName(channelName))
                 .ReturnsAsync(expectedChannel);
 

@@ -109,6 +109,9 @@ namespace HouYun.Migrations
                     b.Property<Guid>("ChannelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("LikeDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("VideoId")
                         .HasColumnType("uniqueidentifier");
 

@@ -14,6 +14,18 @@ namespace HouYun.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<Video>> GetChannelLikedVideos(Guid channelId)
+        {
+            return await _context.Likes
+                .Where(l => l.ChannelId == channelId)
+                .OrderByDescending(l => l.LikeDate)
+                .Include(l => l.Video)
+                    .ThenInclude(v => v.Channel)
+                    .ThenInclude(v => v.Views)
+                .Select(l => l.Video)
+                .ToListAsync();
+        }
+
         public async Task<Like> GetLikeByChannelIdAndVideoId(Guid channelId, Guid videoId)
         {
             return await _context.Likes

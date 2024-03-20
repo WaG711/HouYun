@@ -16,6 +16,26 @@ namespace HouYun.Tests
         private readonly Guid _channelId = Guid.NewGuid();
 
         [Fact]
+        public async Task Index_ReturnsViewWithLikedVideos()
+        {
+            var expectedLikedVideos = new List<Video>();
+
+            var mockLikeRepository = new Mock<ILikeRepository>();
+            var mockChannelRepository = new Mock<IChannelRepository>();
+
+            mockLikeRepository.Setup(repo => repo.GetChannelLikedVideos(_channelId)).ReturnsAsync(expectedLikedVideos);
+            mockChannelRepository.Setup(repo => repo.GetChannelIdByUserId(_userId)).ReturnsAsync(_channelId);
+
+            var controller = CreateLikeController(mockLikeRepository.Object, mockChannelRepository.Object);
+
+            var result = await controller.Index();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsAssignableFrom<List<Video>>(viewResult.ViewData.Model);
+            Assert.Equal(expectedLikedVideos, model);
+        }
+
+        [Fact]
         public async Task AddLike_WithNewLike_ReturnsOkResult()
         {
             var mockLikeRepository = new Mock<ILikeRepository>();
