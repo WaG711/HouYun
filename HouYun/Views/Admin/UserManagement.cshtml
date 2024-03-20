@@ -29,7 +29,7 @@
                 <td>
                     <form asp-action="ChangeRoles" asp-route-id="@user.Id" method="post">
                         @Html.DropDownList("roleName", new SelectList(new[] { "User", "Author", "Admin" }))
-                        <button type="submit" class="btn btn-primary">Применить</button>
+                        <button type="submit" class="btn1 btn-primary">Применить</button>
                     </form>
                 </td>
             </tr>
