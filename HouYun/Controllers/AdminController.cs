@@ -70,6 +70,14 @@ namespace HouYun.Controllers
             return RedirectToAction("UserManagement");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRoles(string id, string roleName)
+        {
+            await _userRepository.ChangeRoles(id, roleName);
+            return RedirectToAction("UserManagement");
+        }
+
         public async Task<IActionResult> GetApplication(Guid id)
         {
             var application = await _applicationRepository.GetApplicationById(id);

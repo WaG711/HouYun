@@ -10,6 +10,7 @@
             <th>Id канала</th>
             <th>Имя канала</th>
             <th>Действие</th>
+            <th>Роль</th>
             <th>Заявка</th>
         </tr>
     </thead>
@@ -25,6 +26,12 @@
                     <form asp-action="RemoveUser" asp-route-id="@user.Id" method="post">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger">Удалить пользователя</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="ChangeRoles" asp-route-id="@user.Id" method="post">
+                        @Html.DropDownList("roleName", new SelectList(new[] { "User", "Author", "Admin" }))
+                        <button type="submit" class="btn1 btn-primary">Применить</button>
                     </form>
                 </td>
                 @if (user.Application.IsActive)

@@ -51,6 +51,25 @@ namespace HouYun.Repositories
             }
         }
 
+        public async Task ChangeRoles(string id, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                if (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com")
+                {
+                    return;
+                }
+
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                await _userManager.RemoveFromRolesAsync(user, userRoles.ToArray());
+
+                await _userManager.AddToRoleAsync(user, roleName);
+            }
+        }
+
         public async Task<bool> ChangeUserName(string userId, string newUserName, string oldPassword)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -131,6 +150,7 @@ namespace HouYun.Repositories
             {
                 await _roleManager.CreateAsync(new IdentityRole("Admin"));
                 await _roleManager.CreateAsync(new IdentityRole("User"));
+                await _roleManager.CreateAsync(new IdentityRole("Author"));
             }
 
             var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";

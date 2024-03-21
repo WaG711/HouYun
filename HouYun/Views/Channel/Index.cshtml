@@ -18,28 +18,30 @@
         {
             <p>
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Загрузить видео</button>
-                    <div class="modal fade" id="upload">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body" id="modal-bodyAdd"></div>
+                    @if (User.IsInRole("Author") || User.IsInRole("Admin"))
+                    {
+                        <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Загрузить видео</button>
+                        <div class="modal fade" id="upload">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="modal-bodyAdd"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="spacer"></div>
+                        <div class="spacer"></div>
 
-                    <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Удалить видео</button>
-                    <div class="modal fade" id="delete">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body" id="modal-bodyDelete"></div>
+                        <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Удалить видео</button>
+                        <div class="modal fade" id="delete">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="modal-bodyDelete"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="spacer"></div>
-
+                        <div class="spacer"></div>
+                    }
                     <button id="btnclickUpdate" data-url="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Изменить канал</button>
                     <div class="modal fade" id="update">
                         <div class="modal-dialog modal-lg">

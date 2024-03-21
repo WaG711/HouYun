@@ -7,7 +7,7 @@ using HouYun.Models;
 
 namespace HouYun.Controllers.UserContoller
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;

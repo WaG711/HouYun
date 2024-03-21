@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
     public class ChannelController : Controller
     {
         private const long MaxVideoSize = 50L * 1024 * 1024 * 1024;
@@ -24,6 +23,7 @@ namespace HouYun.Controllers
             _videoRepository = videoRepository;
         }
 
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpGet("Channel/{channelName?}")]
         public async Task<IActionResult> Index(string channelName)
         {
@@ -40,6 +40,7 @@ namespace HouYun.Controllers
             return View(channel);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpGet("Channel/Add")]
         public async Task<IActionResult> Add()
         {
@@ -51,6 +52,7 @@ namespace HouYun.Controllers
             return PartialView("_AddVideoPartial", model);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(51L * 1024 * 1024 * 1024)]
@@ -83,6 +85,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpGet("Channel/Delete")]
         public async Task<IActionResult> Delete()
         {
@@ -93,6 +96,7 @@ namespace HouYun.Controllers
             return PartialView("_DeleteVideoPartial", videos);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
@@ -101,6 +105,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpGet("Channel/Update")]
         public async Task<IActionResult> Update()
         {
@@ -116,6 +121,7 @@ namespace HouYun.Controllers
             return PartialView("_ChannelUpdatePartial", model);
         }
 
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateChannelViewModel model)
         {
