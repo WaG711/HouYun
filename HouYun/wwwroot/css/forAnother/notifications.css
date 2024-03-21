@@ -1,15 +1,26 @@
-﻿.notification-item {
+﻿.video-notification {
     max-height: 70px;
     margin-bottom: 10px;
     overflow: hidden;
 }
 
-    .notification-item p {
+    .video-notification p {
         font-size: small;
         margin-bottom: 0px;
     }
 
-    .notification-item a {
+    .video-notification a {
         font-weight: 600;
         color: inherit;
+    }
+
+.message-notification {
+    max-height: 70px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+    .message-notification p {
+        font-size: medium;
+        margin-bottom: 0px;
     }

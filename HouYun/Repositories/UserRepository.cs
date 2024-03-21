@@ -12,17 +12,20 @@ namespace HouYun.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly IChannelRepository _channelRepository;
+        private readonly INotificationRepository _notificationRepository;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IChannelRepository channelRepository)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext context, IChannelRepository channelRepository, INotificationRepository notificationRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _context = context;
             _channelRepository = channelRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
@@ -53,7 +56,9 @@ namespace HouYun.Repositories
 
         public async Task ChangeRoles(string id, string roleName)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.Users
+                .Include(u => u.Channel)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user != null)
             {
@@ -67,6 +72,8 @@ namespace HouYun.Repositories
                 await _userManager.RemoveFromRolesAsync(user, userRoles.ToArray());
 
                 await _userManager.AddToRoleAsync(user, roleName);
+
+                await SendNotification(user, roleName);
             }
         }
 
@@ -155,6 +162,30 @@ namespace HouYun.Repositories
 
             var role = (user.Email == "nikitanik10305@gmail.com" || user.Email == "rupcyes@mail.com") ? "Admin" : "User";
             await _userManager.AddToRoleAsync(user, role);
+        }
+
+        private async Task SendNotification(User user, string roleName)
+        {
+            if (roleName.Equals("Author"))
+            {
+                var notification = new Notification
+                {
+                    Message = "Вы стали автором на нашей платформе. Вам стали доступны функции загрузки и удаления видео на странице вашего канала",
+                    ChannelId = user.Channel.ChannelId
+                };
+
+                await _notificationRepository.AddNotification(notification);
+            }
+            else if (roleName.Equals("User"))
+            {
+                var notification = new Notification
+                {
+                    Message = "Вы стали пользователем на нашей платформе. Вам не доступны функции загрузки и удаления видео",
+                    ChannelId = user.Channel.ChannelId
+                };
+
+                await _notificationRepository.AddNotification(notification);
+            }
         }
 
         private async Task DeleteChannel(string id)
