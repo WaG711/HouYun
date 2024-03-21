@@ -17,9 +17,9 @@ namespace HouYun.Models
 
         public Guid ChannelId { get; set; }
         [ForeignKey("ChannelId")]
-        public Channel? Channel { get; set; }
+        public Channel Channel { get; set; }
 
-        public Guid VideoId { get; set; }
+        public Guid? VideoId { get; set; }
         [ForeignKey("VideoId")]
         public Video? Video { get; set; }
 
