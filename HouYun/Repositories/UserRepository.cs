@@ -69,6 +69,11 @@ namespace HouYun.Repositories
 
                 var userRoles = await _userManager.GetRolesAsync(user);
 
+                if (userRoles.Contains(roleName))
+                {
+                    return;
+                }
+
                 await _userManager.RemoveFromRolesAsync(user, userRoles.ToArray());
 
                 await _userManager.AddToRoleAsync(user, roleName);
