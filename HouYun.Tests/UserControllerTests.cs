@@ -1,5 +1,6 @@
 ﻿using HouYun.Controllers.UserContoller;
 using HouYun.IRepositories;
+using HouYun.Models;
 using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace HouYun.Tests
             mockUserRepository.Setup(repo => repo.Logout())
                 .Returns(Task.CompletedTask);
 
-            var controller = new UserController(mockUserRepository.Object);
+            var controller = new UserController(mockUserRepository.Object, null);
 
             var result = await controller.Logout() as RedirectToActionResult;
 
@@ -33,7 +34,7 @@ namespace HouYun.Tests
         public void ChangePassword_ReturnsChangePasswordPartialView()
         {
             var mockUserRepository = new Mock<IUserRepository>();
-            var controller = new UserController(mockUserRepository.Object);
+            var controller = new UserController(mockUserRepository.Object, null);
 
             var result = controller.ChangePassword() as PartialViewResult;
 
@@ -69,7 +70,7 @@ namespace HouYun.Tests
 
             var mockUserRepository = new Mock<IUserRepository>();
 
-            var controller = new UserController(mockUserRepository.Object);
+            var controller = new UserController(mockUserRepository.Object, null);
             controller.ModelState.AddModelError("OldPassword", "Required");
 
             var result = await controller.ChangePassword(model) as PartialViewResult;
@@ -106,7 +107,7 @@ namespace HouYun.Tests
         {
             var mockUserRepository = new Mock<IUserRepository>();
 
-            var controller = new UserController(mockUserRepository.Object);
+            var controller = new UserController(mockUserRepository.Object, null);
 
             var result = controller.ChangeUserName() as PartialViewResult;
 
@@ -142,7 +143,7 @@ namespace HouYun.Tests
 
             var mockUserRepository = new Mock<IUserRepository>();
 
-            var controller = new UserController(mockUserRepository.Object);
+            var controller = new UserController(mockUserRepository.Object, null);
             controller.ModelState.AddModelError("NewUserName", "Required");
 
             var result = await controller.ChangeUserName(model) as PartialViewResult;
@@ -175,28 +176,26 @@ namespace HouYun.Tests
         }
 
         [Fact]
-        public async Task GetUserName_ReturnsOkResultWithUserName()
+        public async Task GetUserName_ReturnsOkObjectResult_WithUserName()
         {
-            var expectedUserName = "testUserName";
+            var userName = "Test";
 
             var mockUserRepository = new Mock<IUserRepository>();
-            mockUserRepository.Setup(repo => repo.GetUserNameById(_userId))
-                .ReturnsAsync(expectedUserName);
+            mockUserRepository.Setup(repo => repo.GetUserById(_userId))
+                              .ReturnsAsync(new User { UserName = userName });
 
             var controller = CreateUserController(mockUserRepository.Object);
 
-            var result = await controller.GetUserName() as OkObjectResult;
+            var result = await controller.GetUserName();
 
-            Assert.NotNull(result);
-            Assert.Equal(200, result.StatusCode);
-
-            var userName = result.Value as string;
-            Assert.Equal(expectedUserName, userName);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resultUserName = Assert.IsType<string>(okResult.Value);
+            Assert.Equal(userName, resultUserName);
         }
 
         private UserController CreateUserController(IUserRepository userRepository)
         {
-            var controller = new UserController(userRepository);
+            var controller = new UserController(userRepository, null);
             controller.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext

@@ -14,6 +14,7 @@ namespace HouYun.Models
         [StringLength(50)]
         public override string UserName { get; set; }
 
+        public Application Application { get; set; }
         public Channel Channel { get; set; }
         public ICollection<Subscription> Subscriptions { get; set; }
 
@@ -21,6 +22,7 @@ namespace HouYun.Models
         {
             Subscriptions = new List<Subscription>();
             Channel = new Channel();
+            Application = new Application();
         }
     }
 }

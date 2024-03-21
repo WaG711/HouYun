@@ -11,23 +11,33 @@ namespace HouYun.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IChannelRepository _channelRepository;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+        public UserRepository(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IChannelRepository channelRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _context = context;
+            _channelRepository = channelRepository;
         }
 
         public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await _userManager.Users
                 .Include(u => u.Channel)
+                .Include(u => u.Application)
                 .ToListAsync();
+        }
+
+        public async Task<User> GetUserById(string userId)
+        {
+            return await _userManager.Users
+                .Include(u => u.Application)
+                .FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task DeleteUser(string id)
@@ -115,12 +125,6 @@ namespace HouYun.Repositories
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<string> GetUserNameById(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            return user.UserName;
-        }
-
         private async Task ManageRoles(User user)
         {
             if (!_roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
@@ -138,7 +142,7 @@ namespace HouYun.Repositories
             var channel = await _context.Channels.FirstOrDefaultAsync(c => c.UserId == id);
             if (channel != null)
             {
-                _context.Channels.Remove(channel);
+                await _channelRepository.DeleteChannel(channel);
             }
         }
     }

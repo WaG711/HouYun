@@ -1,0 +1,19 @@
+﻿.fieldData {
+    word-break: break-word;
+}
+
+#RemoveApplicationForm .sunbit-but input[type="submit"] {
+    width: 180px;
+    height: 45px;
+    background-color: #1F1B3C;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+    #RemoveApplicationForm .sunbit-but input[type="submit"]:hover {
+        background-color: #2B2751;
+    }

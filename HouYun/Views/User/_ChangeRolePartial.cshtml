@@ -1,0 +1,64 @@
+﻿@model HouYun.ViewModels.forUser.ChangeRoleViewModel
+
+@if (!Model.User.Application.IsActive)
+{
+    <form id="ChangeRoleForm" method="post" asp-controller="User" asp-action="ChangeRole">
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <div>
+            <span asp-validation-for="FullName" class="custom-error"></span>
+            <input asp-for="FullName" placeholder="ФИО" autocomplete="off">
+        </div>
+
+        <div>
+            <span asp-validation-for="PlaceOfWork" class="custom-error"></span>
+            <input asp-for="PlaceOfWork" placeholder="Место работы" autocomplete="off">
+        </div>
+
+        <div>
+            <span asp-validation-for="Thesis" class="custom-error"></span>
+            <textarea asp-for="Thesis" placeholder="Почему я должен стать автором" autocomplete="off"></textarea>
+        </div>
+
+        <div class="sunbit-but">
+            <input type="submit" value="Отправить заявку" />
+        </div>
+
+    </form>
+}
+else
+{
+    <h3>Ваша заявка обрабатывается</h3>
+}
+
+<link rel="stylesheet" href="~/css/forUser/changeRole.css" asp-append-version="true" />
+
+<script>
+    $(document).ready(function () {
+        $('#ChangeRoleForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                url: '@Url.Action("ChangeRole", "User")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#ChangeRole').modal('hide');
+                        $('#ChangeRoleForm')[0].reset();
+                        location.reload();
+                    } else {
+                        $('#modal-bodyChangeRole').html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

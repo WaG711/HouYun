@@ -4,7 +4,7 @@ namespace HouYun.ViewModels.forUser
 {
     public class UpdateChannelViewModel
     {
-        [StringLength(20, MinimumLength = 4, ErrorMessage = "Имя канала должно быть от 4 до 20 символов")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Имя канала должно быть от 4 до 50 символов")]
         [Display(Name = "Имя канала")]
         public string? ChannelName { get; set; }
 

@@ -10,10 +10,12 @@ namespace HouYun.Repositories
     public class ChannelRepository : IChannelRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IVideoRepository _videoRepository;
 
-        public ChannelRepository(ApplicationDbContext context)
+        public ChannelRepository(ApplicationDbContext context, IVideoRepository videoRepository)
         {
             _context = context;
+            _videoRepository = videoRepository;
         }
 
         public async Task<Guid> GetChannelIdByUserId(string userId)
@@ -46,6 +48,21 @@ namespace HouYun.Repositories
                     throw new Exception("Имя канала уже используется");
                 }
             }
+        }
+
+        public async Task DeleteChannel(Channel channel)
+        {
+            var videos = await _context.Videos
+                .Where(v => v.ChannelId == channel.ChannelId)
+                .ToArrayAsync();
+
+            foreach (var video in videos)
+            {
+                await _videoRepository.DeleteVideo(video.VideoId);
+            }
+
+            _context.Channels.Remove(channel);
+            await _context.SaveChangesAsync();
         }
 
         private async Task<Channel> GetChannelInfo(Expression<Func<Channel, bool>> expression)

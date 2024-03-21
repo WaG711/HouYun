@@ -22,6 +22,7 @@ namespace HouYun.Data
         public DbSet<WatchHistory> WatchHistories { get; set; }
         public DbSet<SearchHistory> SearchHistories { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Application> Applications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,7 +41,7 @@ namespace HouYun.Data
                 .HasOne(s => s.Channel)
                 .WithMany(c => c.Subscribers)
                 .HasForeignKey(s => s.ChannelId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Channel>()
                 .HasKey(c => c.ChannelId);
@@ -153,6 +154,14 @@ namespace HouYun.Data
                 .WithMany(c => c.Notifications)
                 .HasForeignKey(n => n.ChannelId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Application>()
+                .HasKey(a => a.ApplicationId);
+
+            modelBuilder.Entity<Application>()
+                .HasOne(a => a.User)
+                .WithOne(u => u.Application)
+                .HasForeignKey<Application>(a => a.UserId);
         }
     }
 }
