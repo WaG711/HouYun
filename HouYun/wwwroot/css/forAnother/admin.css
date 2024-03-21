@@ -4,18 +4,22 @@
 
 #Id {
     width: 200px;
+    word-break: break-word;
 }
 
 #Words {
     width: 900px;
+    word-break: break-word;
 }
 
 #Username {
     width: 350px;
+    word-break: break-word;
 }
 
 #ChannelName {
     width: 350px;
+    word-break: break-word;
 }
 
 a {
@@ -42,6 +46,14 @@ select {
     cursor: pointer;
 }
 
-    .btn:hover {
+    .btn1:hover {
         background-color: #0056b3;
     }
+
+#GetApplication .modal-dialog {
+    transform: translateY(25%);
+}
+
+#GetApplication .modal-content {
+    border-radius: 20px;
+}

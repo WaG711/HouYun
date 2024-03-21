@@ -13,13 +13,15 @@ namespace HouYun.Models
 
         public bool IsRead { get; set; }
 
+        public string? Message { get; set; }
+
         public Guid ChannelId { get; set; }
         [ForeignKey("ChannelId")]
-        public Channel Channel { get; set; }
+        public Channel? Channel { get; set; }
 
         public Guid VideoId { get; set; }
         [ForeignKey("VideoId")]
-        public Video Video { get; set; }
+        public Video? Video { get; set; }
 
         public Notification()
         {

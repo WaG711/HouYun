@@ -44,6 +44,9 @@
 }
     .video-channel a {
         padding-top: 17px;
+        max-width: 35%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .video-channel a,
@@ -301,3 +304,8 @@
         -webkit-line-clamp: 2;
         overflow: hidden;
     }
+
+.card-channel a {
+    display: block;
+    text-overflow: ellipsis;
+}

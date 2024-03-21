@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,Author,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class WatchLaterController : Controller
     {
         private readonly IWatchLaterRepository _watchLaterRepository;

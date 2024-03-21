@@ -9,8 +9,7 @@
 <p>@Model.Description</p>
 <p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
 <div>
-    @if (User.Identity.IsAuthenticated)
-    {
+    @{
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
         var isAuthor = Model.UserId == userId;

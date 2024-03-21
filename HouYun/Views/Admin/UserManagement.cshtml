@@ -11,6 +11,7 @@
             <th>Имя канала</th>
             <th>Действие</th>
             <th>Роль</th>
+            <th>Заявка</th>
         </tr>
     </thead>
     <tbody>
@@ -33,9 +34,27 @@
                         <button type="submit" class="btn1 btn-primary">Применить</button>
                     </form>
                 </td>
+                @if (user.Application.IsActive)
+                {
+                    <td>
+                        <a id="btnclickGetApplication" href="@Url.Action("GetApplication", "Admin", new { id = user.Application.ApplicationId })">Посмотреть</a>
+                        <div class="modal fade" id="GetApplication">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-body" id="modal-bodyGetApplication"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                }
+                else
+                {
+                    <td>-</td>
+                }
             </tr>
         }
     </tbody>
 </table>
 
 <link rel="stylesheet" href="~/css/forAnother/admin.css" asp-append-version="true" />
+<script src="~/js/admin.js" asp-append-version="true"></script>

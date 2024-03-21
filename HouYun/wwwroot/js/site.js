@@ -182,6 +182,16 @@ $(function () {
         });
     });
 
+    $(document).on('click', '#btnclickChangeRole', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
+        $.get(url, function (data) {
+            $("#modal-bodyChangeRole").html(data);
+            $("#ChangeRole").modal('show');
+        });
+    });
+
     $("#HidebtnModal").on('click', function () {
         var modalToHide = $(this).attr('data-target');
         $(modalToHide).modal('hide');

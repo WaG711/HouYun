@@ -131,6 +131,10 @@
         overflow: hidden;
     }
 
-#Title{
+.card-channel a {
+    -webkit-line-clamp: 1;
+}
+
+#Title {
     font-size: 2em;
 }

@@ -6,7 +6,7 @@ namespace HouYun.IRepositories
     public interface IUserRepository
     {
         Task<IEnumerable<User>> GetAllUsers();
-        Task<string> GetUserNameById(string userId);
+        Task<User> GetUserById(string userId);
         Task DeleteUser(string id);
         Task ChangeRoles(string id, string roleName);
         Task<bool> ChangeUserName(string userId, string newUserName, string Password);

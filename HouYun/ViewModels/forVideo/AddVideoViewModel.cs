@@ -7,7 +7,7 @@ namespace HouYun.ViewModels.forVideo
     {
         [Required(ErrorMessage = "Название видео обязательно для заполнения")]
         [Display(Name = "Название видео")]
-        [StringLength(100, MinimumLength = 4, ErrorMessage = "Название должно быть от 4 до 100 символов")]
+        [StringLength(150, MinimumLength = 4, ErrorMessage = "Название должно быть от 4 до 150 символов")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Описание видео обязательно для заполнения")]

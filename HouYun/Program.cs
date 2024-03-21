@@ -47,6 +47,7 @@ namespace HouYun
             builder.Services.AddScoped<IWatchHistoryRepository, WatchHistoryRepository>();
             builder.Services.AddScoped<IChannelRepository, ChannelRepository>();
             builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 
             builder.Services.AddControllersWithViews(options =>
             {

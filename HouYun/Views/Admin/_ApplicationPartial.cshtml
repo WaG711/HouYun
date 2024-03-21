@@ -1,0 +1,48 @@
+﻿@model Application
+
+<h4 class="field">ФИО</h4>
+<p class="fieldData">@Model.FullName</p>
+
+<h4 class="field">Место работы</h4>
+<p class="fieldData">@Model.PlaceOfWork</p>
+
+<h4 class="field">Почему должен стать автором</h4>
+<p class="fieldData">@Model.Thesis</p>
+
+<form id="RemoveApplicationForm" method="post" asp-controller="Admin" asp-action="RemoveApplication">
+    <div class="sunbit-but">
+        <input type="submit" value="Удалить заявку" />
+    </div>
+</form>
+
+<link rel="stylesheet" href="~/css/forUser/application.css" asp-append-version="true" />
+
+<script>
+    $(document).ready(function () {
+        $('#RemoveApplicationForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                url: '@Url.Action("RemoveApplication", "Admin", new { id = Model.ApplicationId })',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#GetApplication').modal('hide');
+                        $('#RemoveApplicationForm')[0].reset();
+                        location.reload();
+                    } else {
+                        $('#modal-bodyGetApplication').html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

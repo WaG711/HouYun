@@ -23,7 +23,7 @@ namespace HouYun.Controllers
             _videoRepository = videoRepository;
         }
 
-        [Authorize(Roles = "Admin,Author,User")]
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpGet("Channel/{channelName?}")]
         public async Task<IActionResult> Index(string channelName)
         {
@@ -52,6 +52,7 @@ namespace HouYun.Controllers
             return PartialView("_AddVideoPartial", model);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [RequestSizeLimit(51L * 1024 * 1024 * 1024)]
@@ -95,6 +96,7 @@ namespace HouYun.Controllers
             return PartialView("_DeleteVideoPartial", videos);
         }
 
+        [Authorize(Roles = "Admin,Author")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
@@ -103,7 +105,7 @@ namespace HouYun.Controllers
             return Json(new { success = true });
         }
 
-        [Authorize(Roles = "Admin,Author,User")]
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpGet("Channel/Update")]
         public async Task<IActionResult> Update()
         {
@@ -119,6 +121,7 @@ namespace HouYun.Controllers
             return PartialView("_ChannelUpdatePartial", model);
         }
 
+        [Authorize(Roles = "Admin,User,Author")]
         [HttpPost]
         public async Task<IActionResult> Update(UpdateChannelViewModel model)
         {
