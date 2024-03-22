@@ -2,6 +2,7 @@
     max-height: 70px;
     margin-bottom: 10px;
     overflow: hidden;
+    word-break: break-all;
 }
 
     .video-notification p {
