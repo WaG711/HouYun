@@ -1,4 +1,16 @@
-﻿.spacer {
+﻿.main-name {
+    font-weight: 600;
+}
+
+.main-info {
+    font-size: large;
+}
+
+.main-more-info {
+    font-size: smaller;
+}
+
+.spacer {
     flex-grow: 0.02;
 }
 
@@ -60,4 +72,8 @@
 
 #update .modal-content {
     border-radius: 20px;
+}
+
+.videos {
+    margin-top: 1rem;
 }

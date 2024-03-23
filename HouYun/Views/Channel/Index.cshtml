@@ -5,9 +5,12 @@
     ViewData["Title"] = @Model.Name;
 }
 
-<h1 id="Title">@Model.Name</h1>
-<p>@Model.Description</p>
-<p>@Helper.FormatSubscribers(Model.Subscribers.Count) | @Model.Videos.Count видео</p>
+<div class="main-chennel">
+    <h1 class="main-name">@Model.Name</h1>
+    <p class="main-info">@Model.Description</p>
+    <p class="main-more-info">@Helper.FormatSubscribers(Model.Subscribers.Count) | | @Model.Videos.Count видео  | | Дата регистрации: @Model.RegistrationDate.ToString("dd.MM.yyyy")</p>
+</div>
+
 <div>
     @{
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -16,42 +19,41 @@
 
         if (isAuthor)
         {
-            <p>
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    @if (User.IsInRole("Author") || User.IsInRole("Admin"))
-                    {
-                        <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Загрузить видео</button>
-                        <div class="modal fade" id="upload">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-body" id="modal-bodyAdd"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="spacer"></div>
-
-                        <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Удалить видео</button>
-                        <div class="modal fade" id="delete">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-body" id="modal-bodyDelete"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="spacer"></div>
-                    }
-                    <button id="btnclickUpdate" data-url="@Url.Action("Update", "Channel")" class="btn btn-outline-secondary btn-sm rounded-pill" type="button">Изменить канал</button>
-                    <div class="modal fade" id="update">
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                @if (User.IsInRole("Author") || User.IsInRole("Admin"))
+                {
+                    <button id="btnclickAdd" data-url="@Url.Action("Add", "Channel")" class="btn btn-light btn-sm rounded-pill" type="button">Загрузить видео</button>
+                    <div class="modal fade" id="upload">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-body" id="modal-bodyUpdate"></div>
+                                <div class="modal-body" id="modal-bodyAdd"></div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="spacer"></div>
+
+                    <button id="btnclickDelete" data-url="@Url.Action("Delete", "Channel")" class="btn btn-light btn-sm rounded-pill" type="button">Удалить видео</button>
+                    <div class="modal fade" id="delete">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body" id="modal-bodyDelete"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spacer"></div>
+                }
+
+                <button id="btnclickUpdate" data-url="@Url.Action("Update", "Channel")" class="btn btn-light btn-sm rounded-pill" type="button">Изменить канал</button>
+                <div class="modal fade" id="update">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body" id="modal-bodyUpdate"></div>
+                        </div>
+                    </div>
                 </div>
-            </p>
+            </div>
         }
         else
         {
@@ -77,8 +79,10 @@
     }
 </div>
 
-<p>Видео:</p>
-<partial name="VideoCard" model="Model.Videos" />
+<div>
+    <p class="videos">Видео:</p>
+    <partial name="VideoCard" model="Model.Videos" />
+</div>
 
 <link rel="stylesheet" href="~/css/forChannel/channel.css" asp-append-version="true" />
 <script src="~/js/channel.js"></script>
