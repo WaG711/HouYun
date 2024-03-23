@@ -33,7 +33,7 @@
                 case 0:
                     return "0 просмотров";
                 case < 1000:
-                    return $"{views} {(views == 1 ? "просмотр" : "просмотра")}";
+                    return $"{views} {GetProperForm(views, "просмотр", "просмотра", "просмотров")}";
                 case < 1000000:
                     return $"{views / 1000.0:#.#}K просмотров";
                 default:
@@ -51,11 +51,17 @@
                     return "1 подписчик";
                 default:
                     if (count < 1000)
-                        return $"{count} подписчик{(count != 1 ? "ов" : "")}";
+                    {
+                        return $"{count} {GetProperForm(count, "подписчик", "подписчика", "подписчиков")}";
+                    }
                     else if (count < 1000000)
-                        return $"{count / 1000.0:F1}K подписчиков";
+                    {
+                        return $"{count / 1000.0:F1}K {GetProperForm(count / 1000, "тысячный", "тысячных", "тысяч")}";
+                    }
                     else
-                        return $"{count / 1000000.0:F1}M подписчиков";
+                    {
+                        return $"{count / 1000000.0:F1}M {GetProperForm(count / 1000000, "миллионный", "миллионных", "миллионов")}";
+                    }
             }
         }
 
@@ -63,20 +69,46 @@
         {
             string result;
 
-            if (value == 1)
-            {
-                result = singular;
-            }
-            else if (value >= 2 && value <= 4)
-            {
-                result = $"{value} {few}";
-            }
-            else
+            if (value >= 11 && value <= 19)
             {
                 result = $"{value} {many}";
             }
+            else
+            {
+                int lastDigit = value % 10;
+                switch (lastDigit)
+                {
+                    case 1:
+                        result = $"{value} {singular}";
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                        result = $"{value} {few}";
+                        break;
+                    default:
+                        result = $"{value} {many}";
+                        break;
+                }
+            }
 
             return $"{result} {suffix}";
+        }
+
+        private static string GetProperForm(int value, string form1, string form2, string form3)
+        {
+            if (value % 10 == 1 && value % 100 != 11)
+            {
+                return form1;
+            }
+            else if (value % 10 >= 2 && value % 10 <= 4 && (value % 100 < 10 || value % 100 >= 20))
+            {
+                return form2;
+            }
+            else
+            {
+                return form3;
+            }
         }
     }
 }
