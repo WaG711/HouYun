@@ -175,7 +175,7 @@ namespace HouYun.Repositories
             {
                 var notification = new Notification
                 {
-                    Message = "Вы стали автором на нашей платформе. Вам стали доступны функции загрузки и удаления видео на странице вашего канала",
+                    Message = "Вам стали доступны функции загрузки и удаления видео на странице вашего канала",
                     ChannelId = user.Channel.ChannelId
                 };
 
@@ -185,7 +185,7 @@ namespace HouYun.Repositories
             {
                 var notification = new Notification
                 {
-                    Message = "Вы стали пользователем на нашей платформе. Вам не доступны функции загрузки и удаления видео",
+                    Message = "Вам не доступны функции загрузки и удаления видео",
                     ChannelId = user.Channel.ChannelId
                 };
 

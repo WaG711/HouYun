@@ -21,7 +21,8 @@
         else
         {
             <div class="message-notification">
-                <p>@notification.Message</p>
+                <p class="time">@notification.NotificationDate.ToString("dd.MM.yyyy HH:mm:ss")</p>
+                <p class="message">@notification.Message</p>
             </div>
         }
     }

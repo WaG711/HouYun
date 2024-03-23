@@ -2,7 +2,7 @@
     max-height: 70px;
     margin-bottom: 10px;
     overflow: hidden;
-    word-break: break-all;
+    word-break: break-word;
 }
 
     .video-notification p {
@@ -16,12 +16,17 @@
     }
 
 .message-notification {
-    max-height: 70px;
     margin-bottom: 10px;
-    overflow: hidden;
+    word-break: break-word;
 }
 
-    .message-notification p {
-        font-size: medium;
-        margin-bottom: 0px;
-    }
+.time {
+    font-size: small;
+    margin-bottom: 0px;
+}
+
+.message {
+    font-size: medium;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
