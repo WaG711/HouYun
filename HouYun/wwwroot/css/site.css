@@ -162,7 +162,7 @@ body {
     }
 
 .separatorheader {
-    width: 320px;
+    width: 420px;
     height: 1px;
     background-color: #e0e0e0;
     margin: 0 auto;
@@ -172,8 +172,8 @@ body {
     display: none;
     position: absolute;
     background-color: #0B0922;
-    width: 350px;
-    height: 230px;
+    width: 450px;
+    height: 400px;
     border-radius: 15px;
     top: 48px;
     right: 140px;
@@ -190,8 +190,7 @@ body {
 #notification-list {
     padding-left: 10px;
     padding-top: 10px;
-    padding-right: 10px;
-    max-height: 172px;
+    height: 87%;
     overflow-y: auto;
 }
 

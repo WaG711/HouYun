@@ -1,19 +1,40 @@
 ﻿.video-notification {
-    max-height: 70px;
-    margin-bottom: 10px;
+    max-height: 116px;
+    margin-bottom: 11px;
     overflow: hidden;
     word-break: break-word;
 }
 
-    .video-notification p {
-        font-size: small;
-        margin-bottom: 0px;
-    }
+.video-data {
+    font-size: small;
+    margin-bottom: 0px;
+}
 
-    .video-notification a {
-        font-weight: 600;
+    .video-data a {
         color: inherit;
     }
+
+.video {
+    display: flex;
+    height: 96px;
+}
+
+    .video a {
+        color: inherit;
+    }
+
+
+.poster-notification {
+    width: 165px;
+    height: 93px;
+    border-radius: 10px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+.notification-title {
+    font-weight: 600;
+}
 
 .message-notification {
     margin-bottom: 10px;
