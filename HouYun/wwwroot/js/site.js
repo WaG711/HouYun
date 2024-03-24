@@ -109,6 +109,9 @@ async function toggleNotification() {
         $("#notification-list").html(data);
     } catch (error) {
         console.error('Error:', error.message);
+    }
+}
+
 async function GetUserName() {
     try {
         var response = await fetch('/User/GetUserName');
