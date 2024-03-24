@@ -112,6 +112,35 @@ async function toggleNotification() {
     }
 }
 
+function positionPopup() {
+    var button = document.getElementById('notificationButton');
+    var popup = document.getElementById('notificationPopup');
+
+    var buttonRect = button.getBoundingClientRect();
+
+    var popupWidth = popup.offsetWidth;
+    var popupHeight = popup.offsetHeight;
+
+    var leftPosition = buttonRect.left + window.pageXOffset;
+    var topPosition = buttonRect.bottom + window.pageYOffset;
+
+    popup.style.left = leftPosition - popupWidth + button.offsetWidth + 'px';
+    popup.style.top = topPosition + 'px';
+}
+
+window.addEventListener('resize', positionPopup);
+window.addEventListener('scroll', positionPopup);
+
+function toggleNotification() {
+    var popup = document.getElementById('notificationPopup');
+    if (popup.style.display === 'block') {
+        popup.style.display = 'none';
+    } else {
+        popup.style.display = 'block';
+        positionPopup();
+    }
+}
+
 async function GetUserName() {
     try {
         var response = await fetch('/User/GetUserName');
@@ -206,32 +235,3 @@ window.onload = function () {
 function logout() {
     localStorage.removeItem('searchTerm');
         }
-
-function positionPopup() {
-    var button = document.getElementById('notificationButton');
-    var popup = document.getElementById('notificationPopup');
-
-    var buttonRect = button.getBoundingClientRect();
-
-    var popupWidth = popup.offsetWidth;
-    var popupHeight = popup.offsetHeight;
-
-    var leftPosition = buttonRect.left + window.pageXOffset;
-    var topPosition = buttonRect.bottom + window.pageYOffset;
-
-    popup.style.left = leftPosition - popupWidth + button.offsetWidth + 'px';
-    popup.style.top = topPosition + 'px';
-}
-
-window.addEventListener('resize', positionPopup);
-window.addEventListener('scroll', positionPopup);
-
-function toggleNotification() {
-    var popup = document.getElementById('notificationPopup');
-    if (popup.style.display === 'block') {
-        popup.style.display = 'none';
-    } else {
-        popup.style.display = 'block';
-        positionPopup();
-    }
-}
