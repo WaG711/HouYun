@@ -99,28 +99,43 @@ document.addEventListener("click", function (event) {
 });
 
 async function toggleNotification() {
-    try {
-        const response = await fetch('/Notifications/Index');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    var popup = document.getElementById('notificationPopup');
+    if (popup.style.display === 'block') {
+        popup.style.display = 'none';
+    } else {
+        try {
+            const response = await fetch('/Notifications/Index');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.text();
+            $("#notificationPopup").toggle();
+            $("#notification-list").html(data);
+        } catch (error) {
+            console.error('Error:', error.message);
         }
-        const data = await response.text();
-        $("#notificationPopup").toggle();
-        $("#notification-list").html(data);
-    } catch (error) {
-        console.error('Error:', error.message);
+        positionPopup();
     }
 }
 
-document.addEventListener('click', function (event) {
-    var notificationPopup = document.getElementById('notificationPopup');
-    var notificationButton = document.getElementById('notificationButton');
+function positionPopup() {
+    var button = document.getElementById('notificationButton');
+    var popup = document.getElementById('notificationPopup');
 
-    if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
-        notificationPopup.style.display = 'none';
-    }
-});
+    var buttonRect = button.getBoundingClientRect();
 
+    var popupWidth = popup.offsetWidth;
+    var popupHeight = popup.offsetHeight;
+
+    var leftPosition = buttonRect.left + window.pageXOffset;
+    var topPosition = buttonRect.bottom + window.pageYOffset;
+
+    popup.style.left = leftPosition - popupWidth + button.offsetWidth + 'px';
+    popup.style.top = topPosition + 'px';
+}
+
+window.addEventListener('resize', positionPopup);
+window.addEventListener('scroll', positionPopup);
 
 async function GetUserName() {
     try {
@@ -215,4 +230,4 @@ window.onload = function () {
 
 function logout() {
     localStorage.removeItem('searchTerm');
-}
+        }
