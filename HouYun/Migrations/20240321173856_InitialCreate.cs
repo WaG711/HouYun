@@ -348,7 +348,7 @@ namespace HouYun.Migrations
                     IsRead = table.Column<bool>(type: "bit", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChannelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    VideoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {

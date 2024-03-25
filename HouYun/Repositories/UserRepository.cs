@@ -69,6 +69,11 @@ namespace HouYun.Repositories
 
                 var userRoles = await _userManager.GetRolesAsync(user);
 
+                if (userRoles.Contains(roleName))
+                {
+                    return;
+                }
+
                 await _userManager.RemoveFromRolesAsync(user, userRoles.ToArray());
 
                 await _userManager.AddToRoleAsync(user, roleName);
@@ -170,7 +175,7 @@ namespace HouYun.Repositories
             {
                 var notification = new Notification
                 {
-                    Message = "Вы стали автором на нашей платформе. Вам стали доступны функции загрузки и удаления видео на странице вашего канала",
+                    Message = "Вам стали доступны функции загрузки и удаления видео на странице вашего канала",
                     ChannelId = user.Channel.ChannelId
                 };
 
@@ -180,7 +185,7 @@ namespace HouYun.Repositories
             {
                 var notification = new Notification
                 {
-                    Message = "Вы стали пользователем на нашей платформе. Вам не доступны функции загрузки и удаления видео",
+                    Message = "Вам не доступны функции загрузки и удаления видео",
                     ChannelId = user.Channel.ChannelId
                 };
 

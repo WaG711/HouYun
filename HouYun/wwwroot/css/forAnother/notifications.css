@@ -1,26 +1,53 @@
 ﻿.video-notification {
-    max-height: 70px;
-    margin-bottom: 10px;
+    max-height: 116px;
+    margin-bottom: 11px;
     overflow: hidden;
+    word-break: break-word;
 }
 
-    .video-notification p {
-        font-size: small;
-        margin-bottom: 0px;
-    }
+.video-data {
+    font-size: small;
+    margin-bottom: 0px;
+}
 
-    .video-notification a {
-        font-weight: 600;
+    .video-data a {
         color: inherit;
     }
 
-.message-notification {
-    max-height: 70px;
-    margin-bottom: 10px;
-    overflow: hidden;
+.video {
+    display: flex;
+    height: 96px;
 }
 
-    .message-notification p {
-        font-size: medium;
-        margin-bottom: 0px;
+    .video a {
+        color: inherit;
     }
+
+
+.poster-notification {
+    width: 165px;
+    height: 93px;
+    border-radius: 10px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+.notification-title {
+    font-weight: 600;
+}
+
+.message-notification {
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.time {
+    font-size: small;
+    margin-bottom: 0px;
+}
+
+.message {
+    font-size: medium;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
