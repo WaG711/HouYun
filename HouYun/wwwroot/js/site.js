@@ -99,43 +99,37 @@ document.addEventListener("click", function (event) {
 });
 
 async function toggleNotification() {
-    var popup = document.getElementById('notificationPopup');
-    if (popup.style.display === 'block') {
-        popup.style.display = 'none';
-    } else {
-        try {
-            const response = await fetch('/Notifications/Index');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.text();
-            $("#notificationPopup").toggle();
-            $("#notification-list").html(data);
-        } catch (error) {
-            console.error('Error:', error.message);
+    try {
+        const response = await fetch('/Notifications/Index');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-        positionPopup();
+        const data = await response.text();
+
+        var button = document.getElementById('notificationButton');
+        var popup = document.getElementById('notificationPopup');
+
+        var buttonRect = button.getBoundingClientRect();
+
+        popup.style.top = buttonRect.bottom + 'px';
+        popup.style.right = window.innerWidth - buttonRect.right + 'px';
+
+        $("#notificationPopup").toggle();
+        $("#notification-list").html(data);
+    } catch (error) {
+        console.error('Error:', error.message);
     }
 }
 
-function positionPopup() {
-    var button = document.getElementById('notificationButton');
+
+document.addEventListener('click', function (event) {
     var popup = document.getElementById('notificationPopup');
+    var button = document.getElementById('notificationButton');
+    if (!popup.contains(event.target) && !button.contains(event.target)) {
+        popup.style.display = 'none';
+    }
+});
 
-    var buttonRect = button.getBoundingClientRect();
-
-    var popupWidth = popup.offsetWidth;
-    var popupHeight = popup.offsetHeight;
-
-    var leftPosition = buttonRect.left + window.pageXOffset;
-    var topPosition = buttonRect.bottom + window.pageYOffset;
-
-    popup.style.left = leftPosition - popupWidth + button.offsetWidth + 'px';
-    popup.style.top = topPosition + 'px';
-}
-
-window.addEventListener('resize', positionPopup);
-window.addEventListener('scroll', positionPopup);
 
 async function GetUserName() {
     try {
