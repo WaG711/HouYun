@@ -8,7 +8,7 @@ namespace HouYun.Models
         [Key]
         public Guid VideoId { get; set; }
 
-        [StringLength(100)]
+        [StringLength(150)]
         public string Title { get; set; }
 
         [StringLength(500)]

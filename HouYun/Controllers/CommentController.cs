@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class CommentController : Controller
     {
         private readonly IChannelRepository _channelRepository;

@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Video>
+
+@{
+    ViewData["Title"] = "Понравившиеся";
+}
+
+@if (Model.Any())
+{
+    <h3 style="margin-bottom: 20px;">Понравившиеся</h3>
+    <partial name="VideoCard" model="Model" />
+}
+else
+{
+    <h3>У вас нет понравившихся видео</h3>
+}

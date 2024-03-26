@@ -105,6 +105,15 @@ async function toggleNotification() {
             throw new Error('Network response was not ok');
         }
         const data = await response.text();
+
+        var button = document.getElementById('notificationButton');
+        var popup = document.getElementById('notificationPopup');
+
+        var buttonRect = button.getBoundingClientRect();
+
+        popup.style.top = buttonRect.bottom + 'px';
+        popup.style.right = window.innerWidth - buttonRect.right + 'px';
+
         $("#notificationPopup").toggle();
         $("#notification-list").html(data);
     } catch (error) {
@@ -112,12 +121,12 @@ async function toggleNotification() {
     }
 }
 
-document.addEventListener('click', function (event) {
-    var notificationPopup = document.getElementById('notificationPopup');
-    var notificationButton = document.getElementById('notificationButton');
 
-    if (!notificationPopup.contains(event.target) && event.target !== notificationButton) {
-        notificationPopup.style.display = 'none';
+document.addEventListener('click', function (event) {
+    var popup = document.getElementById('notificationPopup');
+    var button = document.getElementById('notificationButton');
+    if (!popup.contains(event.target) && !button.contains(event.target)) {
+        popup.style.display = 'none';
     }
 });
 
@@ -182,6 +191,16 @@ $(function () {
         });
     });
 
+    $(document).on('click', '#btnclickChangeRole', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('href');
+        $.get(url, function (data) {
+            $("#modal-bodyChangeRole").html(data);
+            $("#ChangeRole").modal('show');
+        });
+    });
+
     $("#HidebtnModal").on('click', function () {
         var modalToHide = $(this).attr('data-target');
         $(modalToHide).modal('hide');
@@ -205,4 +224,4 @@ window.onload = function () {
 
 function logout() {
     localStorage.removeItem('searchTerm');
-}
+        }

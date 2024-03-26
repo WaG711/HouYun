@@ -3,17 +3,20 @@ using HouYun.IRepositories;
 using System.Security.Claims;
 using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Authorization;
+using HouYun.Models;
 
 namespace HouYun.Controllers.UserContoller
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IApplicationRepository _applicationRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IApplicationRepository applicationRepository)
         {
             _userRepository = userRepository;
+            _applicationRepository = applicationRepository;
         }
 
         public async Task<IActionResult> Logout()
@@ -78,13 +81,54 @@ namespace HouYun.Controllers.UserContoller
             }
         }
 
+        public async Task<IActionResult> ChangeRole()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserById(userId);
+
+            var model = new ChangeRoleViewModel()
+            {
+                User = user
+            };
+
+            return PartialView("_ChangeRolePartial", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRole(ChangeRoleViewModel model)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userRepository.GetUserById(userId);
+
+            model.User = user;
+
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_ChangeRolePartial", model);
+            }
+
+            var application = new Application()
+            {
+                IsActive = true,
+                FullName = model.FullName,
+                PlaceOfWork = model.PlaceOfWork,
+                Thesis = model.Thesis,
+                UserId = userId
+            };
+
+            await _applicationRepository.AddApplication(application);
+            return Json(new { success = true });
+
+        }
+
         public async Task<IActionResult> GetUserName()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var userName = await _userRepository.GetUserNameById(userId);
+            var user = await _userRepository.GetUserById(userId);
 
-            return Ok(userName);
+            return Ok(user.UserName);
         }
     }
 }

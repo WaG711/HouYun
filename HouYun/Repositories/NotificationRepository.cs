@@ -2,6 +2,7 @@
 using HouYun.Models;
 using HouYun.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HouYun.Repositories
 {
@@ -28,18 +29,24 @@ namespace HouYun.Repositories
 
         public async Task AddNotification(Notification notification)
         {
-            var subscribers = await _subscriptionRepository.GetSubscriptionsByChannelId(notification.ChannelId);
-            foreach (var subscriber in subscribers)
+            if (notification.Message == null)
             {
-                var sub = subscriber.User.Channel.ChannelId;
-
-                var notify = new Notification
+                var subscribers = await _subscriptionRepository.GetSubscriptionsByChannelId(notification.ChannelId);
+                foreach (var subscriber in subscribers)
                 {
-                    ChannelId = sub,
-                    VideoId = notification.VideoId
-                };
+                    var notify = new Notification
+                    {
+                        ChannelId = subscriber.User.Channel.ChannelId,
+                        VideoId = notification.VideoId
+                    };
 
-                _context.Notifications.Add(notify);
+                    _context.Notifications.Add(notify);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                _context.Notifications.Add(notification);
                 await _context.SaveChangesAsync();
             }
         }

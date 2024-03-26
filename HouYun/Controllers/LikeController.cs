@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class LikeController : Controller
     {
         private readonly ILikeRepository _likeRepository;
@@ -16,6 +16,16 @@ namespace HouYun.Controllers
         {
             _likeRepository = likeRepository;
             _channelRepository = channelRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channelId = await _channelRepository.GetChannelIdByUserId(userId);
+
+            var LikedVideos = await _likeRepository.GetChannelLikedVideos(channelId);
+
+            return View(LikedVideos);
         }
 
         [HttpPost]

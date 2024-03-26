@@ -22,6 +22,39 @@ namespace HouYun.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HouYun.Models.Application", b =>
+                {
+                    b.Property<Guid>("ApplicationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PlaceOfWork")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Thesis")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ApplicationId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Applications");
+                });
+
             modelBuilder.Entity("HouYun.Models.Category", b =>
                 {
                     b.Property<Guid>("CategoryId")
@@ -109,6 +142,9 @@ namespace HouYun.Migrations
                     b.Property<Guid>("ChannelId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("LikeDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("VideoId")
                         .HasColumnType("uniqueidentifier");
 
@@ -133,10 +169,13 @@ namespace HouYun.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("NotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("VideoId")
+                    b.Property<Guid?>("VideoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("NotificationId");
@@ -284,8 +323,8 @@ namespace HouYun.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
@@ -505,6 +544,17 @@ namespace HouYun.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HouYun.Models.Application", b =>
+                {
+                    b.HasOne("HouYun.Models.User", "User")
+                        .WithOne("Application")
+                        .HasForeignKey("HouYun.Models.Application", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HouYun.Models.Channel", b =>
                 {
                     b.HasOne("HouYun.Models.User", "User")
@@ -565,8 +615,7 @@ namespace HouYun.Migrations
                     b.HasOne("HouYun.Models.Video", "Video")
                         .WithMany("Notifications")
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Channel");
 
@@ -589,7 +638,7 @@ namespace HouYun.Migrations
                     b.HasOne("HouYun.Models.Channel", "Channel")
                         .WithMany("Subscribers")
                         .HasForeignKey("ChannelId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HouYun.Models.User", "User")
@@ -758,6 +807,9 @@ namespace HouYun.Migrations
 
             modelBuilder.Entity("HouYun.Models.User", b =>
                 {
+                    b.Navigation("Application")
+                        .IsRequired();
+
                     b.Navigation("Channel")
                         .IsRequired();
 

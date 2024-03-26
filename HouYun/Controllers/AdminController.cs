@@ -1,7 +1,9 @@
 ﻿using HouYun.IRepositories;
 using HouYun.Models;
+using HouYun.ViewModels.forUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
@@ -9,14 +11,16 @@ namespace HouYun.Controllers
     public class AdminController : Controller
     {
         private readonly IUserRepository _userRepository;
+        private readonly IApplicationRepository _applicationRepository;
         private readonly IVideoRepository _videoRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public AdminController(IUserRepository userRepository, IVideoRepository videoRepository, ICategoryRepository categoryRepository)
+        public AdminController(IUserRepository userRepository, IVideoRepository videoRepository, ICategoryRepository categoryRepository, IApplicationRepository applicationRepository)
         {
             _userRepository = userRepository;
             _videoRepository = videoRepository;
             _categoryRepository = categoryRepository;
+            _applicationRepository = applicationRepository;
         }
 
         public IActionResult Index()
@@ -40,7 +44,7 @@ namespace HouYun.Controllers
         public async Task<IActionResult> AddCategory(Category category)
         {
             await _categoryRepository.AddCategory(category);
-            return RedirectToAction("Index");
+            return RedirectToAction("CategoryManagement");
         }
 
         [HttpPost]
@@ -48,7 +52,7 @@ namespace HouYun.Controllers
         public async Task<IActionResult> RemoveCategory(Guid id)
         {
             await _categoryRepository.DeleteCategory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("CategoryManagement");
         }
 
         public async Task<IActionResult> UserManagement()
@@ -64,6 +68,29 @@ namespace HouYun.Controllers
         {
             await _userRepository.DeleteUser(id);
             return RedirectToAction("UserManagement");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeRoles(string id, string roleName)
+        {
+            await _userRepository.ChangeRoles(id, roleName);
+            return RedirectToAction("UserManagement");
+        }
+
+        public async Task<IActionResult> GetApplication(Guid id)
+        {
+            var application = await _applicationRepository.GetApplicationById(id);
+
+            return PartialView("_ApplicationPartial", application);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveApplication(Guid id)
+        {
+            await _applicationRepository.DeleteApplication(id);
+            return Json(new { success = true });
         }
 
         public async Task<IActionResult> VideoManagement()

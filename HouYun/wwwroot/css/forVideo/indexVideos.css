@@ -27,6 +27,7 @@
 
 .my-custom-col {
     width: 20%;
+    height: 360px;
 }
 
 .card {
@@ -131,6 +132,10 @@
         overflow: hidden;
     }
 
-#Title{
+.card-channel a {
+    -webkit-line-clamp: 1;
+}
+
+#Title {
     font-size: 2em;
 }

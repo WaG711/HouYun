@@ -35,9 +35,8 @@ body {
     #myHeader .navbar-brand {
         font-size: 28px;
         color: #e0e0e0;
-        position: absolute;
-        top: 6px;
-        left: 85px;
+        margin-right: 0;
+        margin-left: 1rem;
     }
 
 #toggleSidebarButton .burger-line {
@@ -47,7 +46,6 @@ body {
 #toggleSidebarButton {
     background: none;
     cursor: pointer;
-    position: absolute;
     border: none;
     outline: none;
     box-shadow: none;
@@ -129,6 +127,10 @@ body {
     color: #707070;
 }
 
+.profileinfo {
+    display: flex;
+}
+
 #notificationButton {
     padding: 15px;
     cursor: pointer;
@@ -160,7 +162,7 @@ body {
     }
 
 .separatorheader {
-    width: 320px;
+    width: 420px;
     height: 1px;
     background-color: #e0e0e0;
     margin: 0 auto;
@@ -170,8 +172,8 @@ body {
     display: none;
     position: absolute;
     background-color: #0B0922;
-    width: 350px;
-    height: 230px;
+    width: 450px;
+    height: 400px;
     border-radius: 15px;
     top: 48px;
     right: 140px;
@@ -188,16 +190,16 @@ body {
 #notification-list {
     padding-left: 10px;
     padding-top: 10px;
-    padding-right: 10px;
-    max-height: 172px;
+    height: 87%;
     overflow-y: auto;
 }
 
 .menuHeader {
-    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 350px;
     margin-right: 30px;
     font-size: 20px;
-    right: 35px;
 }
 
 .dropdown-menu1 {
@@ -278,6 +280,15 @@ body {
     border-radius: 20px;
 }
 
+#ChangeRole .modal-dialog {
+    z-index: 9101;
+    transform: translateY(25%);
+}
+
+#ChangeRole .modal-content {
+    border-radius: 20px;
+}
+
 .wrapper {
     padding-top: 60px;
     padding-right: 0;
@@ -338,6 +349,9 @@ body {
 
 .mini-sidebar {
     position: fixed;
+    background-color: #0F1020;
+    height: 100%;
+    z-index: 999;
 }
 
     .mini-sidebar ul li {
@@ -345,6 +359,10 @@ body {
         color: #e0e0e0;
         text-decoration: none;
     }
+
+.mini-navbar-nav {
+    padding-left: 31px;
+}
 
 .mini-img-mini-sb {
     width: 25px;
@@ -356,15 +374,13 @@ body {
 }
 
 .expanded {
+    width: calc(100% - 270px);
     margin-left: 270px;
 }
 
 .collapsed {
+    width: calc(100% - 65px);
     margin-left: 65px;
-}
-
-.expanded-none {
-    margin-left: 0px;
 }
 
 .content {
@@ -374,9 +390,12 @@ body {
     margin-top: 10px;
 }
 
-.pb-3 {
-    max-width: 196.2vh;
-}
+    .content.expanded-none {
+        width: 100%;
+        margin-left: 0px;
+        padding-left: 1px;
+        padding-right: 1px;
+    }
 
 ::-webkit-scrollbar {
     width: 12px;

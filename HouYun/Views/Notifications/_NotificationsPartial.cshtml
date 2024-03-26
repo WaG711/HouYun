@@ -4,17 +4,32 @@
 {
     @foreach (var notification in Model)
     {
-        <div class="notification-item">
-            <p>
-                <a href="@Url.Action("Index", "Channel", new { ChannelName = @notification.Video.Channel.Name })">
-                    @notification.Video.Channel.Name
-                </a>
-                @Helper.TimeAgo(notification.NotificationDate)
-            </p>
-            <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })">
-                Новое видео: @notification.Video.Title
-            </a>
-        </div>
+        @if (notification.Message == null)
+        {
+            <div class="video-notification">
+                <p class="video-data">
+                    <a href="@Url.Action("Index", "Channel", new { ChannelName = @notification.Video.Channel.Name })">
+                        @notification.Video.Channel.Name
+                    </a>
+                    @Helper.TimeAgo(notification.NotificationDate)
+                </p>
+                <div class="video">
+                    <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })">
+                        <img class="poster-notification" src="@Url.Content("~/posters/" + notification.Video.PosterPath)" alt="Video Poster">
+                    </a>
+                    <a href="@Url.Action("Details", "Video", new { videoId = @notification.Video.VideoId })" class="notification-title">
+                        Новое видео: @notification.Video.Title
+                    </a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="message-notification">
+                <p class="time">@notification.NotificationDate.ToString("dd.MM.yyyy")</p>
+                <p class="message">@notification.Message</p>
+            </div>
+        }
     }
 }
 else

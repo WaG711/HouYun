@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace HouYun.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
+    [Authorize(Roles = "Admin,User,Author")]
     public class WatchHistoryController : Controller
     {
         private readonly IWatchHistoryRepository _watchHistoryRepository;

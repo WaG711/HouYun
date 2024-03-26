@@ -16,14 +16,20 @@
     <header id="myHeader">
         <nav class="navbar">
             <div class="container-fluid">
-                <button id="toggleSidebarButton" class="btn" onclick="toggleSidebar()">
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                    <span class="burger-line"></span>
-                </button>
-                <a class="navbar-brand" asp-controller="Video" asp-action="">
-                    <img src="~/imges/Logos.png" class="logo" /> HouYun
-                </a>
+                <div>
+                    <button id="toggleSidebarButton" class="btn" onclick="toggleSidebar()">
+                        <span class="burger-line"></span>
+                        <span class="burger-line"></span>
+                        <span class="burger-line"></span>
+                    </button>
+                </div>
+                
+                <div>
+                    <a class="navbar-brand" asp-controller="Video" asp-action="">
+                        <img src="~/imges/Logos.png" class="logo" /> HouYun
+                    </a>
+                </div>
+                
 
                 <div class="container2">
                     <form id="searchForm" action="@Url.Action("SearchResult", "Search")">
@@ -31,16 +37,20 @@
                         <button type="submit" class="search-button">Искать</button>
                     </form>
                 </div>
+
                 <div class="profileinfo">
                     <button id="notificationButton" class="custom-btn" onclick="toggleNotification()">
                         <img src="/imges/Bell.png" alt="Уведомления">
                     </button>
+
                     <div id="notificationPopup" class="popup">
                         <div class="popup-header">Уведомления</div>
                         <div class="separatorheader"></div>
                         <div class="notification-list" id="notification-list"></div>
                     </div>
+
                     <button id="toggleMenuButton" class="menuHeader custom-btn" onclick="toggleMenu()">@User.Identity.Name</button>
+
                     <div id="menuContent" class="dropdown-menu1" style="display: none;">
                         <a id="btnclickChangeUserName" href="@Url.Action("ChangeUserName", "User")" class="dropdown-item">Изменить имя</a>
                         <div class="modal fade" id="ChangeUserName">
@@ -50,6 +60,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <a id="btnclickChangePassword" href="@Url.Action("ChangePassword", "User")" class="dropdown-item">Изменить пароль</a>
                         <div class="modal fade" id="ChangePassword">
                             <div class="modal-dialog modal-lg">
@@ -58,10 +69,24 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if (User.IsInRole("User"))
+                        {
+                            <a id="btnclickChangeRole" href="@Url.Action("ChangeRole", "User")" class="dropdown-item">Заявка автора</a>
+                            <div class="modal fade" id="ChangeRole">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-body" id="modal-bodyChangeRole"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                         @if (User.IsInRole("Admin"))
                         {
                             <a class="dropdown-item" href="@Url.Action("Index", "Admin")">Панель администратора</a>
                         }
+
                         <a class="dropdown-item" href="@Url.Action("Logout", "User")" onclick="logout()">Выйти</a>
                     </div>
                 </div>
@@ -82,7 +107,9 @@
                         <img src="~/imges/Sub.png" class="mini-img-sb" />Подписки
                     </a>
                 </li>
+
                 <div class="separator"></div>
+
                 <li class="nav-item">
                     <a class="Channel custom-btn" href="@Url.Action("Index", "Channel", new { channelName = (string?)null })">
                         <img src="~/imges/MyChannel.png" class="mini-img-sb" />Мой канал
@@ -98,7 +125,14 @@
                         <img src="~/imges/WL.png" class="mini-img-sb" />Смотреть позже
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="WL custom-btn" href="@Url.Action("Index", "Like")">
+                        <img src="~/imges/Like.png" class="mini-img-sb" />Понравившиеся
+                    </a>
+                </li>
+
                 <div class="separator"></div>
+
                 <li class="nav-item">
                     <div class="SubView custom-btn">Подписки</div>
                 </li>
@@ -130,6 +164,11 @@
                 <li class="nav-item">
                     <a class="WL custom-btn" href="@Url.Action("Index", "WatchLater")">
                         <img src="~/imges/WL.png" class="mini-img-mini-sb" />
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="Like custom-btn" href="@Url.Action("Index", "Like")">
+                        <img src="~/imges/Like.png" class="mini-img-mini-sb" />
                     </a>
                 </li>
             </ul>

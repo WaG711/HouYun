@@ -19,8 +19,15 @@
     <div class="main-data">
         <h2>@Model.Video.Title</h2>
 
-        <h4 class="video-channel">
-            <a href="@Url.Action("Index", "Channel", new { channelName = Model.Video.Channel.Name })">@Model.Video.Channel.Name</a>
+        <div class="video-channel">
+            <a href="@Url.Action("Index", "Channel", new { channelName = Model.Video.Channel.Name })">
+                <div class="channel-name">
+                    @Model.Video.Channel.Name
+                </div>
+                <div class="count-sub">
+                    @Helper.FormatSubscribers(Model.Video.Channel.Subscribers.Count)
+                </div>
+            </a>
             @{
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var isAuthor = Model.Video.Channel.UserId == userId;
@@ -65,10 +72,10 @@
                 }
                 <button class="btn btn-wl" onclick="addToWatchLater('@Url.Action("AddToWatchLater", "WatchLater")', '@Model.Video.VideoId');" data-WL="WL">Смотреть позже</button>
             </span>
-        </h4>
+        </div>
 
         <div class="video-details">
-            <p>@Helper.FormatViews(@Model.Video.Views.Count) | | @Helper.TimeAgo(@Model.Video.UploadDate) | | Количество "Нравится": @Model.Video.Likes.Count</p>
+            <p class="video-info">@Helper.FormatViews(@Model.Video.Views.Count) | | @Helper.TimeAgo(@Model.Video.UploadDate) | | Нравится: @Model.Video.Likes.Count</p>
             <div class="details-content">
                 <p>@Model.Video.Description</p>
             </div>
