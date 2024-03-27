@@ -14,17 +14,9 @@ namespace HouYun.Models
         [StringLength(500)]
         public string Description { get; set; }
 
-        [ScaffoldColumn(false)]
         public string VideoPath { get; set; }
 
-        [ScaffoldColumn(false)]
         public string PosterPath { get; set; }
-
-        [NotMapped]
-        public IFormFile VideoFile { get; set; }
-
-        [NotMapped]
-        public IFormFile PosterFile { get; set; }
 
         [ScaffoldColumn(false)]
         public DateTime UploadDate { get; set; }
