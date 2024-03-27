@@ -69,7 +69,7 @@ namespace HouYun.Repositories
 
             foreach (var group in notificationsGroupedByChannel)
             {
-                var lastTenNotifications = group.OrderByDescending(n => n.NotificationDate).Take(10);
+                var lastTenNotifications = group.OrderByDescending(n => n.NotificationDate).Take(5);
 
                 var notificationsToRemove = group.Except(lastTenNotifications);
 
