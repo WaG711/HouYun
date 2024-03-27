@@ -1,13 +1,33 @@
-﻿.main-name {
+﻿.banner-image {
+    width: 100%;
+    height: 210px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.main-chennel-info,
+.channel-functions {
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+.main-name {
     font-weight: 600;
+    max-width: 100%;
+    word-break: break-word;
 }
 
 .main-info {
     font-size: large;
+    max-width: 100%;
+    word-break: break-word;
 }
 
 .main-more-info {
     font-size: smaller;
+    max-width: 100%;
+    word-break: break-word;
 }
 
 .spacer {
@@ -71,6 +91,15 @@
 }
 
 #update .modal-content {
+    border-radius: 20px;
+}
+
+#updateBanner .modal-dialog {
+    width: 610px;
+    transform: translateY(150%);
+}
+
+#updateBanner .modal-content {
     border-radius: 20px;
 }
 

@@ -6,12 +6,15 @@
 }
 
 <div class="main-chennel">
-    <h1 class="main-name">@Model.Name</h1>
-    <p class="main-info">@Model.Description</p>
-    <p class="main-more-info">@Helper.FormatSubscribers(Model.Subscribers.Count) | | @Model.Videos.Count видео  | | Дата регистрации: @Model.RegistrationDate.ToString("dd.MM.yyyy")</p>
+    <img class="banner-image" src="@Url.Content("~/banners/" + Model.BannerPath)" alt="Banner">
+    <div class="main-chennel-info">
+        <h1 class="main-name">@Model.Name</h1>
+        <p class="main-info">@Model.Description</p>
+        <p class="main-more-info">@Helper.FormatSubscribers(Model.Subscribers.Count) | | @Model.Videos.Count видео  | | Дата регистрации: @Model.RegistrationDate.ToString("dd.MM.yyyy")</p>
+    </div>
 </div>
 
-<div>
+<div class="channel-functions">
     @{
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var isSubscribed = Model.Subscribers.Any(s => s.UserId == userId);
@@ -50,6 +53,17 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-body" id="modal-bodyUpdate"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="spacer"></div>
+
+                <button id="btnclickUpdateBanner" data-url="@Url.Action("UpdateBanner", "Channel")" class="btn btn-light btn-sm rounded-pill" type="button">Изменить баннер</button>
+                <div class="modal fade" id="updateBanner">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body" id="modal-bodyUpdateBanner"></div>
                         </div>
                     </div>
                 </div>
