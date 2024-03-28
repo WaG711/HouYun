@@ -57,6 +57,11 @@ namespace HouYun.Repositories
 
             try
             {
+                if (!channel.BannerPath.Equals("banner.png"))
+                {
+                    await DeleteFile(channel.BannerPath, "banners");
+                }
+
                 channel.BannerPath = bannerFileName;
 
                 _context.Entry(channel).State = EntityState.Modified;

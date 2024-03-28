@@ -30,6 +30,7 @@
     border-radius: 10px;
     padding-right: 5px;
     padding-top: 5px;
+    object-fit: cover;
 }
 
 .notification-title {
