@@ -1,0 +1,49 @@
+﻿@model HouYun.ViewModels.forUser.UpdateBannerChannelViewModel
+
+<form id="updateBannerForm" method="post" asp-controller="Channel" asp-action="UpdateBanner">
+    <div class="form-group">
+        <label asp-for="BannerFile" class="control-label">Файл баннера</label>
+        <input asp-for="BannerFile" type="file" class="form-control" accept="image/*" />
+        <span asp-validation-for="BannerFile" class="text-danger"></span>
+    </div>
+
+    <div class="sunbit-but">
+        <input type="submit" value="Загрузить баннер" />
+    </div>
+</form>
+
+<link rel="stylesheet" href="~/css/forChannel/channelUpdateBanner.css" asp-append-version="true" />
+
+<script>
+    $(document).ready(function () {
+        $('#updateBannerForm').submit(function (event) {
+            event.preventDefault();
+
+            var formData = new FormData($(this)[0]);
+
+            $.ajax({
+                url: '@Url.Action("UpdateBanner", "Channel")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        $('#updateBanner').modal('hide');
+                        $('#updateBannerForm')[0].reset();
+                        location.reload();
+                    } else {
+                        $('#modal-bodyUpdateBanner').html(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $('#updateBanner').on('hidden.bs.modal', function (e) {
+            $('#updateBannerForm')[0].reset();
+        });
+    });
+</script>

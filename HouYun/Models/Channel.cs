@@ -15,6 +15,8 @@ namespace HouYun.Models
         [ScaffoldColumn(false)]
         public DateTime RegistrationDate  { get; set; }
 
+        public string BannerPath { get; set; }
+
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public User User { get; set; }
@@ -40,6 +42,7 @@ namespace HouYun.Models
             Comments = new List<Comment>();
             Likes = new List<Like>();
             Videos = new List<Video>();
+            BannerPath = "banner.png";
             RegistrationDate = DateTime.UtcNow;
         }
     }

@@ -3,6 +3,7 @@ using HouYun.IRepositories;
 using HouYun.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
 
 namespace HouYun.Repositories
@@ -50,6 +51,29 @@ namespace HouYun.Repositories
             }
         }
 
+        public async Task UpdateBannerChannel(Channel channel, IFormFile bannerFile)
+        {
+            var bannerFileName = await SaveFile(bannerFile, "banners");
+
+            try
+            {
+                if (!channel.BannerPath.Equals("banner.png"))
+                {
+                    await DeleteFile(channel.BannerPath, "banners");
+                }
+
+                channel.BannerPath = bannerFileName;
+
+                _context.Entry(channel).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                await DeleteFile(bannerFileName, "banners");
+                throw;
+            }
+        }
+
         public async Task DeleteChannel(Channel channel)
         {
             var videos = await _context.Videos
@@ -60,6 +84,8 @@ namespace HouYun.Repositories
             {
                 await _videoRepository.DeleteVideo(video.VideoId);
             }
+
+            await DeleteFile(channel.BannerPath, "banners");
 
             _context.Channels.Remove(channel);
             await _context.SaveChangesAsync();
@@ -72,6 +98,34 @@ namespace HouYun.Repositories
                     .ThenInclude(v => v.Views)
                 .Include(c => c.Subscribers)
                 .FirstOrDefaultAsync(expression);
+        }
+
+        private async Task<string> SaveFile(IFormFile file, string folderName)
+        {
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return fileName;
+        }
+
+        private async Task DeleteFile(string fileName, string folderName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderName, fileName);
+
+            if (File.Exists(filePath))
+            {
+                await Task.Run(() => File.Delete(filePath));
+            }
         }
     }
 }

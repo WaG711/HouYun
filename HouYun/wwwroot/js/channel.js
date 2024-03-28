@@ -43,6 +43,14 @@ $(function () {
         });
     });
 
+    $("#btnclickUpdateBanner").on('click', function () {
+        var url = $(this).data('url');
+        $.get(url, function (data) {
+            $("#modal-bodyUpdateBanner").html(data);
+            $("#updateBanner").modal('show');
+        });
+    });
+
     $("#btnclickDelete").on('click', function () {
         var url = $(this).data('url');
         $.get(url, function (data) {

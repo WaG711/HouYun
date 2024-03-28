@@ -66,7 +66,13 @@ namespace HouYun.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveUser(string id)
         {
-            await _userRepository.DeleteUser(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!userId.Equals(id))
+            {
+                await _userRepository.DeleteUser(id);
+            }
+
             return RedirectToAction("UserManagement");
         }
 

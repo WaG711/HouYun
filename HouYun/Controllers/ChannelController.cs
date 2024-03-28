@@ -11,7 +11,7 @@ namespace HouYun.Controllers
     public class ChannelController : Controller
     {
         private const long MaxVideoSize = 50L * 1024 * 1024 * 1024;
-        private const long MaxPosterSize = 5 * 1024 * 1024;
+        private const long MaxPosterSize = 10 * 1024 * 1024;
         private readonly IChannelRepository _channelRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IVideoRepository _videoRepository;
@@ -133,7 +133,8 @@ namespace HouYun.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var channel = await _channelRepository.GetChannelByUserId(userId);
 
-            if (model.ChannelName == channel.Name && model.Description == channel.Description)
+            if (model.ChannelName == channel.Name
+                && model.Description == channel.Description)
             {
                 return Json(new { success = true });
             }
@@ -151,6 +152,34 @@ namespace HouYun.Controllers
                 ModelState.AddModelError("", ex.Message);
                 return PartialView("_ChannelUpdatePartial", model);
             }
+        }
+
+        [Authorize(Roles = "Admin,User,Author")]
+        [HttpGet("Channel/UpdateBanner")]
+        public IActionResult UpdateBanner()
+        {
+            return PartialView("_UpdateBannerPartial");
+        }
+
+        [Authorize(Roles = "Admin,User,Author")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateBanner(UpdateBannerChannelViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_UpdateBannerPartial", model);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var channel = await _channelRepository.GetChannelByUserId(userId);
+
+            if (!ValidateBannerFile(model))
+            {
+                return PartialView("_AddVideoPartial", model);
+            }
+
+            await _channelRepository.UpdateBannerChannel(channel, model.BannerFile);
+            return Json(new { success = true });
         }
 
         private bool ValidateVideoFile(AddVideoViewModel model)
@@ -178,7 +207,7 @@ namespace HouYun.Controllers
             {
                 if (model.PosterFile.Length > MaxPosterSize)
                 {
-                    ModelState.AddModelError("PosterFile", "Размер файла постера превышает максимально допустимый");
+                    ModelState.AddModelError("PosterFile", "Размер файла превышает 10МБ");
                     return false;
                 }
 
@@ -186,7 +215,29 @@ namespace HouYun.Controllers
                 var extension = Path.GetExtension(model.PosterFile.FileName).ToLower();
                 if (!allowedExtensions.Contains(extension))
                 {
-                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла постера");
+                    ModelState.AddModelError("PosterFile", "Недопустимое расширение файла");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool ValidateBannerFile(UpdateBannerChannelViewModel model)
+        {
+            if (model.BannerFile != null)
+            {
+                if (model.BannerFile.Length > MaxPosterSize)
+                {
+                    ModelState.AddModelError("BannerFile", "Размер файла превышает 10МБ");
+                    return false;
+                }
+
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                var extension = Path.GetExtension(model.BannerFile.FileName).ToLower();
+                if (!allowedExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("BannerFile", "Недопустимое расширение файла");
                     return false;
                 }
             }
