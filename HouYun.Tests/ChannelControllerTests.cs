@@ -246,6 +246,46 @@ namespace HouYun.Tests
             Assert.True((bool)successProperty.GetValue(result.Value));
         }
 
+        [Fact]
+        public async Task UpdateBanner_WithValidModel_ReturnsJsonResult()
+        {
+            var model = new UpdateBannerChannelViewModel();
+            var fakeFile = new FormFile(null, 0, 0, "fake", "fake.jpg");
+
+            var mockChannelRepository = new Mock<IChannelRepository>();
+            mockChannelRepository.Setup(repo => repo.GetChannelByUserId(_userId)).ReturnsAsync(_channel);
+
+            var controller = CreateChannelController(mockChannelRepository.Object);
+
+            var result = await controller.UpdateBanner(model) as JsonResult;
+
+            Assert.NotNull(result);
+            Assert.IsType<JsonResult>(result);
+
+            var successProperty = result.Value.GetType().GetProperty("success");
+            Assert.NotNull(successProperty);
+            Assert.True((bool)successProperty.GetValue(result.Value));
+        }
+
+        [Fact]
+        public async Task UpdateBanner_WithInvalidModel_ReturnsPartialViewResult()
+        {
+            var model = new UpdateBannerChannelViewModel();
+
+            var mockChannelRepository = new Mock<IChannelRepository>();
+            mockChannelRepository.Setup(repo => repo.GetChannelByUserId(_userId)).ReturnsAsync(_channel);
+
+            var controller = CreateChannelController(mockChannelRepository.Object);
+            controller.ModelState.AddModelError("someKey", "someError");
+
+            var result = await controller.UpdateBanner(model);
+
+            var partialViewResult = Assert.IsType<PartialViewResult>(result);
+            Assert.Equal("_UpdateBannerPartial", partialViewResult.ViewName);
+            Assert.Equal(model, partialViewResult.Model);
+        }
+
+
         private Mock<IChannelRepository> SetupMockChannelRepository()
         {
             var mockChannelRepository = new Mock<IChannelRepository>();
