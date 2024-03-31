@@ -1,26 +1,26 @@
 # HouYun
 Дальше будет представление этого проекта:
 - Вход/регистрация   
-![loginRegistration](https://github.com/WaG711/HouYun/assets/137266836/1191be4b-2eb7-4836-aa06-fee0f7c58c26)
+![LoginRegistration](https://github.com/WaG711/HouYun/assets/137266836/8661d86f-09d6-4e9b-8a5a-d7b0c5125a98)
 - Основная страница  
-![main](https://github.com/WaG711/HouYun/assets/137266836/88a786a4-59b9-484b-a064-54cbd0121f54)
+![Main](https://github.com/WaG711/HouYun/assets/137266836/e5ce33f0-a048-419f-a7cf-dbb747d1ee23)
 - Информацией о канале  
-![channel](https://github.com/WaG711/HouYun/assets/137266836/2915cd95-4a97-439e-87e5-d475ae8bae17)
+![Channel](https://github.com/WaG711/HouYun/assets/137266836/87fc3bb9-12ed-4a42-a905-1fc2bc1a34dc)
 - На странице вашего канала есть функционал загрузки/удаления видео и обновления данных о канале  
-![channelFunctions](https://github.com/WaG711/HouYun/assets/137266836/941e22f3-863b-4f93-9f28-73c31a2bc282)
-- Вклдака с видео только подписанных каналах, плейлист "Смотреть позже" и "История просмотров"  
-![pages](https://github.com/WaG711/HouYun/assets/137266836/98392146-0491-41bc-be70-524ceb303a4e)
+![ChannelFunctions](https://github.com/WaG711/HouYun/assets/137266836/87093e6a-d13d-4f1a-a6d7-55a2afd5f231)
+- Вклдака с видео только подписанных каналах, плейлист "История просмотров", "Смотреть позже" и "Понравившиеся"  
+![Pages](https://github.com/WaG711/HouYun/assets/137266836/486fb7fa-deb1-4832-b2f1-6c5fce9e56d5)
 - Резулатат поиска
-![search](https://github.com/WaG711/HouYun/assets/137266836/e6d657cf-6a15-434a-97d7-2bffb201923a)
+![Search](https://github.com/WaG711/HouYun/assets/137266836/d6397314-dac8-4cd4-a4b5-9101780849d7)
 - Просмотр видео  
-![video](https://github.com/WaG711/HouYun/assets/137266836/01efba38-fce6-4c84-beb2-47911f702359)
-- Возможность смены имени и пароля от аккаунта  
-![userFunctions](https://github.com/WaG711/HouYun/assets/137266836/cb2b5d73-bc36-4e0a-b2c6-d2519a62e26e)
-- У пользователя есть просмотр уведомлений о загрузке видео на подписанные каналы  
-![notifications](https://github.com/WaG711/HouYun/assets/137266836/02200683-e5a0-444e-b986-3584953b8e7a)
+![Video](https://github.com/WaG711/HouYun/assets/137266836/78a284ba-b2c5-4fd8-8c8f-df18fb00ff43)
+- Возможность смены имени, пароля от аккаунта и заявка на становление автором  
+![UerFunctions](https://github.com/WaG711/HouYun/assets/137266836/2fdf8f99-8c6e-45d7-bdab-4c0497d644ad)
+- У пользователя есть просмотр уведомлений  
+![Notifications](https://github.com/WaG711/HouYun/assets/137266836/202e16e7-c702-478e-bf26-55c1df8b9d61)
 - Реализована панель администратора для пользователей с таким статусом  
 ![admin](https://github.com/WaG711/HouYun/assets/137266836/cae56270-0639-4971-8292-cd87e9815af1)
 - Функциональные возможности администратора  
-![adminFunctions](https://github.com/WaG711/HouYun/assets/137266836/b4d3e16d-ad22-4b2b-b693-a087540e6b22)
+![AdminFunctions](https://github.com/WaG711/HouYun/assets/137266836/bd948a35-e3fe-49fb-84e6-890a8d5e739e)
 
 В разработке участвовали: WaG711 и f213u47gj.
